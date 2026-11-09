@@ -1,9 +1,32 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 ---
-<SiteLayout title="Privacidade — Nexauren Story" description="Informações sobre os dados utilizados pela plataforma Nexauren Story.">
-<div class="shell">
-<header class="header"><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a><nav><a href="/apps">Apps</a><a href="/tools">Tools</a><a href="/blog">Blog</a></nav><div class="actions"><button class="theme" data-theme-toggle aria-label="Alternar tema">◐</button><a class="button outline" href="/#account">Entrar ↗</a></div></header>
-<main style="min-height:65vh;display:grid;align-content:center;padding:80px 0"><div class="eyebrow"><i/> NEXAUREN STORY / ECOSSISTEMA</div><h1 style="max-width:850px">Privacidade<br/><span>A política de privacidade será publicada antes da abertura pública das contas.</span></h1><p style="color:var(--muted);max-width:600px;line-height:1.8">Informações sobre os dados utilizados pela plataforma Nexauren Story.</p><a class="button primary" style="width:max-content;margin-top:24px" href="/">Voltar ao início ↗</a></main>
-<footer><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a><p>© 2026 Nexauren Story.</p><div><a href="/privacy">Privacidade</a><a href="/terms">Termos</a></div></footer>
-</div></SiteLayout>
+<SiteLayout title="Política de Privacidade — Nexauren" description="Saiba que dados a Nexauren trata e como são utilizados.">
+<div class="site-shell">
+  <SiteHeader/>
+  <main class="legal-page">
+    <div class="eyebrow"><span class="eyebrow-line"></span> INFORMAÇÃO LEGAL</div>
+    <h1>Política de <span>Privacidade.</span></h1>
+    <p class="legal-updated">Última atualização: 9 de novembro de 2026</p>
+    <p>Esta página explica, em linguagem simples, que informações são utilizadas quando visita a Nexauren, cria uma conta ou utiliza as ferramentas disponíveis no site.</p>
+    <h2>1. Informações da conta</h2>
+    <p>Quando cria uma conta ou inicia sessão, o Firebase Authentication processa os dados necessários à autenticação, como endereço de e-mail, identificador da conta e, quando disponibilizados pelo Google, nome e fotografia de perfil.</p>
+    <h2>2. Dados guardados na conta</h2>
+    <p>Para disponibilizar as funcionalidades da conta, o Firestore pode guardar o identificador do utilizador, e-mail, nome de apresentação, fotografia de perfil, fornecedor de autenticação, data de criação e último acesso. Também guarda os favoritos e o histórico de utilização que escolher associar à sua conta.</p>
+    <h2>3. Processamento de ficheiros</h2>
+    <p>As ferramentas Image Resizer, Cortar Áudio e a versão atual do Compressor de PDF processam os ficheiros localmente no navegador. Os ficheiros selecionados não são enviados para os servidores da Nexauren por estas ferramentas. Os ficheiros e resultados permanecem no dispositivo até serem removidos ou até fechar a página, salvo cópias que descarregar.</p>
+    <h2>4. Serviços de terceiros</h2>
+    <p>A autenticação e o armazenamento da conta utilizam serviços Firebase/Google. O alojamento do site é disponibilizado através da infraestrutura configurada para o projeto. Estes fornecedores podem tratar dados técnicos necessários à prestação, segurança e funcionamento dos respetivos serviços, de acordo com as suas próprias políticas.</p>
+    <h2>5. Segurança e acesso</h2>
+    <p>As regras do Firestore limitam a leitura e escrita dos dados de conta ao utilizador autenticado correspondente. Nunca partilhe a sua palavra-passe. A Nexauren não solicita a sua palavra-passe do Google.</p>
+    <h2>6. Conservação e controlo</h2>
+    <p>Os dados da conta permanecem armazenados enquanto a conta e as funcionalidades associadas forem mantidas. Para solicitar correção ou eliminação de dados, contacte-nos através do endereço indicado abaixo. A eliminação pode exigir a confirmação da titularidade da conta.</p>
+    <h2>7. Contacto</h2>
+    <p>Para questões sobre privacidade ou dados da conta, escreva para <a href="mailto:contact@nexaurenstory.com">contact@nexaurenstory.com</a>.</p>
+    <p class="legal-disclaimer">Esta política descreve a configuração atual da plataforma e deve ser revista antes de utilização comercial em diferentes jurisdições. A publicação desta página não substitui aconselhamento jurídico.</p>
+  </main>
+  <SiteFooter/>
+</div>
+</SiteLayout>
