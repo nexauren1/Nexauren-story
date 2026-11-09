@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import AudioCutter from "../../components/AudioCutter";
+---
+<SiteLayout title="Cortar Áudio — Editor de áudio online | Nexauren" description="Selecione um trecho de um ficheiro de áudio, pré-visualize e exporte o resultado em WAV diretamente no navegador.">
+<div class="site-shell">
+  <SiteHeader/>
+  <main class="tool-page">
+    <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span>Áudio</span></div>
+    <header class="tool-page-header">
+      <div class="tool-title"><h1>Cortar Áudio</h1><p>Selecione o trecho do áudio e gere um novo ficheiro em segundos.</p></div>
+      <span class="tool-state"><i/> EM AÇÃO</span>
+    </header>
+    <AudioCutter client:load/>
+    <p class="tool-footer-note">Nexauren · Cortar Áudio · <a href="/privacy">Privacidade</a> · <a href="/terms">Termos de Uso</a></p>
+  </main>
+  <SiteFooter/>
+</div>
+</SiteLayout>
