@@ -10,7 +10,7 @@ import UniversalTool from "../../components/UniversalTool";
 import catalog from "../../data/toolCatalog.json";
 export function getStaticPaths() {
  const categories = catalog.categories.map((category) => ({ params:{category:category.id}, props:{pageType:"category",category,tools:catalog.tools.filter((tool)=>tool.category===category.id)} }));
- const toolPages = catalog.tools.filter((tool) => !["image-resizer", "pdf-compressor", "audio-cutter"].includes(tool.id)).map((tool) => ({ params:{category:tool.id}, props:{pageType:"tool",tool,category:catalog.categories.find((item)=>item.id===tool.category)} }));
+ const toolPages = catalog.tools.filter((tool) => !["image-resizer", "pdf-compressor", "audio-cutter", "audio-normalizer"].includes(tool.id)).map((tool) => ({ params:{category:tool.id}, props:{pageType:"tool",tool,category:catalog.categories.find((item)=>item.id===tool.category),tools:catalog.tools.filter((item)=>item.category===tool.category)} }));
  return [...categories,...toolPages];
 }
 const {pageType,category,tools,tool}=Astro.props;
