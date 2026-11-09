@@ -3,12 +3,33 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Achievements from "../components/Achievements";
-import catalog from "../data/toolCatalog.json";
-const featured=catalog.tools.filter((tool)=>tool.featured);
+import catalog from "../data/activeTools.json";
+const featured = catalog.tools.filter((tool) => tool.featured);
+const getCategory = (id) => catalog.categories.find((category) => category.id === id);
 ---
-<SiteLayout title="Destaques e conquistas — Nexauren" description="Explora ferramentas em destaque e acompanha as tuas conquistas na plataforma Nexauren.">
-<div class="site-shell"><SiteHeader/><main class="simple-page highlights-page">
-<div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / EXPLORER REWARDS</div><h1>Explora mais.<br/><span>Desbloqueia conquistas.</span></h1><p class="simple-lead">Experimenta ferramentas novas, acompanha o teu progresso e descobre funcionalidades que podem acelerar o teu trabalho.</p>
-<Achievements client:load/>
-<section class="home-section highlight-tools-section"><div class="home-section-heading"><div><span class="section-kicker">ESCOLHIDAS PELA EQUIPA</span><h2>Ferramentas em destaque</h2><p>Começa por estas ferramentas essenciais.</p></div><a class="home-section-link" href="/tools">Abrir catálogo ↗</a></div><div class="home-tool-grid">{featured.map((tool,index)=><a class="home-tool-card" href={"/tools/"+tool.id}><span class="tool-card-icon">{String(index+1).padStart(2,"0")}</span><span class="tool-card-kicker">{tool.category.toUpperCase()}</span><h3>{tool.name}</h3><p>{tool.description}</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>)}</div></section>
-</main><SiteFooter/></div></SiteLayout>
+<SiteLayout title="Destaques e conquistas — Nexauren" description="Explora as ferramentas activas em destaque e acompanha as tuas conquistas na plataforma Nexauren.">
+<div class="site-shell">
+  <SiteHeader />
+  <main class="nx-highlights-page">
+    <header class="nx-page-heading">
+      <span class="nx-overline"><i></i> NEXAUREN / DESTAQUES</span>
+      <h1>Descobre novas formas<br /><span>de fazer mais.</span></h1>
+      <p>Experimenta as ferramentas em destaque e acompanha o teu progresso na plataforma.</p>
+    </header>
+    <Achievements client:load />
+    <section class="nx-section">
+      <div class="nx-section-heading"><div><span class="nx-section-label">SELECÇÃO NEXAUREN</span><h2>Ferramentas em destaque</h2><p>Atalhos para funções que já podes utilizar.</p></div><a class="nx-text-link" href="/tools">Abrir catálogo <span>↗</span></a></div>
+      <div class="nx-tool-grid">
+        {featured.map((tool) => {
+          const category = getCategory(tool.category);
+          return <a class="nx-tool-card" href={tool.path} data-tone={category?.tone ?? "blue"}>
+            <div class="nx-tool-card-top"><span class="nx-tool-icon">{tool.icon}</span><span class="nx-tool-category">{category?.name}</span></div>
+            <h3>{tool.name}</h3><p>{tool.description}</p><span class="nx-tool-card-action">Abrir ferramenta <b>↗</b></span>
+          </a>;
+        })}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</div>
+</SiteLayout>

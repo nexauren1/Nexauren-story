@@ -1,0 +1,19 @@
+{
+  "categories": [
+    {"id":"image","name":"Imagem","description":"Redimensiona, comprime, converte e recorta imagens.","icon":"◈","tone":"blue"},
+    {"id":"pdf","name":"PDF","description":"Organiza, optimiza e prepara documentos PDF.","icon":"▤","tone":"rose"},
+    {"id":"text","name":"Texto","description":"Conta, transforma e organiza texto num só espaço.","icon":"Aa","tone":"green"},
+    {"id":"audio","name":"Áudio","description":"Corta e normaliza ficheiros de áudio.","icon":"♫","tone":"violet"}
+  ],
+  "tools": [
+    {"id":"image-resizer","name":"Redimensionar imagem","description":"Ajusta dimensões, proporção, formato e qualidade. Também permite comprimir e converter JPG, PNG e WebP.","category":"image","path":"/tools/image-resizer","icon":"↔","featured":true},
+    {"id":"image-cropper","name":"Cortar imagem","description":"Escolhe a área exacta da imagem e exporta o recorte em PNG, JPG ou WebP.","category":"image","path":"/tools/image-cropper","icon":"⌗","featured":true},
+    {"id":"pdf-compressor","name":"Comprimir PDF","description":"Optimiza a estrutura do documento no navegador. A redução do tamanho depende do conteúdo do PDF.","category":"pdf","path":"/tools/pdf-compressor","icon":"PDF","featured":true},
+    {"id":"pdf-merger","name":"Juntar PDFs","description":"Combina vários documentos num único ficheiro e mantém a ordem escolhida.","category":"pdf","path":"/tools/pdf-merger","icon":"＋","featured":true},
+    {"id":"pdf-splitter","name":"Extrair páginas PDF","description":"Selecciona páginas ou intervalos e cria um novo documento PDF.","category":"pdf","path":"/tools/pdf-splitter","icon":"⇥","featured":false},
+    {"id":"pdf-rotator","name":"Rodar PDF","description":"Corrige a orientação de todas as páginas ou de uma página específica.","category":"pdf","path":"/tools/pdf-rotator","icon":"↻","featured":false},
+    {"id":"text-toolbox","name":"Caixa de ferramentas de texto","description":"Conta palavras e caracteres, altera maiúsculas e minúsculas e organiza linhas.","category":"text","path":"/tools/text-toolbox","icon":"T","featured":true},
+    {"id":"audio-cutter","name":"Cortar áudio","description":"Escolhe um intervalo, pré-visualiza o excerto e exporta o resultado em WAV.","category":"audio","path":"/tools/audio-cutter","icon":"◖","featured":true},
+    {"id":"audio-normalizer","name":"Normalizar volume","description":"Analisa o nível de pico e ajusta o volume antes de exportar para WAV.","category":"audio","path":"/tools/audio-normalizer","icon":"≋","featured":false}
+  ]
+}

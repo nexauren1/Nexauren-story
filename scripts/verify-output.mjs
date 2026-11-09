@@ -1,9 +1,37 @@
 import { readFile } from "node:fs/promises";
-const catalog = JSON.parse(await readFile("src/data/toolCatalog.json", "utf8"));
+import { join } from "node:path";
+
+const site = "https://nexaurenstory.com";
+const active = JSON.parse(await readFile("src/data/activeTools.json", "utf8"));
 const sitemap = await readFile("dist/sitemap.xml", "utf8");
 const robots = await readFile("dist/robots.txt", "utf8");
-const missing = catalog.tools.filter((tool) => !sitemap.includes("https://nexaurenstory.com/tools/" + tool.id));
-if (missing.length) { console.error("Faltam URLs de ferramentas no sitemap:", missing.map((tool) => tool.id)); process.exit(1); }
-if (sitemap.includes("/nexauren-control")) { console.error("A rota administrativa não pode aparecer no sitemap."); process.exit(1); }
-if (!robots.includes("Disallow: /nexauren-control") || !robots.includes("Sitemap: https://nexaurenstory.com/sitemap.xml")) { console.error("O robots.txt não inclui as regras privadas e a referência do sitemap."); process.exit(1); }
-console.log("SEO verificado: 100 URLs de ferramentas no sitemap; painel privado excluído; robots.txt válido.");
+const toolsPage = await readFile("dist/tools/index.html", "utf8");
+
+const errors = [];
+for (const tool of active.tools) {
+  const output = join("dist", tool.path.replace(/^\/+/, ""), "index.html");
+  try {
+    const html = await readFile(output, "utf8");
+    if (!html.includes("<title>") || !html.includes(tool.name)) errors.push("Página sem título/conteúdo esperado: " + tool.path);
+    if (!sitemap.includes(site + tool.path)) errors.push("Página ausente no sitemap: " + tool.path);
+    if (!toolsPage.includes('href="' + tool.path + '"')) errors.push("Ferramenta ausente do catálogo público: " + tool.path);
+  } catch {
+    errors.push("Página não foi gerada: " + tool.path);
+  }
+}
+for (const category of active.categories) {
+  const output = join("dist", "tools", category.id, "index.html");
+  try { await readFile(output, "utf8"); }
+  catch { errors.push("Página de categoria não foi gerada: /tools/" + category.id); }
+}
+if (sitemap.includes("/nexauren-control")) errors.push("O painel privado apareceu no sitemap.");
+if (!robots.includes("Disallow: /nexauren-control")) errors.push("robots.txt não bloqueia o painel privado.");
+if (!robots.includes("Sitemap: " + site + "/sitemap.xml")) errors.push("robots.txt não referencia o sitemap correcto.");
+
+if (errors.length) {
+  console.error("Verificação do site falhou:");
+  for (const error of errors) console.error(" - " + error);
+  process.exit(1);
+}
+console.log("Site verificado: " + active.tools.length + " páginas de ferramentas geradas, listadas e presentes no sitemap.");
+console.log("Categorias verificadas: " + active.categories.length + ". robots.txt e exclusão do painel privado válidos.");

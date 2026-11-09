@@ -2,20 +2,90 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import catalog from "../data/toolCatalog.json";
+import catalog from "../data/activeTools.json";
 const initialQuery = Astro.url.searchParams.get("q") ?? "";
 ---
-<SiteLayout title="100 ferramentas online gratuitas — Nexauren" description="Explora 100 ferramentas online em 10 categorias: imagem, PDF, texto, áudio, conversores, geradores, calculadoras, programação, cores e datas.">
-<div class="site-shell"><SiteHeader/><main class="simple-page tools-catalog-page">
-<div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / CENTRAL DE FERRAMENTAS</div>
-<h1>Uma plataforma.<br/><span>100 ferramentas para criar e resolver.</span></h1><p class="simple-lead">Pesquisa uma função, escolhe uma categoria e abre um espaço de trabalho próprio. Os ficheiros são processados no teu dispositivo sempre que tecnicamente possível.</p>
-<div class="catalog-search"><span>⌕</span><input id="catalog-search" type="search" value={initialQuery} placeholder="Pesquisar por nome, função ou categoria…" aria-label="Pesquisar ferramentas"/><kbd>100 TOOLS</kbd></div>
-<div class="catalog-category-pills">{catalog.categories.map((category)=><a href={"/tools/"+category.id}>{category.name}<b>{catalog.tools.filter((tool)=>tool.category===category.id).length}</b></a>)}</div>
-<div class="catalog-results-heading"><div><span class="section-kicker">BIBLIOTECA COMPLETA</span><h2>Todas as ferramentas</h2></div><span id="catalog-count">100 ferramentas</span></div>
-{catalog.categories.map((category)=><section class="catalog-section" data-catalog-section={category.id}><div class="catalog-section-heading"><div><span class="catalog-section-icon">{category.icon}</span><div><h3>{category.name}</h3><p>{category.description}</p></div></div><a href={"/tools/"+category.id}>Ver categoria ↗</a></div><div class="tool-list-grid tool-list-grid-premium">{catalog.tools.filter((tool)=>tool.category===category.id).map((tool)=><a class="tool-list-card" data-tool-card data-search={(tool.name+" "+tool.description+" "+category.name).toLowerCase()} href={"/tools/"+tool.id}><span class="tool-list-icon">{category.icon}</span><span><b>{tool.name}</b><small>{tool.description}</small></span><i>↗</i></a>)}</div></section>)}
-<p id="catalog-empty" class="catalog-empty" hidden>Não encontrámos ferramentas com essa pesquisa.</p></main><SiteFooter/></div>
+<SiteLayout title="Todas as ferramentas online — Nexauren" description="Explora as ferramentas online Nexauren para imagem, PDF, texto e áudio. Cada ferramenta tem uma página e uma função próprias.">
+<div class="site-shell">
+  <SiteHeader />
+  <main class="nx-catalog-page">
+    <header class="nx-page-heading">
+      <span class="nx-overline"><i></i> CENTRAL DE FERRAMENTAS</span>
+      <h1>Encontra a ferramenta<br /><span>certa para cada tarefa.</span></h1>
+      <p>Pesquisa pelo nome ou pela função. Cada cartão abre uma ferramenta com controlos próprios e uma página dedicada.</p>
+      <div class="nx-catalog-meta"><span><b>{catalog.tools.length}</b> ferramentas activas</span><span class="nx-meta-dot"></span><span><b>{catalog.categories.length}</b> categorias</span></div>
+    </header>
+    <section class="nx-catalog-controls" aria-label="Pesquisar ferramentas">
+      <label class="nx-search-box">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+        <input id="catalog-search" type="search" value={initialQuery} placeholder="Pesquisar ferramenta, formato ou tarefa…" aria-label="Pesquisar ferramentas" autocomplete="off" />
+        <button id="catalog-clear" type="button" aria-label="Limpar pesquisa" hidden>Limpar</button>
+      </label>
+      <div class="nx-catalog-categories" aria-label="Filtrar por categoria">
+        <a class="is-selected" href="#todas" data-category-filter="all">Todas <b>{catalog.tools.length}</b></a>
+        {catalog.categories.map((category) => <a href={"#"+category.id} data-category-filter={category.id}>{category.name} <b>{catalog.tools.filter((tool) => tool.category === category.id).length}</b></a>)}
+      </div>
+    </section>
+    <div class="nx-catalog-results-heading" id="todas"><div><span class="nx-section-label">CATÁLOGO NEXAUREN</span><h2>Todas as ferramentas</h2></div><span id="catalog-count">{catalog.tools.length} ferramentas</span></div>
+    {catalog.categories.map((category) => {
+      const tools = catalog.tools.filter((tool) => tool.category === category.id);
+      return (
+        <section class="nx-catalog-section nx-reveal" id={category.id} data-catalog-section={category.id}>
+          <div class="nx-catalog-section-heading">
+            <div class="nx-catalog-section-title">
+              <span class="nx-category-icon" data-tone={category.tone}>{category.icon}</span>
+              <div><h2>{category.name}</h2><p>{category.description}</p></div>
+            </div>
+            <span class="nx-section-total">{tools.length.toString().padStart(2, "0")} ferramentas</span>
+          </div>
+          <div class="nx-tool-grid">
+            {tools.map((tool) => (
+              <a class="nx-tool-card" data-tool-card data-category={category.id} data-search={(tool.name + " " + tool.description + " " + category.name).toLocaleLowerCase()} href={tool.path} data-tone={category.tone}>
+                <div class="nx-tool-card-top"><span class="nx-tool-icon">{tool.icon}</span><span class="nx-tool-category">{category.name}</span></div>
+                <h3>{tool.name}</h3><p>{tool.description}</p>
+                <span class="nx-tool-card-action">Abrir ferramenta <b>↗</b></span>
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+    <p id="catalog-empty" class="nx-empty-state" hidden>Não encontrámos ferramentas para essa pesquisa. Experimenta outro nome ou categoria.</p>
+    <div class="nx-catalog-footnote"><span>◈</span> Só aparecem aqui ferramentas com páginas dedicadas e funções disponíveis.</div>
+  </main>
+  <SiteFooter />
+</div>
 <script>
-const search=document.querySelector("#catalog-search");const cards=[...document.querySelectorAll("[data-tool-card]")];const sections=[...document.querySelectorAll("[data-catalog-section]")];const count=document.querySelector("#catalog-count");const empty=document.querySelector("#catalog-empty");
-function filterTools(){const query=(search?.value||"").trim().toLocaleLowerCase();let visible=0;cards.forEach((card)=>{const match=!query||(card.getAttribute("data-search")||"").includes(query);card.hidden=!match;if(match)visible++;});sections.forEach((section)=>{section.hidden=!section.querySelector("[data-tool-card]:not([hidden])");});if(count)count.textContent=visible+(visible===1?" ferramenta":" ferramentas");if(empty)empty.hidden=visible!==0;}
-search?.addEventListener("input",filterTools);filterTools();
-</script></SiteLayout>
+const search = document.querySelector("#catalog-search");
+const clear = document.querySelector("#catalog-clear");
+const cards = [...document.querySelectorAll("[data-tool-card]")];
+const sections = [...document.querySelectorAll("[data-catalog-section]")];
+const filters = [...document.querySelectorAll("[data-category-filter]")];
+const count = document.querySelector("#catalog-count");
+const empty = document.querySelector("#catalog-empty");
+let selectedCategory = "all";
+function filterTools() {
+  const query = (search?.value || "").trim().toLocaleLowerCase();
+  let visible = 0;
+  cards.forEach((card) => {
+    const matchesText = !query || (card.getAttribute("data-search") || "").includes(query);
+    const matchesCategory = selectedCategory === "all" || card.getAttribute("data-category") === selectedCategory;
+    const matches = matchesText && matchesCategory;
+    card.hidden = !matches;
+    if (matches) visible++;
+  });
+  sections.forEach((section) => { section.hidden = !section.querySelector("[data-tool-card]:not([hidden])"); });
+  if (count) count.textContent = visible + (visible === 1 ? " ferramenta" : " ferramentas");
+  if (empty) empty.hidden = visible !== 0;
+  if (clear) clear.hidden = !query;
+}
+search?.addEventListener("input", filterTools);
+clear?.addEventListener("click", () => { if (search) search.value = ""; search?.focus(); filterTools(); });
+filters.forEach((filter) => filter.addEventListener("click", () => {
+  selectedCategory = filter.getAttribute("data-category-filter") || "all";
+  filters.forEach((item) => item.classList.toggle("is-selected", item === filter));
+  filterTools();
+}));
+filterTools();
+</script>
+</SiteLayout>

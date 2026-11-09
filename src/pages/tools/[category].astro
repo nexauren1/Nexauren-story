@@ -2,33 +2,41 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
-import ImageResizer from "../../components/ImageResizer";
-import PDFCompressor from "../../components/PDFCompressor";
-import AudioCutter from "../../components/AudioCutter";
-import FavoriteButton from "../../components/FavoriteButton";
-import UniversalTool from "../../components/UniversalTool";
-import catalog from "../../data/toolCatalog.json";
+import catalog from "../../data/activeTools.json";
 export function getStaticPaths() {
- const categories = catalog.categories.map((category) => ({ params:{category:category.id}, props:{pageType:"category",category,tools:catalog.tools.filter((tool)=>tool.category===category.id)} }));
- const toolPages = catalog.tools.filter((tool) => !["image-resizer", "pdf-compressor", "audio-cutter", "audio-normalizer"].includes(tool.id)).map((tool) => ({ params:{category:tool.id}, props:{pageType:"tool",tool,category:catalog.categories.find((item)=>item.id===tool.category),tools:catalog.tools.filter((item)=>item.category===tool.category)} }));
- return [...categories,...toolPages];
+  return catalog.categories.map((category) => ({
+    params: { category: category.id },
+    props: { category, tools: catalog.tools.filter((tool) => tool.category === category.id) }
+  }));
 }
-const {pageType,category,tools,tool}=Astro.props;
-const isTool=pageType==="tool";
-const pageTitle=isTool?tool.name+" — Ferramenta online | Nexauren":category.name+" — Ferramentas online | Nexauren";
-const pageDescription=isTool?tool.description+" Processamento local e gratuito na Nexauren.":category.description+" Descobre todas as ferramentas disponíveis.";
+const { category, tools } = Astro.props;
 ---
-<SiteLayout title={pageTitle} description={pageDescription}>
-<div class="site-shell"><SiteHeader/>
-{isTool ? <main class="tool-page tool-page-premium">
- <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href={"/tools/"+category.id}>{category.name}</a><span>›</span><span>{tool.name}</span></div>
- <header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / {category.name.toUpperCase()}</span><h1>{tool.name}</h1><p>{tool.description}</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId={tool.id} title={tool.name} kind="tool" href={"/tools/"+tool.id}/></div></header>
- {tool.id==="image-resizer"?<ImageResizer client:load/>:tool.id==="pdf-compressor"?<PDFCompressor client:load/>:tool.id==="audio-cutter"?<AudioCutter client:load/>:<UniversalTool client:load toolId={tool.id} name={tool.name} category={category.name} description={tool.description} kind={tool.kind}/>}
- <section class="tool-trust-strip"><span>◈ Processamento no dispositivo</span><span>⌁ Sem instalação</span><span>↗ Ferramentas em evolução</span></section>
- <section class="tool-related"><div class="home-section-heading"><div><span class="section-kicker">CONTINUA A EXPLORAR</span><h2>Mais ferramentas de {category.name.toLowerCase()}</h2></div><a class="home-section-link" href={"/tools/"+category.id}>Ver categoria ↗</a></div><div class="related-tool-links">{tools.filter((item)=>item.id!==tool.id).slice(0,4).map((item)=><a href={"/tools/"+item.id}><span>{item.name}</span><b>↗</b></a>)}</div></section>
-</main> : <main class="simple-page category-landing tool-category-page">
- <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Todas as ferramentas</a><span>›</span><span>{category.name}</span></div>
- <div class="eyebrow"><span class="eyebrow-line"></span> {String(category.id).toUpperCase()} / {tools.length} FERRAMENTAS</div><h1>{category.name}.<br/><span>{category.description}</span></h1><p class="simple-lead">Escolhe uma ferramenta para abrir o seu espaço de trabalho dedicado. Cada função tem os seus próprios controlos e processamento.</p>
- <div class="category-tool-grid category-tool-grid-large">{tools.map((item,index)=><article class="category-tool-card"><div class="category-tool-top"><span class="category-tool-icon">{String(index+1).padStart(2,"0")}</span><span class="tool-availability is-ready">Disponível</span></div><h2>{item.name}</h2><p>{item.description}</p><a href={"/tools/"+item.id}>Abrir ferramenta <b>↗</b></a></article>)}</div><a class="back-to-tools" href="/tools">← Todas as categorias</a>
-</main>}
-<SiteFooter/></div></SiteLayout>
+<SiteLayout title={category.name + " — Ferramentas online | Nexauren"} description={category.description + " Explora " + tools.length + " ferramentas disponíveis na Nexauren."}>
+<div class="site-shell">
+  <SiteHeader />
+  <main class="nx-category-page">
+    <nav class="nx-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span aria-current="page">{category.name}</span></nav>
+    <header class="nx-page-heading nx-category-heading">
+      <span class="nx-overline"><i></i> CATEGORIA / {category.id.toUpperCase()}</span>
+      <span class="nx-category-large-icon" data-tone={category.tone}>{category.icon}</span>
+      <h1>{category.name}<span>.</span></h1>
+      <p>{category.description}</p>
+      <div class="nx-catalog-meta"><span><b>{tools.length}</b> ferramentas disponíveis</span><span class="nx-meta-dot"></span><a href="/tools">Ver todas as categorias ↗</a></div>
+    </header>
+    <section class="nx-category-tools">
+      <div class="nx-catalog-results-heading"><div><span class="nx-section-label">FERRAMENTAS DE {category.name.toUpperCase()}</span><h2>Escolhe por onde começar</h2></div><span>{tools.length.toString().padStart(2, "0")} disponíveis</span></div>
+      <div class="nx-tool-grid">
+        {tools.map((tool) => (
+          <a class="nx-tool-card" href={tool.path} data-tone={category.tone}>
+            <div class="nx-tool-card-top"><span class="nx-tool-icon">{tool.icon}</span><span class="nx-tool-category">{category.name}</span></div>
+            <h3>{tool.name}</h3><p>{tool.description}</p>
+            <span class="nx-tool-card-action">Abrir ferramenta <b>↗</b></span>
+          </a>
+        ))}
+      </div>
+    </section>
+    <a class="nx-back-link" href="/tools">← Voltar ao catálogo completo</a>
+  </main>
+  <SiteFooter />
+</div>
+</SiteLayout>

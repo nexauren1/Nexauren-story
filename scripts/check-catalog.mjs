@@ -1,9 +1,38 @@
-import { readFile } from "node:fs/promises";
-const catalog = JSON.parse(await readFile("src/data/toolCatalog.json", "utf8"));
-const ids = catalog.tools.map((tool) => tool.id);
-const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
-if (catalog.tools.length !== 100 || catalog.categories.length !== 10 || duplicates.length) {
-  console.error("Catálogo inválido:", { tools: catalog.tools.length, categories: catalog.categories.length, duplicates });
+import { readFile, access } from "node:fs/promises";
+
+const legacy = JSON.parse(await readFile("src/data/toolCatalog.json", "utf8"));
+const legacyIds = legacy.tools.map((tool) => tool.id);
+const duplicates = legacyIds.filter((id, index) => legacyIds.indexOf(id) !== index);
+if (legacy.tools.length !== 100 || legacy.categories.length !== 10 || duplicates.length) {
+  console.error("Catálogo interno inválido:", { tools: legacy.tools.length, categories: legacy.categories.length, duplicates });
   process.exit(1);
 }
-console.log("Catálogo validado: 100 ferramentas, 10 categorias, sem IDs repetidos.");
+
+const active = JSON.parse(await readFile("src/data/activeTools.json", "utf8"));
+const activeIds = active.tools.map((tool) => tool.id);
+const activePaths = active.tools.map((tool) => tool.path);
+const duplicateActiveIds = activeIds.filter((id, index) => activeIds.indexOf(id) !== index);
+const duplicatePaths = activePaths.filter((path, index) => activePaths.indexOf(path) !== index);
+const categoryIds = active.categories.map((category) => category.id);
+if (!active.tools.length || !active.categories.length || duplicateActiveIds.length || duplicatePaths.length) {
+  console.error("Catálogo público inválido:", { tools: active.tools.length, categories: active.categories.length, duplicateActiveIds, duplicatePaths });
+  process.exit(1);
+}
+for (const tool of active.tools) {
+  if (!categoryIds.includes(tool.category)) {
+    console.error("Categoria inexistente para a ferramenta:", tool.id, tool.category);
+    process.exit(1);
+  }
+  if (!/^\/tools\/[a-z0-9-]+$/.test(tool.path)) {
+    console.error("Endereço público inválido:", tool.id, tool.path);
+    process.exit(1);
+  }
+  try {
+    await access("src/pages" + tool.path + ".astro");
+  } catch {
+    console.error("A ferramenta não tem uma página dedicada:", tool.id, tool.path);
+    process.exit(1);
+  }
+}
+console.log("Catálogo validado: " + active.tools.length + " ferramentas públicas, " + active.categories.length + " categorias e todas com páginas Astro dedicadas.");
+console.log("Catálogo interno de experiências preservado: 100 definições; não são anunciadas como ferramentas públicas.");

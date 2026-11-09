@@ -1,36 +1,81 @@
 ---
 import "../styles/global.css";
+import "../styles/rebuild.css";
 const {title="Nexauren — Ferramentas online",description="Ferramentas online práticas para o teu dia a dia.",noIndex=false}=Astro.props;
 const canonical=new URL(Astro.url.pathname,"https://nexaurenstory.com").toString();
 const robots=noIndex?"noindex,nofollow":"index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
 const siteSchema={"@context":"https://schema.org","@type":"WebSite","name":"Nexauren","url":"https://nexaurenstory.com/","inLanguage":"pt","potentialAction":{"@type":"SearchAction","target":"https://nexaurenstory.com/tools/?q={search_term_string}","query-input":"required name=search_term_string"}};
 ---
 <!doctype html>
-<html lang="pt"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#0c1530"/>
-<meta name="description" content={description}/><meta name="robots" content={robots}/><meta name="author" content="Nexauren"/>
-<link rel="canonical" href={canonical}/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="manifest" href="/site.webmanifest"/>
-<meta name="apple-mobile-web-app-title" content="Nexauren"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Nexauren"/><meta property="og:locale" content="pt_PT"/>
-<meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:image" content="https://nexaurenstory.com/og-cover.svg"/>
-<meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content="https://nexaurenstory.com/og-cover.svg"/>
-<title>{title}</title><script type="application/ld+json" set:html={JSON.stringify(siteSchema)}></script>
-</head><body>
-<div class="site-ambient" aria-hidden="true"><span></span><span></span><span></span></div><div class="navigation-progress" data-navigation-progress></div><slot/>
-<script is:inline>
-(() => {
- const translations = {
-  pt:{"nav.tools":"Ferramentas","nav.highlights":"Destaques","nav.apps":"Aplicações","nav.blog":"Blog","nav.account":"Minha conta","home.explore":"Explorar ferramentas","home.search":"Pesquisar ferramenta…","tool.run":"Executar ferramenta","tool.copy":"Copiar texto","tool.reset":"Reiniciar ferramenta","tool.processing":"A processar…"},
-  en:{"nav.tools":"Tools","nav.highlights":"Highlights","nav.apps":"Apps","nav.blog":"Blog","nav.account":"My account","home.explore":"Explore tools","home.search":"Search a tool…","tool.run":"Run tool","tool.copy":"Copy text","tool.reset":"Reset tool","tool.processing":"Processing…"},
-  es:{"nav.tools":"Herramientas","nav.highlights":"Destacados","nav.apps":"Aplicaciones","nav.blog":"Blog","nav.account":"Mi cuenta","home.explore":"Explorar herramientas","home.search":"Buscar herramienta…","tool.run":"Ejecutar herramienta","tool.copy":"Copiar texto","tool.reset":"Reiniciar herramienta","tool.processing":"Procesando…"},
-  fr:{"nav.tools":"Outils","nav.highlights":"À la une","nav.apps":"Applications","nav.blog":"Blog","nav.account":"Mon compte","home.explore":"Explorer les outils","home.search":"Rechercher un outil…","tool.run":"Lancer l’outil","tool.copy":"Copier le texte","tool.reset":"Réinitialiser","tool.processing":"Traitement…"}
- };
- const applyLanguage=(locale)=>{const selected=translations[locale]?locale:"pt";document.documentElement.lang=selected;document.querySelectorAll("[data-i18n]").forEach((node)=>{const value=translations[selected][node.getAttribute("data-i18n")];if(value)node.textContent=value;});const select=document.querySelector("[data-language-select]");if(select&&select.value!==selected)select.value=selected;try{localStorage.setItem("nexauren:language",selected);}catch{}};
- let language="pt";try{language=localStorage.getItem("nexauren:language")||"pt";}catch{}applyLanguage(language);
- document.addEventListener("change",(event)=>{if(event.target.matches("[data-language-select]"))applyLanguage(event.target.value);});
- document.addEventListener("click",(event)=>{const target=event.target;const toggle=target.closest("[data-menu-toggle]");if(toggle){const menu=document.querySelector("[data-mobile-menu]");const open=menu?.classList.toggle("open")??false;toggle.setAttribute("aria-expanded",String(open));}
- if(target.closest("[data-mobile-menu] a")){document.querySelector("[data-mobile-menu]")?.classList.remove("open");document.querySelector("[data-menu-toggle]")?.setAttribute("aria-expanded","false");}
- const link=target.closest("a[href]");if(link&&link.origin===location.origin&&!link.hash&&!event.metaKey&&!event.ctrlKey&&!event.shiftKey){document.querySelector("[data-navigation-progress]")?.classList.add("is-loading");}});
- document.addEventListener("keydown",(event)=>{if(event.key==="Escape"){document.querySelector("[data-mobile-menu]")?.classList.remove("open");document.querySelector("[data-menu-toggle]")?.setAttribute("aria-expanded","false");}});
- if("IntersectionObserver" in window){const observer=new IntersectionObserver((entries)=>entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target);}}),{threshold:.08});document.querySelectorAll(".home-section,.category-tool-card,.editorial-card,.directory-card,.achievement-card").forEach((node)=>{node.classList.add("scroll-reveal");observer.observe(node);});}
-})();
-</script></body></html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#f5f7fc"/><meta name="color-scheme" content="light"/>
+  <meta name="description" content={description}/><meta name="robots" content={robots}/><meta name="author" content="Nexauren"/>
+  <link rel="canonical" href={canonical}/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="manifest" href="/site.webmanifest"/>
+  <meta name="apple-mobile-web-app-title" content="Nexauren"/>
+  <meta property="og:type" content="website"/><meta property="og:site_name" content="Nexauren"/><meta property="og:locale" content="pt_PT"/>
+  <meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:image" content="https://nexaurenstory.com/og-cover.svg"/>
+  <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content="https://nexaurenstory.com/og-cover.svg"/>
+  <title>{title}</title><script type="application/ld+json" set:html={JSON.stringify(siteSchema)}></script>
+</head>
+<body>
+  <div class="site-ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="navigation-progress" data-navigation-progress></div>
+  <slot/>
+  <script is:inline>
+  (() => {
+    const translations = {
+      pt:{"nav.tools":"Ferramentas","nav.highlights":"Destaques","nav.apps":"Aplicações","nav.blog":"Blog","nav.account":"Minha conta"},
+      en:{"nav.tools":"Tools","nav.highlights":"Highlights","nav.apps":"Apps","nav.blog":"Blog","nav.account":"My account"},
+      es:{"nav.tools":"Herramientas","nav.highlights":"Destacados","nav.apps":"Aplicaciones","nav.blog":"Blog","nav.account":"Mi cuenta"},
+      fr:{"nav.tools":"Outils","nav.highlights":"À la une","nav.apps":"Applications","nav.blog":"Blog","nav.account":"Mon compte"}
+    };
+    const applyLanguage=(locale)=>{
+      const selected=translations[locale]?locale:"pt";
+      document.documentElement.lang=selected;
+      document.querySelectorAll("[data-i18n]").forEach((node)=>{
+        const value=translations[selected][node.getAttribute("data-i18n")];
+        if(value)node.textContent=value;
+      });
+      try{localStorage.setItem("nexauren:language",selected);}catch{}
+    };
+    let language="pt";
+    try{language=localStorage.getItem("nexauren:language")||"pt";}catch{}
+    applyLanguage(language);
+    document.addEventListener("click",(event)=>{
+      const target=event.target;
+      const toggle=target.closest("[data-menu-toggle]");
+      if(toggle){
+        const menu=document.querySelector("[data-mobile-menu]");
+        const open=menu?.classList.toggle("open")??false;
+        toggle.setAttribute("aria-expanded",String(open));
+      }
+      if(target.closest("[data-mobile-menu] a")){
+        document.querySelector("[data-mobile-menu]")?.classList.remove("open");
+        document.querySelector("[data-menu-toggle]")?.setAttribute("aria-expanded","false");
+      }
+      const link=target.closest("a[href]");
+      if(link&&link.origin===location.origin&&!link.hash&&!event.metaKey&&!event.ctrlKey&&!event.shiftKey){
+        document.querySelector("[data-navigation-progress]")?.classList.add("is-loading");
+      }
+    });
+    document.addEventListener("keydown",(event)=>{
+      if(event.key==="Escape"){
+        document.querySelector("[data-mobile-menu]")?.classList.remove("open");
+        document.querySelector("[data-menu-toggle]")?.setAttribute("aria-expanded","false");
+      }
+    });
+    if("IntersectionObserver" in window){
+      const observer=new IntersectionObserver((entries)=>entries.forEach((entry)=>{
+        if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target);}
+      }),{threshold:.08});
+      document.querySelectorAll(".home-section,.category-tool-card,.editorial-card,.directory-card,.achievement-card,.nx-reveal").forEach((node)=>{
+        node.classList.add("scroll-reveal");
+        observer.observe(node);
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
