@@ -3,21 +3,12 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import TrackActivity from "../../components/TrackActivity";
+import FavoriteButton from "../../components/FavoriteButton";
 import ImageResizer from "../../components/ImageResizer";
 ---
-<SiteLayout title="Image Resizer — Redimensionar e comprimir imagens | Nexauren" description="Redimensione, comprima e converta imagens JPG, PNG e WebP diretamente no navegador.">
-<div class="site-shell">
-  <SiteHeader/>
-  <main class="tool-page">
-    <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span>Imagem</span></div>
-    <header class="tool-page-header">
-      <div class="tool-title"><h1>Image Resizer / Compressor de Imagem</h1><p>Redimensione e comprima imagens em segundos. Rápido, seguro e sem perder qualidade percetível.</p></div>
-      <span class="tool-state"><i/> EM AÇÃO</span>
-    </header>
-    <ImageResizer client:load/>
-    <p class="tool-footer-note">Nexauren · Image Resizer · <a href="/privacy">Privacidade</a> · <a href="/terms">Termos de Uso</a></p>
-  <TrackActivity client:load activityId="tool-image-studio" activityTitle="Usou o Image Studio para redimensionar ou converter imagens"/>
-    </main>
-  <SiteFooter/>
-</div>
-</SiteLayout>
+<SiteLayout title="Redimensionar imagem — Compressor e conversor JPG, PNG, WebP | Nexauren" description="Redimensiona, comprime e converte imagens JPG, PNG e WebP diretamente no navegador com controlos de dimensão e qualidade.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/image">Imagem</a><span>›</span><span>Redimensionar imagem</span></div>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / IMAGE LAB</span><h1>Redimensionar imagem</h1><p>Controla dimensões, proporção, qualidade e formato de exportação num espaço de trabalho dedicado.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="image-resizer" title="Redimensionar imagem" kind="tool" href="/tools/image-resizer"/></div></header>
+<ImageResizer client:load/><TrackActivity client:load activityId="image-resizer" activityTitle="Usou Redimensionar imagem"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ JPG · PNG · WebP</span></section></main><SiteFooter/></div></SiteLayout>

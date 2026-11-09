@@ -3,21 +3,12 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import TrackActivity from "../../components/TrackActivity";
+import FavoriteButton from "../../components/FavoriteButton";
 import AudioCutter from "../../components/AudioCutter";
 ---
-<SiteLayout title="Cortar Áudio — Editor de áudio online | Nexauren" description="Selecione um trecho de um ficheiro de áudio, pré-visualize e exporte o resultado em WAV diretamente no navegador.">
-<div class="site-shell">
-  <SiteHeader/>
-  <main class="tool-page">
-    <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span>Áudio</span></div>
-    <header class="tool-page-header">
-      <div class="tool-title"><h1>Cortar Áudio</h1><p>Selecione o trecho do áudio e gere um novo ficheiro em segundos.</p></div>
-      <span class="tool-state"><i/> EM AÇÃO</span>
-    </header>
-    <AudioCutter client:load/>
-    <p class="tool-footer-note">Nexauren · Cortar Áudio · <a href="/privacy">Privacidade</a> · <a href="/terms">Termos de Uso</a></p>
-  <TrackActivity client:load activityId="tool-audio-cutter" activityTitle="Cortou um ficheiro de áudio"/>
-    </main>
-  <SiteFooter/>
-</div>
-</SiteLayout>
+<SiteLayout title="Cortar áudio — Editor e extrator de trechos MP3, WAV | Nexauren" description="Seleciona e pré-visualiza um trecho de áudio e exporta WAV no navegador, com controlo preciso do início e fim.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/audio">Áudio</a><span>›</span><span>Cortar áudio</span></div>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / AUDIO LAB</span><h1>Cortar áudio</h1><p>Seleciona o início e o fim, ouve o intervalo e exporta o excerto em WAV.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="audio-cutter" title="Cortar áudio" kind="tool" href="/tools/audio-cutter"/></div></header>
+<AudioCutter client:load/><TrackActivity client:load activityId="audio-cutter" activityTitle="Usou Cortar áudio"/>
+<section class="tool-trust-strip"><span>◈ Descodificação local</span><span>⌁ Pré-visualização</span><span>↗ Exportação WAV</span></section></main><SiteFooter/></div></SiteLayout>

@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Achievements from "../components/Achievements";
+import catalog from "../data/toolCatalog.json";
+const featured=catalog.tools.filter((tool)=>tool.featured);
+---
+<SiteLayout title="Destaques e conquistas — Nexauren" description="Explora ferramentas em destaque e acompanha as tuas conquistas na plataforma Nexauren.">
+<div class="site-shell"><SiteHeader/><main class="simple-page highlights-page">
+<div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / EXPLORER REWARDS</div><h1>Explora mais.<br/><span>Desbloqueia conquistas.</span></h1><p class="simple-lead">Experimenta ferramentas novas, acompanha o teu progresso e descobre funcionalidades que podem acelerar o teu trabalho.</p>
+<Achievements client:load/>
+<section class="home-section highlight-tools-section"><div class="home-section-heading"><div><span class="section-kicker">ESCOLHIDAS PELA EQUIPA</span><h2>Ferramentas em destaque</h2><p>Começa por estas ferramentas essenciais.</p></div><a class="home-section-link" href="/tools">Abrir catálogo ↗</a></div><div class="home-tool-grid">{featured.map((tool,index)=><a class="home-tool-card" href={"/tools/"+tool.id}><span class="tool-card-icon">{String(index+1).padStart(2,"0")}</span><span class="tool-card-kicker">{tool.category.toUpperCase()}</span><h3>{tool.name}</h3><p>{tool.description}</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>)}</div></section>
+</main><SiteFooter/></div></SiteLayout>

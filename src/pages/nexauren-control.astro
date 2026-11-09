@@ -1,0 +1,10 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import BlogAdmin from "../components/BlogAdmin";
+---
+<SiteLayout title="Nexauren CMS — Painel editorial" description="Painel privado de gestão e publicação de artigos." noIndex={true}>
+<div class="site-shell"><SiteHeader/><main class="simple-page admin-page">
+<div class="eyebrow"><span class="eyebrow-line"></span> PRIVATE WORKSPACE / CMS</div><h1>Editorial <span>control.</span></h1><p class="simple-lead">Área privada para preparar, otimizar e publicar artigos no blog Nexauren.</p><BlogAdmin client:load/>
+</main><SiteFooter/></div></SiteLayout>

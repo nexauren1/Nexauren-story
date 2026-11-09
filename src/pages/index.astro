@@ -2,66 +2,16 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import catalog from "../data/toolCatalog.json";
+const featured=catalog.tools.filter((tool)=>tool.featured);
 ---
-<SiteLayout title="Nexauren — Ferramentas digitais, num só espaço" description="Ferramentas gratuitas para imagem, PDF, texto e áudio. Redimensiona, corta, combina, extrai páginas e transforma ficheiros diretamente no teu dispositivo.">
-<div class="site-shell">
-  <SiteHeader/>
-  <main class="home-premium">
-    <section class="home-hero">
-      <div class="home-hero-copy">
-        <div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN DIGITAL WORKSPACE</div>
-        <h1>Resolve mais.<br/><span>Com menos passos.</span></h1>
-        <p>Um espaço digital para trabalhar com os teus ficheiros. Ferramentas práticas, processamento no navegador e uma experiência organizada para cada tarefa.</p>
-        <div class="home-hero-actions"><a class="home-primary-cta" href="/tools">Explorar ferramentas <b>↗</b></a><a class="home-secondary-cta" href="/apps">Conhecer aplicações <span>→</span></a></div>
-        <div class="home-proof-row"><span><i/> Sem instalar programas</span><span><i/> Ficheiros no teu dispositivo</span></div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-visual-glow"></div>
-        <div class="hero-visual-top"><span>WORKSPACE / 01</span><span class="hero-live"><i/> ONLINE</span></div>
-        <div class="hero-visual-orbit"><div class="orbit-ring orbit-one"></div><div class="orbit-ring orbit-two"></div><div class="orbit-core">N.</div><span class="orbit-chip chip-image">▧ IMAGEM</span><span class="orbit-chip chip-pdf">PDF</span><span class="orbit-chip chip-audio">♫ ÁUDIO</span><span class="orbit-chip chip-text">Aa TEXTO</span></div>
-        <div class="hero-visual-bottom"><span>FERRAMENTAS INTEGRADAS</span><strong>Um único espaço. Muitas soluções.</strong></div>
-      </div>
-    </section>
-
-    <section class="home-stats">
-      <div><strong>10+</strong><span>operações disponíveis</span></div>
-      <div><strong>04</strong><span>áreas especializadas</span></div>
-      <div><strong>Local</strong><span>processamento no navegador</span></div>
-      <div><strong>Cloud</strong><span>conta e favoritos sincronizados</span></div>
-    </section>
-
-    <section class="home-section">
-      <div class="home-section-heading"><div><span class="section-kicker">01 / FERRAMENTAS</span><h2>O que precisas de fazer?</h2><p>Entra diretamente na ferramenta. Cada operação tem o seu próprio espaço de trabalho.</p></div><a href="/tools" class="home-section-link">Ver todas as ferramentas <b>↗</b></a></div>
-      <div class="home-tool-grid">
-        <a class="home-tool-card featured-tool-card" href="/tools/image-resizer"><span class="tool-card-icon image-card-icon">↔</span><span class="tool-card-kicker">IMAGEM · 01</span><h3>Redimensionar e converter</h3><p>Ajusta dimensões, qualidade e formato de imagens JPG, PNG e WebP.</p><span class="tool-card-bottom">Abrir Image Studio <b>↗</b></span></a>
-        <a class="home-tool-card" href="/tools/image-cropper"><span class="tool-card-icon image-card-icon">▧</span><span class="tool-card-kicker">IMAGEM · 02</span><h3>Cortar imagem</h3><p>Define coordenadas e cria um recorte preciso para cada utilização.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
-        <a class="home-tool-card" href="/tools/pdf-compressor"><span class="tool-card-icon pdf-card-icon">PDF</span><span class="tool-card-kicker">DOCUMENTOS · 03</span><h3>Otimizar PDF</h3><p>Reestrutura documentos e prepara uma versão otimizada para partilhar.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
-        <a class="home-tool-card" href="/tools/pdf-merger"><span class="tool-card-icon pdf-card-icon">＋</span><span class="tool-card-kicker">DOCUMENTOS · 04</span><h3>Juntar PDFs</h3><p>Combina vários ficheiros num único documento, respeitando a ordem.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
-        <a class="home-tool-card" href="/tools/pdf-splitter"><span class="tool-card-icon pdf-card-icon">⇱</span><span class="tool-card-kicker">DOCUMENTOS · 05</span><h3>Extrair páginas</h3><p>Escolhe intervalos específicos e cria um novo PDF com as páginas pretendidas.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
-        <a class="home-tool-card" href="/tools/pdf-rotator"><span class="tool-card-icon pdf-card-icon">↻</span><span class="tool-card-kicker">DOCUMENTOS · 06</span><h3>Rodar PDF</h3><p>Corrige a orientação de todas as páginas ou apenas de uma página.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
-        <a class="home-tool-card" href="/tools/text-toolbox"><span class="tool-card-icon text-card-icon">Aa</span><span class="tool-card-kicker">TEXTO · 07</span><h3>Caixa de ferramentas de texto</h3><p>Conta, limpa, ordena, inverte e transforma texto com um só painel.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
-        <a class="home-tool-card" href="/tools/audio-cutter"><span class="tool-card-icon audio-card-icon">♫</span><span class="tool-card-kicker">ÁUDIO · 08</span><h3>Cortar áudio</h3><p>Seleciona um intervalo, ouve o excerto e exporta para WAV.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
-        <a class="home-tool-card" href="/tools/audio-normalizer"><span class="tool-card-icon audio-card-icon">≋</span><span class="tool-card-kicker">ÁUDIO · 09</span><h3>Normalizar volume</h3><p>Analisa o pico de áudio e ajusta o nível de saída com controlo.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
-      </div>
-    </section>
-
-    <section class="home-category-band">
-      <div class="home-section-heading"><div><span class="section-kicker">02 / EXPLORAR POR ÁREA</span><h2>Quatro áreas. Uma experiência.</h2><p>Organização clara para chegares mais depressa ao que procuras.</p></div></div>
-      <div class="home-category-grid">
-        <a href="/tools/image"><span class="home-category-symbol image-card-icon">▧</span><span><b>Imagem</b><small>Redimensionar · Cortar · Converter</small></span><b class="category-arrow">↗</b></a>
-        <a href="/tools/pdf"><span class="home-category-symbol pdf-card-icon">PDF</span><span><b>PDF</b><small>Otimizar · Juntar · Dividir · Rodar</small></span><b class="category-arrow">↗</b></a>
-        <a href="/tools/text"><span class="home-category-symbol text-card-icon">Aa</span><span><b>Texto</b><small>Contar · Limpar · Ordenar · Formatar</small></span><b class="category-arrow">↗</b></a>
-        <a href="/tools/audio"><span class="home-category-symbol audio-card-icon">♫</span><span><b>Áudio</b><small>Cortar · Pré-visualizar · Normalizar</small></span><b class="category-arrow">↗</b></a>
-      </div>
-    </section>
-
-    <section class="home-security">
-      <div class="security-visual"><div class="security-ring">⌑</div><span>LOCAL-FIRST</span></div>
-      <div><span class="section-kicker">03 / PRIVACIDADE E CONTROLO</span><h2>Os teus ficheiros ficam contigo.</h2><p>As ferramentas de imagem, PDF, texto e áudio desta área executam o processamento no navegador. Os ficheiros selecionados não são enviados para um servidor da Nexauren.</p><a href="/privacy">Ler a política de privacidade <b>↗</b></a></div>
-    </section>
-
-    <section class="home-account-cta"><div><span class="section-kicker">04 / CONTA NEXAUREN</span><h2>Continua o teu trabalho<br/><span>em qualquer dispositivo.</span></h2><p>Entra com a mesma conta para manter favoritos e histórico sincronizados na cloud.</p></div><a href="/account">Abrir a minha conta <b>↗</b></a></section>
-  </main>
-  <SiteFooter/>
-</div>
-</SiteLayout>
+<SiteLayout title="Nexauren — 100 ferramentas online para criar, editar e resolver" description="Uma plataforma de ferramentas online em 10 categorias. Trabalha com imagens, PDFs, texto, áudio, conversões, código, cores, cálculos e datas.">
+<div class="site-shell"><SiteHeader/><main class="home-premium">
+<section class="home-hero home-hero-rebuilt"><div class="home-hero-copy"><div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN DIGITAL WORKSPACE <span class="hero-live"><i></i> 100 FERRAMENTAS</span></div><h1>O teu próximo<br/><span>trabalho começa aqui.</span></h1><p>Uma plataforma para transformar ficheiros, criar conteúdos, resolver cálculos e acelerar tarefas digitais. Ferramentas com identidade, controlos claros e motores de processamento dedicados.</p><div class="home-hero-actions"><a class="home-primary-cta" href="/tools">Explorar 100 ferramentas <b>↗</b></a><a class="home-secondary-cta" href="/highlights">Ver destaques e conquistas <span>→</span></a></div><div class="home-proof-row"><span><i></i> Processamento local sempre que possível</span><span><i></i> Sem instalação</span><span><i></i> 10 áreas de trabalho</span></div></div>
+<div class="hero-visual hero-visual-rebuilt" aria-label="Painel visual das ferramentas Nexauren"><div class="hero-visual-top"><span>NEXAUREN / WORKSPACE</span><span class="hero-live"><i></i> ONLINE</span></div><div class="hero-visual-glow"></div><div class="hero-visual-orbit"><span class="orbit-ring"></span><span class="orbit-ring orbit-two"></span><span class="orbit-core">N.</span><span class="orbit-chip chip-image">IMAGE LAB</span><span class="orbit-chip chip-pdf">PDF ENGINE</span><span class="orbit-chip chip-audio">AUDIO LAB</span><span class="orbit-chip chip-text">DATA TOOLS</span></div><div class="hero-terminal"><span><i></i><i></i><i></i> SYSTEM STATUS</span><b>10 MODULES LOADED</b><small>LOCAL PROCESSING · MULTI-TOOL WORKSPACE</small></div><div class="hero-visual-bottom"><span>01 / 10</span><strong>One platform. Many possibilities.</strong><span>BUILD · CREATE · TRANSFORM</span></div></div></section>
+<section class="home-stats home-stats-premium"><div><strong>100</strong><span>Ferramentas disponíveis</span></div><div><strong>10</strong><span>Categorias organizadas</span></div><div><strong>4</strong><span>Idiomas de interface</span></div><div><strong>24/7</strong><span>Acesso online</span></div></section>
+<section class="home-section"><div class="home-section-heading"><div><span class="section-kicker">01 / ESCOLHAS DA PLATAFORMA</span><h2>Começa pelos destaques.</h2><p>Atalhos para ferramentas essenciais e muito utilizadas.</p></div><a class="home-section-link" href="/highlights">Todos os destaques ↗</a></div><div class="home-tool-grid">{featured.slice(0,9).map((tool,index)=><a class="home-tool-card home-tool-card-premium" href={"/tools/"+tool.id}><span class="tool-card-icon image-card-icon">{String(index+1).padStart(2,"0")}</span><span class="tool-card-kicker">FEATURED TOOL / {tool.category.toUpperCase()}</span><h3>{tool.name}</h3><p>{tool.description}</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>)}</div></section>
+<section class="home-category-band home-category-band-premium"><div class="home-section-heading"><div><span class="section-kicker">02 / EXPLORAR POR ÁREA</span><h2>Um espaço para cada tarefa.</h2><p>Organização clara, sem misturar ferramentas de áreas diferentes.</p></div><a class="home-section-link" href="/tools">Abrir catálogo ↗</a></div><div class="home-category-grid">{catalog.categories.map((category)=><a href={"/tools/"+category.id}><span class="home-category-symbol">{category.icon}</span><span><b>{category.name}</b><small>{category.description}</small></span><span class="category-arrow">↗</span></a>)}</div></section>
+<section class="home-security home-security-rebuilt"><div class="security-visual"><span class="security-ring">◈</span><span>LOCAL-FIRST ENGINE</span></div><div><span class="section-kicker">03 / CONTROLO E PRIVACIDADE</span><h2>Os teus ficheiros ficam contigo.</h2><p>As ferramentas de imagem, PDF e áudio processam os ficheiros no navegador sempre que possível. Os favoritos e o histórico da conta são sincronizados através do Firebase quando inicias sessão.</p><a href="/account">Conhecer a conta sincronizada <b>↗</b></a></div></section>
+<section class="home-account-cta"><div><span class="section-kicker">04 / O TEU ESPAÇO</span><h2>Favoritos, atividade e <span>conquistas.</span></h2><p>Entra na tua conta para guardar ferramentas e acompanhar o que já exploraste.</p></div><a href="/account">Abrir a minha conta <b>↗</b></a></section>
+</main><SiteFooter/></div></SiteLayout>

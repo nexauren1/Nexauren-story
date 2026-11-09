@@ -2,17 +2,20 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import catalog from "../data/toolCatalog.json";
+const initialQuery = Astro.url.searchParams.get("q") ?? "";
 ---
-<SiteLayout title="Todas as ferramentas — Nexauren" description="Acede a ferramentas de imagem, PDF, texto e áudio. Cada ferramenta tem um espaço de trabalho dedicado.">
-<div class="site-shell"><SiteHeader/><main class="simple-page tools-directory">
-  <div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / TOOL CENTER</div>
-  <h1>Escolhe a tarefa.<br/><span>Entra no teu espaço de trabalho.</span></h1>
-  <p class="simple-lead">Ferramentas organizadas por área, com processamento visível e resultados prontos para guardar. Não precisas de instalar um programa.</p>
-  <section class="directory-grid">
-    <a class="directory-card" href="/tools/image"><span class="directory-icon icon-image">▧</span><span class="directory-number">01 / IMAGEM · 2 FERRAMENTAS</span><h2>Imagem</h2><p>Redimensiona, comprime, converte e corta imagens com controlo de dimensões e qualidade.</p><span class="directory-action">Explorar ferramentas <b>↗</b></span></a>
-    <a class="directory-card" href="/tools/pdf"><span class="directory-icon icon-pdf">PDF</span><span class="directory-number">02 / DOCUMENTOS · 4 FERRAMENTAS</span><h2>PDF</h2><p>Otimiza, combina documentos, extrai páginas e corrige a orientação.</p><span class="directory-action">Explorar ferramentas <b>↗</b></span></a>
-    <a class="directory-card" href="/tools/text"><span class="directory-icon icon-text">Aa</span><span class="directory-number">03 / TEXTO · 7 OPERAÇÕES</span><h2>Texto</h2><p>Conta palavras, limpa espaços, altera maiúsculas, ordena e organiza linhas.</p><span class="directory-action">Explorar ferramentas <b>↗</b></span></a>
-    <a class="directory-card" href="/tools/audio"><span class="directory-icon icon-audio">♫</span><span class="directory-number">04 / ÁUDIO · 2 FERRAMENTAS</span><h2>Áudio</h2><p>Corta trechos, visualiza a forma de onda e normaliza o volume.</p><span class="directory-action">Explorar ferramentas <b>↗</b></span></a>
-  </section>
-  <div class="directory-note"><strong>Processamento no dispositivo</strong><span>Os ficheiros são tratados no navegador. A Nexauren não recebe os documentos selecionados pelas ferramentas locais.</span></div>
-</main><SiteFooter/></div></SiteLayout>
+<SiteLayout title="100 ferramentas online gratuitas — Nexauren" description="Explora 100 ferramentas online em 10 categorias: imagem, PDF, texto, áudio, conversores, geradores, calculadoras, programação, cores e datas.">
+<div class="site-shell"><SiteHeader/><main class="simple-page tools-catalog-page">
+<div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / CENTRAL DE FERRAMENTAS</div>
+<h1>Uma plataforma.<br/><span>100 ferramentas para criar e resolver.</span></h1><p class="simple-lead">Pesquisa uma função, escolhe uma categoria e abre um espaço de trabalho próprio. Os ficheiros são processados no teu dispositivo sempre que tecnicamente possível.</p>
+<div class="catalog-search"><span>⌕</span><input id="catalog-search" type="search" value={initialQuery} placeholder="Pesquisar por nome, função ou categoria…" aria-label="Pesquisar ferramentas"/><kbd>100 TOOLS</kbd></div>
+<div class="catalog-category-pills">{catalog.categories.map((category)=><a href={"/tools/"+category.id}>{category.name}<b>{catalog.tools.filter((tool)=>tool.category===category.id).length}</b></a>)}</div>
+<div class="catalog-results-heading"><div><span class="section-kicker">BIBLIOTECA COMPLETA</span><h2>Todas as ferramentas</h2></div><span id="catalog-count">100 ferramentas</span></div>
+{catalog.categories.map((category)=><section class="catalog-section" data-catalog-section={category.id}><div class="catalog-section-heading"><div><span class="catalog-section-icon">{category.icon}</span><div><h3>{category.name}</h3><p>{category.description}</p></div></div><a href={"/tools/"+category.id}>Ver categoria ↗</a></div><div class="tool-list-grid tool-list-grid-premium">{catalog.tools.filter((tool)=>tool.category===category.id).map((tool)=><a class="tool-list-card" data-tool-card data-search={(tool.name+" "+tool.description+" "+category.name).toLowerCase()} href={"/tools/"+tool.id}><span class="tool-list-icon">{category.icon}</span><span><b>{tool.name}</b><small>{tool.description}</small></span><i>↗</i></a>)}</div></section>)}
+<p id="catalog-empty" class="catalog-empty" hidden>Não encontrámos ferramentas com essa pesquisa.</p></main><SiteFooter/></div>
+<script>
+const search=document.querySelector("#catalog-search");const cards=[...document.querySelectorAll("[data-tool-card]")];const sections=[...document.querySelectorAll("[data-catalog-section]")];const count=document.querySelector("#catalog-count");const empty=document.querySelector("#catalog-empty");
+function filterTools(){const query=(search?.value||"").trim().toLocaleLowerCase();let visible=0;cards.forEach((card)=>{const match=!query||(card.getAttribute("data-search")||"").includes(query);card.hidden=!match;if(match)visible++;});sections.forEach((section)=>{section.hidden=!section.querySelector("[data-tool-card]:not([hidden])");});if(count)count.textContent=visible+(visible===1?" ferramenta":" ferramentas");if(empty)empty.hidden=visible!==0;}
+search?.addEventListener("input",filterTools);filterTools();
+</script></SiteLayout>

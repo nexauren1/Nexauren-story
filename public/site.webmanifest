@@ -1,0 +1,16 @@
+{
+  "name": "Nexauren",
+  "short_name": "Nexauren",
+  "description": "Ferramentas digitais para criar, editar e resolver.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c1530",
+  "theme_color": "#0c1530",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

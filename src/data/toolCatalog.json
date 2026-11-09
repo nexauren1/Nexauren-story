@@ -1,0 +1,976 @@
+{
+  "categories": [
+    {
+      "id": "image",
+      "name": "Imagem",
+      "description": "Editar, redimensionar, otimizar e transformar imagens.",
+      "icon": "◈",
+      "color": "blue"
+    },
+    {
+      "id": "pdf",
+      "name": "PDF",
+      "description": "Combinar, dividir, organizar e preparar documentos.",
+      "icon": "▤",
+      "color": "red"
+    },
+    {
+      "id": "text",
+      "name": "Texto",
+      "description": "Escrever, limpar, contar e organizar conteúdo.",
+      "icon": "Aa",
+      "color": "green"
+    },
+    {
+      "id": "audio",
+      "name": "Áudio",
+      "description": "Cortar, analisar e ajustar ficheiros de som.",
+      "icon": "♫",
+      "color": "purple"
+    },
+    {
+      "id": "converters",
+      "name": "Conversores",
+      "description": "Converter dados, codificações e formatos comuns.",
+      "icon": "⇄",
+      "color": "cyan"
+    },
+    {
+      "id": "generators",
+      "name": "Geradores",
+      "description": "Criar identificadores, textos, códigos e recursos.",
+      "icon": "✧",
+      "color": "orange"
+    },
+    {
+      "id": "calculators",
+      "name": "Calculadoras",
+      "description": "Resolver cálculos úteis de forma rápida e clara.",
+      "icon": "∑",
+      "color": "indigo"
+    },
+    {
+      "id": "developer",
+      "name": "Programador",
+      "description": "Ferramentas práticas para código, dados e depuração.",
+      "icon": "</>",
+      "color": "slate"
+    },
+    {
+      "id": "colors",
+      "name": "Cores e design",
+      "description": "Criar paletas, verificar contraste e gerar estilos.",
+      "icon": "◉",
+      "color": "pink"
+    },
+    {
+      "id": "dates",
+      "name": "Data e tempo",
+      "description": "Calcular intervalos, datas, horas e calendários.",
+      "icon": "◷",
+      "color": "teal"
+    }
+  ],
+  "tools": [
+    {
+      "id": "image-resizer",
+      "name": "Redimensionar imagem",
+      "description": "Ajusta largura, altura, formato e qualidade.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-resizer",
+      "featured": true
+    },
+    {
+      "id": "image-crop",
+      "name": "Cortar imagem",
+      "description": "Extrai uma área precisa de uma imagem.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-crop",
+      "featured": false
+    },
+    {
+      "id": "image-compress",
+      "name": "Comprimir imagem",
+      "description": "Reduz o peso com controlo de qualidade.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-compress",
+      "featured": false
+    },
+    {
+      "id": "image-convert",
+      "name": "Converter imagem",
+      "description": "Exporta JPG, PNG ou WebP.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-convert",
+      "featured": false
+    },
+    {
+      "id": "image-rotate",
+      "name": "Rodar imagem",
+      "description": "Roda a imagem em incrementos de 90 graus.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-rotate",
+      "featured": false
+    },
+    {
+      "id": "image-flip",
+      "name": "Espelhar imagem",
+      "description": "Inverte na horizontal ou vertical.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-flip",
+      "featured": false
+    },
+    {
+      "id": "image-grayscale",
+      "name": "Preto e branco",
+      "description": "Aplica escala de cinzentos.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-grayscale",
+      "featured": false
+    },
+    {
+      "id": "image-invert",
+      "name": "Inverter cores",
+      "description": "Cria uma versão com cores invertidas.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-invert",
+      "featured": false
+    },
+    {
+      "id": "image-base64",
+      "name": "Imagem para Base64",
+      "description": "Gera uma representação Base64 da imagem.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-base64",
+      "featured": false
+    },
+    {
+      "id": "image-info",
+      "name": "Informações da imagem",
+      "description": "Consulta dimensões, formato e tamanho.",
+      "category": "image",
+      "kind": "image",
+      "operation": "image-info",
+      "featured": false
+    },
+    {
+      "id": "pdf-compressor",
+      "name": "Comprimir PDF",
+      "description": "Regrava e otimiza a estrutura interna do PDF.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-compressor",
+      "featured": true
+    },
+    {
+      "id": "pdf-merge",
+      "name": "Juntar PDF",
+      "description": "Combina vários documentos num só.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-merge",
+      "featured": true
+    },
+    {
+      "id": "pdf-split",
+      "name": "Extrair páginas PDF",
+      "description": "Cria um PDF com páginas selecionadas.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-split",
+      "featured": false
+    },
+    {
+      "id": "pdf-rotate",
+      "name": "Rodar páginas PDF",
+      "description": "Corrige a orientação de páginas.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-rotate",
+      "featured": false
+    },
+    {
+      "id": "pdf-page-count",
+      "name": "Contar páginas PDF",
+      "description": "Lê a quantidade de páginas e metadados.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-page-count",
+      "featured": false
+    },
+    {
+      "id": "pdf-remove-pages",
+      "name": "Remover páginas PDF",
+      "description": "Remove páginas escolhidas do documento.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-remove-pages",
+      "featured": false
+    },
+    {
+      "id": "pdf-reorder-pages",
+      "name": "Reordenar páginas PDF",
+      "description": "Define uma nova ordem para as páginas.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-reorder-pages",
+      "featured": false
+    },
+    {
+      "id": "pdf-duplicate-page",
+      "name": "Duplicar página PDF",
+      "description": "Insere uma cópia de uma página escolhida.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-duplicate-page",
+      "featured": false
+    },
+    {
+      "id": "pdf-metadata",
+      "name": "Ler metadados PDF",
+      "description": "Consulta título, autor e propriedades.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-metadata",
+      "featured": false
+    },
+    {
+      "id": "pdf-clean-metadata",
+      "name": "Limpar metadados PDF",
+      "description": "Remove metadados pessoais comuns.",
+      "category": "pdf",
+      "kind": "pdf",
+      "operation": "pdf-clean-metadata",
+      "featured": false
+    },
+    {
+      "id": "text-word-counter",
+      "name": "Contador de palavras",
+      "description": "Conta palavras, caracteres, linhas e parágrafos.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-word-counter",
+      "featured": true
+    },
+    {
+      "id": "text-character-counter",
+      "name": "Contador de caracteres",
+      "description": "Conta caracteres com e sem espaços.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-character-counter",
+      "featured": false
+    },
+    {
+      "id": "text-uppercase",
+      "name": "Converter para MAIÚSCULAS",
+      "description": "Transforma o texto em letras maiúsculas.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-uppercase",
+      "featured": false
+    },
+    {
+      "id": "text-lowercase",
+      "name": "Converter para minúsculas",
+      "description": "Transforma o texto em letras minúsculas.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-lowercase",
+      "featured": false
+    },
+    {
+      "id": "text-title-case",
+      "name": "Formato de título",
+      "description": "Capitaliza as palavras do texto.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-title-case",
+      "featured": false
+    },
+    {
+      "id": "text-clean-spaces",
+      "name": "Limpar espaços",
+      "description": "Remove espaços repetidos e linhas vazias.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-clean-spaces",
+      "featured": false
+    },
+    {
+      "id": "text-sort-lines",
+      "name": "Ordenar linhas",
+      "description": "Ordena linhas alfabeticamente.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-sort-lines",
+      "featured": false
+    },
+    {
+      "id": "text-unique-lines",
+      "name": "Remover linhas duplicadas",
+      "description": "Mantém apenas linhas únicas.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-unique-lines",
+      "featured": false
+    },
+    {
+      "id": "text-reverse-lines",
+      "name": "Inverter linhas",
+      "description": "Inverte a ordem das linhas.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-reverse-lines",
+      "featured": false
+    },
+    {
+      "id": "text-slug",
+      "name": "Criar URL amigável",
+      "description": "Transforma texto num slug para URL.",
+      "category": "text",
+      "kind": "text",
+      "operation": "text-slug",
+      "featured": false
+    },
+    {
+      "id": "audio-cutter",
+      "name": "Cortar áudio",
+      "description": "Seleciona o início e o fim e exporta WAV.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-cutter",
+      "featured": true
+    },
+    {
+      "id": "audio-normalizer",
+      "name": "Normalizar volume",
+      "description": "Ajusta o pico de volume do áudio.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-normalizer",
+      "featured": false
+    },
+    {
+      "id": "audio-trim-silence",
+      "name": "Remover silêncio",
+      "description": "Deteta e corta silêncio nas extremidades.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-trim-silence",
+      "featured": false
+    },
+    {
+      "id": "audio-volume",
+      "name": "Ajustar volume",
+      "description": "Amplifica ou reduz o nível do áudio.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-volume",
+      "featured": false
+    },
+    {
+      "id": "audio-fade-in",
+      "name": "Fade in",
+      "description": "Cria uma entrada gradual do som.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-fade-in",
+      "featured": false
+    },
+    {
+      "id": "audio-fade-out",
+      "name": "Fade out",
+      "description": "Cria uma saída gradual do som.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-fade-out",
+      "featured": false
+    },
+    {
+      "id": "audio-reverse",
+      "name": "Inverter áudio",
+      "description": "Reproduz o áudio ao contrário.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-reverse",
+      "featured": false
+    },
+    {
+      "id": "audio-speed",
+      "name": "Alterar velocidade",
+      "description": "Ajusta a velocidade de reprodução/exportação.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-speed",
+      "featured": false
+    },
+    {
+      "id": "audio-mono",
+      "name": "Converter para mono",
+      "description": "Mistura os canais num único canal.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-mono",
+      "featured": false
+    },
+    {
+      "id": "audio-info",
+      "name": "Informações de áudio",
+      "description": "Consulta duração, canais e frequência.",
+      "category": "audio",
+      "kind": "audio",
+      "operation": "audio-info",
+      "featured": false
+    },
+    {
+      "id": "base64-encode",
+      "name": "Texto para Base64",
+      "description": "Codifica texto em Base64 UTF-8.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "base64-encode",
+      "featured": false
+    },
+    {
+      "id": "base64-decode",
+      "name": "Base64 para texto",
+      "description": "Descodifica Base64 para texto.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "base64-decode",
+      "featured": false
+    },
+    {
+      "id": "url-encode",
+      "name": "Codificar URL",
+      "description": "Codifica caracteres para utilização em URLs.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "url-encode",
+      "featured": false
+    },
+    {
+      "id": "url-decode",
+      "name": "Descodificar URL",
+      "description": "Descodifica texto codificado para URL.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "url-decode",
+      "featured": false
+    },
+    {
+      "id": "html-escape",
+      "name": "Escapar HTML",
+      "description": "Converte caracteres especiais em entidades HTML.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "html-escape",
+      "featured": false
+    },
+    {
+      "id": "html-unescape",
+      "name": "Descodificar HTML",
+      "description": "Converte entidades HTML em texto.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "html-unescape",
+      "featured": false
+    },
+    {
+      "id": "csv-to-json",
+      "name": "CSV para JSON",
+      "description": "Converte linhas CSV em objetos JSON.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "csv-to-json",
+      "featured": false
+    },
+    {
+      "id": "json-to-csv",
+      "name": "JSON para CSV",
+      "description": "Converte uma lista de objetos em CSV.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "json-to-csv",
+      "featured": false
+    },
+    {
+      "id": "text-to-binary",
+      "name": "Texto para binário",
+      "description": "Converte texto UTF-8 em bits.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "text-to-binary",
+      "featured": false
+    },
+    {
+      "id": "binary-to-text",
+      "name": "Binário para texto",
+      "description": "Converte sequências binárias em texto.",
+      "category": "converters",
+      "kind": "converters",
+      "operation": "binary-to-text",
+      "featured": false
+    },
+    {
+      "id": "uuid-generator",
+      "name": "Gerador UUID",
+      "description": "Gera identificadores UUID aleatórios.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "uuid-generator",
+      "featured": false
+    },
+    {
+      "id": "password-generator",
+      "name": "Gerador de palavras-passe",
+      "description": "Cria palavras-passe aleatórias.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "password-generator",
+      "featured": true
+    },
+    {
+      "id": "sha256-generator",
+      "name": "Gerador SHA-256",
+      "description": "Calcula o resumo criptográfico SHA-256.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "sha256-generator",
+      "featured": false
+    },
+    {
+      "id": "lorem-generator",
+      "name": "Gerador Lorem Ipsum",
+      "description": "Gera texto de preenchimento.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "lorem-generator",
+      "featured": false
+    },
+    {
+      "id": "random-number-generator",
+      "name": "Gerador de números",
+      "description": "Gera sequências numéricas aleatórias.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "random-number-generator",
+      "featured": false
+    },
+    {
+      "id": "username-generator",
+      "name": "Gerador de nomes",
+      "description": "Sugere nomes de utilizador.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "username-generator",
+      "featured": false
+    },
+    {
+      "id": "hex-generator",
+      "name": "Gerador hexadecimal",
+      "description": "Cria sequências hexadecimais aleatórias.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "hex-generator",
+      "featured": false
+    },
+    {
+      "id": "css-gradient-generator",
+      "name": "Gerador de gradientes",
+      "description": "Cria código CSS de gradiente.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "css-gradient-generator",
+      "featured": false
+    },
+    {
+      "id": "html-starter-generator",
+      "name": "Gerador HTML",
+      "description": "Cria uma estrutura HTML inicial.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "html-starter-generator",
+      "featured": false
+    },
+    {
+      "id": "json-schema-generator",
+      "name": "Gerador de esquema JSON",
+      "description": "Infere um esquema simples a partir de JSON.",
+      "category": "generators",
+      "kind": "generators",
+      "operation": "json-schema-generator",
+      "featured": false
+    },
+    {
+      "id": "percentage-calculator",
+      "name": "Calculadora de percentagem",
+      "description": "Calcula percentagens de um valor.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "percentage-calculator",
+      "featured": false
+    },
+    {
+      "id": "percentage-change",
+      "name": "Variação percentual",
+      "description": "Calcula aumento ou redução percentual.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "percentage-change",
+      "featured": false
+    },
+    {
+      "id": "discount-calculator",
+      "name": "Calculadora de desconto",
+      "description": "Calcula preço final e poupança.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "discount-calculator",
+      "featured": false
+    },
+    {
+      "id": "vat-calculator",
+      "name": "Calculadora de IVA",
+      "description": "Calcula imposto e total.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "vat-calculator",
+      "featured": false
+    },
+    {
+      "id": "rule-of-three",
+      "name": "Regra de três",
+      "description": "Resolve proporções simples.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "rule-of-three",
+      "featured": false
+    },
+    {
+      "id": "average-calculator",
+      "name": "Calculadora de média",
+      "description": "Calcula a média de uma lista de números.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "average-calculator",
+      "featured": false
+    },
+    {
+      "id": "simple-interest",
+      "name": "Juros simples",
+      "description": "Calcula juros simples e montante.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "simple-interest",
+      "featured": false
+    },
+    {
+      "id": "compound-interest",
+      "name": "Juros compostos",
+      "description": "Projeta crescimento com capitalização.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "compound-interest",
+      "featured": false
+    },
+    {
+      "id": "bill-splitter",
+      "name": "Dividir conta",
+      "description": "Divide um valor por várias pessoas.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "bill-splitter",
+      "featured": false
+    },
+    {
+      "id": "unit-converter",
+      "name": "Conversor de unidades",
+      "description": "Converte distância, massa e temperatura.",
+      "category": "calculators",
+      "kind": "calculators",
+      "operation": "unit-converter",
+      "featured": false
+    },
+    {
+      "id": "json-formatter",
+      "name": "Formatador JSON",
+      "description": "Formata e valida JSON.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "json-formatter",
+      "featured": true
+    },
+    {
+      "id": "json-minifier",
+      "name": "Minificador JSON",
+      "description": "Remove espaços desnecessários de JSON.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "json-minifier",
+      "featured": false
+    },
+    {
+      "id": "json-validator",
+      "name": "Validador JSON",
+      "description": "Verifica a sintaxe JSON e aponta erros.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "json-validator",
+      "featured": false
+    },
+    {
+      "id": "jwt-decoder",
+      "name": "Descodificador JWT",
+      "description": "Lê o cabeçalho e payload de um JWT.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "jwt-decoder",
+      "featured": false
+    },
+    {
+      "id": "regex-tester",
+      "name": "Testador RegEx",
+      "description": "Testa uma expressão regular contra texto.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "regex-tester",
+      "featured": false
+    },
+    {
+      "id": "timestamp-converter",
+      "name": "Conversor Timestamp",
+      "description": "Converte Unix timestamp para data.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "timestamp-converter",
+      "featured": false
+    },
+    {
+      "id": "url-parser",
+      "name": "Analisador de URL",
+      "description": "Separa protocolo, domínio, caminho e parâmetros.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "url-parser",
+      "featured": false
+    },
+    {
+      "id": "html-preview-code",
+      "name": "Gerador de HTML seguro",
+      "description": "Escapa e apresenta código HTML como texto.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "html-preview-code",
+      "featured": false
+    },
+    {
+      "id": "css-minifier",
+      "name": "Minificador CSS",
+      "description": "Remove comentários e espaços CSS.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "css-minifier",
+      "featured": false
+    },
+    {
+      "id": "csv-validator",
+      "name": "Validador CSV",
+      "description": "Verifica consistência básica de colunas CSV.",
+      "category": "developer",
+      "kind": "developer",
+      "operation": "csv-validator",
+      "featured": false
+    },
+    {
+      "id": "hex-to-rgb",
+      "name": "HEX para RGB",
+      "description": "Converte códigos HEX em valores RGB.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "hex-to-rgb",
+      "featured": false
+    },
+    {
+      "id": "rgb-to-hex",
+      "name": "RGB para HEX",
+      "description": "Converte canais RGB em HEX.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "rgb-to-hex",
+      "featured": false
+    },
+    {
+      "id": "contrast-checker",
+      "name": "Verificador de contraste",
+      "description": "Calcula contraste entre duas cores.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "contrast-checker",
+      "featured": false
+    },
+    {
+      "id": "complementary-color",
+      "name": "Cor complementar",
+      "description": "Calcula a cor oposta no círculo cromático.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "complementary-color",
+      "featured": false
+    },
+    {
+      "id": "analogous-palette",
+      "name": "Paleta análoga",
+      "description": "Gera cores próximas no círculo cromático.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "analogous-palette",
+      "featured": false
+    },
+    {
+      "id": "gradient-css",
+      "name": "Gradiente CSS",
+      "description": "Gera um gradiente com duas ou mais cores.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "gradient-css",
+      "featured": false
+    },
+    {
+      "id": "color-mixer",
+      "name": "Misturador de cores",
+      "description": "Mistura duas cores.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "color-mixer",
+      "featured": false
+    },
+    {
+      "id": "random-color",
+      "name": "Cor aleatória",
+      "description": "Gera uma cor HEX aleatória.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "random-color",
+      "featured": false
+    },
+    {
+      "id": "alpha-color",
+      "name": "HEX com transparência",
+      "description": "Adiciona transparência a uma cor.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "alpha-color",
+      "featured": false
+    },
+    {
+      "id": "text-color-picker",
+      "name": "Cor de texto acessível",
+      "description": "Escolhe preto ou branco com melhor contraste.",
+      "category": "colors",
+      "kind": "colors",
+      "operation": "text-color-picker",
+      "featured": false
+    },
+    {
+      "id": "date-difference",
+      "name": "Diferença entre datas",
+      "description": "Calcula dias, semanas e meses entre datas.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "date-difference",
+      "featured": false
+    },
+    {
+      "id": "date-add-days",
+      "name": "Adicionar dias",
+      "description": "Adiciona dias a uma data.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "date-add-days",
+      "featured": false
+    },
+    {
+      "id": "date-subtract-days",
+      "name": "Subtrair dias",
+      "description": "Subtrai dias a uma data.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "date-subtract-days",
+      "featured": false
+    },
+    {
+      "id": "date-to-iso",
+      "name": "Data para ISO",
+      "description": "Normaliza uma data para formato ISO.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "date-to-iso",
+      "featured": false
+    },
+    {
+      "id": "unix-time",
+      "name": "Gerador Unix Time",
+      "description": "Converte data para timestamp Unix.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "unix-time",
+      "featured": false
+    },
+    {
+      "id": "age-calculator",
+      "name": "Calculadora de idade",
+      "description": "Calcula anos entre duas datas.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "age-calculator",
+      "featured": false
+    },
+    {
+      "id": "weekday-finder",
+      "name": "Dia da semana",
+      "description": "Descobre o dia da semana de uma data.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "weekday-finder",
+      "featured": false
+    },
+    {
+      "id": "days-in-month",
+      "name": "Dias do mês",
+      "description": "Conta os dias de um mês.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "days-in-month",
+      "featured": false
+    },
+    {
+      "id": "iso-week",
+      "name": "Número da semana",
+      "description": "Calcula a semana ISO do ano.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "iso-week",
+      "featured": false
+    },
+    {
+      "id": "time-converter",
+      "name": "Conversor de hora",
+      "description": "Converte entre formatos de 12 e 24 horas.",
+      "category": "dates",
+      "kind": "dates",
+      "operation": "time-converter",
+      "featured": false
+    }
+  ]
+}

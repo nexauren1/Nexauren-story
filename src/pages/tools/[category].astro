@@ -2,33 +2,33 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import ImageResizer from "../../components/ImageResizer";
+import PDFCompressor from "../../components/PDFCompressor";
+import AudioCutter from "../../components/AudioCutter";
+import FavoriteButton from "../../components/FavoriteButton";
+import UniversalTool from "../../components/UniversalTool";
+import catalog from "../../data/toolCatalog.json";
 export function getStaticPaths() {
-  return [
-    { params:{category:"image"}, props:{number:"01",name:"Imagem",title:"Ferramentas de imagem",description:"Redimensiona, comprime, converte e corta imagens diretamente no navegador.",intro:"Controlo de dimensões, formato e composição.",icon:"▧",tools:[
-      {name:"Image Studio",description:"Redimensionar, comprimir e converter JPG, PNG e WebP.",href:"/tools/image-resizer",active:true,label:"Disponível"},
-      {name:"Cortar imagem",description:"Define coordenadas de corte e exporta uma nova imagem.",href:"/tools/image-cropper",active:true,label:"Disponível"}
-    ]}},
-    { params:{category:"pdf"}, props:{number:"02",name:"PDF",title:"Ferramentas PDF",description:"Organiza, otimiza e transforma documentos PDF.",intro:"Operações de documentos num só local.",icon:"PDF",tools:[
-      {name:"Otimizar PDF",description:"Reestrutura o documento e mantém as páginas e o conteúdo.",href:"/tools/pdf-compressor",active:true,label:"Disponível"},
-      {name:"Juntar PDFs",description:"Combina vários PDFs mantendo a ordem escolhida.",href:"/tools/pdf-merger",active:true,label:"Disponível"},
-      {name:"Extrair páginas",description:"Seleciona intervalos e cria um documento separado.",href:"/tools/pdf-splitter",active:true,label:"Disponível"},
-      {name:"Rodar PDF",description:"Roda todas as páginas ou uma página específica.",href:"/tools/pdf-rotator",active:true,label:"Disponível"}
-    ]}},
-    { params:{category:"text"}, props:{number:"03",name:"Texto",title:"Ferramentas de texto",description:"Transforma e organiza texto com operações rápidas.",intro:"Escrita mais limpa e conteúdo melhor organizado.",icon:"Aa",tools:[
-      {name:"Caixa de ferramentas de texto",description:"Contagem, maiúsculas, minúsculas, limpeza e organização de linhas.",href:"/tools/text-toolbox",active:true,label:"Disponível"}
-    ]}},
-    { params:{category:"audio"}, props:{number:"04",name:"Áudio",title:"Ferramentas de áudio",description:"Prepara ficheiros de áudio com operações locais.",intro:"Seleciona excertos e ajusta os níveis do som.",icon:"♫",tools:[
-      {name:"Cortar áudio",description:"Seleciona um trecho, ouve e exporta em WAV.",href:"/tools/audio-cutter",active:true,label:"Disponível"},
-      {name:"Normalizar volume",description:"Analisa o pico e ajusta o volume de saída.",href:"/tools/audio-normalizer",active:true,label:"Disponível"}
-    ]}}
-  ];
+ const categories = catalog.categories.map((category) => ({ params:{category:category.id}, props:{pageType:"category",category,tools:catalog.tools.filter((tool)=>tool.category===category.id)} }));
+ const toolPages = catalog.tools.filter((tool) => !["image-resizer", "pdf-compressor", "audio-cutter"].includes(tool.id)).map((tool) => ({ params:{category:tool.id}, props:{pageType:"tool",tool,category:catalog.categories.find((item)=>item.id===tool.category)} }));
+ return [...categories,...toolPages];
 }
-const {number,name,title,description,intro,icon,tools}=Astro.props;
+const {pageType,category,tools,tool}=Astro.props;
+const isTool=pageType==="tool";
+const pageTitle=isTool?tool.name+" — Ferramenta online | Nexauren":category.name+" — Ferramentas online | Nexauren";
+const pageDescription=isTool?tool.description+" Processamento local e gratuito na Nexauren.":category.description+" Descobre todas as ferramentas disponíveis.";
 ---
-<SiteLayout title={title+" — Nexauren"} description={description}><div class="site-shell"><SiteHeader/><main class="simple-page category-landing">
-  <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span>{name}</span></div>
-  <div class="eyebrow"><span class="eyebrow-line"></span> {number} / ÁREA ESPECIALIZADA</div>
-  <h1>{title}.<br/><span>{intro}</span></h1><p class="simple-lead">{description}</p>
-  <div class="category-tool-grid">{tools.map((tool)=> <article class:list={["category-tool-card",{"is-available":tool.active}]}><div class="category-tool-top"><span class="category-tool-icon">{icon}</span><span class:list={["tool-availability",{"is-ready":tool.active}]}>{tool.label}</span></div><h2>{tool.name}</h2><p>{tool.description}</p><a href={tool.href}>Abrir ferramenta <b>↗</b></a></article>)}</div>
-  <a class="back-to-tools" href="/tools">← Todas as áreas</a>
-</main><SiteFooter/></div></SiteLayout>
+<SiteLayout title={pageTitle} description={pageDescription}>
+<div class="site-shell"><SiteHeader/>
+{isTool ? <main class="tool-page tool-page-premium">
+ <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href={"/tools/"+category.id}>{category.name}</a><span>›</span><span>{tool.name}</span></div>
+ <header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / {category.name.toUpperCase()}</span><h1>{tool.name}</h1><p>{tool.description}</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId={tool.id} title={tool.name} kind="tool" href={"/tools/"+tool.id}/></div></header>
+ {tool.id==="image-resizer"?<ImageResizer client:load/>:tool.id==="pdf-compressor"?<PDFCompressor client:load/>:tool.id==="audio-cutter"?<AudioCutter client:load/>:<UniversalTool client:load toolId={tool.id} name={tool.name} category={category.name} description={tool.description} kind={tool.kind}/>}
+ <section class="tool-trust-strip"><span>◈ Processamento no dispositivo</span><span>⌁ Sem instalação</span><span>↗ Ferramentas em evolução</span></section>
+ <section class="tool-related"><div class="home-section-heading"><div><span class="section-kicker">CONTINUA A EXPLORAR</span><h2>Mais ferramentas de {category.name.toLowerCase()}</h2></div><a class="home-section-link" href={"/tools/"+category.id}>Ver categoria ↗</a></div><div class="related-tool-links">{tools.filter((item)=>item.id!==tool.id).slice(0,4).map((item)=><a href={"/tools/"+item.id}><span>{item.name}</span><b>↗</b></a>)}</div></section>
+</main> : <main class="simple-page category-landing tool-category-page">
+ <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Todas as ferramentas</a><span>›</span><span>{category.name}</span></div>
+ <div class="eyebrow"><span class="eyebrow-line"></span> {String(category.id).toUpperCase()} / {tools.length} FERRAMENTAS</div><h1>{category.name}.<br/><span>{category.description}</span></h1><p class="simple-lead">Escolhe uma ferramenta para abrir o seu espaço de trabalho dedicado. Cada função tem os seus próprios controlos e processamento.</p>
+ <div class="category-tool-grid category-tool-grid-large">{tools.map((item,index)=><article class="category-tool-card"><div class="category-tool-top"><span class="category-tool-icon">{String(index+1).padStart(2,"0")}</span><span class="tool-availability is-ready">Disponível</span></div><h2>{item.name}</h2><p>{item.description}</p><a href={"/tools/"+item.id}>Abrir ferramenta <b>↗</b></a></article>)}</div><a class="back-to-tools" href="/tools">← Todas as categorias</a>
+</main>}
+<SiteFooter/></div></SiteLayout>

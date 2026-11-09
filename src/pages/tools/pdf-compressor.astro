@@ -3,21 +3,12 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import TrackActivity from "../../components/TrackActivity";
+import FavoriteButton from "../../components/FavoriteButton";
 import PDFCompressor from "../../components/PDFCompressor";
 ---
-<SiteLayout title="Comprimir PDF — Otimizador de PDF | Nexauren" description="Otimize a estrutura dos seus documentos PDF diretamente no navegador, sem enviar os ficheiros para um servidor.">
-<div class="site-shell">
-  <SiteHeader/>
-  <main class="tool-page">
-    <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span>PDF</span></div>
-    <header class="tool-page-header">
-      <div class="tool-title"><h1>Compressor de PDF</h1><p>Otimize a estrutura de um ou vários ficheiros PDF diretamente no seu dispositivo.</p></div>
-      <span class="tool-state"><i/> EM AÇÃO</span>
-    </header>
-    <PDFCompressor client:load/>
-    <p class="tool-footer-note">Nexauren · Compressor de PDF · <a href="/privacy">Privacidade</a> · <a href="/terms">Termos de Uso</a></p>
-  <TrackActivity client:load activityId="tool-pdf-optimizer" activityTitle="Otimizou um documento PDF"/>
-    </main>
-  <SiteFooter/>
-</div>
-</SiteLayout>
+<SiteLayout title="Comprimir PDF — Otimizador de documentos online | Nexauren" description="Otimiza a estrutura de documentos PDF localmente no navegador e guarda o resultado sem enviar os ficheiros para a Nexauren.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/pdf">PDF</a><span>›</span><span>Comprimir PDF</span></div>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / PDF LAB</span><h1>Comprimir PDF</h1><p>Reestrutura documentos PDF no dispositivo. A redução depende da estrutura e dos recursos incorporados no ficheiro.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="pdf-compressor" title="Comprimir PDF" kind="tool" href="/tools/pdf-compressor"/></div></header>
+<PDFCompressor client:load/><TrackActivity client:load activityId="pdf-compressor" activityTitle="Usou Comprimir PDF"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Vários ficheiros</span><span>↗ Sem envio para servidor</span></section></main><SiteFooter/></div></SiteLayout>

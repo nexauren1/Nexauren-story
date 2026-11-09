@@ -1,0 +1,13 @@
+{
+  "nav.tools": "Herramientas",
+  "nav.highlights": "Destacados",
+  "nav.apps": "Aplicaciones",
+  "nav.blog": "Blog",
+  "nav.account": "Mi cuenta",
+  "home.explore": "Explorar herramientas",
+  "home.search": "Buscar herramienta…",
+  "tool.run": "Ejecutar herramienta",
+  "tool.copy": "Copiar texto",
+  "tool.reset": "Reiniciar herramienta",
+  "tool.processing": "Procesando…"
+}

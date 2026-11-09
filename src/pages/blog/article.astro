@@ -1,0 +1,8 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import BlogPostReader from "../../components/BlogPostReader";
+---
+<SiteLayout title="Artigo — Nexauren" description="Artigos e guias práticos da Nexauren.">
+<div class="site-shell"><SiteHeader/><main class="simple-page"><div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/blog">Blog</a><span>›</span><span>Artigo</span></div><BlogPostReader client:load/></main><SiteFooter/></div></SiteLayout>
