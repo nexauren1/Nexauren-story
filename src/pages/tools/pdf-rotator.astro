@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import PDFRotator from "../../components/PDFRotator";
+import TrackActivity from "../../components/TrackActivity";
+---
+<SiteLayout title="Rodar PDF — PDF Rotator | Nexauren" description="Corrige a orientação de todas as páginas ou de uma página específica de um PDF.">
+<div class="site-shell"><SiteHeader/><main class="tool-page">
+  <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/pdf">PDF</a><span>›</span><span>Rodar PDF</span></div>
+  <header class="tool-page-header"><div class="tool-title"><h1>Rodar PDF</h1><p>Roda 90° ou 180° e aplica a alteração a todas as páginas ou apenas a uma.</p></div><span class="tool-state"><i/> PROCESSAMENTO LOCAL</span></header>
+  <PDFRotator client:load/><TrackActivity client:load activityId="tool-pdf-rotator" activityTitle="Rodou páginas de um PDF"/>
+  <p class="tool-footer-note">Nexauren · PDF Rotator · <a href="/privacy">Privacidade</a></p>
+</main><SiteFooter/></div></SiteLayout>

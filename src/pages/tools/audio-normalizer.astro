@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import AudioNormalizer from "../../components/AudioNormalizer";
+import TrackActivity from "../../components/TrackActivity";
+---
+<SiteLayout title="Normalizar áudio — Audio Normalizer | Nexauren" description="Analisa o nível de pico e normaliza o volume de ficheiros de áudio, exportando WAV PCM 16-bit.">
+<div class="site-shell"><SiteHeader/><main class="tool-page">
+  <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/audio">Áudio</a><span>›</span><span>Normalizar volume</span></div>
+  <header class="tool-page-header"><div class="tool-title"><h1>Normalizar volume</h1><p>Analisa o pico do áudio e ajusta o nível máximo antes de exportar para WAV.</p></div><span class="tool-state"><i/> PROCESSAMENTO LOCAL</span></header>
+  <AudioNormalizer client:load/><TrackActivity client:load activityId="tool-audio-normalizer" activityTitle="Normalizou o volume de áudio"/>
+  <p class="tool-footer-note">Nexauren · Audio Normalizer · <a href="/privacy">Privacidade</a></p>
+</main><SiteFooter/></div></SiteLayout>

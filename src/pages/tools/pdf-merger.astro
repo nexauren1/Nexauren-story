@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import PDFMerger from "../../components/PDFMerger";
+import TrackActivity from "../../components/TrackActivity";
+---
+<SiteLayout title="Juntar PDFs — PDF Merger | Nexauren" description="Combina vários ficheiros PDF num único documento diretamente no navegador.">
+<div class="site-shell"><SiteHeader/><main class="tool-page">
+  <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/pdf">PDF</a><span>›</span><span>Juntar PDFs</span></div>
+  <header class="tool-page-header"><div class="tool-title"><h1>Juntar PDFs</h1><p>Combina dois ou mais documentos e mantém a ordem pela qual os adicionaste.</p></div><span class="tool-state"><i/> PROCESSAMENTO LOCAL</span></header>
+  <PDFMerger client:load/><TrackActivity client:load activityId="tool-pdf-merger" activityTitle="Juntou documentos PDF"/>
+  <p class="tool-footer-note">Nexauren · PDF Merger · <a href="/privacy">Privacidade</a></p>
+</main><SiteFooter/></div></SiteLayout>

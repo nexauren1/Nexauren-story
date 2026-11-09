@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import ImageCropper from "../../components/ImageCropper";
+import TrackActivity from "../../components/TrackActivity";
+---
+<SiteLayout title="Cortar imagem — Image Cropper | Nexauren" description="Corta imagens por coordenadas e exporta em PNG, JPG ou WebP diretamente no navegador.">
+<div class="site-shell"><SiteHeader/><main class="tool-page">
+  <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/image">Imagem</a><span>›</span><span>Cortar imagem</span></div>
+  <header class="tool-page-header"><div class="tool-title"><h1>Cortar imagem</h1><p>Define a área exata do recorte através de coordenadas e exporta a imagem final.</p></div><span class="tool-state"><i/> PROCESSAMENTO LOCAL</span></header>
+  <ImageCropper client:load/><TrackActivity client:load activityId="tool-image-cropper" activityTitle="Usou o cortador de imagem"/>
+  <p class="tool-footer-note">Nexauren · Image Cropper · <a href="/privacy">Privacidade</a></p>
+</main><SiteFooter/></div></SiteLayout>

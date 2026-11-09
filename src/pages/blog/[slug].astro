@@ -1,0 +1,39 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+export function getStaticPaths() {
+ return [
+  {params:{slug:"juntar-pdfs"},props:{category:"DOCUMENTOS",reading:"5 MIN",title:"Como juntar vários PDFs num único documento",intro:"Combinar documentos PDF é útil para reunir relatórios, formulários e páginas digitalizadas num ficheiro fácil de partilhar.",steps:[
+   {title:"Organiza a ordem dos ficheiros",text:"Antes de começar, identifica o documento que deve aparecer primeiro. A ferramenta mantém a ordem em que os PDFs são adicionados."},
+   {title:"Abre a ferramenta Juntar PDFs",text:"Seleciona dois ou mais documentos PDF. Confirma os nomes e remove qualquer ficheiro que tenhas adicionado por engano."},
+   {title:"Combina e verifica o resultado",text:"Executa a operação, aguarda a conclusão e descarrega o documento final. Abre-o para confirmar se todas as páginas estão na ordem pretendida."}
+  ],tool:"/tools/pdf-merger",toolLabel:"Experimentar Juntar PDFs"}},
+  {params:{slug:"redimensionar-imagens"},props:{category:"IMAGEM",reading:"4 MIN",title:"Como redimensionar imagens para qualquer utilização",intro:"O tamanho de uma imagem influencia a apresentação, o tempo de carregamento e o espaço que ocupa. Escolher as dimensões corretas ajuda a manter um equilíbrio entre nitidez e rapidez.",steps:[
+   {title:"Define a utilização final",text:"Escolhe primeiro onde vais usar a imagem: num perfil, numa publicação, num documento ou num site. Cada destino pode exigir uma proporção diferente."},
+   {title:"Mantém a proporção",text:"Ao alterar a largura, mantém a proporção para evitar rostos ou objetos distorcidos. Só desativa esta opção quando tiveres uma razão concreta para alterar a forma da imagem."},
+   {title:"Escolhe formato e qualidade",text:"JPEG é prático para fotografias; PNG mantém transparência; WebP pode reduzir o tamanho em muitos casos. Compara o resultado visual e o tamanho antes de guardar."}
+  ],tool:"/tools/image-resizer",toolLabel:"Abrir Image Studio"}},
+  {params:{slug:"organizar-texto"},props:{category:"TEXTO",reading:"3 MIN",title:"Como limpar e organizar texto rapidamente",intro:"Texto copiado de páginas, documentos e mensagens pode trazer espaços repetidos e linhas duplicadas. Uma pequena limpeza torna-o mais simples de reutilizar.",steps:[
+   {title:"Remove espaços desnecessários",text:"Uniformiza os espaços entre palavras e elimina linhas vazias quando elas não têm utilidade."},
+   {title:"Escolhe uma transformação",text:"Usa maiúsculas, minúsculas ou formato de título conforme o contexto. Para listas, ordena as linhas alfabeticamente ou remove duplicados."},
+   {title:"Revê antes de copiar",text:"Confirma nomes próprios, siglas e pontuação. A automatização ajuda na formatação, mas não substitui a revisão do conteúdo."}
+  ],tool:"/tools/text-toolbox",toolLabel:"Abrir Caixa de Texto"}},
+  {params:{slug:"cortar-audio"},props:{category:"ÁUDIO",reading:"4 MIN",title:"Como cortar um excerto de áudio com precisão",intro:"Para extrair apenas uma parte de uma música, entrevista ou gravação, é importante definir os pontos de início e fim antes de exportar.",steps:[
+   {title:"Carrega o ficheiro",text:"Seleciona um formato de áudio compatível. Aguarda que o navegador descodifique o ficheiro e apresente a forma de onda."},
+   {title:"Marca o início e o fim",text:"Ajusta os controlos de tempo e reproduz a seleção para confirmar que o excerto começa e termina no ponto certo."},
+   {title:"Exporta e escuta o resultado",text:"Gera o ficheiro WAV e reproduz o resultado antes de o usar noutro projeto. O formato WAV evita uma nova compressão com perdas durante a exportação."}
+  ],tool:"/tools/audio-cutter",toolLabel:"Abrir Cortar Áudio"}}
+ ];
+}
+const {category,reading,title,intro,steps,tool,toolLabel}=Astro.props;
+---
+<SiteLayout title={title+" — Blog Nexauren"} description={intro}>
+<div class="site-shell"><SiteHeader/><main class="simple-page article-page">
+ <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/blog">Blog</a><span>›</span><span>{category}</span></div>
+ <div class="eyebrow"><span class="eyebrow-line"></span> GUIA PRÁTICO / {category}</div>
+ <h1>{title}</h1><p class="article-meta">{category} <span>·</span> {reading} DE LEITURA</p><p class="article-intro">{intro}</p>
+ <div class="article-body">{steps.map((step,index)=><section><span class="article-step-number">0{index+1}</span><div><h2>{step.title}</h2><p>{step.text}</p></div></section>)}</div>
+ <div class="article-tool-cta"><div><b>Experimenta na Nexauren</b><small>Aplica estes passos diretamente numa ferramenta online.</small></div><a href={tool}>{toolLabel} ↗</a></div>
+ <a class="back-to-tools" href="/blog">← Voltar aos guias</a>
+</main><SiteFooter/></div></SiteLayout>
