@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import ImageResizer from "../../components/ImageResizer";
+---
+<SiteLayout title="Image Resizer — Redimensionar e comprimir imagens | Nexauren" description="Redimensione, comprima e converta imagens JPG, PNG e WebP diretamente no navegador.">
+<div class="site-shell">
+  <SiteHeader/>
+  <main class="tool-page">
+    <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span>Imagem</span></div>
+    <header class="tool-page-header">
+      <div class="tool-title"><h1>Image Resizer / Compressor de Imagem</h1><p>Redimensione e comprima imagens em segundos. Rápido, seguro e sem perder qualidade percetível.</p></div>
+      <span class="tool-state"><i/> EM AÇÃO</span>
+    </header>
+    <ImageResizer client:load/>
+    <p class="tool-footer-note">Nexauren · Image Resizer · <a href="/privacy">Privacidade</a> · <a href="/terms">Termos de Uso</a></p>
+  </main>
+  <SiteFooter/>
+</div>
+</SiteLayout>
