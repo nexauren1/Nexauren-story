@@ -16,7 +16,6 @@ export default function PDFCompressor() {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [quality, setQuality] = useState<"balanced" | "structure">("balanced");
 
   useEffect(() => () => finished.forEach((file) => URL.revokeObjectURL(file.url)), [finished]);
 
@@ -170,8 +169,7 @@ export default function PDFCompressor() {
           <h2>Configurações de Compressão</h2>
           <div className="settings-group">
             <span className="settings-label">Método de otimização</span>
-            <label className="radio-option"><input type="radio" name="pdf-quality" checked={quality === "balanced"} onChange={() => setQuality("balanced")}/><span><b>Equilibrado</b><small>Reorganiza os objetos e usa object streams.</small></span></label>
-            <label className="radio-option"><input type="radio" name="pdf-quality" checked={quality === "structure"} onChange={() => setQuality("structure")}/><span><b>Estrutura</b><small>Regrava o documento sem atualizar metadados.</small></span></label>
+            <div className="format-choice"><b>Reestruturação do PDF</b><small>Regrava os objetos internos em object streams e mantém as páginas e o conteúdo original.</small></div>
           </div>
           <div className="tool-help-note"><strong>Nota importante:</strong> esta versão otimiza a estrutura interna do PDF no navegador. Não reamostra fotografias incorporadas, por isso a redução varia conforme o documento e pode ser pequena ou inexistente.</div>
           <div className="settings-group">
