@@ -1,11 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type DragEvent, type ChangeEvent } from "react";
 
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp";
-const formatNames: Record<ImageFormat, string> = {
-  "image/jpeg": "JPG",
-  "image/png": "PNG",
-  "image/webp": "WebP",
-};
 function readableSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -140,10 +135,13 @@ export default function ImageResizer() {
       setProcessedBlob(output);
       setCompare(50);
       setProgress(100);
+      const sizeDifference = Math.round((1 - output.size / file.size) * 100);
       setNotice(
-        output.size <= file.size
-          ? `Concluído. O ficheiro ficou ${reduction >= 0 ? "mais leve" : "pronto"}.`
-          : "Imagem processada. A nova versão ficou maior; experimenta reduzir a qualidade ou as dimensões.",
+        output.size < file.size
+          ? `Concluído. O ficheiro ficou ${sizeDifference}% mais leve.`
+          : output.size === file.size
+            ? "Concluído. O tamanho do ficheiro manteve-se."
+            : "Imagem processada. A nova versão ficou maior; experimenta reduzir a qualidade ou as dimensões.",
       );
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Ocorreu um erro ao processar a imagem.");
@@ -153,13 +151,24 @@ export default function ImageResizer() {
     }
   }
 
+  function invalidateResult() {
+    setResultUrl((previous) => {
+      if (previous) URL.revokeObjectURL(previous);
+      return "";
+    });
+    setProcessedBlob(null);
+    setProgress(0);
+    setNotice("");
+  }
   function updateWidth(value: string) {
     setWidth(value);
     if (keepRatio && value && Number(value) > 0) setHeight(String(Math.max(1, Math.round(Number(value) * ratio))));
+    invalidateResult();
   }
   function updateHeight(value: string) {
     setHeight(value);
     if (keepRatio && value && Number(value) > 0 && ratio > 0) setWidth(String(Math.max(1, Math.round(Number(value) / ratio))));
+    invalidateResult();
   }
 
   return (
@@ -218,12 +227,12 @@ export default function ImageResizer() {
           </div>
           <div className="settings-group">
             <div className="range-heading"><span>Qualidade</span><span className="range-value">{quality}%</span></div>
-            <input type="range" min="20" max="100" step="1" value={quality} disabled={!file || busy} onChange={(event) => setQuality(Number(event.target.value))}/>
+            <input type="range" min="20" max="100" step="1" value={quality} disabled={!file || busy} onChange={(event) => { setQuality(Number(event.target.value)); invalidateResult(); }}/>
             <p className="range-help">Uma qualidade entre 70% e 85% costuma equilibrar nitidez e tamanho. PNG não utiliza este controlo.</p>
           </div>
           <div className="settings-group">
             <label className="field-label">Formato de saída
-              <select value={format} disabled={!file || busy} onChange={(event) => setFormat(event.target.value as ImageFormat)}>
+              <select value={format} disabled={!file || busy} onChange={(event) => { setFormat(event.target.value as ImageFormat); invalidateResult(); }}>
                 <option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option>
               </select>
             </label>
