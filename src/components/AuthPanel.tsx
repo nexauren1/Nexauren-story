@@ -59,6 +59,15 @@ export default function AuthPanel() {
   const [overview, setOverview] = useState<AccountOverview>(emptyOverview);
 
   useEffect(() => {
+    if (!user) return;
+    const refreshOverview = () => {
+      void getAccountOverview(user).then(setOverview).catch(() => undefined);
+    };
+    window.addEventListener("nexauren:favorites-updated", refreshOverview);
+    return () => window.removeEventListener("nexauren:favorites-updated", refreshOverview);
+  }, [user]);
+
+  useEffect(() => {
     const { auth } = getFirebaseClient();
     return onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
