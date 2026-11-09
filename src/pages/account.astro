@@ -1,0 +1,25 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import AuthPanel from "../components/AuthPanel";
+---
+<SiteLayout title="A minha conta — Nexauren" description="Acede à tua conta Nexauren e consulta favoritos e atividade sincronizados entre dispositivos.">
+<div class="site-shell">
+  <SiteHeader/>
+  <main class="simple-page account-page">
+    <div class="eyebrow"><span class="eyebrow-line"></span> ESPAÇO PESSOAL NEXAUREN</div>
+    <h1>A tua conta.<br/><span>O teu espaço digital.</span></h1>
+    <p class="simple-lead">Inicia sessão com a mesma conta em qualquer dispositivo. Os teus favoritos e a tua atividade são guardados na cloud através do Firebase.</p>
+    <div class="account-page-layout">
+      <div class="account-benefits">
+        <div><b>01</b><span><strong>Favoritos sincronizados</strong><small>Guarda uma ferramenta ou aplicação e encontra-a noutro dispositivo.</small></span></div>
+        <div><b>02</b><span><strong>Histórico atualizado</strong><small>Consulta as últimas ferramentas e atividades da tua conta.</small></span></div>
+        <div><b>03</b><span><strong>Uma única identidade</strong><small>Usa sempre o mesmo método de entrada e endereço de e-mail.</small></span></div>
+      </div>
+      <AuthPanel client:load/>
+    </div>
+  </main>
+  <SiteFooter/>
+</div>
+</SiteLayout>

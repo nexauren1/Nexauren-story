@@ -1,0 +1,84 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { category: "image" }, props: {
+      number: "01", name: "Imagem", title: "Ferramentas de imagem",
+      description: "Redimensiona, comprime e converte imagens no teu navegador.",
+      intro: "Trabalha com fotografias e gráficos sem instalar software adicional.",
+      icon: "↔",
+      tools: [
+        { name: "Image Resizer", description: "Redimensiona, comprime e converte ficheiros JPEG, PNG e WebP num só espaço de trabalho.", href: "/tools/image-resizer", active: true, label: "Disponível" }
+      ]
+    }},
+    { params: { category: "pdf" }, props: {
+      number: "02", name: "PDF", title: "Ferramentas PDF",
+      description: "Otimiza documentos e prepara os teus ficheiros PDF.",
+      intro: "Ferramentas práticas para reduzir e organizar documentos.",
+      icon: "PDF",
+      tools: [
+        { name: "Comprimir PDF", description: "Regrava e otimiza a estrutura de documentos PDF diretamente no dispositivo.", href: "/tools/pdf-compressor", active: true, label: "Disponível" },
+        { name: "Juntar PDF", description: "Combina vários documentos num só ficheiro.", active: false, label: "Em desenvolvimento" },
+        { name: "Dividir PDF", description: "Separa páginas ou intervalos de páginas.", active: false, label: "Em desenvolvimento" }
+      ]
+    }},
+    { params: { category: "text" }, props: {
+      number: "03", name: "Texto", title: "Ferramentas de texto",
+      description: "Utilitários para contar, limpar e transformar texto.",
+      intro: "Uma área dedicada a pequenos trabalhos de escrita e formatação.",
+      icon: "Aa",
+      tools: [
+        { name: "Contador de palavras", description: "Conta palavras, caracteres e linhas.", active: false, label: "Em desenvolvimento" },
+        { name: "Conversor de maiúsculas", description: "Altera a capitalização do texto.", active: false, label: "Em desenvolvimento" },
+        { name: "Limpar espaços", description: "Remove espaços repetidos e linhas vazias.", active: false, label: "Em desenvolvimento" }
+      ]
+    }},
+    { params: { category: "audio" }, props: {
+      number: "04", name: "Áudio", title: "Ferramentas de áudio",
+      description: "Corta e prepara ficheiros de áudio no navegador.",
+      intro: "Seleciona trechos e exporta o áudio sem enviar o ficheiro para um servidor.",
+      icon: "♫",
+      tools: [
+        { name: "Cortar Áudio", description: "Seleciona o início e o fim de um ficheiro e exporta o trecho em WAV.", href: "/tools/audio-cutter", active: true, label: "Disponível" },
+        { name: "Conversor de áudio", description: "Converte ficheiros entre formatos populares.", active: false, label: "Em desenvolvimento" },
+        { name: "Redução de ruído", description: "Reduz ruído de fundo em ficheiros compatíveis.", active: false, label: "Em desenvolvimento" }
+      ]
+    }}
+  ];
+}
+
+const { number, name, title, description, intro, icon, tools } = Astro.props;
+---
+<SiteLayout title={title + " — Nexauren"} description={description}>
+<div class="site-shell">
+  <SiteHeader/>
+  <main class="simple-page category-landing">
+    <div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span>{name}</span></div>
+    <div class="eyebrow"><span class="eyebrow-line"></span> {number} / CATEGORIA</div>
+    <h1>{title}.<br/><span>{intro}</span></h1>
+    <p class="simple-lead">{description}</p>
+    <div class="category-tool-grid">
+      {tools.map((tool) => (
+        <article class:list={["category-tool-card", { "is-available": tool.active }]}>
+          <div class="category-tool-top">
+            <span class="category-tool-icon">{icon}</span>
+            <span class:list={["tool-availability", { "is-ready": tool.active }]}>{tool.label}</span>
+          </div>
+          <h2>{tool.name}</h2>
+          <p>{tool.description}</p>
+          {tool.active ? (
+            <a href={tool.href}>Abrir ferramenta <b>↗</b></a>
+          ) : (
+            <span class="category-tool-disabled">Ainda não disponível</span>
+          )}
+        </article>
+      ))}
+    </div>
+    <a class="back-to-tools" href="/tools">← Todas as categorias</a>
+  </main>
+  <SiteFooter/>
+</div>
+</SiteLayout>
