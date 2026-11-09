@@ -700,3 +700,8 @@ input[type=range]{width:100%;accent-color:#159b8c;cursor:pointer}
  .article-intro{font-size:14px}
  .article-body section{grid-template-columns:30px 1fr}
 }
+
+.account-link.is-authenticated{display:flex;align-items:center;gap:8px;background:#eff5ff;color:#294b9a}
+.account-link-dot{width:7px;height:7px;border-radius:50%;background:#18a17c;box-shadow:0 0 0 3px #18a17c20}
+.account-link-label{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.account-link-arrow{font-size:14px;color:#3158c7}
