@@ -13,4 +13,8 @@ jobs:
         with:
           node-version: 24.12.0
       - run: npm install
+      - name: Report dependency advisories
+        run: |
+          npm audit --json > /tmp/npm-audit.json || true
+          node --input-type=module -e 'import fs from "node:fs"; const report = JSON.parse(fs.readFileSync("/tmp/npm-audit.json", "utf8")); for (const [name, item] of Object.entries(report.vulnerabilities ?? {})) { const via = item.via.map(entry => typeof entry === "string" ? entry : { title: entry.title, range: entry.range, url: entry.url }); console.log(JSON.stringify({ name, severity: item.severity, isDirect: item.isDirect, range: item.range, fixAvailable: item.fixAvailable, via })); }'
       - run: npm run build
