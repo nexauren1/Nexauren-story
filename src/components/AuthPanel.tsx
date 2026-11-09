@@ -39,7 +39,12 @@ function readableAuthError(error: unknown): string {
     "auth/network-request-failed": "Falha de ligação. Verifica a Internet e tenta novamente.",
   };
 
-  return messages[code] ?? "Não foi possível concluir a operação. Tenta novamente.";
+  if (code === "auth/unauthorized-domain") {
+    const host = typeof window !== "undefined" ? window.location.hostname : "este domínio";
+    return `O domínio ${host} ainda não está autorizado. No Firebase Console, abre Authentication → Settings → Authorized domains e adiciona este endereço sem https://.`;
+  }
+
+  return messages[code] ?? "Não foi possível concluir a operação. Tenta novamente."
 }
 
 function formatDate(value?: Timestamp): string {
@@ -277,7 +282,7 @@ export default function AuthPanel() {
           {mode === "login" ? "Regista-te" : "Entrar"}
         </button>
       </p>
-      <small>A tua conta e os teus dados pessoais são guardados no Firebase.</small>
+      <small>A autenticação utiliza Firebase. O domínio atual tem de estar na lista de domínios autorizados do projeto.</small>
     </section>
   );
 }
