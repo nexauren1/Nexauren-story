@@ -83,7 +83,9 @@ export default function PDFCompressor() {
           objectsPerTick: 60,
           updateFieldAppearances: false,
         });
-        const blob = new Blob([output], { type: "application/pdf" });
+        const outputBytes = new Uint8Array(output.byteLength);
+        outputBytes.set(output);
+        const blob = new Blob([outputBytes.buffer], { type: "application/pdf" });
         const url = URL.createObjectURL(blob);
         results.push({
           id: `${file.name}-${file.lastModified}-${index}`,
