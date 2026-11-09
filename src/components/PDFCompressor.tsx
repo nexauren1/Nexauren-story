@@ -16,6 +16,7 @@ export default function PDFCompressor() {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [removeMetadata, setRemoveMetadata] = useState(false);
 
   useEffect(() => () => finished.forEach((file) => URL.revokeObjectURL(file.url)), [finished]);
 
@@ -77,6 +78,14 @@ export default function PDFCompressor() {
         const document = await PDFDocument.load(await file.arrayBuffer(), {
           updateMetadata: false,
         });
+        if (removeMetadata) {
+          document.setTitle("");
+          document.setAuthor("");
+          document.setSubject("");
+          document.setKeywords([]);
+          document.setCreator("");
+          document.setProducer("");
+        }
         const output = await document.save({
           useObjectStreams: true,
           addDefaultPage: false,
@@ -168,12 +177,13 @@ export default function PDFCompressor() {
 
       <section className="tool-panel settings-panel">
         <div>
-          <h2>Configurações de Compressão</h2>
+          <h2>Optimização estrutural</h2>
           <div className="settings-group">
             <span className="settings-label">Método de otimização</span>
             <div className="format-choice"><b>Reestruturação do PDF</b><small>Regrava os objetos internos em object streams e mantém as páginas e o conteúdo original.</small></div>
           </div>
-          <div className="tool-help-note"><strong>Nota importante:</strong> esta versão otimiza a estrutura interna do PDF no navegador. Não reamostra fotografias incorporadas, por isso a redução varia conforme o documento e pode ser pequena ou inexistente.</div>
+          <div className="tool-help-note"><strong>Limitação técnica:</strong> esta operação regrava os objectos internos do PDF. Não reduz a resolução das imagens incorporadas; a diminuição do tamanho não é garantida.</div>
+          <label className="nx-check-line"><input type="checkbox" checked={removeMetadata} disabled={busy || !files.length} onChange={(event) => setRemoveMetadata(event.target.checked)}/> Remover metadados básicos (autor, título e assunto)</label>
           <div className="settings-group">
             <h3 className="panel-section-title">Resumo da compressão</h3>
             <div className="result-box">
@@ -187,7 +197,7 @@ export default function PDFCompressor() {
           </div>
         </div>
         <div className="settings-actions">
-          <button className="primary-button" onClick={compress} disabled={!files.length || busy}>{busy ? "A processar PDFs…" : "↓  Comprimir ficheiros"}</button>
+          <button className="primary-button" onClick={compress} disabled={!files.length || busy}>{busy ? "A processar PDFs…" : "Optimizar estrutura dos PDFs"}</button>
           {finished.length > 0 && <button className="secondary-button" onClick={() => finished.forEach((file, index) => window.setTimeout(() => { const link = document.createElement("a"); link.href = file.url; link.download = outputName(file.name); link.click(); }, index * 350))}>↓  Baixar todos individualmente</button>}
           <p className="settings-footnote">O processamento ocorre no navegador. Os ficheiros não são enviados para a Nexauren.</p>
         </div>

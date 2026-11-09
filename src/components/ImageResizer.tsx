@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useRef, useState, type DragEvent, type ChangeEvent } from "react";
 
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp";
+type SizePreset = "custom" | "original" | "square" | "portrait" | "story" | "cover" | "hd";
+const sizePresets = [
+  { id:"square", label:"Quadrado · 1080 × 1080", width:1080, height:1080 },
+  { id:"portrait", label:"Retrato · 1080 × 1350", width:1080, height:1350 },
+  { id:"story", label:"Story · 1080 × 1920", width:1080, height:1920 },
+  { id:"cover", label:"Capa · 1200 × 630", width:1200, height:630 },
+  { id:"hd", label:"HD · 1920 × 1080", width:1920, height:1080 }
+] as const;
 function readableSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
@@ -21,6 +29,9 @@ export default function ImageResizer() {
   const [keepRatio, setKeepRatio] = useState(true);
   const [quality, setQuality] = useState(75);
   const [format, setFormat] = useState<ImageFormat>("image/jpeg");
+  const [preset, setPreset] = useState<SizePreset>("original");
+  const [background, setBackground] = useState("#ffffff");
+  const [previewOriginal, setPreviewOriginal] = useState(false);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
@@ -39,6 +50,8 @@ export default function ImageResizer() {
       setNaturalSize({ width: image.naturalWidth, height: image.naturalHeight });
       setWidth(String(image.naturalWidth));
       setHeight(String(image.naturalHeight));
+      setPreset("original");
+      setPreviewOriginal(false);
       setResultUrl("");
       setProcessedBlob(null);
       setProgress(0);
@@ -110,7 +123,7 @@ export default function ImageResizer() {
       const context = canvas.getContext("2d", { alpha: format !== "image/jpeg" });
       if (!context) throw new Error("O navegador não conseguiu iniciar o processamento.");
       if (format === "image/jpeg") {
-        context.fillStyle = "#ffffff";
+        context.fillStyle = background;
         context.fillRect(0, 0, newWidth, newHeight);
       }
       context.imageSmoothingEnabled = true;
@@ -158,12 +171,24 @@ export default function ImageResizer() {
     setProgress(0);
     setNotice("");
   }
+  function applyPreset(value: SizePreset) {
+    setPreset(value);
+    if (value === "original" && naturalSize.width) {
+      setKeepRatio(true); setWidth(String(naturalSize.width)); setHeight(String(naturalSize.height));
+    } else {
+      const selected = sizePresets.find((item) => item.id === value);
+      if (selected) { setKeepRatio(false); setWidth(String(selected.width)); setHeight(String(selected.height)); }
+    }
+    invalidateResult();
+  }
   function updateWidth(value: string) {
+    setPreset("custom");
     setWidth(value);
     if (keepRatio && value && Number(value) > 0) setHeight(String(Math.max(1, Math.round(Number(value) * ratio))));
     invalidateResult();
   }
   function updateHeight(value: string) {
+    setPreset("custom");
     setHeight(value);
     if (keepRatio && value && Number(value) > 0 && ratio > 0) setWidth(String(Math.max(1, Math.round(Number(value) / ratio))));
     invalidateResult();
@@ -192,9 +217,10 @@ export default function ImageResizer() {
         ) : (
           <>
             <div className="preview-stage image-result-stage">
-              <img src={resultUrl || sourceUrl} alt={resultUrl ? "Imagem processada" : "Imagem original"} />
-              <span className="image-preview-badge">{resultUrl ? "RESULTADO" : "ORIGINAL"}</span>
+              <img src={previewOriginal ? sourceUrl : (resultUrl || sourceUrl)} alt={resultUrl && !previewOriginal ? "Imagem processada" : "Imagem original"} />
+              <span className="image-preview-badge">{resultUrl && !previewOriginal ? "RESULTADO" : "ORIGINAL"}</span>
             </div>
+            {resultUrl && <div className="nx-preview-switch"><button type="button" className={previewOriginal ? "is-active" : ""} onClick={() => setPreviewOriginal(true)}>Original</button><button type="button" className={!previewOriginal ? "is-active" : ""} onClick={() => setPreviewOriginal(false)}>Resultado</button></div>}
             <div className="file-caption">{file.name} · {naturalSize.width} × {naturalSize.height} px{resultUrl ? ` · Resultado: ${newWidth} × ${newHeight} px` : ""}</div>
             <div className="image-toolbar">
               <span className="file-selected"><b>▧</b><span><strong>{file.name}</strong><small>{readableSize(file.size)}</small></span></span>
@@ -212,7 +238,15 @@ export default function ImageResizer() {
         <div>
           <h2>Configurações de Redimensionamento</h2>
           <div className="settings-group">
-            <span className="settings-label">Dimensões</span>
+            <span className="settings-label">Tamanho rápido</span>
+            <label className="field-label nx-preset-select">Preset de exportação
+              <select value={preset} disabled={!file || busy} onChange={(event) => applyPreset(event.target.value as SizePreset)}>
+                <option value="original">Dimensões originais</option>
+                {sizePresets.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
+                <option value="custom">Personalizado</option>
+              </select>
+            </label>
+            <span className="settings-label">Dimensões personalizadas</span>
             <div className="field-grid">
               <label className="field-label">Largura (px)<input type="number" min="1" max="16000" value={width} disabled={!file || busy} onChange={(event) => updateWidth(event.target.value)}/></label>
               <label className="field-label">Altura (px)<input type="number" min="1" max="16000" value={height} disabled={!file || busy} onChange={(event) => updateHeight(event.target.value)}/></label>
@@ -220,6 +254,9 @@ export default function ImageResizer() {
             <label className="toggle-row ratio-toggle"><span>Manter proporção</span><input type="checkbox" checked={keepRatio} disabled={!file || busy} onChange={(event) => setKeepRatio(event.target.checked)}/></label>
           </div>
           <div className="settings-group">
+            <label className="field-label nx-background-field">Fundo para JPG
+              <span><input type="color" value={background} disabled={!file || busy || format !== "image/jpeg"} onChange={(event) => { setBackground(event.target.value); invalidateResult(); }}/><b>{background.toUpperCase()}</b></span>
+            </label>
             <div className="range-heading"><span>Qualidade</span><span className="range-value">{quality}%</span></div>
             <input type="range" min="20" max="100" step="1" value={quality} disabled={!file || busy} onChange={(event) => { setQuality(Number(event.target.value)); invalidateResult(); }}/>
             <p className="range-help">Uma qualidade entre 70% e 85% costuma equilibrar nitidez e tamanho. PNG não utiliza este controlo.</p>
@@ -244,8 +281,8 @@ export default function ImageResizer() {
           <p className="status-note">{busy ? "A preparar a imagem…" : progress === 100 ? "Concluído — o processamento foi feito no teu navegador." : "Seleciona uma imagem para começar."}</p>
         </div>
         <div className="settings-actions">
-          <button className="primary-button" disabled={!file || busy} onClick={processImage}>{busy ? "A processar imagem…" : "↓  Redimensionar e Processar"}</button>
-          {resultUrl && <a className="download-button" href={resultUrl} download={`${safeBaseName(file?.name ?? "imagem")}-nexauren.${format==="image/jpeg"?"jpg":format==="image/png"?"png":"webp"}`}>↓  Baixar imagem</a>}
+          <button className="nx-run-button" disabled={!file || busy} onClick={processImage}><span>{busy ? "A processar imagem…" : "Redimensionar e exportar"}</span><b>{busy ? "◌" : "↗"}</b></button>
+          {resultUrl && <a className="download-button nx-download-button" href={resultUrl} download={`${safeBaseName(file?.name ?? "imagem")}-nexauren.${format==="image/jpeg"?"jpg":format==="image/png"?"png":"webp"}`}>↓  Baixar imagem</a>}
           <p className="settings-footnote">Os ficheiros são processados localmente no dispositivo. Não são enviados para um servidor.</p>
         </div>
       </section>

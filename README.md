@@ -16,21 +16,21 @@ Plataforma de ferramentas digitais para imagem, PDF, texto e áudio, com conta p
 O catálogo público é definido em src/data/activeTools.json. Só entram no catálogo ferramentas com uma página dedicada e um motor de processamento implementado.
 
 ### Image
-- **Resize Image** — resize, compress and convert JPG, PNG and WebP.
-- **Image Cropper** — crop by pixel coordinates and export PNG, JPG or WebP.
+- **Resize Image** — resize, compress and convert JPG, PNG and WebP; includes social-media presets, custom dimensions, quality control and JPG background.
+- **Image Cropper** — crop by pixel coordinates or aspect-ratio presets (1:1, 4:5, 16:9, 3:2); export PNG, JPG or WebP.
 
 ### PDF
 - **PDF Optimizer** — reserializes document structure using PDF object streams. It does not downsample embedded images, so size reduction depends on the document and is not guaranteed.
-- **PDF Merger** — combines multiple PDFs in the selected order.
-- **PDF Splitter** — extracts selected pages and page ranges into a new PDF.
-- **PDF Rotator** — changes page rotation.
+- **PDF Merger** — combines multiple PDFs; reorder files before merging.
+- **PDF Splitter** — extracts selected pages and ranges, with shortcuts for all, odd, even, first and last pages.
+- **PDF Rotator** — rotates all pages or selected page numbers/ranges by 90° left, 90° right or 180°.
 
 ### Text
-- **Text Toolbox** — live word/character/line statistics, uppercase, lowercase, title case, whitespace cleanup, alphabetical line sorting, duplicate-line removal and reverse line order.
+- **Text Toolbox** — word/character/line/paragraph/reading-time statistics plus 14 operations: case conversion, title and sentence case, whitespace and blank-line cleanup, accent removal, line sorting, duplicate removal, line/text reversal, slug generation, find-and-replace and word frequency.
 
 ### Audio
-- **Audio Cutter** — select a time range, preview the segment and export WAV PCM 16-bit.
-- **Audio Normalizer** — analyse peak level, set a target peak and export WAV PCM 16-bit.
+- **Audio Cutter** — select and preview a time range, apply fade-in/fade-out and output gain, then export WAV PCM 16-bit.
+- **Audio Normalizer** — scan the true sample peak, set a target level and amplification limit, prevent boost when required, choose mono/stereo and export WAV PCM 16-bit.
 
 All public tools process the selected files or text locally in the browser. These tool components do not upload source files to Nexauren servers.
 
