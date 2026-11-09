@@ -195,7 +195,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
       }
       case "html-starter-generator": return "<!doctype html>\n<html lang=\"pt\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>" + escapeHtml(value || "Nova página") + "</title>\n</head>\n<body>\n  <main>\n    <h1>" + escapeHtml(value || "Olá, mundo!") + "</h1>\n  </main>\n</body>\n</html>";
       case "json-schema-generator": {
-        const sample = JSON.parse(value); const infer = (entry: unknown): unknown => {
+        const sample = JSON.parse(value); const infer = (entry: unknown): Record<string, unknown> => {
           if (entry === null) return { type: "null" }; if (Array.isArray(entry)) return { type: "array", items: entry.length ? infer(entry[0]) : {} };
           if (typeof entry === "object") return { type: "object", properties: Object.fromEntries(Object.entries(entry as Record<string, unknown>).map(([key, val]) => [key, infer(val)])), required: Object.keys(entry as object) };
           return { type: typeof entry === "number" ? "number" : typeof entry, ...(typeof entry === "string" ? { minLength: 0 } : {}) };
@@ -326,7 +326,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
         setNotice("A reestruturar o documento PDF…");
       }
       setProgress(80);
-      const bytes = await output.save({ useObjectStreams: true, updateMetadata: false });
+      const bytes = await output.save({ useObjectStreams: true });
       const nameOut = file.name.replace(/\.pdf$/i, "") + "-nexauren.pdf";
       setResult("Processamento concluído. " + output.getPageCount() + " páginas no ficheiro final.\nOriginal: " + sizeLabel(file.size) + "\nNovo: " + sizeLabel(bytes.length));
       const pdfBytes = new Uint8Array(bytes.byteLength); pdfBytes.set(bytes); setDownloadName(nameOut); setResultUrl(URL.createObjectURL(new Blob([pdfBytes.buffer], { type: "application/pdf" })));
