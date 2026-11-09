@@ -20,5 +20,5 @@ jobs:
       - run: npm run check
       - run: npm run check:catalog
       - run: npm run build
-      - name: Verify generated SEO files
-        run: test -s dist/sitemap.xml && test -s dist/robots.txt
+      - name: Verify generated SEO files and all tool routes
+        run: node scripts/verify-output.mjs
