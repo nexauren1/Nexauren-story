@@ -52,6 +52,7 @@ export default function FavoriteButton({ itemId, title, kind, href }: Props) {
       });
       setSaved(nextSaved);
       setMessage(nextSaved ? "Guardado nos favoritos." : "Removido dos favoritos.");
+      window.dispatchEvent(new Event("nexauren:favorites-updated"));
     } catch {
       setMessage("Não foi possível atualizar os favoritos. Tenta novamente.");
     } finally {
