@@ -4,6 +4,8 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
+  sendPasswordResetEmail,
   signOut,
   type User,
 } from "firebase/auth";
@@ -93,12 +95,12 @@ export default function AuthPanel() {
     });
   }, []);
 
-  async function perform(action: () => Promise<unknown>) {
+  async function perform(action: () => Promise<unknown>, successMessage = "Pedido concluído.") {
     setBusy(true);
     setMessage("");
     try {
       await action();
-      setMessage("Pedido concluído.");
+      setMessage(successMessage);
     } catch (error) {
       setMessage(readableAuthError(error));
     } finally {
@@ -119,12 +121,24 @@ export default function AuthPanel() {
   function continueWithGoogle() {
     const { auth, googleProvider } = getFirebaseClient();
     googleProvider.setCustomParameters({ prompt: "select_account" });
-    void perform(() => signInWithPopup(auth, googleProvider));
+    const mobileBrowser = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);\n    void perform(() =>\n      mobileBrowser\n        ? signInWithRedirect(auth, googleProvider)\n        : signInWithPopup(auth, googleProvider),\n    );
   }
 
   function leaveAccount() {
     const { auth } = getFirebaseClient();
     void perform(() => signOut(auth));
+  }
+
+  function resetPassword() {
+    if (!email.trim()) {
+      setMessage("Escreve primeiro o teu e-mail para receberes o link de recuperação.");
+      return;
+    }
+    const { auth } = getFirebaseClient();
+    void perform(
+      () => sendPasswordResetEmail(auth, email.trim()),
+      "Enviámos um link de recuperação para o teu e-mail.",
+    );
   }
 
   if (checking) {
@@ -233,6 +247,11 @@ export default function AuthPanel() {
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Mínimo de 6 caracteres"
         />
+        {mode === "login" && (
+          <button type="button" className="forgot-button" onClick={resetPassword} disabled={busy}>
+            Esqueceste a palavra-passe?
+          </button>
+        )}
         <button className="button primary full" disabled={busy}>
           {busy
             ? "A processar…"
