@@ -12,23 +12,37 @@ export default function TrackedLink({
   activityTitle,
   href = "/",
   onClick,
+  target,
   children,
   ...props
 }: Props) {
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
-    if (event.defaultPrevented) return;
+    if (
+      event.defaultPrevented ||
+      target === "_blank" ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) return;
+
     const { auth } = getFirebaseClient();
     const user = auth.currentUser;
-    if (user) {
-      void recordActivity(user, {
-        id: activityId,
-        title: activityTitle,
-        kind: "section",
-        href: String(href),
-      }).catch(() => undefined);
-    }
+    if (!user) return;
+
+    // Persist the activity before navigating so it is not lost during page unload.
+    event.preventDefault();
+    void recordActivity(user, {
+      id: activityId,
+      title: activityTitle,
+      kind: "section",
+      href: String(href),
+    })
+      .catch(() => undefined)
+      .finally(() => window.location.assign(String(href)));
   }
 
-  return <a {...props} href={href} onClick={handleClick}>{children}</a>;
+  return <a {...props} href={href} target={target} onClick={handleClick}>{children}</a>;
 }
