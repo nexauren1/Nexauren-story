@@ -1,9 +1,55 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import FavoriteButton from "../components/FavoriteButton";
+import TrackedLink from "../components/TrackedLink";
 ---
-<SiteLayout title="Aplicações — Nexauren Story" description="Descobre os aplicativos Nexauren, consulta as funcionalidades e encontra os links para as lojas oficiais.">
+<SiteLayout title="Aplicações Android — Nexauren Story" description="Descobre as aplicações Nexauren, consulta as funcionalidades e visita as páginas oficiais na APKPure.">
 <div class="shell">
-<header class="header"><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a><nav><a href="/apps">Apps</a><a href="/tools">Tools</a><a href="/blog">Blog</a></nav><div class="actions"><button class="theme" data-theme-toggle aria-label="Alternar tema">◐</button><a class="button outline" href="/#account">Entrar ↗</a></div></header>
-<main style="min-height:65vh;display:grid;align-content:center;padding:80px 0"><div class="eyebrow"><i/> NEXAUREN STORY / ECOSSISTEMA</div><h1 style="max-width:850px">Aplicações<br/><span>O catálogo de aplicações está a ser preparado.</span></h1><p style="color:var(--muted);max-width:600px;line-height:1.8">Descobre os aplicativos Nexauren, consulta as funcionalidades e encontra os links para as lojas oficiais.</p><a class="button primary" style="width:max-content;margin-top:24px" href="/">Voltar ao início ↗</a></main>
-<footer><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a><p>© 2026 Nexauren Story.</p><div><a href="/privacy">Privacidade</a><a href="/terms">Termos</a></div></footer>
-</div></SiteLayout>
+  <header class="header">
+    <a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a>
+    <nav><a href="/apps" aria-current="page">Apps</a><a href="/tools">Tools</a><a href="/blog">Blog</a></nav>
+    <div class="actions"><button class="theme" data-theme-toggle aria-label="Alternar tema">◐</button><a class="button outline" href="/#account">A minha conta ↗</a></div>
+  </header>
+
+  <main class="catalog-page">
+    <section class="catalog-heading">
+      <div class="eyebrow"><i/> 01 / ECOSSISTEMA NEXAUREN</div>
+      <h1>Aplicações para<br/><span>o teu mundo digital.</span></h1>
+      <p>Explora as aplicações desenvolvidas pela Nexauren. Cada cartão leva-te à página da aplicação na loja onde está publicada.</p>
+      <div class="catalog-meta"><b>02</b><span>APLICAÇÕES LISTADAS</span><i></i><span>ANDROID</span><i></i><span>LINKS DE LOJA</span></div>
+    </section>
+
+    <section class="app-grid" aria-label="Catálogo de aplicações">
+      <article class="app-card">
+        <div class="app-card-top"><span class="app-platform">ANDROID · APKPURE</span><span class="app-status"><i/> DISPONÍVEL</span></div>
+        <div class="app-identity">
+          <div class="app-icon image-tools-icon"><span>IT</span><i>✦</i></div>
+          <div><div class="app-publisher">NEXAUREN</div><h2>Image Tools: Edit &amp; Resize</h2><p>Editor e caixa de ferramentas para imagens.</p></div>
+        </div>
+        <FavoriteButton client:load itemId="app-image-tools" title="Image Tools: Edit & Resize" kind="app" href="https://apkpure.com/p/com.nexauren.imagetools"/>
+        <div class="app-feature-line"><span>51 ferramentas</span><span>6,9 MB</span><span>Android 10+</span></div>
+        <p class="app-description">Edita, redimensiona, comprime e converte imagens com um conjunto de 51 ferramentas fáceis de utilizar.</p>
+        <div class="app-version"><span>VERSÃO 1.21.0</span><span>ATUALIZADO EM 03 NOV 2026</span></div>
+        <TrackedLink class="button primary app-store-link" activityId="open-image-tools-store" activityTitle="Abriu Image Tools na APKPure" href="https://apkpure.com/p/com.nexauren.imagetools">Ver na APKPure <b>↗</b></TrackedLink>
+      </article>
+
+      <article class="app-card">
+        <div class="app-card-top"><span class="app-platform">ANDROID · APKPURE</span><span class="app-status"><i/> DISPONÍVEL</span></div>
+        <div class="app-identity">
+          <div class="app-icon archiver-icon"><span>A</span><i>▤</i></div>
+          <div><div class="app-publisher">NEXAUREN</div><h2>Archiver</h2><p>Gestão de arquivos compactados.</p></div>
+        </div>
+        <FavoriteButton client:load itemId="app-archiver" title="Archiver" kind="app" href="https://apkpure.com/p/com.nexauren.archiver"/>
+        <div class="app-feature-line"><span>Ficheiros</span><span>Arquivos</span><span>Android</span></div>
+        <p class="app-description">Uma aplicação Nexauren dedicada ao trabalho com arquivos compactados. Consulta a página da loja para veres os detalhes e requisitos da versão publicada.</p>
+        <div class="app-version"><span>PUBLICAÇÃO APKPURE</span><span>DETALHES NA LOJA</span></div>
+        <TrackedLink class="button primary app-store-link" activityId="open-archiver-store" activityTitle="Abriu Archiver na APKPure" href="https://apkpure.com/p/com.nexauren.archiver">Ver na APKPure <b>↗</b></TrackedLink>
+      </article>
+    </section>
+
+    <section class="catalog-note"><span class="note-mark">N.</span><div><b>Mais aplicações a caminho.</b><p>Novos projetos serão adicionados ao catálogo quando estiverem publicados numa loja oficial.</p></div><a href="/#account">Criar conta ↗</a></section>
+  </main>
+
+  <footer><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a><p>© 2026 Nexauren Story.</p><div><a href="/privacy">Privacidade</a><a href="/terms">Termos</a></div></footer>
+</div>
+</SiteLayout>
