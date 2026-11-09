@@ -1,0 +1,24 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import AuthPanel from "../components/AuthPanel";
+---
+<SiteLayout>
+<div class="shell">
+<header class="header"><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a>
+<nav><a href="#apps">Apps</a><a href="#tools">Tools</a><a href="#blog">Blog</a><a href="#about">Sobre</a></nav>
+<div class="actions"><button class="theme" data-theme-toggle aria-label="Alternar tema">◐</button><a class="button outline" href="#account">Entrar ↗</a><button class="menu" data-menu-toggle aria-label="Abrir menu" aria-expanded="false">☰</button></div></header>
+<nav class="mobile" data-mobile-menu><a href="#apps">Apps</a><a href="#tools">Tools</a><a href="#blog">Blog</a><a href="#account">A minha conta</a></nav>
+<main>
+<section class="hero"><div class="hero-copy"><div class="eyebrow"><i/> UM UNIVERSO DIGITAL, NUM SÓ LUGAR</div><h1>Ideias que se tornam<br/><span>experiências digitais.</span></h1><p>Explora aplicações úteis, ferramentas online e conhecimento criado para simplificar o teu mundo digital.</p><div class="hero-actions"><a class="button primary" href="#apps">Explorar plataforma ↗</a><a class="quiet-link" href="#about">Conhecer a Nexauren →</a></div><div class="proof"><b>N.</b><b>S.</b><b>+</b><span>Um espaço em constante evolução<br/><strong>Construído para explorar mais.</strong></span></div></div>
+<div class="visual"><div class="orbit one"></div><div class="orbit two"></div><div class="core"><strong>N<span>.</span></strong><small>DIGITAL ECOSYSTEM</small></div><div class="float top">✦ <span><b>Apps</b><small>Experiências móveis</small></span>↗</div><div class="float bottom">⌘ <span><b>Web tools</b><small>Utilidade instantânea</small></span>↗</div><small class="visual-caption">FIG. 01 — NEXAUREN SYSTEM</small></div><div class="scroll">— DESCOBRE O ECOSSISTEMA</div></section>
+<section class="intro" id="about"><div><div class="eyebrow">01 / O ECOSSISTEMA</div><h2>Mais do que um site.<br/><em>Um ponto de partida.</em></h2></div><p>Aplicações, ferramentas e conteúdo reunidos numa plataforma simples de explorar, rápida de utilizar e preparada para crescer.</p></section>
+<section class="cards">
+<article class="feature" id="apps"><div class="card-number">01 <span>▦</span></div><div class="art apps-art"><i> N </i><i>▧</i><i>⌁</i></div><small>DESCOBRIR & INSTALAR</small><h3>Aplicações</h3><p>Conhece os aplicativos Nexauren, explora funcionalidades e encontra o caminho para a loja oficial.</p><a href="/apps">Explorar aplicações <b>↗</b></a></article>
+<article class="feature" id="tools"><div class="card-number">02 <span>⌘</span></div><div class="art tools-art"><div>⌁　▤　⌗　◈</div></div><small>UTILIDADE NO NAVEGADOR</small><h3>Ferramentas online</h3><p>Ferramentas práticas para trabalhar com imagens, documentos, texto e muito mais.</p><a href="/tools">Abrir ferramentas <b>↗</b></a></article>
+<article class="feature" id="blog"><div class="card-number">03 <span>◫</span></div><div class="art blog-art"><div>INSIGHT / 001<br/><hr/>━━━━━━<br/>━━━━<br/>━━━━━━</div></div><small>APRENDER & DESCOBRIR</small><h3>Blog</h3><p>Tutoriais, guias, novidades e ideias para tirar mais partido da tecnologia.</p><a href="/blog">Ler artigos <b>↗</b></a></article>
+</section>
+<section class="account" id="account"><div><div class="eyebrow">02 / O TEU ESPAÇO</div><h2>Uma experiência<br/><span>à tua medida.</span></h2><p>Cria a tua conta para preparar uma experiência mais pessoal: favoritos, preferências e histórico num só lugar.</p><ul><li>✓ Favoritos sincronizados</li><li>✓ Preferências pessoais</li><li>✓ Histórico de ferramentas</li></ul></div><AuthPanel client:load/></section>
+<section class="closing"><b>N.</b><p>O próximo passo da tua experiência digital começa aqui.</p><a href="#apps">Explorar agora ↗</a></section>
+</main>
+<footer><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a><p>© 2026 Nexauren Story. Feito para explorar.</p><div><a href="/privacy">Privacidade</a><a href="/terms">Termos</a></div></footer>
+</div></SiteLayout>

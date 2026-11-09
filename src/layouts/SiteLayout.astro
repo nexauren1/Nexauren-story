@@ -1,0 +1,10 @@
+---
+import "../styles/global.css";
+const {title="Nexauren Story — Apps, ferramentas e tecnologia",description="Descobre aplicações, ferramentas online e conhecimento para o teu mundo digital."}=Astro.props;
+---
+<!doctype html><html lang="pt"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#080b14"/><meta name="description" content={description}/><title>{title}</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"/></head><body><slot/>
+<script is:inline>
+const root=document.documentElement;const saved=localStorage.getItem("nexauren-theme");if(saved)root.dataset.theme=saved;
+document.addEventListener("click",e=>{const t=e.target.closest("[data-theme-toggle]");if(t){const n=root.dataset.theme==="light"?"dark":"light";root.dataset.theme=n;localStorage.setItem("nexauren-theme",n);}
+const m=e.target.closest("[data-menu-toggle]");if(m){document.querySelector("[data-mobile-menu]")?.classList.toggle("open");m.setAttribute("aria-expanded",m.getAttribute("aria-expanded")!=="true"?"true":"false");}});
+</script></body></html>
