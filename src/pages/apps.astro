@@ -5,31 +5,14 @@ import SiteFooter from "../components/SiteFooter.astro";
 import FavoriteButton from "../components/FavoriteButton";
 import TrackedLink from "../components/TrackedLink";
 ---
-<SiteLayout title="Aplicações Nexauren — Android" description="Descubra as aplicações Android desenvolvidas pela Nexauren e aceda às respetivas páginas oficiais de distribuição.">
-<div class="site-shell">
-  <SiteHeader/>
-  <main class="simple-page">
-    <div class="eyebrow"><span class="eyebrow-line"></span> ECOSSISTEMA NEXAUREN</div>
-    <h1>Aplicações <span>Android.</span></h1>
-    <p class="simple-lead">Aplicações criadas para tornar tarefas digitais mais simples. Consulte cada projeto e visite a loja onde está publicado.</p>
-    <section class="app-catalog-grid">
-      <article class="app-product-card">
-        <div class="app-product-icon image-product-icon">IT</div>
-        <div class="app-product-info"><span class="app-product-label">ANDROID · APKPURE</span><h2>Image Tools: Edit &amp; Resize</h2><p>51 ferramentas para editar, redimensionar, comprimir e converter imagens.</p>
-        <div class="app-product-meta"><span>Versão 1.21.0</span><span>6,9 MB</span><span>Android 10+</span></div></div>
-        <FavoriteButton client:load itemId="app-image-tools" title="Image Tools: Edit & Resize" kind="app" href="https://apkpure.com/p/com.nexauren.imagetools"/>
-        <TrackedLink class="primary-button" activityId="open-image-tools-store" activityTitle="Abriu Image Tools na APKPure" href="https://apkpure.com/p/com.nexauren.imagetools">Ver na APKPure ↗</TrackedLink>
-      </article>
-      <article class="app-product-card">
-        <div class="app-product-icon archiver-product-icon">A</div>
-        <div class="app-product-info"><span class="app-product-label">ANDROID · APKPURE</span><h2>Archiver</h2><p>Ferramenta Nexauren para trabalhar com arquivos compactados.</p>
-        <div class="app-product-meta"><span>Disponível na APKPure</span><span>Android</span></div></div>
-        <FavoriteButton client:load itemId="app-archiver" title="Archiver" kind="app" href="https://apkpure.com/p/com.nexauren.archiver"/>
-        <TrackedLink class="primary-button" activityId="open-archiver-store" activityTitle="Abriu Archiver na APKPure" href="https://apkpure.com/p/com.nexauren.archiver">Ver na APKPure ↗</TrackedLink>
-      </article>
-    </section>
-    <div class="catalog-note"><b>N.</b><span><strong>Mais aplicações em desenvolvimento.</strong><small>O catálogo será atualizado à medida que novos projetos forem publicados.</small></span></div>
-  </main>
-  <SiteFooter/>
-</div>
-</SiteLayout>
+<SiteLayout title="Aplicações Android — Nexauren" description="Conhece as aplicações Android Nexauren, os seus recursos e as respetivas páginas oficiais de distribuição.">
+<div class="site-shell"><SiteHeader/><main class="simple-page apps-page">
+  <div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / APLICAÇÕES</div>
+  <h1>Software pensado<br/><span>para o teu dia a dia.</span></h1>
+  <p class="simple-lead">Aplicações Android com ferramentas práticas, interfaces cuidadas e foco em utilidade. Consulta os detalhes e visita sempre a página oficial de distribuição.</p>
+  <section class="app-catalog-grid">
+    <article class="app-product-card app-product-featured"><div class="app-product-icon image-product-icon">IT</div><div class="app-product-info"><span class="app-product-label">ANDROID · APKPURE</span><h2>Image Tools: Edit &amp; Resize</h2><p>Um conjunto de ferramentas para editar, redimensionar, comprimir e converter imagens no telemóvel.</p><div class="app-product-meta"><span>51 ferramentas</span><span>Versão 1.21.0</span><span>6,9 MB</span><span>Android 10+</span></div></div><FavoriteButton client:load itemId="app-image-tools" title="Image Tools: Edit & Resize" kind="app" href="https://apkpure.com/p/com.nexauren.imagetools"/><TrackedLink class="primary-button" activityId="open-image-tools-store" activityTitle="Abriu Image Tools na APKPure" href="https://apkpure.com/p/com.nexauren.imagetools">Abrir página oficial <span>↗</span></TrackedLink></article>
+    <article class="app-product-card"><div class="app-product-icon archiver-product-icon">A</div><div class="app-product-info"><span class="app-product-label">ANDROID · APKPURE</span><h2>Archiver</h2><p>Gestão de arquivos compactados para manter documentos e ficheiros organizados.</p><div class="app-product-meta"><span>Disponível na APKPure</span><span>Android</span></div></div><FavoriteButton client:load itemId="app-archiver" title="Archiver" kind="app" href="https://apkpure.com/p/com.nexauren.archiver"/><TrackedLink class="primary-button" activityId="open-archiver-store" activityTitle="Abriu Archiver na APKPure" href="https://apkpure.com/p/com.nexauren.archiver">Abrir página oficial <span>↗</span></TrackedLink></article>
+  </section>
+  <div class="app-development-strip"><span class="app-development-icon">N.</span><span><b>O ecossistema está em evolução.</b><small>Novas aplicações serão apresentadas aqui quando estiverem prontas para distribuição.</small></span><a href="/account">Guardar favoritos <b>↗</b></a></div>
+</main><SiteFooter/></div></SiteLayout>

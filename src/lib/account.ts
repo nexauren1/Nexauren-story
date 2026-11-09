@@ -8,6 +8,7 @@ import {
   limit,
   orderBy,
   onSnapshot,
+  runTransaction,
   query,
   serverTimestamp,
   setDoc,
@@ -74,18 +75,15 @@ export async function toggleFavorite(
 ): Promise<boolean> {
   const { db } = getFirebaseClient();
   const favoriteRef = doc(db, "users", user.uid, "favorites", item.id);
-  const existing = await getDoc(favoriteRef);
-
-  if (existing.exists()) {
-    await deleteDoc(favoriteRef);
-    return false;
-  }
-
-  await setDoc(favoriteRef, {
-    ...item,
-    savedAt: serverTimestamp(),
+  return runTransaction(db, async (transaction) => {
+    const existing = await transaction.get(favoriteRef);
+    if (existing.exists()) {
+      transaction.delete(favoriteRef);
+      return false;
+    }
+    transaction.set(favoriteRef, { ...item, savedAt: serverTimestamp() });
+    return true;
   });
-  return true;
 }
 
 export async function recordActivity(

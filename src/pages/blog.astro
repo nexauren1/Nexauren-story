@@ -3,15 +3,15 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 ---
-<SiteLayout title="Blog — Nexauren" description="Guias e artigos sobre ferramentas digitais, aplicações e produtividade.">
-<div class="site-shell">
-  <SiteHeader/>
-  <main class="simple-page blog-page">
-    <div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / CONHECIMENTO</div>
-    <h1>Ideias, guias e<br/><span>conhecimento digital.</span></h1>
-    <p class="simple-lead">Artigos e tutoriais para tirar mais partido das ferramentas, aplicações e tecnologia que utilizas todos os dias.</p>
-    <div class="blog-coming-card"><div class="blog-art-icon">N.</div><div><span class="section-kicker">A PREPARAR</span><h2>Os primeiros artigos estão a caminho.</h2><p>Estamos a organizar guias práticos e conteúdos sobre imagem, PDF, áudio, aplicações Android e produtividade.</p><a class="text-link" href="/tools">Explorar ferramentas ↗</a></div></div>
-  </main>
-  <SiteFooter/>
-</div>
-</SiteLayout>
+<SiteLayout title="Guias e conhecimento digital — Nexauren" description="Guias práticos para trabalhar com imagens, PDFs, texto e áudio usando as ferramentas Nexauren.">
+<div class="site-shell"><SiteHeader/><main class="simple-page editorial-page">
+  <div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / JOURNAL</div>
+  <h1>Guias para fazer<br/><span>mais, com confiança.</span></h1>
+  <p class="simple-lead">Tutoriais diretos, explicações úteis e pequenas estratégias para resolver tarefas digitais com menos esforço.</p>
+  <div class="editorial-feature"><div class="editorial-feature-art"><span>01</span><b>PDF</b><i>↗</i></div><div><span class="article-kicker">GUIA DE DOCUMENTOS · 5 MIN</span><h2>Como juntar vários PDFs num único documento</h2><p>Prepara a ordem, combina os ficheiros e cria um documento final sem enviar os teus ficheiros para um serviço externo.</p><a href="/blog/juntar-pdfs">Ler o guia completo <b>↗</b></a></div></div>
+  <section class="editorial-grid">
+    <article class="editorial-card"><span class="article-card-icon image-card-icon">▧</span><span class="article-kicker">IMAGEM · 4 MIN</span><h2>Como redimensionar imagens para qualquer utilização</h2><p>Entende dimensões, proporção e formatos antes de exportar.</p><a href="/blog/redimensionar-imagens">Ler artigo <b>↗</b></a></article>
+    <article class="editorial-card"><span class="article-card-icon text-card-icon">Aa</span><span class="article-kicker">TEXTO · 3 MIN</span><h2>Como limpar e organizar texto rapidamente</h2><p>Remove linhas duplicadas, corrige espaços e melhora a leitura.</p><a href="/blog/organizar-texto">Ler artigo <b>↗</b></a></article>
+    <article class="editorial-card"><span class="article-card-icon audio-card-icon">♫</span><span class="article-kicker">ÁUDIO · 4 MIN</span><h2>Como cortar um excerto de áudio com precisão</h2><p>Escolhe o início e o fim do trecho e exporta o resultado.</p><a href="/blog/cortar-audio">Ler artigo <b>↗</b></a></article>
+  </section>
+</main><SiteFooter/></div></SiteLayout>

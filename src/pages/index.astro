@@ -3,96 +3,65 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 ---
-<SiteLayout title="Nexauren — Ferramentas online para o dia a dia" description="Edite, comprima e converta imagens, PDFs, áudio e texto com ferramentas online simples, rápidas e seguras.">
+<SiteLayout title="Nexauren — Ferramentas digitais, num só espaço" description="Ferramentas gratuitas para imagem, PDF, texto e áudio. Redimensiona, corta, combina, extrai páginas e transforma ficheiros diretamente no teu dispositivo.">
 <div class="site-shell">
-  <SiteHeader />
-  <main>
-    <section class="tools-hero">
-      <div class="eyebrow"><span class="eyebrow-line"></span> FERRAMENTAS ONLINE · NEXAUREN</div>
-      <h1>Ferramentas online<br/><span>práticas para o seu dia a dia.</span></h1>
-      <p>Edite, comprima e converta os seus ficheiros em segundos. Simples, rápido e diretamente no navegador.</p>
-      <form class="tool-search" action="/tools" method="get" role="search">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
-        <input id="home-tool-search" name="q" type="search" placeholder="Pesquise uma ferramenta, ex.: Comprimir PDF..." aria-label="Pesquisar ferramentas"/>
-        <button type="submit">Buscar</button>
-      </form>
-      <div class="popular-tools"><span>Populares:</span><a href="/tools/image-resizer">Image Resizer</a><i>•</i><a href="/tools/pdf-compressor">Comprimir PDF</a><i>•</i><a href="/tools/audio-cutter">Cortar Áudio</a><i>•</i><a href="/tools/text">Contador de Palavras</a></div>
-    </section>
-
-    <section class="category-section" id="tools">
-      <div class="section-heading"><div><span class="section-kicker">01 / EXPLORAR</span><h2>Categorias</h2><p>Escolha uma categoria e comece agora.</p></div><a class="text-link" href="/tools">Ver todas as ferramentas <span>↗</span></a></div>
-      <div class="category-grid">
-        <article class="category-card" id="image">
-          <div class="category-card-head"><span class="category-icon icon-image"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></span><div><h3>Imagem</h3><p>Edição e conversão de imagens</p></div></div>
-          <div class="category-tools">
-            <a href="/tools/image-resizer"><span>↔</span> Image Resizer</a>
-            <a href="/tools/image-resizer"><span>◈</span> Compressor de Imagem</a>
-            <a href="/tools/image-resizer"><span>⇄</span> Conversor JPG para PNG</a>
-            <a href="/tools/image-resizer"><span>✧</span> Ajustar dimensões</a>
-          </div>
-          <a class="category-open" href="/tools/image">Explorar imagem <b>↗</b></a>
-        </article>
-
-        <article class="category-card" id="pdf">
-          <div class="category-card-head"><span class="category-icon icon-pdf"><svg viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M14 2v6h5M8 14h8M8 18h6"/></svg></span><div><h3>PDF</h3><p>Trabalhe com arquivos PDF facilmente</p></div></div>
-          <div class="category-tools">
-            <a href="/tools/pdf-compressor"><span>⇄</span> Comprimir PDF</a>
-            <a href="/tools/pdf-compressor"><span>▣</span> Otimizar PDF</a>
-            <a href="/tools/pdf-compressor"><span>↧</span> Preparar para partilhar</a>
-            <a href="/tools/pdf-compressor"><span>⌕</span> Verificar ficheiros</a>
-          </div>
-          <a class="category-open" href="/tools/pdf">Explorar PDF <b>↗</b></a>
-        </article>
-
-        <article class="category-card" id="text">
-          <div class="category-card-head"><span class="category-icon icon-text"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div><h3>Texto</h3><p>Ferramentas de texto rápidas e úteis</p></div></div>
-          <div class="category-tools">
-            <a href="/tools/text"><span>☷</span> Contador de Palavras</a>
-            <a href="/tools/text"><span>⌁</span> Remover Espaços</a>
-            <a href="/tools/text"><span>Aa</span> Maiúsculas e Minúsculas</a>
-            <a href="/tools/text"><span>文</span> Traduzir Texto</a>
-          </div>
-          <a class="category-open" href="/tools/text">Explorar texto <b>↗</b></a>
-        </article>
-
-        <article class="category-card" id="audio">
-          <div class="category-card-head"><span class="category-icon icon-audio"><svg viewBox="0 0 24 24"><path d="M3 10v4M7 6v12M11 3v18M15 7v10M19 5v14M23 9v6"/></svg></span><div><h3>Áudio</h3><p>Edite e corte os seus ficheiros de áudio</p></div></div>
-          <div class="category-tools">
-            <a href="/tools/audio-cutter"><span>⌁</span> Cortar Áudio</a>
-            <a href="/tools/audio-cutter"><span>♫</span> Extrair trecho de áudio</a>
-            <a href="/tools/audio-cutter"><span>◖</span> Pré-visualizar áudio</a>
-            <a href="/tools/audio-cutter"><span>⇩</span> Exportar WAV</a>
-          </div>
-          <a class="category-open" href="/tools/audio">Explorar áudio <b>↗</b></a>
-        </article>
+  <SiteHeader/>
+  <main class="home-premium">
+    <section class="home-hero">
+      <div class="home-hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN DIGITAL WORKSPACE</div>
+        <h1>Resolve mais.<br/><span>Com menos passos.</span></h1>
+        <p>Um espaço digital para trabalhar com os teus ficheiros. Ferramentas práticas, processamento no navegador e uma experiência organizada para cada tarefa.</p>
+        <div class="home-hero-actions"><a class="home-primary-cta" href="/tools">Explorar ferramentas <b>↗</b></a><a class="home-secondary-cta" href="/apps">Conhecer aplicações <span>→</span></a></div>
+        <div class="home-proof-row"><span><i/> Sem instalar programas</span><span><i/> Ficheiros no teu dispositivo</span></div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-visual-glow"></div>
+        <div class="hero-visual-top"><span>WORKSPACE / 01</span><span class="hero-live"><i/> ONLINE</span></div>
+        <div class="hero-visual-orbit"><div class="orbit-ring orbit-one"></div><div class="orbit-ring orbit-two"></div><div class="orbit-core">N.</div><span class="orbit-chip chip-image">▧ IMAGEM</span><span class="orbit-chip chip-pdf">PDF</span><span class="orbit-chip chip-audio">♫ ÁUDIO</span><span class="orbit-chip chip-text">Aa TEXTO</span></div>
+        <div class="hero-visual-bottom"><span>FERRAMENTAS INTEGRADAS</span><strong>Um único espaço. Muitas soluções.</strong></div>
       </div>
     </section>
 
-    <section class="popular-section">
-      <div class="section-heading"><div><span class="section-kicker">02 / ACESSO RÁPIDO</span><h2>Ferramentas em destaque</h2><p>Comece com uma destas ferramentas.</p></div></div>
-      <div class="featured-grid">
-        <a class="featured-tool" href="/tools/image-resizer"><span class="featured-icon icon-image">↔</span><span><b>Image Resizer</b><small>Redimensione e comprima imagens</small></span><i>↗</i></a>
-        <a class="featured-tool" href="/tools/pdf-compressor"><span class="featured-icon icon-pdf">PDF</span><span><b>Comprimir PDF</b><small>Otimize documentos PDF</small></span><i>↗</i></a>
-        <a class="featured-tool" href="/tools/audio-cutter"><span class="featured-icon icon-audio">♫</span><span><b>Cortar Áudio</b><small>Selecione e exporte um trecho</small></span><i>↗</i></a>
+    <section class="home-stats">
+      <div><strong>10+</strong><span>operações disponíveis</span></div>
+      <div><strong>04</strong><span>áreas especializadas</span></div>
+      <div><strong>Local</strong><span>processamento no navegador</span></div>
+      <div><strong>Cloud</strong><span>conta e favoritos sincronizados</span></div>
+    </section>
+
+    <section class="home-section">
+      <div class="home-section-heading"><div><span class="section-kicker">01 / FERRAMENTAS</span><h2>O que precisas de fazer?</h2><p>Entra diretamente na ferramenta. Cada operação tem o seu próprio espaço de trabalho.</p></div><a href="/tools" class="home-section-link">Ver todas as ferramentas <b>↗</b></a></div>
+      <div class="home-tool-grid">
+        <a class="home-tool-card featured-tool-card" href="/tools/image-resizer"><span class="tool-card-icon image-card-icon">↔</span><span class="tool-card-kicker">IMAGEM · 01</span><h3>Redimensionar e converter</h3><p>Ajusta dimensões, qualidade e formato de imagens JPG, PNG e WebP.</p><span class="tool-card-bottom">Abrir Image Studio <b>↗</b></span></a>
+        <a class="home-tool-card" href="/tools/image-cropper"><span class="tool-card-icon image-card-icon">▧</span><span class="tool-card-kicker">IMAGEM · 02</span><h3>Cortar imagem</h3><p>Define coordenadas e cria um recorte preciso para cada utilização.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
+        <a class="home-tool-card" href="/tools/pdf-compressor"><span class="tool-card-icon pdf-card-icon">PDF</span><span class="tool-card-kicker">DOCUMENTOS · 03</span><h3>Otimizar PDF</h3><p>Reestrutura documentos e prepara uma versão otimizada para partilhar.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
+        <a class="home-tool-card" href="/tools/pdf-merger"><span class="tool-card-icon pdf-card-icon">＋</span><span class="tool-card-kicker">DOCUMENTOS · 04</span><h3>Juntar PDFs</h3><p>Combina vários ficheiros num único documento, respeitando a ordem.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
+        <a class="home-tool-card" href="/tools/pdf-splitter"><span class="tool-card-icon pdf-card-icon">⇱</span><span class="tool-card-kicker">DOCUMENTOS · 05</span><h3>Extrair páginas</h3><p>Escolhe intervalos específicos e cria um novo PDF com as páginas pretendidas.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
+        <a class="home-tool-card" href="/tools/pdf-rotator"><span class="tool-card-icon pdf-card-icon">↻</span><span class="tool-card-kicker">DOCUMENTOS · 06</span><h3>Rodar PDF</h3><p>Corrige a orientação de todas as páginas ou apenas de uma página.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
+        <a class="home-tool-card" href="/tools/text-toolbox"><span class="tool-card-icon text-card-icon">Aa</span><span class="tool-card-kicker">TEXTO · 07</span><h3>Caixa de ferramentas de texto</h3><p>Conta, limpa, ordena, inverte e transforma texto com um só painel.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
+        <a class="home-tool-card" href="/tools/audio-cutter"><span class="tool-card-icon audio-card-icon">♫</span><span class="tool-card-kicker">ÁUDIO · 08</span><h3>Cortar áudio</h3><p>Seleciona um intervalo, ouve o excerto e exporta para WAV.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
+        <a class="home-tool-card" href="/tools/audio-normalizer"><span class="tool-card-icon audio-card-icon">≋</span><span class="tool-card-kicker">ÁUDIO · 09</span><h3>Normalizar volume</h3><p>Analisa o pico de áudio e ajusta o nível de saída com controlo.</p><span class="tool-card-bottom">Abrir ferramenta <b>↗</b></span></a>
       </div>
     </section>
 
-    <section class="account-section account-promo">
-    <div class="account-copy"><span class="section-kicker">03 / ESPAÇO PESSOAL</span><h2>A tua conta,<br/><span>em todos os dispositivos.</span></h2><p>Inicia sessão para manter os teus favoritos e o teu histórico associados à mesma conta, mesmo quando mudas de telemóvel ou computador.</p></div>
-    <a class="account-promo-card" href="/account"><span class="account-promo-icon">↗</span><strong>Minha conta Nexauren</strong><small>Entrar, criar conta e consultar os teus dados sincronizados.</small><span class="account-promo-link">Abrir a minha conta <b>→</b></span></a>
-  </section>
+    <section class="home-category-band">
+      <div class="home-section-heading"><div><span class="section-kicker">02 / EXPLORAR POR ÁREA</span><h2>Quatro áreas. Uma experiência.</h2><p>Organização clara para chegares mais depressa ao que procuras.</p></div></div>
+      <div class="home-category-grid">
+        <a href="/tools/image"><span class="home-category-symbol image-card-icon">▧</span><span><b>Imagem</b><small>Redimensionar · Cortar · Converter</small></span><b class="category-arrow">↗</b></a>
+        <a href="/tools/pdf"><span class="home-category-symbol pdf-card-icon">PDF</span><span><b>PDF</b><small>Otimizar · Juntar · Dividir · Rodar</small></span><b class="category-arrow">↗</b></a>
+        <a href="/tools/text"><span class="home-category-symbol text-card-icon">Aa</span><span><b>Texto</b><small>Contar · Limpar · Ordenar · Formatar</small></span><b class="category-arrow">↗</b></a>
+        <a href="/tools/audio"><span class="home-category-symbol audio-card-icon">♫</span><span><b>Áudio</b><small>Cortar · Pré-visualizar · Normalizar</small></span><b class="category-arrow">↗</b></a>
+      </div>
+    </section>
+
+    <section class="home-security">
+      <div class="security-visual"><div class="security-ring">⌑</div><span>LOCAL-FIRST</span></div>
+      <div><span class="section-kicker">03 / PRIVACIDADE E CONTROLO</span><h2>Os teus ficheiros ficam contigo.</h2><p>As ferramentas de imagem, PDF, texto e áudio desta área executam o processamento no navegador. Os ficheiros selecionados não são enviados para um servidor da Nexauren.</p><a href="/privacy">Ler a política de privacidade <b>↗</b></a></div>
+    </section>
+
+    <section class="home-account-cta"><div><span class="section-kicker">04 / CONTA NEXAUREN</span><h2>Continua o teu trabalho<br/><span>em qualquer dispositivo.</span></h2><p>Entra com a mesma conta para manter favoritos e histórico sincronizados na cloud.</p></div><a href="/account">Abrir a minha conta <b>↗</b></a></section>
   </main>
   <SiteFooter/>
 </div>
-<script>
-  const search = document.querySelector("#home-tool-search");
-  search?.addEventListener("input", () => {
-    const term = search.value.trim().toLocaleLowerCase();
-    document.querySelectorAll(".category-card").forEach((card) => {
-      const haystack = card.textContent?.toLocaleLowerCase() ?? "";
-      card.classList.toggle("search-dimmed", Boolean(term) && !haystack.includes(term));
-      card.classList.toggle("search-match", Boolean(term) && haystack.includes(term));
-    });
-  });
-</script>
 </SiteLayout>

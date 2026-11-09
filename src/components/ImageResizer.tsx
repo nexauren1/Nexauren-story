@@ -25,7 +25,6 @@ export default function ImageResizer() {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const [compare, setCompare] = useState(50);
   const [processedBlob, setProcessedBlob] = useState<Blob | null>(null);
 
   useEffect(() => {
@@ -133,7 +132,6 @@ export default function ImageResizer() {
         return nextUrl;
       });
       setProcessedBlob(output);
-      setCompare(50);
       setProgress(100);
       const sizeDifference = Math.round((1 - output.size / file.size) * 100);
       setNotice(
@@ -175,8 +173,8 @@ export default function ImageResizer() {
     <div className="tool-workspace image-workspace">
       <section className="tool-panel">
         <div className="panel-topline">
-          <h2>Pré-visualização</h2>
-          {resultUrl && <span className="preview-mode-label">ANTES / DEPOIS</span>}
+          <h2>Pré-visualização do resultado</h2>
+          {resultUrl && <span className="preview-mode-label">RESULTADO PRONTO</span>}
         </div>
         {!file ? (
           <label
@@ -193,15 +191,11 @@ export default function ImageResizer() {
           </label>
         ) : (
           <>
-            <div className="compare-frame" style={{ "--compare-position": `${compare}%` } as React.CSSProperties}>
-              <img src={sourceUrl} alt="Imagem original"/>
-              {resultUrl && <img className="compare-after" src={resultUrl} alt="Imagem depois do processamento"/>}
-              <span className="compare-label before">ANTES</span>
-              {resultUrl && <span className="compare-label after">DEPOIS</span>}
-              {resultUrl && <div className="compare-divider"/>}
-              {resultUrl && <input className="compare-control" type="range" min="0" max="100" value={compare} onChange={(event) => setCompare(Number(event.target.value))} aria-label="Comparar imagem antes e depois"/>}
+            <div className="preview-stage image-result-stage">
+              <img src={resultUrl || sourceUrl} alt={resultUrl ? "Imagem processada" : "Imagem original"} />
+              <span className="image-preview-badge">{resultUrl ? "RESULTADO" : "ORIGINAL"}</span>
             </div>
-            <div className="file-caption">{file.name} · {naturalSize.width} × {naturalSize.height} px{resultUrl ? ` → ${newWidth} × ${newHeight} px` : ""}</div>
+            <div className="file-caption">{file.name} · {naturalSize.width} × {naturalSize.height} px{resultUrl ? ` · Resultado: ${newWidth} × ${newHeight} px` : ""}</div>
             <div className="image-toolbar">
               <span className="file-selected"><b>▧</b><span><strong>{file.name}</strong><small>{readableSize(file.size)}</small></span></span>
               <button className="secondary-button" onClick={() => { setFile(null); setResultUrl(""); setProcessedBlob(null); setError(""); setNotice(""); }}>Remover imagem</button>
