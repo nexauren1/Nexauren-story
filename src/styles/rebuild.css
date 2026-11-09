@@ -317,3 +317,93 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .scroll-reveal{opacity:1;transform:none}
 }
+
+/* Category-only landing page */
+.nx-category-directory-controls { max-width: 760px; }
+.nx-category-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 17px;
+  margin: 0 0 25px;
+}
+.nx-directory-category-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  padding: 23px;
+  border: 1px solid #e3e9f2;
+  border-radius: 19px;
+  background: #fff;
+  box-shadow: 0 8px 26px rgba(25,42,78,.045);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.nx-directory-category-card:hover {
+  transform: translateY(-4px);
+  border-color: #c8d6f4;
+  box-shadow: var(--nx-shadow-hover);
+}
+.nx-directory-category-card[hidden] { display: none !important; }
+.nx-directory-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.nx-directory-card-top .nx-category-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  font-size: 22px;
+}
+.nx-directory-index {
+  color: #a0aabd;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1.2px;
+}
+.nx-directory-category-card h2 {
+  margin: 19px 0 5px;
+  color: #1e2c4b;
+  font-size: 22px;
+  letter-spacing: -.6px;
+}
+.nx-directory-category-card > p {
+  min-height: 42px;
+  margin: 0 0 18px;
+  color: #78859a;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.nx-directory-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid #edf0f5;
+  color: #8a95a7;
+  font-size: 10px;
+}
+.nx-directory-card-bottom > span:first-child b {
+  color: #334f91;
+  font-size: 13px;
+}
+.nx-directory-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #315bd0;
+  font-size: 10px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+.nx-directory-open b { font-size: 15px; }
+@media(max-width:760px) {
+  .nx-category-directory-grid { grid-template-columns: 1fr; gap: 11px; }
+  .nx-directory-category-card { min-height: 190px; padding: 18px; border-radius: 15px; }
+  .nx-directory-category-card h2 { margin-top: 14px; font-size: 20px; }
+  .nx-directory-category-card > p { min-height: 0; margin-bottom: 15px; font-size: 11px; }
+  .nx-directory-card-bottom { font-size: 9px; }
+}
