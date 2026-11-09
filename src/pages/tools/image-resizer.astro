@@ -2,6 +2,7 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import TrackActivity from "../../components/TrackActivity";
 import ImageResizer from "../../components/ImageResizer";
 ---
 <SiteLayout title="Image Resizer — Redimensionar e comprimir imagens | Nexauren" description="Redimensione, comprima e converta imagens JPG, PNG e WebP diretamente no navegador.">
@@ -15,7 +16,8 @@ import ImageResizer from "../../components/ImageResizer";
     </header>
     <ImageResizer client:load/>
     <p class="tool-footer-note">Nexauren · Image Resizer · <a href="/privacy">Privacidade</a> · <a href="/terms">Termos de Uso</a></p>
-  </main>
+  <TrackActivity client:load activityId="tool-image-studio" activityTitle="Usou o Image Studio para redimensionar ou converter imagens"/>
+    </main>
   <SiteFooter/>
 </div>
 </SiteLayout>

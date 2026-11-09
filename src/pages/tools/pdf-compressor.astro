@@ -2,6 +2,7 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import TrackActivity from "../../components/TrackActivity";
 import PDFCompressor from "../../components/PDFCompressor";
 ---
 <SiteLayout title="Comprimir PDF — Otimizador de PDF | Nexauren" description="Otimize a estrutura dos seus documentos PDF diretamente no navegador, sem enviar os ficheiros para um servidor.">
@@ -15,7 +16,8 @@ import PDFCompressor from "../../components/PDFCompressor";
     </header>
     <PDFCompressor client:load/>
     <p class="tool-footer-note">Nexauren · Compressor de PDF · <a href="/privacy">Privacidade</a> · <a href="/terms">Termos de Uso</a></p>
-  </main>
+  <TrackActivity client:load activityId="tool-pdf-optimizer" activityTitle="Otimizou um documento PDF"/>
+    </main>
   <SiteFooter/>
 </div>
 </SiteLayout>

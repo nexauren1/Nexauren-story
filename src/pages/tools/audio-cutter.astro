@@ -2,6 +2,7 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import TrackActivity from "../../components/TrackActivity";
 import AudioCutter from "../../components/AudioCutter";
 ---
 <SiteLayout title="Cortar Áudio — Editor de áudio online | Nexauren" description="Selecione um trecho de um ficheiro de áudio, pré-visualize e exporte o resultado em WAV diretamente no navegador.">
@@ -15,7 +16,8 @@ import AudioCutter from "../../components/AudioCutter";
     </header>
     <AudioCutter client:load/>
     <p class="tool-footer-note">Nexauren · Cortar Áudio · <a href="/privacy">Privacidade</a> · <a href="/terms">Termos de Uso</a></p>
-  </main>
+  <TrackActivity client:load activityId="tool-audio-cutter" activityTitle="Cortou um ficheiro de áudio"/>
+    </main>
   <SiteFooter/>
 </div>
 </SiteLayout>
