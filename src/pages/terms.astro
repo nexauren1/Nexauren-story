@@ -1,9 +1,31 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 ---
-<SiteLayout title="Termos de utilização — Nexauren Story" description="Condições de utilização dos serviços e conteúdos Nexauren Story.">
-<div class="shell">
-<header class="header"><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a><nav><a href="/apps">Apps</a><a href="/tools">Tools</a><a href="/blog">Blog</a></nav><div class="actions"><button class="theme" data-theme-toggle aria-label="Alternar tema">◐</button><a class="button outline" href="/#account">Entrar ↗</a></div></header>
-<main style="min-height:65vh;display:grid;align-content:center;padding:80px 0"><div class="eyebrow"><i/> NEXAUREN STORY / ECOSSISTEMA</div><h1 style="max-width:850px">Termos de utilização<br/><span>Os termos de utilização serão publicados antes do lançamento.</span></h1><p style="color:var(--muted);max-width:600px;line-height:1.8">Condições de utilização dos serviços e conteúdos Nexauren Story.</p><a class="button primary" style="width:max-content;margin-top:24px" href="/">Voltar ao início ↗</a></main>
-<footer><a class="brand" href="/"><span class="brand-icon">N.</span><span>NEXAUREN<small>STORY</small></span></a><p>© 2026 Nexauren Story.</p><div><a href="/privacy">Privacidade</a><a href="/terms">Termos</a></div></footer>
-</div></SiteLayout>
+<SiteLayout title="Termos de Utilização — Nexauren" description="Condições gerais de utilização das ferramentas e da conta Nexauren.">
+<div class="site-shell">
+  <SiteHeader/>
+  <main class="legal-page">
+    <div class="eyebrow"><span class="eyebrow-line"></span> INFORMAÇÃO LEGAL</div>
+    <h1>Termos de <span>Utilização.</span></h1>
+    <p class="legal-updated">Última atualização: 9 de novembro de 2026</p>
+    <p>Ao utilizar a Nexauren, aceita estes termos. Leia-os antes de utilizar as ferramentas ou criar uma conta.</p>
+    <h2>1. Utilização das ferramentas</h2>
+    <p>As ferramentas são disponibilizadas para tarefas pessoais e profissionais lícitas. É responsável pelos ficheiros que seleciona, pelo conteúdo que processa e por assegurar que tem autorização para utilizar esses ficheiros.</p>
+    <h2>2. Processamento no dispositivo</h2>
+    <p>As ferramentas de imagem, áudio e a atual ferramenta de otimização PDF processam os ficheiros localmente no navegador. O resultado depende do formato, qualidade e características do ficheiro original. A Nexauren não garante uma percentagem específica de redução, compatibilidade com todos os ficheiros ou resultados sem erros.</p>
+    <h2>3. Conta e segurança</h2>
+    <p>O utilizador deve fornecer informações corretas e manter a segurança das credenciais de acesso. A conta é pessoal. Não tente aceder a dados de outros utilizadores, contornar regras de segurança ou interferir com o funcionamento da plataforma.</p>
+    <h2>4. Disponibilidade</h2>
+    <p>As ferramentas e funcionalidades podem ser atualizadas, alteradas ou temporariamente indisponibilizadas para manutenção, segurança ou melhoria. A plataforma é fornecida tal como está, na medida permitida pela legislação aplicável.</p>
+    <h2>5. Conteúdo e propriedade intelectual</h2>
+    <p>A marca Nexauren, o design, textos e componentes próprios do site pertencem aos respetivos titulares. Não copie, redistribua ou explore comercialmente esses elementos sem autorização. Os ficheiros que carrega continuam a ser seus.</p>
+    <h2>6. Utilização responsável</h2>
+    <p>Não utilize a plataforma para atividades ilegais, violação de direitos de terceiros, distribuição de conteúdo malicioso ou tentativas de comprometer a segurança do serviço.</p>
+    <h2>7. Contacto</h2>
+    <p>Para questões sobre estes termos, contacte <a href="mailto:contact@nexaurenstory.com">contact@nexaurenstory.com</a>.</p>
+  </main>
+  <SiteFooter/>
+</div>
+</SiteLayout>
