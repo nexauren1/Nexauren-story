@@ -1,11 +1,14 @@
 import { useEffect, useState, type FormEvent } from "react";
 import {
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
+  getRedirectResult,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signInWithRedirect,
   sendPasswordResetEmail,
+  setPersistence,
   signOut,
   type User,
 } from "firebase/auth";
@@ -13,7 +16,7 @@ import type { Timestamp } from "firebase/firestore";
 import { getFirebaseClient } from "../lib/firebase";
 import {
   ensureUserProfile,
-  getAccountOverview,
+  subscribeAccountOverview,
   type AccountOverview,
 } from "../lib/account";
 
@@ -66,17 +69,16 @@ export default function AuthPanel() {
   const [overview, setOverview] = useState<AccountOverview>(emptyOverview);
 
   useEffect(() => {
-    if (!user) return;
-    const refreshOverview = () => {
-      void getAccountOverview(user).then(setOverview).catch(() => undefined);
-    };
-    window.addEventListener("nexauren:favorites-updated", refreshOverview);
-    return () => window.removeEventListener("nexauren:favorites-updated", refreshOverview);
+    if (!user) { setOverview(emptyOverview); return; }
+    return subscribeAccountOverview(user, setOverview, () =>
+      setMessage("Não foi possível atualizar os dados da conta. Verifica a ligação e as regras do Firestore."),
+    );
   }, [user]);
 
   useEffect(() => {
     const { auth } = getFirebaseClient();
-    return onAuthStateChanged(auth, async (currentUser) => {
+    let active = true;
+    const stopListening = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setMessage("");
       if (!currentUser) {
@@ -84,20 +86,17 @@ export default function AuthPanel() {
         setChecking(false);
         return;
       }
-
       setChecking(true);
-      try {
-        await ensureUserProfile(currentUser);
-        const data = await getAccountOverview(currentUser);
-        setOverview(data);
-      } catch {
-        setMessage(
-          "A sessão está ativa, mas não foi possível sincronizar o perfil. Confirma as regras do Firestore.",
-        );
-      } finally {
-        setChecking(false);
-      }
+      void ensureUserProfile(currentUser).catch(() => {
+        if (active && auth.currentUser?.uid === currentUser.uid) {
+          setMessage("A sessão está ativa, mas não foi possível sincronizar o perfil. Verifica as regras do Firestore.");
+        }
+      }).finally(() => {
+        if (active && auth.currentUser?.uid === currentUser.uid) setChecking(false);
+      });
     });
+    void getRedirectResult(auth).catch((error) => setMessage(readableAuthError(error)));
+    return () => { active = false; stopListening(); };
   }, []);
 
   async function perform(action: () => Promise<unknown>, successMessage = "Pedido concluído.") {
@@ -116,22 +115,24 @@ export default function AuthPanel() {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const { auth } = getFirebaseClient();
-    void perform(() =>
-      mode === "register"
+    void perform(async () => {
+      await setPersistence(auth, browserLocalPersistence);
+      return mode === "register"
         ? createUserWithEmailAndPassword(auth, email.trim(), password)
-        : signInWithEmailAndPassword(auth, email.trim(), password),
-    );
+        : signInWithEmailAndPassword(auth, email.trim(), password);
+    });
   }
 
   function continueWithGoogle() {
     const { auth, googleProvider } = getFirebaseClient();
     googleProvider.setCustomParameters({ prompt: "select_account" });
     const mobileBrowser = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    void perform(() =>
-      mobileBrowser
+    void perform(async () => {
+      await setPersistence(auth, browserLocalPersistence);
+      return mobileBrowser
         ? signInWithRedirect(auth, googleProvider)
-        : signInWithPopup(auth, googleProvider),
-    );
+        : signInWithPopup(auth, googleProvider);
+    });
   }
 
   function leaveAccount() {

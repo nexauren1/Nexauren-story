@@ -1,6 +1,5 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import AuthPanel from "../components/AuthPanel";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 ---
@@ -17,7 +16,7 @@ import SiteFooter from "../components/SiteFooter.astro";
         <input id="home-tool-search" name="q" type="search" placeholder="Pesquise uma ferramenta, ex.: Comprimir PDF..." aria-label="Pesquisar ferramentas"/>
         <button type="submit">Buscar</button>
       </form>
-      <div class="popular-tools"><span>Populares:</span><a href="/tools/image-resizer">Image Resizer</a><i>•</i><a href="/tools/pdf-compressor">Comprimir PDF</a><i>•</i><a href="/tools/audio-cutter">Cortar Áudio</a><i>•</i><a href="/tools#text">Contador de Palavras</a></div>
+      <div class="popular-tools"><span>Populares:</span><a href="/tools/image-resizer">Image Resizer</a><i>•</i><a href="/tools/pdf-compressor">Comprimir PDF</a><i>•</i><a href="/tools/audio-cutter">Cortar Áudio</a><i>•</i><a href="/tools/text">Contador de Palavras</a></div>
     </section>
 
     <section class="category-section" id="tools">
@@ -31,7 +30,7 @@ import SiteFooter from "../components/SiteFooter.astro";
             <a href="/tools/image-resizer"><span>⇄</span> Conversor JPG para PNG</a>
             <a href="/tools/image-resizer"><span>✧</span> Ajustar dimensões</a>
           </div>
-          <a class="category-open" href="/tools#image">Explorar imagem <b>↗</b></a>
+          <a class="category-open" href="/tools/image">Explorar imagem <b>↗</b></a>
         </article>
 
         <article class="category-card" id="pdf">
@@ -42,18 +41,18 @@ import SiteFooter from "../components/SiteFooter.astro";
             <a href="/tools/pdf-compressor"><span>↧</span> Preparar para partilhar</a>
             <a href="/tools/pdf-compressor"><span>⌕</span> Verificar ficheiros</a>
           </div>
-          <a class="category-open" href="/tools#pdf">Explorar PDF <b>↗</b></a>
+          <a class="category-open" href="/tools/pdf">Explorar PDF <b>↗</b></a>
         </article>
 
         <article class="category-card" id="text">
           <div class="category-card-head"><span class="category-icon icon-text"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div><h3>Texto</h3><p>Ferramentas de texto rápidas e úteis</p></div></div>
           <div class="category-tools">
-            <a href="/tools#text"><span>☷</span> Contador de Palavras</a>
-            <a href="/tools#text"><span>⌁</span> Remover Espaços</a>
-            <a href="/tools#text"><span>Aa</span> Maiúsculas e Minúsculas</a>
-            <a href="/tools#text"><span>文</span> Traduzir Texto</a>
+            <a href="/tools/text"><span>☷</span> Contador de Palavras</a>
+            <a href="/tools/text"><span>⌁</span> Remover Espaços</a>
+            <a href="/tools/text"><span>Aa</span> Maiúsculas e Minúsculas</a>
+            <a href="/tools/text"><span>文</span> Traduzir Texto</a>
           </div>
-          <a class="category-open" href="/tools#text">Explorar texto <b>↗</b></a>
+          <a class="category-open" href="/tools/text">Explorar texto <b>↗</b></a>
         </article>
 
         <article class="category-card" id="audio">
@@ -64,7 +63,7 @@ import SiteFooter from "../components/SiteFooter.astro";
             <a href="/tools/audio-cutter"><span>◖</span> Pré-visualizar áudio</a>
             <a href="/tools/audio-cutter"><span>⇩</span> Exportar WAV</a>
           </div>
-          <a class="category-open" href="/tools#audio">Explorar áudio <b>↗</b></a>
+          <a class="category-open" href="/tools/audio">Explorar áudio <b>↗</b></a>
         </article>
       </div>
     </section>
@@ -78,10 +77,10 @@ import SiteFooter from "../components/SiteFooter.astro";
       </div>
     </section>
 
-    <section class="account-section" id="account">
-      <div class="account-copy"><span class="section-kicker">03 / MINHA CONTA</span><h2>O seu espaço<br/><span>Nexauren.</span></h2><p>Entre para manter os seus favoritos e acompanhar as ferramentas utilizadas. Para iniciar sessão em produção, o domínio deste site tem de estar autorizado em Firebase → Authentication → Settings → Authorized domains.</p></div>
-      <AuthPanel client:load/>
-    </section>
+    <section class="account-section account-promo">
+    <div class="account-copy"><span class="section-kicker">03 / ESPAÇO PESSOAL</span><h2>A tua conta,<br/><span>em todos os dispositivos.</span></h2><p>Inicia sessão para manter os teus favoritos e o teu histórico associados à mesma conta, mesmo quando mudas de telemóvel ou computador.</p></div>
+    <a class="account-promo-card" href="/account"><span class="account-promo-icon">↗</span><strong>Minha conta Nexauren</strong><small>Entrar, criar conta e consultar os teus dados sincronizados.</small><span class="account-promo-link">Abrir a minha conta <b>→</b></span></a>
+  </section>
   </main>
   <SiteFooter/>
 </div>

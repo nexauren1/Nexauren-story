@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, type User } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { getFirebaseClient } from "../lib/firebase";
 import { toggleFavorite } from "../lib/account";
 
@@ -19,19 +19,21 @@ export default function FavoriteButton({ itemId, title, kind, href }: Props) {
 
   useEffect(() => {
     const { auth, db } = getFirebaseClient();
-    return onAuthStateChanged(auth, async (currentUser) => {
+    let stopFavorite: (() => void) | undefined;
+    const stopAuth = onAuthStateChanged(auth, (currentUser) => {
+      stopFavorite?.();
+      stopFavorite = undefined;
       setUser(currentUser);
       setSaved(false);
+      setMessage("");
       if (!currentUser) return;
-      try {
-        const favorite = await getDoc(
-          doc(db, "users", currentUser.uid, "favorites", itemId),
-        );
-        setSaved(favorite.exists());
-      } catch {
-        setMessage("Não foi possível verificar este favorito.");
-      }
+      stopFavorite = onSnapshot(
+        doc(db, "users", currentUser.uid, "favorites", itemId),
+        (favorite) => setSaved(favorite.exists()),
+        () => setMessage("Não foi possível sincronizar este favorito."),
+      );
     });
+    return () => { stopAuth(); stopFavorite?.(); };
   }, [itemId]);
 
   async function handleToggle() {

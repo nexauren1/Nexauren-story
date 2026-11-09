@@ -7,6 +7,7 @@ import {
   getDocs,
   limit,
   orderBy,
+  onSnapshot,
   query,
   serverTimestamp,
   setDoc,
@@ -120,4 +121,44 @@ export async function getAccountOverview(
       id: entry.id,
     })),
   };
+}
+
+
+/** Real-time account subscription shared by every signed-in device. */
+export function subscribeAccountOverview(
+  user: User,
+  onChange: (overview: AccountOverview) => void,
+  onError: (error: unknown) => void = () => undefined,
+): () => void {
+  const { db } = getFirebaseClient();
+  const favoritesRef = collection(db, "users", user.uid, "favorites");
+  const historyRef = collection(db, "users", user.uid, "toolHistory");
+  let favorites: FavoriteRecord[] = [];
+  let activity: ActivityRecord[] = [];
+  let favoritesReady = false;
+  let activityReady = false;
+  const publish = () => {
+    if (favoritesReady && activityReady) onChange({ favorites, activity });
+  };
+  const stopFavorites = onSnapshot(
+    query(favoritesRef, orderBy("savedAt", "desc"), limit(20)),
+    (snapshot) => {
+      favorites = snapshot.docs.map((entry) => ({
+        ...(entry.data() as Omit<FavoriteRecord, "id">), id: entry.id,
+      }));
+      favoritesReady = true;
+      publish();
+    }, onError,
+  );
+  const stopActivity = onSnapshot(
+    query(historyRef, orderBy("usedAt", "desc"), limit(6)),
+    (snapshot) => {
+      activity = snapshot.docs.map((entry) => ({
+        ...(entry.data() as Omit<ActivityRecord, "id">), id: entry.id,
+      }));
+      activityReady = true;
+      publish();
+    }, onError,
+  );
+  return () => { stopFavorites(); stopActivity(); };
 }
