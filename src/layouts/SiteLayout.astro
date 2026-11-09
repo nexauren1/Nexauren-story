@@ -1,10 +1,42 @@
 ---
 import "../styles/global.css";
-const {title="Nexauren Story — Apps, ferramentas e tecnologia",description="Descobre aplicações, ferramentas online e conhecimento para o teu mundo digital."}=Astro.props;
+const {title="Nexauren — Ferramentas online",description="Ferramentas online práticas para o seu dia a dia."}=Astro.props;
 ---
-<!doctype html><html lang="pt"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#080b14"/><meta name="description" content={description}/><title>{title}</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"/></head><body><slot/>
-<script is:inline>
-const root=document.documentElement;const saved=localStorage.getItem("nexauren-theme");if(saved)root.dataset.theme=saved;
-document.addEventListener("click",e=>{const t=e.target.closest("[data-theme-toggle]");if(t){const n=root.dataset.theme==="light"?"dark":"light";root.dataset.theme=n;localStorage.setItem("nexauren-theme",n);}
-const m=e.target.closest("[data-menu-toggle]");if(m){document.querySelector("[data-mobile-menu]")?.classList.toggle("open");m.setAttribute("aria-expanded",m.getAttribute("aria-expanded")!=="true"?"true":"false");}});
-</script></body></html>
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#f7f9fc"/>
+  <meta name="description" content={description}/>
+  <meta name="robots" content="index,follow"/>
+  <title>{title}</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <slot/>
+  <script is:inline>
+    document.addEventListener("click", (event) => {
+      const toggle = event.target.closest("[data-menu-toggle]");
+      if (toggle) {
+        const menu = document.querySelector("[data-mobile-menu]");
+        const open = menu?.classList.toggle("open") ?? false;
+        toggle.setAttribute("aria-expanded", String(open));
+      }
+      if (event.target.closest("[data-mobile-menu] a")) {
+        document.querySelector("[data-mobile-menu]")?.classList.remove("open");
+        document.querySelector("[data-menu-toggle]")?.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        document.querySelector("[data-mobile-menu]")?.classList.remove("open");
+        document.querySelector("[data-menu-toggle]")?.setAttribute("aria-expanded", "false");
+      }
+    });
+  </script>
+</body>
+</html>
