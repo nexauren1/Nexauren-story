@@ -41,7 +41,7 @@ export default function AudioCutter() {
 
   useEffect(()=>{
     if(!file){setAudioUrl("");setBuffer(null);return;}
-    const url=URL.createObjectURL(file);setAudioUrl(url);
+    const url=URL.createObjectURL(file);setAudioUrl(url);setBuffer(null);setDuration(0);
     setResultUrl((previous)=>{if(previous)URL.revokeObjectURL(previous);return "";});
     setResultSize(0);setError("");setNotice("");setProgress(0);setPeaks([]);setPlaying(false);setPeak(0);
     let active=true;

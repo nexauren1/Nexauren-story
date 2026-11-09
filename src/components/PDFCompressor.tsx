@@ -183,7 +183,7 @@ export default function PDFCompressor() {
             <div className="format-choice"><b>Reestruturação do PDF</b><small>Regrava os objetos internos em object streams e mantém as páginas e o conteúdo original.</small></div>
           </div>
           <div className="tool-help-note"><strong>Limitação técnica:</strong> esta operação regrava os objectos internos do PDF. Não reduz a resolução das imagens incorporadas; a diminuição do tamanho não é garantida.</div>
-          <label className="nx-check-line"><input type="checkbox" checked={removeMetadata} disabled={busy || !files.length} onChange={(event) => setRemoveMetadata(event.target.checked)}/> Remover metadados básicos (autor, título e assunto)</label>
+          <label className="nx-check-line"><input type="checkbox" checked={removeMetadata} disabled={busy || !files.length} onChange={(event) => { setRemoveMetadata(event.target.checked); setFinished([]); setProgress(0); setMessage(""); }}/> Remover metadados básicos (autor, título e assunto)</label>
           <div className="settings-group">
             <h3 className="panel-section-title">Resumo da compressão</h3>
             <div className="result-box">
