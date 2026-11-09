@@ -121,7 +121,12 @@ export default function AuthPanel() {
   function continueWithGoogle() {
     const { auth, googleProvider } = getFirebaseClient();
     googleProvider.setCustomParameters({ prompt: "select_account" });
-    const mobileBrowser = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);\n    void perform(() =>\n      mobileBrowser\n        ? signInWithRedirect(auth, googleProvider)\n        : signInWithPopup(auth, googleProvider),\n    );
+    const mobileBrowser = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    void perform(() =>
+      mobileBrowser
+        ? signInWithRedirect(auth, googleProvider)
+        : signInWithPopup(auth, googleProvider),
+    );
   }
 
   function leaveAccount() {
