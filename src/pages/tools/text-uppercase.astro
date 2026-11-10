@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Texto em maiúsculas — Ferramenta online | Nexauren" description="Converte todas as letras do texto para maiúsculas, preservando números e pontuação.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Texto em maiúsculas</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Texto em maiúsculas</h1><p>Converte todas as letras do texto para maiúsculas, preservando números e pontuação.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-uppercase" title="Texto em maiúsculas" kind="tool" href="/tools/text-uppercase"/></div></header>
+<UniversalTool client:load toolId="text-uppercase" name="Texto em maiúsculas" category="text" description="Converte todas as letras do texto para maiúsculas, preservando números e pontuação." kind="text"/>
+<TrackActivity client:load activityId="text-uppercase" activityTitle="Usou Texto em maiúsculas"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

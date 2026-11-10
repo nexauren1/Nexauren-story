@@ -13,26 +13,30 @@ Plataforma de ferramentas digitais para imagem, PDF, texto e áudio, com conta p
 
 ## Public tools
 
-O catálogo público é definido em src/data/activeTools.json. Só entram no catálogo ferramentas com uma página dedicada e um motor de processamento implementado.
+O catálogo público tem **50 ferramentas activas**, distribuídas por quatro categorias. Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
 
-### Image
-- **Resize Image** — resize, compress and convert JPG, PNG and WebP; includes social-media presets, custom dimensions, quality control and JPG background.
-- **Image Cropper** — crop by pixel coordinates or aspect-ratio presets (1:1, 4:5, 16:9, 3:2); export PNG, JPG or WebP.
+### Image — 10 tools
+- Resize image; crop image; image watermark; rotate and flip image.
+- Image information; grayscale conversion; colour inversion; image format conversion; horizontal flip; image-to-Base64.
 
-### PDF
-- **PDF Optimizer** — reserializes document structure using PDF object streams. It does not downsample embedded images, so size reduction depends on the document and is not guaranteed.
-- **PDF Merger** — combines multiple PDFs; reorder files before merging.
-- **PDF Splitter** — extracts selected pages and ranges, with shortcuts for all, odd, even, first and last pages.
-- **PDF Rotator** — rotates all pages or selected page numbers/ranges by 90° left, 90° right or 180°.
+### PDF — 13 tools
+- PDF optimiser; merge PDFs; split PDFs; rotate PDFs; PDF inspection.
+- Page count; metadata viewer; extract page ranges; remove pages; reorder pages; rotate pages; duplicate pages; clear metadata.
 
-### Text
-- **Text Toolbox** — word/character/line/paragraph/reading-time statistics plus 14 operations: case conversion, title and sentence case, whitespace and blank-line cleanup, accent removal, line sorting, duplicate removal, line/text reversal, slug generation, find-and-replace and word frequency.
+### Text — 18 tools
+- Text toolbox; text case converter; find and replace.
+- Uppercase; lowercase; title case; clean spaces and lines; sort lines; remove duplicate lines; reverse lines; URL slug; Base64 encode/decode; URL encode/decode; JSON formatter/minifier; CSV to JSON.
 
-### Audio
-- **Audio Cutter** — select and preview a time range, apply fade-in/fade-out and output gain, then export WAV PCM 16-bit.
-- **Audio Normalizer** — scan the true sample peak, set a target level and amplification limit, prevent boost when required, choose mono/stereo and export WAV PCM 16-bit.
+### Audio — 9 tools
+- Audio cutter; volume normaliser; audio information; silence trimming; gain adjustment; fade-in; fade-out; reverse audio; speed adjustment.
 
-All public tools process the selected files or text locally in the browser. These tool components do not upload source files to Nexauren servers.
+The image, PDF, audio and text operations run in the browser. Tool descriptions state format and output limitations; file processing does not upload source files to Nexauren servers.
+
+## Languages
+- Portuguese (default), English, Spanish, French and German.
+- The language selector is available in the desktop header and mobile menu.
+- The selected language is saved in the browser and applied across navigation, pages, tool descriptions, controls, account screens and legal information.
+- Articles written by site administrators remain in their original publishing language.
 
 ## Catalogue rules
 
@@ -74,10 +78,7 @@ Set the PUBLIC_FIREBASE_* variables in .env using the Firebase Web app configura
 - / — home page
 - /tools — public catalogue (only verified tools)
 - /tools/image, /tools/pdf, /tools/text, /tools/audio — category pages
-- /tools/image-resizer, /tools/image-cropper
-- /tools/pdf-compressor, /tools/pdf-merger, /tools/pdf-splitter, /tools/pdf-rotator
-- /tools/text-toolbox
-- /tools/audio-cutter, /tools/audio-normalizer
+- 50 dedicated tool pages across image, PDF, text and audio categories
 - /account — account, favorites and activity
 - /apps — Android app catalogue
 - /blog and individual articles

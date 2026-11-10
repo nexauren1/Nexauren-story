@@ -4,22 +4,34 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import AuthPanel from "../components/AuthPanel";
 ---
-<SiteLayout title="A minha conta — Nexauren" description="Acede à tua conta Nexauren e consulta favoritos e atividade sincronizados entre dispositivos.">
-<div class="site-shell">
-  <SiteHeader/>
-  <main class="simple-page account-page">
-    <div class="eyebrow"><span class="eyebrow-line"></span> ESPAÇO PESSOAL NEXAUREN</div>
+<SiteLayout title="A minha conta — Nexauren" description="Acede ao teu espaço pessoal Nexauren para guardar favoritos e consultar a tua actividade sincronizada.">
+<div class="site-shell"><SiteHeader/>
+<main class="nx-account-page">
+  <nav class="nx-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><span aria-current="page">A minha conta</span></nav>
+  <header class="nx-account-page-heading">
+    <span class="nx-overline"><i></i> NEXAUREN ID / ESPAÇO PESSOAL</span>
     <h1>A tua conta.<br/><span>O teu espaço digital.</span></h1>
-    <p class="simple-lead">Inicia sessão com a mesma conta em qualquer dispositivo. Os teus favoritos e a tua atividade são guardados na cloud através do Firebase.</p>
-    <div class="account-page-layout">
-      <div class="account-benefits">
-        <div><b>01</b><span><strong>Favoritos sincronizados</strong><small>Guarda uma ferramenta ou aplicação e encontra-a noutro dispositivo.</small></span></div>
-        <div><b>02</b><span><strong>Histórico atualizado</strong><small>Consulta as últimas ferramentas e atividades da tua conta.</small></span></div>
-        <div><b>03</b><span><strong>Uma única identidade</strong><small>Usa sempre o mesmo método de entrada e endereço de e-mail.</small></span></div>
+    <p>Um único espaço para os teus favoritos, ferramentas e actividade — sincronizado nos teus dispositivos.</p>
+  </header>
+  <div class="nx-account-layout">
+    <aside class="nx-account-aside">
+      <div class="nx-account-aside-visual">
+        <div class="nx-account-orbit nx-orbit-one"></div><div class="nx-account-orbit nx-orbit-two"></div>
+        <div class="nx-account-emblem"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M9 34V10l26 24V10" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="nx-account-visual-caption">YOUR DIGITAL SPACE</span>
+        <b>Uma conta.<br/>Tudo no seu lugar.</b>
+        <small>O teu espaço acompanha-te em qualquer dispositivo.</small>
+        <div class="nx-account-visual-footer"><span><i/> FIREBASE SECURE</span><span>01 / NEXAUREN</span></div>
       </div>
-      <AuthPanel client:load/>
-    </div>
-  </main>
-  <SiteFooter/>
-</div>
-</SiteLayout>
+      <div class="nx-account-benefits">
+        <div><span>☆</span><section><b>Favoritos sincronizados</b><small>Guarda ferramentas e aplicações para acederes mais tarde.</small></section></div>
+        <div><span>↗</span><section><b>Actividade organizada</b><small>Retoma ferramentas e páginas que visitaste recentemente.</small></section></div>
+        <div><span>◈</span><section><b>Nos teus dispositivos</b><small>Entra com a mesma conta para manter os teus dados sincronizados.</small></section></div>
+      </div>
+      <a class="nx-account-backlink" href="/tools">Explorar ferramentas <b>↗</b></a>
+    </aside>
+    <div class="nx-account-auth-wrap"><AuthPanel client:load/></div>
+  </div>
+  <div class="nx-account-page-foot"><span>◈</span> A tua privacidade importa. Os dados da conta são associados ao teu utilizador autenticado.</div>
+</main>
+<SiteFooter/></div></SiteLayout>

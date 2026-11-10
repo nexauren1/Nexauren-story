@@ -1,289 +1,121 @@
 import { useEffect, useState, type FormEvent } from "react";
 import {
-  browserLocalPersistence,
-  createUserWithEmailAndPassword,
-  getRedirectResult,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signInWithRedirect,
-  sendPasswordResetEmail,
-  setPersistence,
-  signOut,
-  type User,
+  browserLocalPersistence,createUserWithEmailAndPassword,getRedirectResult,onAuthStateChanged,
+  signInWithEmailAndPassword,signInWithPopup,signInWithRedirect,sendPasswordResetEmail,
+  setPersistence,signOut,type User
 } from "firebase/auth";
 import type { Timestamp } from "firebase/firestore";
 import { getFirebaseClient } from "../lib/firebase";
-import {
-  ensureUserProfile,
-  subscribeAccountOverview,
-  type AccountOverview,
-} from "../lib/account";
+import { ensureUserProfile,subscribeAccountOverview,type AccountOverview } from "../lib/account";
 
-const emptyOverview: AccountOverview = { favorites: [], activity: [] };
-
-function readableAuthError(error: unknown): string {
-  const code =
-    typeof error === "object" && error !== null && "code" in error
-      ? String((error as { code: unknown }).code)
-      : "";
-
-  const messages: Record<string, string> = {
-    "auth/email-already-in-use": "Este e-mail já tem uma conta. Experimenta iniciar sessão.",
-    "auth/invalid-credential": "E-mail ou palavra-passe incorretos.",
-    "auth/invalid-email": "O endereço de e-mail não é válido.",
-    "auth/weak-password": "Escolhe uma palavra-passe com pelo menos 6 caracteres.",
-    "auth/user-disabled": "Esta conta foi desativada.",
-    "auth/too-many-requests": "Demasiadas tentativas. Tenta novamente mais tarde.",
-    "auth/popup-closed-by-user": "A janela do Google foi fechada antes de terminar.",
-    "auth/popup-blocked": "O navegador bloqueou a janela. Permite pop-ups e tenta novamente.",
-    "auth/unauthorized-domain": "Este domínio ainda não está autorizado no Firebase Authentication.",
-    "auth/operation-not-allowed": "Este método de autenticação ainda não está ativado no Firebase.",
-    "auth/network-request-failed": "Falha de ligação. Verifica a Internet e tenta novamente.",
+const emptyOverview:AccountOverview={favorites:[],activity:[]};
+function readableAuthError(error:unknown):string{
+  const code=typeof error==="object"&&error!==null&&"code" in error?String((error as {code:unknown}).code):"";
+  const messages:Record<string,string>={
+    "auth/email-already-in-use":"Este e-mail já tem uma conta. Experimenta iniciar sessão.",
+    "auth/invalid-credential":"E-mail ou palavra-passe incorrectos.",
+    "auth/invalid-email":"O endereço de e-mail não é válido.",
+    "auth/weak-password":"Escolhe uma palavra-passe com pelo menos 6 caracteres.",
+    "auth/user-disabled":"Esta conta foi desactivada.",
+    "auth/too-many-requests":"Demasiadas tentativas. Tenta novamente mais tarde.",
+    "auth/popup-closed-by-user":"A janela do Google foi fechada antes de terminar.",
+    "auth/popup-blocked":"O navegador bloqueou a janela. Permite pop-ups e tenta novamente.",
+    "auth/unauthorized-domain":"Este domínio ainda não está autorizado no Firebase Authentication.",
+    "auth/operation-not-allowed":"Este método de autenticação ainda não está activo no Firebase.",
+    "auth/network-request-failed":"Falha de ligação. Verifica a Internet e tenta novamente."
   };
-
-  if (code === "auth/unauthorized-domain") {
-    const host = typeof window !== "undefined" ? window.location.hostname : "este domínio";
-    return `O domínio ${host} ainda não está autorizado. No Firebase Console, abre Authentication → Settings → Authorized domains e adiciona este endereço sem https://.`;
+  if(code==="auth/unauthorized-domain"){
+    const host=typeof window!=="undefined"?window.location.hostname:"este domínio";
+    return "O domínio "+host+" ainda não está autorizado. No Firebase Console, abre Authentication → Settings → Authorized domains e adiciona este endereço sem https://.";
   }
-
-  return messages[code] ?? "Não foi possível concluir a operação. Tenta novamente."
+  return messages[code]??"Não foi possível concluir a operação. Tenta novamente.";
 }
+function formatDate(value?:Timestamp){if(!value)return "";return value.toDate().toLocaleDateString("pt-PT",{day:"2-digit",month:"short"});}
 
-function formatDate(value?: Timestamp): string {
-  if (!value) return "";
-  return value.toDate().toLocaleDateString("pt-PT", {
-    day: "2-digit",
-    month: "short",
-  });
-}
-
-export default function AuthPanel() {
-  const [mode, setMode] = useState<"login" | "register">("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [checking, setChecking] = useState(true);
-  const [message, setMessage] = useState("");
-  const [user, setUser] = useState<User | null>(null);
-  const [overview, setOverview] = useState<AccountOverview>(emptyOverview);
-
-  useEffect(() => {
-    if (!user) { setOverview(emptyOverview); return; }
-    return subscribeAccountOverview(user, setOverview, () =>
-      setMessage("Não foi possível atualizar os dados da conta. Verifica a ligação e as regras do Firestore."),
-    );
-  }, [user]);
-
-  useEffect(() => {
-    const { auth } = getFirebaseClient();
-    let active = true;
-    const stopListening = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setMessage("");
-      if (!currentUser) {
-        setOverview(emptyOverview);
-        setChecking(false);
-        return;
-      }
+export default function AuthPanel(){
+  const [mode,setMode]=useState<"login"|"register">("login");
+  const [email,setEmail]=useState(""),[password,setPassword]=useState(""),[showPassword,setShowPassword]=useState(false);
+  const [busy,setBusy]=useState(false),[checking,setChecking]=useState(true),[message,setMessage]=useState("");
+  const [user,setUser]=useState<User|null>(null),[overview,setOverview]=useState<AccountOverview>(emptyOverview);
+  useEffect(()=>{
+    if(!user){setOverview(emptyOverview);return;}
+    return subscribeAccountOverview(user,setOverview,()=>setMessage("Não foi possível actualizar os dados da conta. Verifica a ligação e as regras do Firestore."));
+  },[user]);
+  useEffect(()=>{
+    const {auth}=getFirebaseClient();let active=true;
+    const stop=onAuthStateChanged(auth,current=>{
+      setUser(current);setMessage("");
+      if(!current){setOverview(emptyOverview);setChecking(false);return;}
       setChecking(true);
-      void ensureUserProfile(currentUser).catch(() => {
-        if (active && auth.currentUser?.uid === currentUser.uid) {
-          setMessage("A sessão está ativa, mas não foi possível sincronizar o perfil. Verifica as regras do Firestore.");
-        }
-      }).finally(() => {
-        if (active && auth.currentUser?.uid === currentUser.uid) setChecking(false);
-      });
+      void ensureUserProfile(current).catch(()=>{
+        if(active&&auth.currentUser?.uid===current.uid)setMessage("A sessão está activa, mas não foi possível sincronizar o perfil. Verifica as regras do Firestore.");
+      }).finally(()=>{if(active&&auth.currentUser?.uid===current.uid)setChecking(false);});
     });
-    void getRedirectResult(auth).catch((error) => setMessage(readableAuthError(error)));
-    return () => { active = false; stopListening(); };
-  }, []);
+    void getRedirectResult(auth).catch(error=>setMessage(readableAuthError(error)));
+    return()=>{active=false;stop();};
+  },[]);
+  async function perform(action:()=>Promise<unknown>,success="Pedido concluído."){
+    setBusy(true);setMessage("");
+    try{await action();setMessage(success);}catch(error){setMessage(readableAuthError(error));}
+    finally{setBusy(false);}
+  }
+  function submit(event:FormEvent<HTMLFormElement>){
+    event.preventDefault();const {auth}=getFirebaseClient();
+    void perform(async()=>{await setPersistence(auth,browserLocalPersistence);return mode==="register"?createUserWithEmailAndPassword(auth,email.trim(),password):signInWithEmailAndPassword(auth,email.trim(),password);});
+  }
+  function continueWithGoogle(){
+    const {auth,googleProvider}=getFirebaseClient();googleProvider.setCustomParameters({prompt:"select_account"});
+    const mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    void perform(async()=>{await setPersistence(auth,browserLocalPersistence);return mobile?signInWithRedirect(auth,googleProvider):signInWithPopup(auth,googleProvider);});
+  }
+  function leaveAccount(){const {auth}=getFirebaseClient();void perform(()=>signOut(auth));}
+  function resetPassword(){
+    if(!email.trim()){setMessage("Escreve primeiro o teu e-mail para receberes o link de recuperação.");return;}
+    const {auth}=getFirebaseClient();void perform(()=>sendPasswordResetEmail(auth,email.trim()),"Enviámos um link de recuperação para o teu e-mail.");
+  }
+  if(checking)return <section className="nx-auth-loading" aria-live="polite"><span className="nx-auth-spinner"/><b>A preparar o teu espaço pessoal</b><small>A verificar a sessão e a sincronizar os dados protegidos…</small></section>;
 
-  async function perform(action: () => Promise<unknown>, successMessage = "Pedido concluído.") {
-    setBusy(true);
-    setMessage("");
-    try {
-      await action();
-      setMessage(successMessage);
-    } catch (error) {
-      setMessage(readableAuthError(error));
-    } finally {
-      setBusy(false);
-    }
+  if(user){
+    const displayName=user.displayName??user.email?.split("@")[0]??"Utilizador";
+    return <section className="nx-account-dashboard">
+      <div className="nx-account-welcome">
+        <div className="nx-account-avatar">{user.photoURL?<img src={user.photoURL} alt="" referrerPolicy="no-referrer"/>:<span>{displayName.charAt(0).toUpperCase()}</span>}</div>
+        <div className="nx-account-identity"><span className="nx-account-status"><i/> CONTA LIGADA</span><h2>Olá, {displayName.split(/\s+/)[0]}.</h2><p>{user.email??"Conta Google"}</p></div>
+        <button className="nx-signout-button" onClick={leaveAccount} disabled={busy}>{busy?"A sair…":"Terminar sessão ↗"}</button>
+      </div>
+      <div className="nx-account-stats">
+        <div><span className="nx-stat-icon">☆</span><span><b>{overview.favorites.length}</b><small>Favoritos guardados</small></span></div>
+        <div><span className="nx-stat-icon">↗</span><span><b>{overview.activity.length}</b><small>Actividades recentes</small></span></div>
+        <div><span className="nx-stat-icon">✓</span><span><b>Activo</b><small>Sincronização da conta</small></span></div>
+      </div>
+      <div className="nx-account-content-grid">
+        <section className="nx-account-content-card">
+          <div className="nx-account-card-heading"><div><span>O TEU ESPAÇO</span><h3>Favoritos</h3></div><b>{overview.favorites.length.toString().padStart(2,"0")}</b></div>
+          {overview.favorites.length?<ul className="nx-account-list">{overview.favorites.map(item=><li key={item.id}><span className="nx-account-list-icon">{item.kind==="app"?"▣":item.kind==="article"?"▤":"◈"}</span><span className="nx-account-list-copy"><a href={item.href}>{item.title}</a><small>{item.kind==="app"?"Aplicação":item.kind==="article"?"Artigo":item.kind==="tool"?"Ferramenta":"Secção"} · {formatDate(item.savedAt)}</small></span><a className="nx-account-open" href={item.href} aria-label={"Abrir "+item.title}>↗</a></li>)}</ul>:<div className="nx-account-empty"><span>☆</span><b>Ainda não tens favoritos</b><p>Guarda ferramentas, aplicações e artigos para os encontrares aqui.</p><a href="/tools">Explorar ferramentas ↗</a></div>}
+        </section>
+        <section className="nx-account-content-card">
+          <div className="nx-account-card-heading"><div><span>O TEU PERCURSO</span><h3>Actividade recente</h3></div><b>{overview.activity.length.toString().padStart(2,"0")}</b></div>
+          {overview.activity.length?<ul className="nx-account-list nx-activity-list">{overview.activity.map(item=><li key={item.id}><span className="nx-account-list-icon">◷</span><span className="nx-account-list-copy"><a href={item.href}>{item.title}</a><small>{item.kind==="tool"?"Ferramenta utilizada":"Página visitada"} · {formatDate(item.usedAt)}</small></span><a className="nx-account-open" href={item.href} aria-label={"Abrir "+item.title}>↗</a></li>)}</ul>:<div className="nx-account-empty"><span>◷</span><b>A tua actividade começa aqui</b><p>Quando utilizares ferramentas e explorares o site, o histórico aparece nesta área.</p><a href="/tools">Começar agora ↗</a></div>}
+        </section>
+      </div>
+      {message&&<p className="nx-auth-message" role="status">{message}</p>}
+      <div className="nx-account-privacy"><span>◈</span><p>Os teus favoritos e a tua actividade estão associados à tua conta Firebase. Usa a mesma conta noutros dispositivos para sincronizar os dados.</p></div>
+    </section>;
   }
 
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const { auth } = getFirebaseClient();
-    void perform(async () => {
-      await setPersistence(auth, browserLocalPersistence);
-      return mode === "register"
-        ? createUserWithEmailAndPassword(auth, email.trim(), password)
-        : signInWithEmailAndPassword(auth, email.trim(), password);
-    });
-  }
-
-  function continueWithGoogle() {
-    const { auth, googleProvider } = getFirebaseClient();
-    googleProvider.setCustomParameters({ prompt: "select_account" });
-    const mobileBrowser = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    void perform(async () => {
-      await setPersistence(auth, browserLocalPersistence);
-      return mobileBrowser
-        ? signInWithRedirect(auth, googleProvider)
-        : signInWithPopup(auth, googleProvider);
-    });
-  }
-
-  function leaveAccount() {
-    const { auth } = getFirebaseClient();
-    void perform(() => signOut(auth));
-  }
-
-  function resetPassword() {
-    if (!email.trim()) {
-      setMessage("Escreve primeiro o teu e-mail para receberes o link de recuperação.");
-      return;
-    }
-    const { auth } = getFirebaseClient();
-    void perform(
-      () => sendPasswordResetEmail(auth, email.trim()),
-      "Enviámos um link de recuperação para o teu e-mail.",
-    );
-  }
-
-  if (checking) {
-    return (
-      <section className="auth-panel auth-loading" aria-live="polite">
-        <span className="loading-orbit" />
-        <p>A sincronizar o teu espaço seguro…</p>
-      </section>
-    );
-  }
-
-  if (user) {
-    const displayName =
-      user.displayName ?? user.email?.split("@")[0] ?? "Utilizador";
-
-    return (
-      <section className="auth-panel account-dashboard">
-        <div className="eyebrow"><i className="status-dot" /> CONTA LIGADA</div>
-        <div className="signed-user">
-          {user.photoURL ? (
-            <img src={user.photoURL} alt="" referrerPolicy="no-referrer" />
-          ) : (
-            <span className="user-avatar">{displayName.charAt(0).toUpperCase()}</span>
-          )}
-          <div>
-            <h2>{displayName}</h2>
-            <p>{user.email ?? "Conta Google"}</p>
-          </div>
-          <button className="signout-button" onClick={leaveAccount} disabled={busy}>
-            {busy ? "A sair…" : "Terminar sessão"}
-          </button>
-        </div>
-
-        <div className="account-stats">
-          <div><b>{overview.favorites.length}</b><span>Favoritos</span></div>
-          <div><b>{overview.activity.length}</b><span>Atividades recentes</span></div>
-        </div>
-
-        <div className="account-data-grid">
-          <div className="account-data-section">
-            <div className="account-section-heading"><h3>Os teus favoritos</h3><span>GUARDADOS</span></div>
-            {overview.favorites.length ? (
-              <ul className="account-items">
-                {overview.favorites.map((item) => (
-                  <li key={item.id}>
-                    <a href={item.href}>{item.title}<span>↗</span></a>
-                    <small>{formatDate(item.savedAt)}</small>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="empty-account">Ainda não guardaste nenhum item. Usa o botão “Guardar” nos cartões do site.</p>
-            )}
-          </div>
-          <div className="account-data-section">
-            <div className="account-section-heading"><h3>Atividade recente</h3><span>HISTÓRICO</span></div>
-            {overview.activity.length ? (
-              <ul className="account-items">
-                {overview.activity.map((item) => (
-                  <li key={item.id}>
-                    <a href={item.href}>{item.title}<span>↗</span></a>
-                    <small>{formatDate(item.usedAt)}</small>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="empty-account">As secções que visitares através dos cartões serão registadas aqui.</p>
-            )}
-          </div>
-        </div>
-        {message && <p className="auth-message" role="status">{message}</p>}
-      </section>
-    );
-  }
-
-  return (
-    <section className="auth-panel">
-      <div className="eyebrow"><i className="status-dot" /> CONTA NEXAUREN</div>
-      <h2>{mode === "login" ? "Entra no teu espaço." : "Cria a tua conta."}</h2>
-      <p className="muted">
-        Guarda favoritos, acompanha a tua atividade e personaliza a experiência.
-      </p>
-      <button className="google-button" disabled={busy} onClick={continueWithGoogle}>
-        <b>G</b> {busy ? "A processar…" : "Continuar com Google"}
-      </button>
-      <div className="or"><span /> ou com e-mail <span /></div>
-      <form onSubmit={submit}>
-        <label htmlFor="email">E-mail</label>
-        <input
-          id="email"
-          type="email"
-          required
-          autoComplete="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="nome@exemplo.com"
-        />
-        <label htmlFor="password">Palavra-passe</label>
-        <input
-          id="password"
-          type="password"
-          minLength={6}
-          required
-          autoComplete={mode === "login" ? "current-password" : "new-password"}
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Mínimo de 6 caracteres"
-        />
-        {mode === "login" && (
-          <button type="button" className="forgot-button" onClick={resetPassword} disabled={busy}>
-            Esqueceste a palavra-passe?
-          </button>
-        )}
-        <button className="button primary full" disabled={busy}>
-          {busy
-            ? "A processar…"
-            : mode === "login"
-              ? "Iniciar sessão"
-              : "Criar conta"}
-        </button>
-      </form>
-      {message && <p className="auth-message" role="status">{message}</p>}
-      <p className="switch">
-        {mode === "login" ? "Ainda não tens conta?" : "Já tens uma conta?"}{" "}
-        <button
-          onClick={() => {
-            setMode(mode === "login" ? "register" : "login");
-            setMessage("");
-          }}
-        >
-          {mode === "login" ? "Regista-te" : "Entrar"}
-        </button>
-      </p>
-      <small>A autenticação utiliza Firebase. O domínio atual tem de estar na lista de domínios autorizados do projeto.</small>
-    </section>
-  );
+  return <section className="nx-auth-card">
+    <div className="nx-auth-card-top"><span className="nx-auth-card-mark">N.</span><span className="nx-account-status"><i/> ACESSO SEGURO</span></div>
+    <div className="nx-auth-heading"><span className="nx-panel-kicker">NEXAUREN ID / PERSONAL SPACE</span><h2>{mode==="login"?"Bem-vindo de volta.":"Cria o teu espaço."}</h2><p>{mode==="login"?"Entra para continuares a partir de onde ficaste.":"Regista-te para guardar favoritos e sincronizar a tua actividade."}</p></div>
+    <div className="nx-auth-tabs"><button type="button" className={mode==="login"?"is-active":""} onClick={()=>{setMode("login");setMessage("");}}>Iniciar sessão</button><button type="button" className={mode==="register"?"is-active":""} onClick={()=>{setMode("register");setMessage("");}}>Criar conta</button></div>
+    <button className="nx-google-button" disabled={busy} onClick={continueWithGoogle}><b>G</b><span>{busy?"A processar…":"Continuar com Google"}</span><i>↗</i></button>
+    <div className="nx-auth-divider"><span/>OU UTILIZA O E-MAIL<span/></div>
+    <form className="nx-auth-form" onSubmit={submit}>
+      <label htmlFor="email">Endereço de e-mail</label><input id="email" type="email" required autoComplete="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="nome@exemplo.com"/>
+      <div className="nx-password-label"><label htmlFor="password">Palavra-passe</label>{mode==="login"&&<button type="button" onClick={resetPassword} disabled={busy}>Recuperar acesso</button>}</div>
+      <div className="nx-password-field"><input id="password" type={showPassword?"text":"password"} minLength={6} required autoComplete={mode==="login"?"current-password":"new-password"} value={password} onChange={e=>setPassword(e.target.value)} placeholder="Mínimo de 6 caracteres"/><button type="button" onClick={()=>setShowPassword(v=>!v)} aria-label={showPassword?"Ocultar palavra-passe":"Mostrar palavra-passe"}>{showPassword?"Ocultar":"Mostrar"}</button></div>
+      <button className="nx-auth-submit" disabled={busy}><span>{busy?"A processar…":mode==="login"?"Entrar na Nexauren":"Criar a minha conta"}</span><b>{busy?"◌":"↗"}</b></button>
+    </form>
+    {message&&<p className="nx-auth-message" role="status">{message}</p>}
+    <div className="nx-auth-footnote"><span>◈</span><p>A tua sessão é protegida pelo Firebase Authentication. Nunca partilhamos a tua palavra-passe.</p></div>
+  </section>;
 }

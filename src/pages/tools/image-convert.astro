@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Converter formato de imagem — Ferramenta online | Nexauren" description="Converte imagens entre WebP, JPG e PNG no navegador, sem enviar os ficheiros.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/image">Imagem</a><span>›</span><span>Converter formato de imagem</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / IMAGE LAB</span><h1>Converter formato de imagem</h1><p>Converte imagens entre WebP, JPG e PNG no navegador, sem enviar os ficheiros.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="image-convert" title="Converter formato de imagem" kind="tool" href="/tools/image-convert"/></div></header>
+<UniversalTool client:load toolId="image-convert" name="Converter formato de imagem" category="image" description="Converte imagens entre WebP, JPG e PNG no navegador, sem enviar os ficheiros." kind="image"/>
+<TrackActivity client:load activityId="image-convert" activityTitle="Usou Converter formato de imagem"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

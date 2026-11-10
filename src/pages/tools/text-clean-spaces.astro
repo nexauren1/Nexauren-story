@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Limpar espaços e linhas — Ferramenta online | Nexauren" description="Remove espaços repetidos, espaços nas extremidades e linhas vazias desnecessárias.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Limpar espaços e linhas</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Limpar espaços e linhas</h1><p>Remove espaços repetidos, espaços nas extremidades e linhas vazias desnecessárias.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-clean-spaces" title="Limpar espaços e linhas" kind="tool" href="/tools/text-clean-spaces"/></div></header>
+<UniversalTool client:load toolId="text-clean-spaces" name="Limpar espaços e linhas" category="text" description="Remove espaços repetidos, espaços nas extremidades e linhas vazias desnecessárias." kind="text"/>
+<TrackActivity client:load activityId="text-clean-spaces" activityTitle="Usou Limpar espaços e linhas"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

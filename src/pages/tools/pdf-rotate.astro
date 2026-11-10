@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Rodar páginas PDF — Ferramenta online | Nexauren" description="Roda todas as páginas do documento em 90 graus e exporta o PDF corrigido.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/pdf">PDF</a><span>›</span><span>Rodar páginas PDF</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / PDF LAB</span><h1>Rodar páginas PDF</h1><p>Roda todas as páginas do documento em 90 graus e exporta o PDF corrigido.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="pdf-rotate" title="Rodar páginas PDF" kind="tool" href="/tools/pdf-rotate"/></div></header>
+<UniversalTool client:load toolId="pdf-rotate" name="Rodar páginas PDF" category="pdf" description="Roda todas as páginas do documento em 90 graus e exporta o PDF corrigido." kind="pdf"/>
+<TrackActivity client:load activityId="pdf-rotate" activityTitle="Usou Rodar páginas PDF"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

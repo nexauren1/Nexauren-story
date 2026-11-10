@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Converter CSV para JSON — Ferramenta online | Nexauren" description="Converte tabelas CSV em listas JSON, respeitando cabeçalhos, aspas e campos separados.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Converter CSV para JSON</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Converter CSV para JSON</h1><p>Converte tabelas CSV em listas JSON, respeitando cabeçalhos, aspas e campos separados.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="csv-to-json" title="Converter CSV para JSON" kind="tool" href="/tools/csv-to-json"/></div></header>
+<UniversalTool client:load toolId="csv-to-json" name="Converter CSV para JSON" category="text" description="Converte tabelas CSV em listas JSON, respeitando cabeçalhos, aspas e campos separados." kind="text"/>
+<TrackActivity client:load activityId="csv-to-json" activityTitle="Usou Converter CSV para JSON"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

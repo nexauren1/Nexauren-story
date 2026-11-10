@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Codificar URL — Ferramenta online | Nexauren" description="Codifica caracteres especiais para utilização segura em parâmetros e endereços URL.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Codificar URL</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Codificar URL</h1><p>Codifica caracteres especiais para utilização segura em parâmetros e endereços URL.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="url-encode" title="Codificar URL" kind="tool" href="/tools/url-encode"/></div></header>
+<UniversalTool client:load toolId="url-encode" name="Codificar URL" category="text" description="Codifica caracteres especiais para utilização segura em parâmetros e endereços URL." kind="text"/>
+<TrackActivity client:load activityId="url-encode" activityTitle="Usou Codificar URL"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Copiar ou guardar resultado</span></section>
+</main><SiteFooter/></div></SiteLayout>

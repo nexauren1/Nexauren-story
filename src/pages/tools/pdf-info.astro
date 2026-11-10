@@ -1,0 +1,15 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import PDFInfo from "../../components/PDFInfo";
+import TrackActivity from "../../components/TrackActivity";
+import FavoriteButton from "../../components/FavoriteButton";
+---
+<SiteLayout title="Informação e análise de PDF — Nexauren" description="Analisa metadados, número de páginas, dimensões e rotação de documentos PDF. Exporta relatórios JSON e CSV.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/pdf">PDF</a><span>›</span><span>Informação PDF</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / PDF LAB</span><h1>Informação e análise de PDF</h1><p>Consulta propriedades do documento, metadados, dimensões e orientação de cada página.</p></div><div class="tool-header-actions"><span class="tool-state"><i/> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="pdf-info" title="Informação e análise de PDF" kind="tool" href="/tools/pdf-info"/></div></header>
+<PDFInfo client:load/><TrackActivity client:load activityId="pdf-info" activityTitle="Usou Informação e análise de PDF"/>
+<section class="tool-trust-strip"><span>◈ Análise local</span><span>⌁ Relatórios JSON e CSV</span><span>↗ Sem envio para servidor</span></section>
+</main><SiteFooter/></div></SiteLayout>

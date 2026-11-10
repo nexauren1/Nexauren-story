@@ -1,0 +1,15 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import TextFindReplace from "../../components/TextFindReplace";
+import TrackActivity from "../../components/TrackActivity";
+import FavoriteButton from "../../components/FavoriteButton";
+---
+<SiteLayout title="Localizar e substituir texto — Nexauren" description="Encontra palavras ou expressões, conta ocorrências e substitui uma ou todas as correspondências num texto.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Localizar e substituir</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Localizar e substituir texto</h1><p>Pesquisa palavras, conta correspondências e troca o conteúdo seleccionado com controlo preciso.</p></div><div class="tool-header-actions"><span class="tool-state"><i/> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-find-replace" title="Localizar e substituir texto" kind="tool" href="/tools/text-find-replace"/></div></header>
+<TextFindReplace client:load/><TrackActivity client:load activityId="text-find-replace" activityTitle="Usou Localizar e substituir texto"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Contagem de ocorrências</span><span>↗ Copiar ou guardar TXT</span></section>
+</main><SiteFooter/></div></SiteLayout>

@@ -17,6 +17,9 @@ import AccountLink from "./AccountLink";
     <a href="/blog" data-i18n="nav.blog">Blog</a>
   </nav>
   <div class="nx-header-actions">
+    <label class="nx-language-control" title="Idioma do site"><span aria-hidden="true">◎</span><select data-language-select aria-label="Idioma do site">
+      <option value="pt">PT</option><option value="en">EN</option><option value="es">ES</option><option value="fr">FR</option><option value="de">DE</option>
+    </select></label>
     <AccountLink client:load />
     <button class="nx-menu-toggle" type="button" data-menu-toggle aria-label="Abrir menu" aria-expanded="false">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -29,4 +32,7 @@ import AccountLink from "./AccountLink";
   <a href="/apps" data-i18n="nav.apps">Aplicações</a>
   <a href="/blog" data-i18n="nav.blog">Blog</a>
   <a href="/account" data-i18n="nav.account">Minha conta</a>
+  <label class="nx-mobile-language-label">Idioma / Language
+    <select data-language-select aria-label="Idioma do site"><option value="pt">Português</option><option value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option></select>
+  </label>
 </nav>

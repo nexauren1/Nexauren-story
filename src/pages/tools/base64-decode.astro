@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Descodificar Base64 — Ferramenta online | Nexauren" description="Descodifica conteúdo Base64 para texto UTF-8 e apresenta o resultado legível.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Descodificar Base64</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Descodificar Base64</h1><p>Descodifica conteúdo Base64 para texto UTF-8 e apresenta o resultado legível.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="base64-decode" title="Descodificar Base64" kind="tool" href="/tools/base64-decode"/></div></header>
+<UniversalTool client:load toolId="base64-decode" name="Descodificar Base64" category="text" description="Descodifica conteúdo Base64 para texto UTF-8 e apresenta o resultado legível." kind="text"/>
+<TrackActivity client:load activityId="base64-decode" activityTitle="Usou Descodificar Base64"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Copiar ou guardar resultado</span></section>
+</main><SiteFooter/></div></SiteLayout>

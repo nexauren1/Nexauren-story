@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Formatar JSON — Ferramenta online | Nexauren" description="Valida e organiza JSON com indentação legível para facilitar a leitura e edição.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Formatar JSON</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Formatar JSON</h1><p>Valida e organiza JSON com indentação legível para facilitar a leitura e edição.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="json-formatter" title="Formatar JSON" kind="tool" href="/tools/json-formatter"/></div></header>
+<UniversalTool client:load toolId="json-formatter" name="Formatar JSON" category="text" description="Valida e organiza JSON com indentação legível para facilitar a leitura e edição." kind="text"/>
+<TrackActivity client:load activityId="json-formatter" activityTitle="Usou Formatar JSON"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Copiar ou guardar resultado</span></section>
+</main><SiteFooter/></div></SiteLayout>

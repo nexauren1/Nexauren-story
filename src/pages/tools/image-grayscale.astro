@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Converter para escala de cinzentos — Ferramenta online | Nexauren" description="Remove a cor da imagem e cria uma versão em tons de cinzento, pronta para descarregar.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/image">Imagem</a><span>›</span><span>Converter para escala de cinzentos</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / IMAGE LAB</span><h1>Converter para escala de cinzentos</h1><p>Remove a cor da imagem e cria uma versão em tons de cinzento, pronta para descarregar.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="image-grayscale" title="Converter para escala de cinzentos" kind="tool" href="/tools/image-grayscale"/></div></header>
+<UniversalTool client:load toolId="image-grayscale" name="Converter para escala de cinzentos" category="image" description="Remove a cor da imagem e cria uma versão em tons de cinzento, pronta para descarregar." kind="image"/>
+<TrackActivity client:load activityId="image-grayscale" activityTitle="Usou Converter para escala de cinzentos"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

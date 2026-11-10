@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Imagem para Base64 — Ferramenta online | Nexauren" description="Lê uma imagem e converte-a numa Data URL Base64 para usar em código e documentos.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/image">Imagem</a><span>›</span><span>Imagem para Base64</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / IMAGE LAB</span><h1>Imagem para Base64</h1><p>Lê uma imagem e converte-a numa Data URL Base64 para usar em código e documentos.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="image-base64" title="Imagem para Base64" kind="tool" href="/tools/image-base64"/></div></header>
+<UniversalTool client:load toolId="image-base64" name="Imagem para Base64" category="image" description="Lê uma imagem e converte-a numa Data URL Base64 para usar em código e documentos." kind="image"/>
+<TrackActivity client:load activityId="image-base64" activityTitle="Usou Imagem para Base64"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

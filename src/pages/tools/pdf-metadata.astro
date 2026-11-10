@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Consultar metadados PDF — Ferramenta online | Nexauren" description="Consulta título, autor, assunto, criador, produtor e palavras-chave guardados no PDF.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/pdf">PDF</a><span>›</span><span>Consultar metadados PDF</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / PDF LAB</span><h1>Consultar metadados PDF</h1><p>Consulta título, autor, assunto, criador, produtor e palavras-chave guardados no PDF.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="pdf-metadata" title="Consultar metadados PDF" kind="tool" href="/tools/pdf-metadata"/></div></header>
+<UniversalTool client:load toolId="pdf-metadata" name="Consultar metadados PDF" category="pdf" description="Consulta título, autor, assunto, criador, produtor e palavras-chave guardados no PDF." kind="pdf"/>
+<TrackActivity client:load activityId="pdf-metadata" activityTitle="Usou Consultar metadados PDF"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

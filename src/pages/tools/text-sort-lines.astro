@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Ordenar linhas alfabeticamente — Ferramenta online | Nexauren" description="Ordena linhas por ordem alfabética e elimina linhas vazias para organizar listas.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Ordenar linhas alfabeticamente</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Ordenar linhas alfabeticamente</h1><p>Ordena linhas por ordem alfabética e elimina linhas vazias para organizar listas.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-sort-lines" title="Ordenar linhas alfabeticamente" kind="tool" href="/tools/text-sort-lines"/></div></header>
+<UniversalTool client:load toolId="text-sort-lines" name="Ordenar linhas alfabeticamente" category="text" description="Ordena linhas por ordem alfabética e elimina linhas vazias para organizar listas." kind="text"/>
+<TrackActivity client:load activityId="text-sort-lines" activityTitle="Usou Ordenar linhas alfabeticamente"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Copiar ou guardar resultado</span></section>
+</main><SiteFooter/></div></SiteLayout>

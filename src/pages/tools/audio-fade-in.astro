@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Fade in de áudio — Ferramenta online | Nexauren" description="Aplica uma entrada gradual de volume ao áudio para suavizar o início do ficheiro.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/audio">Áudio</a><span>›</span><span>Fade in de áudio</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / AUDIO LAB</span><h1>Fade in de áudio</h1><p>Aplica uma entrada gradual de volume ao áudio para suavizar o início do ficheiro.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="audio-fade-in" title="Fade in de áudio" kind="tool" href="/tools/audio-fade-in"/></div></header>
+<UniversalTool client:load toolId="audio-fade-in" name="Fade in de áudio" category="audio" description="Aplica uma entrada gradual de volume ao áudio para suavizar o início do ficheiro." kind="audio"/>
+<TrackActivity client:load activityId="audio-fade-in" activityTitle="Usou Fade in de áudio"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

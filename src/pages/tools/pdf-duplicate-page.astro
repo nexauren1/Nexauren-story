@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Duplicar página PDF — Ferramenta online | Nexauren" description="Duplica uma página indicada e insere a cópia logo a seguir à página original.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/pdf">PDF</a><span>›</span><span>Duplicar página PDF</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / PDF LAB</span><h1>Duplicar página PDF</h1><p>Duplica uma página indicada e insere a cópia logo a seguir à página original.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="pdf-duplicate-page" title="Duplicar página PDF" kind="tool" href="/tools/pdf-duplicate-page"/></div></header>
+<UniversalTool client:load toolId="pdf-duplicate-page" name="Duplicar página PDF" category="pdf" description="Duplica uma página indicada e insere a cópia logo a seguir à página original." kind="pdf"/>
+<TrackActivity client:load activityId="pdf-duplicate-page" activityTitle="Usou Duplicar página PDF"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

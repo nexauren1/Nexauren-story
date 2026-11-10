@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Minificar JSON — Ferramenta online | Nexauren" description="Remove espaços e quebras de linha desnecessários de JSON válido para reduzir o texto.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Minificar JSON</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Minificar JSON</h1><p>Remove espaços e quebras de linha desnecessários de JSON válido para reduzir o texto.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="json-minifier" title="Minificar JSON" kind="tool" href="/tools/json-minifier"/></div></header>
+<UniversalTool client:load toolId="json-minifier" name="Minificar JSON" category="text" description="Remove espaços e quebras de linha desnecessários de JSON válido para reduzir o texto." kind="text"/>
+<TrackActivity client:load activityId="json-minifier" activityTitle="Usou Minificar JSON"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

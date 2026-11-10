@@ -114,7 +114,7 @@ export default function ImageCropper() {
           <input ref={input} className="file-input-hidden" type="file" accept="image/*" onChange={change}/>
           <span className="nx-upload-symbol">◈</span><strong>Escolher imagem para recortar</strong><small>PNG, JPG, WebP · até 35 MB</small><span className="upload-cta">Seleccionar imagem</span>
         </label> : <>
-          <div className="nx-crop-preview" style={{aspectRatio:dims.w>0?dims.w+" / "+dims.h:"4 / 3",width:dims.w>0?Math.min(460*dims.w/dims.h,760)+"px":"100%"}}>
+          <div className="nx-crop-preview" style={{aspectRatio:dims.w>0?dims.w+" / "+dims.h:"4 / 3"}}>
             {result ? <img src={result} alt="Imagem recortada"/> : <>
               <img src={imageUrl} alt="Imagem original"/>
               <div className="nx-crop-selection" style={selection}><span>ÁREA SELECCIONADA</span></div>

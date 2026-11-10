@@ -1,0 +1,15 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import TextCaseConverter from "../../components/TextCaseConverter";
+import TrackActivity from "../../components/TrackActivity";
+import FavoriteButton from "../../components/FavoriteButton";
+---
+<SiteLayout title="Conversor de maiúsculas e formatos de texto — Nexauren" description="Converte texto para camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE e outros formatos.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Conversor de formatos</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Conversor de formatos de texto</h1><p>Transforma nomes, frases e identificadores para os formatos de escrita mais utilizados.</p></div><div class="tool-header-actions"><span class="tool-state"><i/> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-case-converter" title="Conversor de formatos de texto" kind="tool" href="/tools/text-case-converter"/></div></header>
+<TextCaseConverter client:load/><TrackActivity client:load activityId="text-case-converter" activityTitle="Usou Conversor de formatos de texto"/>
+<section class="tool-trust-strip"><span>◈ Conversão local</span><span>⌁ 8 formatos</span><span>↗ Copiar ou guardar TXT</span></section>
+</main><SiteFooter/></div></SiteLayout>

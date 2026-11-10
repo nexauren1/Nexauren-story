@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Texto em minúsculas — Ferramenta online | Nexauren" description="Converte o texto para minúsculas e mantém a estrutura das linhas e parágrafos.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Texto em minúsculas</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Texto em minúsculas</h1><p>Converte o texto para minúsculas e mantém a estrutura das linhas e parágrafos.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-lowercase" title="Texto em minúsculas" kind="tool" href="/tools/text-lowercase"/></div></header>
+<UniversalTool client:load toolId="text-lowercase" name="Texto em minúsculas" category="text" description="Converte o texto para minúsculas e mantém a estrutura das linhas e parágrafos." kind="text"/>
+<TrackActivity client:load activityId="text-lowercase" activityTitle="Usou Texto em minúsculas"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

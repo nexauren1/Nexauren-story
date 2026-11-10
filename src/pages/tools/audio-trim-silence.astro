@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Remover silêncio do áudio — Ferramenta online | Nexauren" description="Detecta silêncio no início e no fim do áudio e cria um WAV com o trecho útil.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/audio">Áudio</a><span>›</span><span>Remover silêncio do áudio</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / AUDIO LAB</span><h1>Remover silêncio do áudio</h1><p>Detecta silêncio no início e no fim do áudio e cria um WAV com o trecho útil.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="audio-trim-silence" title="Remover silêncio do áudio" kind="tool" href="/tools/audio-trim-silence"/></div></header>
+<UniversalTool client:load toolId="audio-trim-silence" name="Remover silêncio do áudio" category="audio" description="Detecta silêncio no início e no fim do áudio e cria um WAV com o trecho útil." kind="audio"/>
+<TrackActivity client:load activityId="audio-trim-silence" activityTitle="Usou Remover silêncio do áudio"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Gerar URL amigável (slug) — Ferramenta online | Nexauren" description="Transforma títulos em slugs curtos, sem acentos e adequados para endereços web.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Gerar URL amigável (slug)</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Gerar URL amigável (slug)</h1><p>Transforma títulos em slugs curtos, sem acentos e adequados para endereços web.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-slug" title="Gerar URL amigável (slug)" kind="tool" href="/tools/text-slug"/></div></header>
+<UniversalTool client:load toolId="text-slug" name="Gerar URL amigável (slug)" category="text" description="Transforma títulos em slugs curtos, sem acentos e adequados para endereços web." kind="text"/>
+<TrackActivity client:load activityId="text-slug" activityTitle="Usou Gerar URL amigável (slug)"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Copiar ou guardar resultado</span></section>
+</main><SiteFooter/></div></SiteLayout>

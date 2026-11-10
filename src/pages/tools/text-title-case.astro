@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Formato de título — Ferramenta online | Nexauren" description="Coloca a primeira letra de cada palavra em maiúscula para criar títulos consistentes.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Formato de título</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Formato de título</h1><p>Coloca a primeira letra de cada palavra em maiúscula para criar títulos consistentes.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-title-case" title="Formato de título" kind="tool" href="/tools/text-title-case"/></div></header>
+<UniversalTool client:load toolId="text-title-case" name="Formato de título" category="text" description="Coloca a primeira letra de cada palavra em maiúscula para criar títulos consistentes." kind="text"/>
+<TrackActivity client:load activityId="text-title-case" activityTitle="Usou Formato de título"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

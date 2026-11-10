@@ -25,24 +25,206 @@ const siteSchema={"@context":"https://schema.org","@type":"WebSite","name":"Nexa
   <slot/>
   <script is:inline>
   (() => {
-    const translations = {
-      pt:{"nav.tools":"Ferramentas","nav.highlights":"Destaques","nav.apps":"Aplicações","nav.blog":"Blog","nav.account":"Minha conta"},
-      en:{"nav.tools":"Tools","nav.highlights":"Highlights","nav.apps":"Apps","nav.blog":"Blog","nav.account":"My account"},
-      es:{"nav.tools":"Herramientas","nav.highlights":"Destacados","nav.apps":"Aplicaciones","nav.blog":"Blog","nav.account":"Mi cuenta"},
-      fr:{"nav.tools":"Outils","nav.highlights":"À la une","nav.apps":"Applications","nav.blog":"Blog","nav.account":"Mon compte"}
+    const allowed = ["pt","en","es","fr","de"];
+    const dictionaryCache = new Map();
+    const textStates = new WeakMap();
+    const attributeStates = new WeakMap();
+    let current = "pt";
+    let dictionary = {};
+    let originalTitle = document.title;
+    let translatedTitle = originalTitle;
+
+    const patterns = {
+      en: [
+        [/^(\d+)\s+ferramentas?$/i, (n) => n+" tools"],
+        [/^(\d+)\s+categorias?$/i, (n) => n+" categories"],
+        [/^(\d+)\s+ferramentas disponíveis$/i, (n) => n+" tools available"],
+        [/^(\d+)\s+ferramenta disponível$/i, (n) => n+" tool available"],
+        [/^(\d+)\s+documentos?$/i, (n) => n+" documents"],
+        [/^(\d+)\s+páginas?$/i, (n) => n+" pages"],
+        [/^(\d+)\s+caracteres?$/i, (n) => n+" characters"],
+        [/^(\d+)\s+palavras?$/i, (n) => n+" words"],
+        [/^(\d+)\s+linhas?$/i, (n) => n+" lines"],
+        [/^(\d+)\s+minutos?$/i, (n) => n+" minutes"],
+        [/^Combinar\s+(\d+)\s+documentos$/i, (n) => "Merge "+n+" documents"]
+      ],
+      es: [
+        [/^(\d+)\s+ferramentas?$/i, (n) => n+" herramientas"],
+        [/^(\d+)\s+categorias?$/i, (n) => n+" categorías"],
+        [/^(\d+)\s+ferramentas disponíveis$/i, (n) => n+" herramientas disponibles"],
+        [/^(\d+)\s+ferramenta disponível$/i, (n) => n+" herramienta disponible"],
+        [/^(\d+)\s+documentos?$/i, (n) => n+" documentos"],
+        [/^(\d+)\s+páginas?$/i, (n) => n+" páginas"],
+        [/^(\d+)\s+caracteres?$/i, (n) => n+" caracteres"],
+        [/^(\d+)\s+palavras?$/i, (n) => n+" palabras"],
+        [/^(\d+)\s+linhas?$/i, (n) => n+" líneas"],
+        [/^(\d+)\s+minutos?$/i, (n) => n+" minutos"],
+        [/^Combinar\s+(\d+)\s+documentos$/i, (n) => "Unir "+n+" documentos"]
+      ],
+      fr: [
+        [/^(\d+)\s+ferramentas?$/i, (n) => n+" outils"],
+        [/^(\d+)\s+categorias?$/i, (n) => n+" catégories"],
+        [/^(\d+)\s+ferramentas disponíveis$/i, (n) => n+" outils disponibles"],
+        [/^(\d+)\s+ferramenta disponível$/i, (n) => n+" outil disponible"],
+        [/^(\d+)\s+documentos?$/i, (n) => n+" documents"],
+        [/^(\d+)\s+páginas?$/i, (n) => n+" pages"],
+        [/^(\d+)\s+caracteres?$/i, (n) => n+" caractères"],
+        [/^(\d+)\s+palavras?$/i, (n) => n+" mots"],
+        [/^(\d+)\s+linhas?$/i, (n) => n+" lignes"],
+        [/^(\d+)\s+minutos?$/i, (n) => n+" minutes"],
+        [/^Combinar\s+(\d+)\s+documentos$/i, (n) => "Fusionner "+n+" documents"]
+      ],
+      de: [
+        [/^(\d+)\s+ferramentas?$/i, (n) => n+" Werkzeuge"],
+        [/^(\d+)\s+categorias?$/i, (n) => n+" Kategorien"],
+        [/^(\d+)\s+ferramentas disponíveis$/i, (n) => n+" verfügbare Werkzeuge"],
+        [/^(\d+)\s+ferramenta disponível$/i, (n) => n+" verfügbares Werkzeug"],
+        [/^(\d+)\s+documentos?$/i, (n) => n+" Dokumente"],
+        [/^(\d+)\s+páginas?$/i, (n) => n+" Seiten"],
+        [/^(\d+)\s+caracteres?$/i, (n) => n+" Zeichen"],
+        [/^(\d+)\s+palavras?$/i, (n) => n+" Wörter"],
+        [/^(\d+)\s+linhas?$/i, (n) => n+" Zeilen"],
+        [/^(\d+)\s+minutos?$/i, (n) => n+" Minuten"],
+        [/^Combinar\s+(\d+)\s+documentos$/i, (n) => n+" Dokumente zusammenfügen"]
+      ]
     };
-    const applyLanguage=(locale)=>{
-      const selected=translations[locale]?locale:"pt";
-      document.documentElement.lang=selected;
-      document.querySelectorAll("[data-i18n]").forEach((node)=>{
-        const value=translations[selected][node.getAttribute("data-i18n")];
-        if(value)node.textContent=value;
-      });
-      try{localStorage.setItem("nexauren:language",selected);}catch{}
-    };
-    let language="pt";
-    try{language=localStorage.getItem("nexauren:language")||"pt";}catch{}
-    applyLanguage(language);
+
+    function translateValue(source) {
+      if (current === "pt" || !source) return source;
+      const clean = source.trim();
+      if (Object.prototype.hasOwnProperty.call(dictionary, clean)) {
+        return source.replace(clean, dictionary[clean]);
+      }
+      for (const [pattern, render] of (patterns[current] || [])) {
+        const match = clean.match(pattern);
+        if (match) return source.replace(clean, render(match[1]));
+      }
+      return source;
+    }
+
+    function translateTextNode(node) {
+      if (!node || !node.nodeValue || !node.nodeValue.trim()) return;
+      const parent = node.parentElement;
+      if (parent && parent.closest("script,style,noscript,code,pre,textarea")) return;
+      let state = textStates.get(node);
+      if (!state) {
+        state = { source: node.nodeValue, last: null };
+        textStates.set(node, state);
+      } else if (node.nodeValue !== state.last) {
+        state.source = node.nodeValue;
+      }
+      const next = translateValue(state.source);
+      state.last = next;
+      if (node.nodeValue !== next) node.nodeValue = next;
+    }
+
+    function translateAttributes(root) {
+      const elements = [];
+      if (root.nodeType === 1) elements.push(root);
+      if (root.querySelectorAll) elements.push(...root.querySelectorAll("[placeholder],[aria-label],[title]"));
+      for (const element of elements) {
+        let state = attributeStates.get(element);
+        if (!state) {
+          state = {};
+          for (const name of ["placeholder","aria-label","title"]) {
+            if (element.hasAttribute(name)) state[name] = { source: element.getAttribute(name), last: null };
+          }
+          attributeStates.set(element,state);
+        }
+        for (const name of ["placeholder","aria-label","title"]) {
+          if (!element.hasAttribute(name)) continue;
+          const now = element.getAttribute(name);
+          let value = state[name];
+          if (!value) { value = {source:now,last:null}; state[name]=value; }
+          else if (now !== value.last) value.source = now;
+          const next = translateValue(value.source);
+          value.last = next;
+          if (now !== next) element.setAttribute(name,next);
+        }
+      }
+    }
+
+    function translateTree(root) {
+      if (root.nodeType === 3) { translateTextNode(root); return; }
+      if (root.querySelectorAll || root.nodeType === 1) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) translateTextNode(node);
+        translateAttributes(root);
+      }
+    }
+
+    async function loadDictionary(locale) {
+      if (dictionaryCache.has(locale)) return dictionaryCache.get(locale);
+      const response = await fetch("/translations/"+locale+".json",{cache:"force-cache"});
+      if (!response.ok) throw new Error("Could not load language file");
+      const json = await response.json();
+      dictionaryCache.set(locale,json);
+      return json;
+    }
+
+    async function setLanguage(locale) {
+      const selected = allowed.includes(locale) ? locale : "pt";
+      try {
+        dictionary = await loadDictionary(selected);
+      } catch {
+        dictionary = {};
+      }
+      current = selected;
+      document.documentElement.lang = selected;
+      const localeMeta = document.querySelector('meta[property="og:locale"]');
+      if (localeMeta) localeMeta.setAttribute("content",({pt:"pt_PT",en:"en_US",es:"es_ES",fr:"fr_FR",de:"de_DE"})[selected]);
+      try { localStorage.setItem("nexauren:language",selected); } catch {}
+      document.querySelectorAll("[data-language-select]").forEach((select) => { select.value = selected; });
+      translatedTitle = translateValue(originalTitle);
+      document.title = translatedTitle;
+      translateTree(document.head);
+      translateTree(document.body);
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        const currentDescription = metaDescription.getAttribute("content") || "";
+        const original = metaDescription.dataset.originalContent || currentDescription;
+        metaDescription.dataset.originalContent = original;
+        metaDescription.setAttribute("content",translateValue(original));
+      }
+      for (const selector of ['meta[property="og:title"]','meta[name="twitter:title"]']) {
+        const meta=document.querySelector(selector);
+        if(meta){
+          const original=meta.dataset.originalContent||meta.getAttribute("content")||"";
+          meta.dataset.originalContent=original;
+          meta.setAttribute("content",translateValue(original));
+        }
+      }
+      for (const selector of ['meta[property="og:description"]','meta[name="twitter:description"]']) {
+        const meta=document.querySelector(selector);
+        if(meta){
+          const original=meta.dataset.originalContent||meta.getAttribute("content")||"";
+          meta.dataset.originalContent=original;
+          meta.setAttribute("content",translateValue(original));
+        }
+      }
+    }
+
+    let saved = "pt";
+    try { saved = localStorage.getItem("nexauren:language") || "pt"; } catch {}
+    void setLanguage(saved);
+
+    document.addEventListener("change",(event)=>{
+      const target=event.target;
+      if(target && target.matches && target.matches("[data-language-select]")) void setLanguage(target.value);
+    });
+
+    const observer = new MutationObserver((records)=>{
+      for(const record of records){
+        if(record.type==="characterData") translateTextNode(record.target);
+        else {
+          for(const node of record.addedNodes) translateTree(node);
+          if(record.target.nodeType===1) translateAttributes(record.target);
+        }
+      }
+    });
+    observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+    observer.observe(document.head,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["content"]});
     document.addEventListener("click",(event)=>{
       const target=event.target;
       const toggle=target.closest("[data-menu-toggle]");
@@ -71,8 +253,7 @@ const siteSchema={"@context":"https://schema.org","@type":"WebSite","name":"Nexa
         if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target);}
       }),{threshold:.08});
       document.querySelectorAll(".home-section,.category-tool-card,.editorial-card,.directory-card,.achievement-card,.nx-reveal").forEach((node)=>{
-        node.classList.add("scroll-reveal");
-        observer.observe(node);
+        node.classList.add("scroll-reveal");observer.observe(node);
       });
     }
   })();

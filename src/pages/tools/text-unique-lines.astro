@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Remover linhas duplicadas — Ferramenta online | Nexauren" description="Mantém apenas a primeira ocorrência de cada linha e remove duplicados.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Remover linhas duplicadas</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Remover linhas duplicadas</h1><p>Mantém apenas a primeira ocorrência de cada linha e remove duplicados.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-unique-lines" title="Remover linhas duplicadas" kind="tool" href="/tools/text-unique-lines"/></div></header>
+<UniversalTool client:load toolId="text-unique-lines" name="Remover linhas duplicadas" category="text" description="Mantém apenas a primeira ocorrência de cada linha e remove duplicados." kind="text"/>
+<TrackActivity client:load activityId="text-unique-lines" activityTitle="Usou Remover linhas duplicadas"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Copiar ou guardar resultado</span></section>
+</main><SiteFooter/></div></SiteLayout>

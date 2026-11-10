@@ -3,28 +3,28 @@
     {
       "id": "image",
       "name": "Imagem",
-      "description": "Redimensiona, comprime, converte e recorta imagens.",
+      "description": "Edita, recorta, transforma, converte e prepara imagens para qualquer utilização.",
       "icon": "◈",
       "tone": "blue"
     },
     {
       "id": "pdf",
       "name": "PDF",
-      "description": "Organiza, optimiza e prepara documentos PDF.",
+      "description": "Organiza, extrai, roda, analisa e optimiza documentos PDF.",
       "icon": "▤",
       "tone": "rose"
     },
     {
       "id": "text",
       "name": "Texto",
-      "description": "Conta, transforma e organiza texto num só espaço.",
+      "description": "Escreve, transforma, codifica, valida e organiza texto e dados.",
       "icon": "Aa",
       "tone": "green"
     },
     {
       "id": "audio",
       "name": "Áudio",
-      "description": "Corta e normaliza ficheiros de áudio.",
+      "description": "Corta, transforma, ajusta e analisa ficheiros de áudio.",
       "icon": "♫",
       "tone": "violet"
     }
@@ -109,6 +109,375 @@
       "category": "audio",
       "path": "/tools/audio-normalizer",
       "icon": "≋",
+      "featured": false
+    },
+    {
+      "category": "image",
+      "id": "image-watermark",
+      "name": "Marca de água em imagem",
+      "description": "Adiciona texto às imagens com 9 posições, cor, opacidade, tamanho e exportação PNG, JPG ou WebP.",
+      "path": "/tools/image-watermark",
+      "icon": "✎",
+      "featured": true
+    },
+    {
+      "category": "image",
+      "id": "image-rotate",
+      "name": "Rodar e espelhar imagem",
+      "description": "Roda a imagem em 90° ou 180°, espelha horizontalmente ou verticalmente e exporta o resultado.",
+      "path": "/tools/image-rotate",
+      "icon": "↻",
+      "featured": true
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-info",
+      "name": "Informação e análise de PDF",
+      "description": "Consulta páginas, dimensões, orientação e metadados; exporta relatórios em JSON e CSV.",
+      "path": "/tools/pdf-info",
+      "icon": "ⓘ",
+      "featured": true
+    },
+    {
+      "category": "text",
+      "id": "text-case-converter",
+      "name": "Conversor de formatos de texto",
+      "description": "Converte texto para camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, dot.case e formatos de frase.",
+      "path": "/tools/text-case-converter",
+      "icon": "Aa",
+      "featured": true
+    },
+    {
+      "category": "text",
+      "id": "text-find-replace",
+      "name": "Localizar e substituir texto",
+      "description": "Conta ocorrências e substitui texto com controlo de maiúsculas, palavras completas e primeira ocorrência.",
+      "path": "/tools/text-find-replace",
+      "icon": "⌕",
+      "featured": true
+    },
+    {
+      "category": "image",
+      "id": "image-info",
+      "name": "Informação da imagem",
+      "description": "Consulta nome, formato, dimensões em píxeis e tamanho de qualquer imagem.",
+      "path": "/tools/image-info",
+      "icon": "ⓘ",
+      "featured": false
+    },
+    {
+      "category": "image",
+      "id": "image-grayscale",
+      "name": "Converter para escala de cinzentos",
+      "description": "Remove a cor da imagem e cria uma versão em tons de cinzento, pronta para descarregar.",
+      "path": "/tools/image-grayscale",
+      "icon": "◐",
+      "featured": false
+    },
+    {
+      "category": "image",
+      "id": "image-invert",
+      "name": "Inverter cores da imagem",
+      "description": "Inverte as cores da imagem com pré-visualização do resultado e exportação WebP.",
+      "path": "/tools/image-invert",
+      "icon": "◑",
+      "featured": false
+    },
+    {
+      "category": "image",
+      "id": "image-convert",
+      "name": "Converter formato de imagem",
+      "description": "Converte imagens entre WebP, JPG e PNG no navegador, sem enviar os ficheiros.",
+      "path": "/tools/image-convert",
+      "icon": "⇄",
+      "featured": true
+    },
+    {
+      "category": "image",
+      "id": "image-flip",
+      "name": "Espelhar imagem",
+      "description": "Espelha horizontalmente uma imagem e exporta uma cópia transformada.",
+      "path": "/tools/image-flip",
+      "icon": "↔",
+      "featured": false
+    },
+    {
+      "category": "image",
+      "id": "image-base64",
+      "name": "Imagem para Base64",
+      "description": "Lê uma imagem e converte-a numa Data URL Base64 para usar em código e documentos.",
+      "path": "/tools/image-base64",
+      "icon": "⌘",
+      "featured": false
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-page-count",
+      "name": "Contar páginas PDF",
+      "description": "Conta páginas e consulta o tamanho do ficheiro, título e autor do documento PDF.",
+      "path": "/tools/pdf-page-count",
+      "icon": "▤",
+      "featured": false
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-metadata",
+      "name": "Consultar metadados PDF",
+      "description": "Consulta título, autor, assunto, criador, produtor e palavras-chave guardados no PDF.",
+      "path": "/tools/pdf-metadata",
+      "icon": "ⓘ",
+      "featured": false
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-split",
+      "name": "Extrair páginas por intervalo",
+      "description": "Extrai páginas específicas ou vários intervalos e guarda-os num novo documento PDF.",
+      "path": "/tools/pdf-split",
+      "icon": "⇥",
+      "featured": false
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-remove-pages",
+      "name": "Remover páginas PDF",
+      "description": "Remove páginas seleccionadas e cria uma nova cópia sem alterar o documento original.",
+      "path": "/tools/pdf-remove-pages",
+      "icon": "−",
+      "featured": false
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-reorder-pages",
+      "name": "Reordenar páginas PDF",
+      "description": "Define uma sequência de páginas personalizada e reorganiza o PDF numa nova cópia.",
+      "path": "/tools/pdf-reorder-pages",
+      "icon": "☷",
+      "featured": false
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-rotate",
+      "name": "Rodar páginas PDF",
+      "description": "Roda todas as páginas do documento em 90 graus e exporta o PDF corrigido.",
+      "path": "/tools/pdf-rotate",
+      "icon": "↻",
+      "featured": false
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-duplicate-page",
+      "name": "Duplicar página PDF",
+      "description": "Duplica uma página indicada e insere a cópia logo a seguir à página original.",
+      "path": "/tools/pdf-duplicate-page",
+      "icon": "▣",
+      "featured": false
+    },
+    {
+      "category": "pdf",
+      "id": "pdf-clean-metadata",
+      "name": "Limpar metadados PDF",
+      "description": "Remove metadados básicos como autor, título, assunto, criador e palavras-chave.",
+      "path": "/tools/pdf-clean-metadata",
+      "icon": "⌫",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "text-uppercase",
+      "name": "Texto em maiúsculas",
+      "description": "Converte todas as letras do texto para maiúsculas, preservando números e pontuação.",
+      "path": "/tools/text-uppercase",
+      "icon": "AA",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "text-lowercase",
+      "name": "Texto em minúsculas",
+      "description": "Converte o texto para minúsculas e mantém a estrutura das linhas e parágrafos.",
+      "path": "/tools/text-lowercase",
+      "icon": "aa",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "text-title-case",
+      "name": "Formato de título",
+      "description": "Coloca a primeira letra de cada palavra em maiúscula para criar títulos consistentes.",
+      "path": "/tools/text-title-case",
+      "icon": "Tt",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "text-clean-spaces",
+      "name": "Limpar espaços e linhas",
+      "description": "Remove espaços repetidos, espaços nas extremidades e linhas vazias desnecessárias.",
+      "path": "/tools/text-clean-spaces",
+      "icon": "↤",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "text-sort-lines",
+      "name": "Ordenar linhas alfabeticamente",
+      "description": "Ordena linhas por ordem alfabética e elimina linhas vazias para organizar listas.",
+      "path": "/tools/text-sort-lines",
+      "icon": "A↕",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "text-unique-lines",
+      "name": "Remover linhas duplicadas",
+      "description": "Mantém apenas a primeira ocorrência de cada linha e remove duplicados.",
+      "path": "/tools/text-unique-lines",
+      "icon": "≠",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "text-reverse-lines",
+      "name": "Inverter ordem das linhas",
+      "description": "Inverte a sequência das linhas do texto sem alterar o conteúdo de cada linha.",
+      "path": "/tools/text-reverse-lines",
+      "icon": "⇅",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "text-slug",
+      "name": "Gerar URL amigável (slug)",
+      "description": "Transforma títulos em slugs curtos, sem acentos e adequados para endereços web.",
+      "path": "/tools/text-slug",
+      "icon": "#",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "base64-encode",
+      "name": "Codificar texto Base64",
+      "description": "Codifica texto para Base64 usando UTF-8, incluindo caracteres acentuados.",
+      "path": "/tools/base64-encode",
+      "icon": "B64",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "base64-decode",
+      "name": "Descodificar Base64",
+      "description": "Descodifica conteúdo Base64 para texto UTF-8 e apresenta o resultado legível.",
+      "path": "/tools/base64-decode",
+      "icon": "↙",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "url-encode",
+      "name": "Codificar URL",
+      "description": "Codifica caracteres especiais para utilização segura em parâmetros e endereços URL.",
+      "path": "/tools/url-encode",
+      "icon": "%",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "url-decode",
+      "name": "Descodificar URL",
+      "description": "Descodifica sequências percent-encoded e recupera o texto original de uma URL.",
+      "path": "/tools/url-decode",
+      "icon": "↗",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "json-formatter",
+      "name": "Formatar JSON",
+      "description": "Valida e organiza JSON com indentação legível para facilitar a leitura e edição.",
+      "path": "/tools/json-formatter",
+      "icon": "{ }",
+      "featured": true
+    },
+    {
+      "category": "text",
+      "id": "json-minifier",
+      "name": "Minificar JSON",
+      "description": "Remove espaços e quebras de linha desnecessários de JSON válido para reduzir o texto.",
+      "path": "/tools/json-minifier",
+      "icon": "{}-",
+      "featured": false
+    },
+    {
+      "category": "text",
+      "id": "csv-to-json",
+      "name": "Converter CSV para JSON",
+      "description": "Converte tabelas CSV em listas JSON, respeitando cabeçalhos, aspas e campos separados.",
+      "path": "/tools/csv-to-json",
+      "icon": "⇢",
+      "featured": true
+    },
+    {
+      "category": "audio",
+      "id": "audio-info",
+      "name": "Informação do áudio",
+      "description": "Consulta duração, número de canais, frequência de amostragem e total de amostras.",
+      "path": "/tools/audio-info",
+      "icon": "ⓘ",
+      "featured": false
+    },
+    {
+      "category": "audio",
+      "id": "audio-trim-silence",
+      "name": "Remover silêncio do áudio",
+      "description": "Detecta silêncio no início e no fim do áudio e cria um WAV com o trecho útil.",
+      "path": "/tools/audio-trim-silence",
+      "icon": "∿",
+      "featured": false
+    },
+    {
+      "category": "audio",
+      "id": "audio-volume",
+      "name": "Ajustar volume do áudio",
+      "description": "Aumenta ou reduz o ganho do áudio e exporta uma versão WAV com o nível ajustado.",
+      "path": "/tools/audio-volume",
+      "icon": "◖",
+      "featured": false
+    },
+    {
+      "category": "audio",
+      "id": "audio-fade-in",
+      "name": "Fade in de áudio",
+      "description": "Aplica uma entrada gradual de volume ao áudio para suavizar o início do ficheiro.",
+      "path": "/tools/audio-fade-in",
+      "icon": "↗",
+      "featured": false
+    },
+    {
+      "category": "audio",
+      "id": "audio-fade-out",
+      "name": "Fade out de áudio",
+      "description": "Aplica uma saída gradual de volume ao áudio para terminar o som suavemente.",
+      "path": "/tools/audio-fade-out",
+      "icon": "↘",
+      "featured": false
+    },
+    {
+      "category": "audio",
+      "id": "audio-reverse",
+      "name": "Inverter áudio",
+      "description": "Inverte a ordem das amostras de áudio e exporta o resultado em WAV PCM.",
+      "path": "/tools/audio-reverse",
+      "icon": "⇄",
+      "featured": false
+    },
+    {
+      "category": "audio",
+      "id": "audio-speed",
+      "name": "Alterar velocidade do áudio",
+      "description": "Acelera ou abranda o áudio entre 0,5× e 2×, ajustando a duração do ficheiro.",
+      "path": "/tools/audio-speed",
+      "icon": "⏩",
       "featured": false
     }
   ]

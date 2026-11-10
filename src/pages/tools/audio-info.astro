@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Informação do áudio — Ferramenta online | Nexauren" description="Consulta duração, número de canais, frequência de amostragem e total de amostras.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/audio">Áudio</a><span>›</span><span>Informação do áudio</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / AUDIO LAB</span><h1>Informação do áudio</h1><p>Consulta duração, número de canais, frequência de amostragem e total de amostras.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="audio-info" title="Informação do áudio" kind="tool" href="/tools/audio-info"/></div></header>
+<UniversalTool client:load toolId="audio-info" name="Informação do áudio" category="audio" description="Consulta duração, número de canais, frequência de amostragem e total de amostras." kind="audio"/>
+<TrackActivity client:load activityId="audio-info" activityTitle="Usou Informação do áudio"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

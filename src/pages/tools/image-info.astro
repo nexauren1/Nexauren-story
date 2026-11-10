@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Informação da imagem — Ferramenta online | Nexauren" description="Consulta nome, formato, dimensões em píxeis e tamanho de qualquer imagem.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/image">Imagem</a><span>›</span><span>Informação da imagem</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / IMAGE LAB</span><h1>Informação da imagem</h1><p>Consulta nome, formato, dimensões em píxeis e tamanho de qualquer imagem.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="image-info" title="Informação da imagem" kind="tool" href="/tools/image-info"/></div></header>
+<UniversalTool client:load toolId="image-info" name="Informação da imagem" category="image" description="Consulta nome, formato, dimensões em píxeis e tamanho de qualquer imagem." kind="image"/>
+<TrackActivity client:load activityId="image-info" activityTitle="Usou Informação da imagem"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

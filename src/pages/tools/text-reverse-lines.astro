@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Inverter ordem das linhas — Ferramenta online | Nexauren" description="Inverte a sequência das linhas do texto sem alterar o conteúdo de cada linha.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Inverter ordem das linhas</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Inverter ordem das linhas</h1><p>Inverte a sequência das linhas do texto sem alterar o conteúdo de cada linha.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-reverse-lines" title="Inverter ordem das linhas" kind="tool" href="/tools/text-reverse-lines"/></div></header>
+<UniversalTool client:load toolId="text-reverse-lines" name="Inverter ordem das linhas" category="text" description="Inverte a sequência das linhas do texto sem alterar o conteúdo de cada linha." kind="text"/>
+<TrackActivity client:load activityId="text-reverse-lines" activityTitle="Usou Inverter ordem das linhas"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Copiar ou guardar resultado</span></section>
+</main><SiteFooter/></div></SiteLayout>
