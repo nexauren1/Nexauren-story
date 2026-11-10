@@ -17,7 +17,7 @@ export default function PDFInfo(){
       const {PDFDocument}=await import("pdf-lib");
       const doc=await PDFDocument.load(await next.arrayBuffer(),{updateMetadata:false});
       const pages=doc.getPages().map((page,index)=>{const size=page.getSize();return{number:index+1,width:Math.round(size.width*100)/100,height:Math.round(size.height*100)/100,rotation:page.getRotation().angle};});
-      const result:Info={pages,title:doc.getTitle()||"",author:doc.getAuthor()||"",subject:doc.getSubject()||"",keywords:doc.getKeywords()?doc.getKeywords().split(",").map(s=>s.trim()).filter(Boolean):[],creator:doc.getCreator()||"",producer:doc.getProducer()||"",creationDate:dateLabel(doc.getCreationDate()),modificationDate:dateLabel(doc.getModificationDate())};
+      const result:Info={pages,title:doc.getTitle()||"",author:doc.getAuthor()||"",subject:doc.getSubject()||"",keywords:doc.getKeywords()?.split(",").map(s=>s.trim()).filter(Boolean) ?? [],creator:doc.getCreator()||"",producer:doc.getProducer()||"",creationDate:dateLabel(doc.getCreationDate()),modificationDate:dateLabel(doc.getModificationDate())};
       setInfo(result);setMessage("Análise concluída. Foram encontradas "+pages.length+" páginas.");
     }catch(cause){setError(cause instanceof Error?"Não foi possível ler este PDF. "+cause.message:"PDF inválido ou protegido por palavra-passe.");setMessage("");}
     finally{setBusy(false);}
