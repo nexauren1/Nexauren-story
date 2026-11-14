@@ -14,8 +14,8 @@ for (const category of active.categories) {
   try {
     const html = await readFile(output, "utf8");
     categoryPages.set(category.id, html);
-    if (!toolsPage.includes('href="/tools/' + category.id + '"')) {
-      errors.push("Categoria ausente da página principal de ferramentas: /tools/" + category.id);
+    if (!toolsPage.includes('data-tool-filter="' + category.id + '"')) {
+      errors.push("Filtro de categoria ausente no diretório: " + category.id);
     }
   } catch {
     errors.push("Página de categoria não foi gerada: /tools/" + category.id);
@@ -32,18 +32,21 @@ for (const tool of active.tools) {
     if (!sitemap.includes(site + tool.path)) {
       errors.push("Página ausente no sitemap: " + tool.path);
     }
+    if (!toolsPage.includes('href="' + tool.path + '"')) {
+      errors.push("Ferramenta ausente do diretório principal: " + tool.path);
+    }
     const categoryHtml = categoryPages.get(tool.category);
     if (!categoryHtml || !categoryHtml.includes('href="' + tool.path + '"')) {
       errors.push("Ferramenta ausente da página da categoria " + tool.category + ": " + tool.path);
-    }
-    if (toolsPage.includes('href="' + tool.path + '"')) {
-      errors.push("A página /tools não deve listar ferramentas individuais: " + tool.path);
     }
   } catch {
     errors.push("Página de ferramenta não foi gerada: " + tool.path);
   }
 }
 
+for (const route of ["/about", "/contact"]) {
+  if (!sitemap.includes(site + route)) errors.push("Página institucional ausente do sitemap: " + route);
+}
 if (sitemap.includes("/nexauren-control")) errors.push("O painel privado apareceu no sitemap.");
 if (!robots.includes("Disallow: /nexauren-control")) errors.push("robots.txt não bloqueia o painel privado.");
 if (!robots.includes("Sitemap: " + site + "/sitemap.xml")) errors.push("robots.txt não referencia o sitemap correcto.");
@@ -53,6 +56,6 @@ if (errors.length) {
   for (const error of errors) console.error(" - " + error);
   process.exit(1);
 }
-console.log("Navegação verificada: /tools apresenta " + active.categories.length + " categorias e nenhuma ferramenta individual.");
-console.log("Ferramentas verificadas: " + active.tools.length + " páginas geradas, presentes na categoria certa e no sitemap.");
-console.log("SEO verificado: robots.txt válido e painel privado excluído do sitemap.");
+console.log("Diretório verificado: /tools apresenta " + active.tools.length + " ferramentas pesquisáveis e filtros por categoria.");
+console.log("Ferramentas verificadas: " + active.tools.length + " páginas dedicadas, com presença no diretório, categoria e sitemap.");
+console.log("SEO verificado: sitemap, robots.txt e painel privado excluído.");
