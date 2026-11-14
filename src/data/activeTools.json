@@ -27,6 +27,48 @@
       "description": "Corta, transforma, ajusta e analisa ficheiros de áudio.",
       "icon": "♫",
       "tone": "violet"
+    },
+    {
+      "id": "converters",
+      "name": "Conversores",
+      "description": "Converter dados, codificações e formatos comuns.",
+      "icon": "⇄",
+      "tone": "cyan"
+    },
+    {
+      "id": "generators",
+      "name": "Geradores",
+      "description": "Criar identificadores, textos, códigos e recursos.",
+      "icon": "✧",
+      "tone": "orange"
+    },
+    {
+      "id": "calculators",
+      "name": "Calculadoras",
+      "description": "Resolver cálculos úteis de forma rápida e clara.",
+      "icon": "∑",
+      "tone": "blue"
+    },
+    {
+      "id": "developer",
+      "name": "Programador",
+      "description": "Ferramentas práticas para código, dados e depuração.",
+      "icon": "</>",
+      "tone": "purple"
+    },
+    {
+      "id": "colors",
+      "name": "Cores e design",
+      "description": "Criar paletas, verificar contraste e gerar estilos.",
+      "icon": "◉",
+      "tone": "purple"
+    },
+    {
+      "id": "dates",
+      "name": "Data e tempo",
+      "description": "Calcular intervalos, datas, horas e calendários.",
+      "icon": "◷",
+      "tone": "green"
     }
   ],
   "tools": [
@@ -514,6 +556,222 @@
       "category": "text",
       "path": "/tools/uuid-generator",
       "icon": "✳",
+      "featured": false
+    },
+    {
+      "id": "text-character-counter",
+      "name": "Contador de caracteres",
+      "description": "Conta caracteres com e sem espaços.",
+      "category": "text",
+      "path": "/tools/text-character-counter",
+      "icon": "123",
+      "featured": false
+    },
+    {
+      "id": "html-escape",
+      "name": "Escapar HTML",
+      "description": "Converte caracteres especiais em entidades HTML.",
+      "category": "converters",
+      "path": "/tools/html-escape",
+      "icon": "&lt;",
+      "featured": false
+    },
+    {
+      "id": "html-unescape",
+      "name": "Descodificar HTML",
+      "description": "Converte entidades HTML em texto.",
+      "category": "converters",
+      "path": "/tools/html-unescape",
+      "icon": "&gt;",
+      "featured": false
+    },
+    {
+      "id": "json-to-csv",
+      "name": "JSON para CSV",
+      "description": "Converte uma lista de objetos em CSV.",
+      "category": "converters",
+      "path": "/tools/json-to-csv",
+      "icon": "⇢",
+      "featured": true
+    },
+    {
+      "id": "text-to-binary",
+      "name": "Texto para binário",
+      "description": "Converte texto UTF-8 em bits.",
+      "category": "converters",
+      "path": "/tools/text-to-binary",
+      "icon": "01",
+      "featured": false
+    },
+    {
+      "id": "binary-to-text",
+      "name": "Binário para texto",
+      "description": "Converte sequências binárias em texto.",
+      "category": "converters",
+      "path": "/tools/binary-to-text",
+      "icon": "10",
+      "featured": false
+    },
+    {
+      "id": "sha256-generator",
+      "name": "Gerador SHA-256",
+      "description": "Calcula o resumo criptográfico SHA-256.",
+      "category": "generators",
+      "path": "/tools/sha256-generator",
+      "icon": "#",
+      "featured": true
+    },
+    {
+      "id": "random-number-generator",
+      "name": "Gerador de números",
+      "description": "Gera sequências numéricas aleatórias.",
+      "category": "generators",
+      "path": "/tools/random-number-generator",
+      "icon": "⚄",
+      "featured": false
+    },
+    {
+      "id": "lorem-generator",
+      "name": "Gerador Lorem Ipsum",
+      "description": "Gera texto de preenchimento.",
+      "category": "generators",
+      "path": "/tools/lorem-generator",
+      "icon": "¶",
+      "featured": false
+    },
+    {
+      "id": "unit-converter",
+      "name": "Conversor de unidades",
+      "description": "Converte distância, massa e temperatura.",
+      "category": "calculators",
+      "path": "/tools/unit-converter",
+      "icon": "⇄",
+      "featured": true
+    },
+    {
+      "id": "percentage-calculator",
+      "name": "Calculadora de percentagem",
+      "description": "Calcula percentagens de um valor.",
+      "category": "calculators",
+      "path": "/tools/percentage-calculator",
+      "icon": "%",
+      "featured": true
+    },
+    {
+      "id": "json-validator",
+      "name": "Validador JSON",
+      "description": "Verifica a sintaxe JSON e aponta erros.",
+      "category": "developer",
+      "path": "/tools/json-validator",
+      "icon": "{}",
+      "featured": true
+    },
+    {
+      "id": "jwt-decoder",
+      "name": "Descodificador JWT",
+      "description": "Lê o cabeçalho e payload de um JWT.",
+      "category": "developer",
+      "path": "/tools/jwt-decoder",
+      "icon": "JWT",
+      "featured": false
+    },
+    {
+      "id": "regex-tester",
+      "name": "Testador RegEx",
+      "description": "Testa uma expressão regular contra texto.",
+      "category": "developer",
+      "path": "/tools/regex-tester",
+      "icon": ".*",
+      "featured": false
+    },
+    {
+      "id": "url-parser",
+      "name": "Analisador de URL",
+      "description": "Separa protocolo, domínio, caminho e parâmetros.",
+      "category": "developer",
+      "path": "/tools/url-parser",
+      "icon": "↗",
+      "featured": false
+    },
+    {
+      "id": "css-minifier",
+      "name": "Minificador CSS",
+      "description": "Remove comentários e espaços CSS.",
+      "category": "developer",
+      "path": "/tools/css-minifier",
+      "icon": "{}",
+      "featured": false
+    },
+    {
+      "id": "contrast-checker",
+      "name": "Verificador de contraste",
+      "description": "Calcula contraste entre duas cores.",
+      "category": "colors",
+      "path": "/tools/contrast-checker",
+      "icon": "◐",
+      "featured": false
+    },
+    {
+      "id": "hex-to-rgb",
+      "name": "HEX para RGB",
+      "description": "Converte códigos HEX em valores RGB.",
+      "category": "colors",
+      "path": "/tools/hex-to-rgb",
+      "icon": "HEX",
+      "featured": false
+    },
+    {
+      "id": "rgb-to-hex",
+      "name": "RGB para HEX",
+      "description": "Converte canais RGB em HEX.",
+      "category": "colors",
+      "path": "/tools/rgb-to-hex",
+      "icon": "RGB",
+      "featured": false
+    },
+    {
+      "id": "date-difference",
+      "name": "Diferença entre datas",
+      "description": "Calcula dias, semanas e meses entre datas.",
+      "category": "dates",
+      "path": "/tools/date-difference",
+      "icon": "Δ",
+      "featured": true
+    },
+    {
+      "id": "timestamp-converter",
+      "name": "Conversor Timestamp",
+      "description": "Converte Unix timestamp para data.",
+      "category": "developer",
+      "path": "/tools/timestamp-converter",
+      "icon": "◷",
+      "featured": false
+    },
+    {
+      "id": "weekday-finder",
+      "name": "Dia da semana",
+      "description": "Descobre o dia da semana de uma data.",
+      "category": "dates",
+      "path": "/tools/weekday-finder",
+      "icon": "▦",
+      "featured": false
+    },
+    {
+      "id": "days-in-month",
+      "name": "Dias do mês",
+      "description": "Conta os dias de um mês.",
+      "category": "dates",
+      "path": "/tools/days-in-month",
+      "icon": "▣",
+      "featured": false
+    },
+    {
+      "id": "iso-week",
+      "name": "Número da semana",
+      "description": "Calcula a semana ISO do ano.",
+      "category": "dates",
+      "path": "/tools/iso-week",
+      "icon": "W",
       "featured": false
     }
   ]

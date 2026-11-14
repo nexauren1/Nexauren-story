@@ -36,6 +36,14 @@ for (const tool of active.tools) {
     }
   }
 }
+for (const category of active.categories) {
+  for (const locale of locales) {
+    if (!dictionaries[locale][category.name] || !dictionaries[locale][category.description]) {
+      console.error("Tradução em falta para categoria:", category.id, locale);
+      process.exit(1);
+    }
+  }
+}
 for (const tool of active.tools) {
   if (!categoryIds.includes(tool.category)) {
     console.error("Categoria inexistente para a ferramenta:", tool.id, tool.category);

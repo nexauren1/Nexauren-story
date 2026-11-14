@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Gerador Lorem Ipsum — Ferramenta online | Nexauren Story" description="Gera texto de preenchimento.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/generators">Geradores</a><span>›</span><span aria-current="page">Gerador Lorem Ipsum</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">¶</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Gerador Lorem Ipsum</h1><p>Gera texto de preenchimento.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="lorem-generator" title="Gerador Lorem Ipsum" kind="tool" href="/tools/lorem-generator"/></div>
+  </header>
+  <UniversalTool client:load toolId="lorem-generator" name="Gerador Lorem Ipsum" category="generators" description="Gera texto de preenchimento." kind="generators"/>
+  <TrackActivity client:load activityId="lorem-generator" activityTitle="Usou Gerador Lorem Ipsum"/>
+</main><SiteFooter/></div>
+</SiteLayout>

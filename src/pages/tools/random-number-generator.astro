@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Gerador de números — Ferramenta online | Nexauren Story" description="Gera sequências numéricas aleatórias.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/generators">Geradores</a><span>›</span><span aria-current="page">Gerador de números</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">⚄</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Gerador de números</h1><p>Gera sequências numéricas aleatórias.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="random-number-generator" title="Gerador de números" kind="tool" href="/tools/random-number-generator"/></div>
+  </header>
+  <UniversalTool client:load toolId="random-number-generator" name="Gerador de números" category="generators" description="Gera sequências numéricas aleatórias." kind="generators"/>
+  <TrackActivity client:load activityId="random-number-generator" activityTitle="Usou Gerador de números"/>
+</main><SiteFooter/></div>
+</SiteLayout>

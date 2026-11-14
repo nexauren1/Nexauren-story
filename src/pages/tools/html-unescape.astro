@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Descodificar HTML — Ferramenta online | Nexauren Story" description="Converte entidades HTML em texto.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/converters">Conversores</a><span>›</span><span aria-current="page">Descodificar HTML</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">&gt;</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Descodificar HTML</h1><p>Converte entidades HTML em texto.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="html-unescape" title="Descodificar HTML" kind="tool" href="/tools/html-unescape"/></div>
+  </header>
+  <UniversalTool client:load toolId="html-unescape" name="Descodificar HTML" category="converters" description="Converte entidades HTML em texto." kind="converters"/>
+  <TrackActivity client:load activityId="html-unescape" activityTitle="Usou Descodificar HTML"/>
+</main><SiteFooter/></div>
+</SiteLayout>

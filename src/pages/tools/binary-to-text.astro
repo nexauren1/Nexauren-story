@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Binário para texto — Ferramenta online | Nexauren Story" description="Converte sequências binárias em texto.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/converters">Conversores</a><span>›</span><span aria-current="page">Binário para texto</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">10</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Binário para texto</h1><p>Converte sequências binárias em texto.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="binary-to-text" title="Binário para texto" kind="tool" href="/tools/binary-to-text"/></div>
+  </header>
+  <UniversalTool client:load toolId="binary-to-text" name="Binário para texto" category="converters" description="Converte sequências binárias em texto." kind="converters"/>
+  <TrackActivity client:load activityId="binary-to-text" activityTitle="Usou Binário para texto"/>
+</main><SiteFooter/></div>
+</SiteLayout>

@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Dias do mês — Ferramenta online | Nexauren Story" description="Conta os dias de um mês.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/dates">Data e tempo</a><span>›</span><span aria-current="page">Dias do mês</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">▣</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Dias do mês</h1><p>Conta os dias de um mês.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="days-in-month" title="Dias do mês" kind="tool" href="/tools/days-in-month"/></div>
+  </header>
+  <UniversalTool client:load toolId="days-in-month" name="Dias do mês" category="dates" description="Conta os dias de um mês." kind="dates"/>
+  <TrackActivity client:load activityId="days-in-month" activityTitle="Usou Dias do mês"/>
+</main><SiteFooter/></div>
+</SiteLayout>

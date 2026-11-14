@@ -71,13 +71,14 @@ async function walk(folder) {
   }
 }
 await walk("dist");
+const routesWithoutThirdPartyAds = new Set(["/account", ...active.tools.map((tool) => tool.path)]);
 for (const page of publicPages) {
   if (!sitemap.includes("<loc>" + site + page.route + "</loc>") && !sitemap.includes("<loc>" + site + page.route.replace(/\/$/, "") + "/</loc>")) {
     errors.push("Página pública ausente do sitemap: " + page.route);
   }
   const adSlots = (page.html.match(/<div[^>]*\bdata-ad-slot\b/g) || []).length;
-  const isAccountPage = page.route.replace(/\\/$/, "") === "/account";
-  const expectedAdSlots = isAccountPage ? 0 : 2;
+  const routePath = page.route.length > 1 && page.route.endsWith("/") ? page.route.slice(0, -1) : page.route;
+  const expectedAdSlots = routesWithoutThirdPartyAds.has(routePath) ? 0 : 2;
   if (adSlots !== expectedAdSlots) errors.push("Número inesperado de espaços de anúncio em " + page.route + ": esperados " + expectedAdSlots + ", encontrados " + adSlots + ").");
 }
 
@@ -89,5 +90,5 @@ if (errors.length) {
 console.log("Diretório verificado: " + active.tools.length + " ferramentas com pesquisa e filtros.");
 console.log("Rotas verificadas: " + active.tools.length + " páginas de ferramentas e " + publicPages.length + " páginas públicas indexáveis.");
 console.log("Sitemap automático: todas as páginas públicas foram encontradas.");
-console.log("Publicidade: dois espaços responsivos confirmados em cada página pública.");
+console.log("Publicidade: dois espaços em páginas de descoberta; conta e ferramentas que recebem dados sem scripts publicitários.");
 console.log("SEO verificado: robots.txt, redirects Blogger e painel privado excluído do sitemap.");

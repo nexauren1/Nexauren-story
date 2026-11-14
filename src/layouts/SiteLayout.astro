@@ -15,9 +15,9 @@ const {
 } = Astro.props;
 const routePath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const isAccountWorkspace = routePath === "/account";
-// Keep third-party ad scripts away from the authenticated account workspace.
-// Public tool pages retain reserved top and bottom placements outside the tool UI.
-const renderAds = showAds && !noIndex && !isAccountWorkspace;
+const isToolWorkspace = activeTools.tools.some((tool) => tool.path === routePath);
+// Keep third-party advertising scripts away from authenticated data and user file/text inputs.
+const renderAds = showAds && !noIndex && !isAccountWorkspace && !isToolWorkspace;
 const canonical = new URL(Astro.url.pathname, "https://nexaurenstory.com").toString();
 const robots = noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
 const schema = {

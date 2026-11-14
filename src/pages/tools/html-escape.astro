@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Escapar HTML — Ferramenta online | Nexauren Story" description="Converte caracteres especiais em entidades HTML.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/converters">Conversores</a><span>›</span><span aria-current="page">Escapar HTML</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">&lt;</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Escapar HTML</h1><p>Converte caracteres especiais em entidades HTML.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="html-escape" title="Escapar HTML" kind="tool" href="/tools/html-escape"/></div>
+  </header>
+  <UniversalTool client:load toolId="html-escape" name="Escapar HTML" category="converters" description="Converte caracteres especiais em entidades HTML." kind="converters"/>
+  <TrackActivity client:load activityId="html-escape" activityTitle="Usou Escapar HTML"/>
+</main><SiteFooter/></div>
+</SiteLayout>
