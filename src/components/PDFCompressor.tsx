@@ -204,7 +204,7 @@ export default function PDFCompressor() {
         </div>
         <div className="settings-actions">
           <button className="primary-button" onClick={compress} disabled={!files.length || busy}>{busy ? "A processar PDFs…" : "Optimizar estrutura dos PDFs"}</button>
-          {finished.length > 0 && <button className="secondary-button" onClick={() => finished.forEach((file, index) => window.setTimeout(() => { const link = document.createElement("a"); link.href = file.url; link.download = outputName(file.name); link.click(); }, index * 350))}>↓  Baixar todos individualmente</button>}
+          {finished.length > 0 && <button className="secondary-button" onClick={() => finished.forEach((file, index) => window.setTimeout(() => { const link = document.createElement("a"); link.href = file.url; link.download = outputName(file.name, suffix); link.click(); }, index * 350))}>↓  Baixar todos individualmente</button>}
           <p className="settings-footnote">O processamento ocorre no navegador. Os ficheiros não são enviados para a Nexauren.</p>
         </div>
       </section>
