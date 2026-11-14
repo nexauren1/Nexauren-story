@@ -27,6 +27,7 @@ export default function ImageResizer() {
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
   const [keepRatio, setKeepRatio] = useState(true);
+  const [scalePercent, setScalePercent] = useState(100);
   const [quality, setQuality] = useState(75);
   const [format, setFormat] = useState<ImageFormat>("image/jpeg");
   const [preset, setPreset] = useState<SizePreset>("original");
@@ -51,6 +52,7 @@ export default function ImageResizer() {
       setWidth(String(image.naturalWidth));
       setHeight(String(image.naturalHeight));
       setPreset("original");
+      setScalePercent(100);
       setPreviewOriginal(false);
       setResultUrl("");
       setProcessedBlob(null);
@@ -173,6 +175,7 @@ export default function ImageResizer() {
   }
   function applyPreset(value: SizePreset) {
     setPreset(value);
+    setScalePercent(100);
     if (value === "original" && naturalSize.width) {
       setKeepRatio(true); setWidth(String(naturalSize.width)); setHeight(String(naturalSize.height));
     } else {
@@ -181,6 +184,18 @@ export default function ImageResizer() {
     }
     invalidateResult();
   }
+  function applyScale(value: number) {
+    const percent = Math.max(10, Math.min(400, value));
+    setScalePercent(percent);
+    setPreset("custom");
+    setKeepRatio(true);
+    if (naturalSize.width && naturalSize.height) {
+      setWidth(String(Math.max(1, Math.round(naturalSize.width * percent / 100))));
+      setHeight(String(Math.max(1, Math.round(naturalSize.height * percent / 100))));
+    }
+    invalidateResult();
+  }
+
   function updateWidth(value: string) {
     setPreset("custom");
     setWidth(value);
@@ -244,6 +259,19 @@ export default function ImageResizer() {
                 <option value="original">Dimensões originais</option>
                 {sizePresets.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
                 <option value="custom">Personalizado</option>
+              </select>
+            </label>
+            <label className="field-label">Escala da imagem
+              <select value={scalePercent} disabled={!file || busy} onChange={(event) => applyScale(Number(event.target.value))}>
+                <option value="25">25% · Muito pequeno</option>
+                <option value="50">50% · Metade</option>
+                <option value="75">75%</option>
+                <option value="100">100% · Original</option>
+                <option value="125">125%</option>
+                <option value="150">150%</option>
+                <option value="200">200% · Dobro</option>
+                <option value="300">300%</option>
+                <option value="400">400% · Máximo</option>
               </select>
             </label>
             <span className="settings-label">Dimensões personalizadas</span>
