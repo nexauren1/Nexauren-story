@@ -13,7 +13,7 @@ Portal de ferramentas online gratuitas e conteúdo tecnológico, com conta pesso
 
 ## Public tools
 
-O catálogo público tem **54 ferramentas activas**, distribuídas por quatro categorias. Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
+O catálogo público tem **78 ferramentas activas**, distribuídas por dez categorias: imagem (11), PDF (13), texto (22), áudio (9), conversores (5), geradores (3), calculadoras (2), programador (6), cores (3) e data/tempo (4). Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
 
 ### Image — 10 tools
 - Resize image; crop image; image watermark; rotate and flip image.
@@ -45,7 +45,8 @@ The image, PDF, audio and text operations run in the browser. Tool descriptions 
 - The wider src/data/toolCatalog.json is retained for future development, but its entries are not advertised as live tools until they have a dedicated, tested page.
 - npm run check:catalog validates IDs, categories and the presence of each dedicated page.
 - `npm run build` automatically generates `sitemap.xml` after each build by scanning every public HTML route.
-- `npm run verify:output` checks all tool pages, public pages, sitemap entries, two reserved advertisement slots per public page and private admin exclusion.
+- `npm run verify:output` checks all 78 tool routes, every indexable page in the sitemap, and the ad-slot policy: two placements on discovery/information pages, none on the account page or file/text-processing workspaces.
+- The GitHub Actions workflow supports manual runs and stores the generated sitemap and robots.txt as build artifacts.
 
 ## Account and synchronization
 - Firebase sign-in with Google or email/password.

@@ -463,14 +463,14 @@ export default function UniversalTool({ toolId, name, category, description, kin
   const paramATools = new Set([
     "percentage-calculator", "percentage-change", "discount-calculator", "vat-calculator", "rule-of-three", "simple-interest", "compound-interest", "bill-splitter", "unit-converter",
     "date-difference", "date-add-days", "date-subtract-days", "age-calculator",
-    "regex-tester", "contrast-checker", "color-mixer", "rgb-to-hex", "alpha-color", "gradient-css", "css-gradient-generator", "rgb-to-hex",
+    "regex-tester", "contrast-checker", "color-mixer", "rgb-to-hex", "alpha-color", "gradient-css", "css-gradient-generator",
     "pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "pdf-duplicate-page",
     "password-generator", "random-number-generator", "hex-generator", "lorem-generator",
     "image-crop", "image-rotate", "audio-volume", "audio-speed"
   ]);
   const paramBTools = new Set([
     "percentage-calculator", "percentage-change", "discount-calculator", "vat-calculator", "rule-of-three", "simple-interest", "compound-interest", "bill-splitter", "unit-converter",
-    "date-difference", "age-calculator", "regex-tester", "contrast-checker", "color-mixer",
+    "date-difference", "age-calculator", "regex-tester", "contrast-checker", "color-mixer", "rgb-to-hex",
     "pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "image-crop", "random-number-generator"
   ]);
   const paramCTools = new Set(["rule-of-three", "simple-interest", "compound-interest", "rgb-to-hex", "random-number-generator"]);
@@ -479,7 +479,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
   const showParamC = paramCTools.has(toolId);
   const fields = showParamA || showParamB || showParamC;
   const labelA = toolId === "regex-tester" ? "Expressão regular" : toolId === "date-difference" ? "Segunda data" : toolId === "age-calculator" ? "Data de referência" : toolId === "contrast-checker" || toolId === "color-mixer" ? "Segunda cor HEX" : toolId === "unit-converter" ? "Valor numérico" : toolId === "percentage-calculator" || toolId === "percentage-change" || toolId === "discount-calculator" || toolId === "vat-calculator" ? "Valor principal" : toolId === "lorem-generator" ? "Número de palavras" : toolId === "pdf-split" || toolId === "pdf-remove-pages" || toolId === "pdf-reorder-pages" ? "Páginas (ex.: 1-3,5)" : toolId === "image-crop" ? "Largura de corte" : toolId === "image-rotate" ? "Ângulo em graus" : toolId === "rgb-to-hex" ? "Canal vermelho (R)" : toolId === "password-generator" || toolId === "hex-generator" ? "Comprimento" : toolId === "random-number-generator" ? "Valor mínimo" : toolId === "audio-volume" ? "Ganho em dB" : toolId === "audio-speed" ? "Velocidade (0,5 a 2)" : "Valor / opção";
-  const labelB = toolId === "regex-tester" ? "Opções RegEx" : toolId === "contrast-checker" || toolId === "color-mixer" ? "Segunda cor HEX" : toolId === "percentage-calculator" || toolId === "percentage-change" || toolId === "discount-calculator" || toolId === "vat-calculator" ? "Percentagem (%)" : toolId === "rgb-to-hex" ? "Canal verde (G)" : toolId === "image-crop" ? "Altura de corte" : toolId === "rgb-to-hex" ? "Canal verde (G)" : toolId === "random-number-generator" ? "Valor máximo" : toolId === "unit-converter" ? "Conversão (ex.: km-mi)" : "Segundo valor";
+  const labelB = toolId === "regex-tester" ? "Opções RegEx" : toolId === "contrast-checker" || toolId === "color-mixer" ? "Segunda cor HEX" : toolId === "percentage-calculator" || toolId === "percentage-change" || toolId === "discount-calculator" || toolId === "vat-calculator" ? "Percentagem (%)" : toolId === "rgb-to-hex" ? "Canal verde (G)" : toolId === "image-crop" ? "Altura de corte" : toolId === "random-number-generator" ? "Valor máximo" : toolId === "unit-converter" ? "Conversão (ex.: km-mi)" : "Segundo valor";
   const showMainText = !isFileTool && (
     ["text", "converters", "developer", "dates"].includes(kind) ||
     (kind === "colors" && toolId !== "rgb-to-hex") ||
@@ -497,7 +497,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
           {showParamB && <label className="universal-label"><span>{labelB}</span><input value={paramB} onChange={(e) => setParamB(e.target.value)} placeholder={toolId === "regex-tester" ? "g, i, m…" : toolId === "unit-converter" ? "km-mi" : "Introduz um valor"}/></label>}
           {showParamC && <label className="universal-label"><span>{toolId === "random-number-generator" ? "Quantidade de números" : toolId === "rgb-to-hex" ? "Canal azul (B)" : "Terceiro valor"}</span><input value={paramC} onChange={(e) => setParamC(e.target.value)} placeholder="Introduz um valor"/></label>}
         </div>}
-        {kind === "image" && <label className="universal-label format-select"><span>Formato de saída</span><select value={format} onChange={(e) => setFormat(e.target.value)}><option value="image/webp">WebP</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></label>}
+        {kind === "image" && toolId === "image-convert" && <label className="universal-label format-select"><span>Formato de saída</span><select value={format} onChange={(e) => setFormat(e.target.value)}><option value="image/webp">WebP</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></label>}
         {error && <div className="error-banner" role="alert">{error}</div>}
         {notice && <div className={complete ? "success-banner" : "processing-message"}><b>{complete ? "✓" : "◌"}</b>{notice}</div>}
       </section>
