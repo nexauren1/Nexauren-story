@@ -6,7 +6,7 @@ function parsePageRange(value: string, total: number): number[] {
   for (const part of value.split(",")) {
     const token = part.trim();
     if (!token) continue;
-    const match = token.match(/^(\\d+)(?:\\s*-\\s*(\\d+))?$/);
+    const match = token.match(/^(\d+)(?:\s*-\s*(\d+))?$/);
     if (!match) throw new Error("Usa páginas como 1-3,5,8-10.");
     const first = Number(match[1]), last = Number(match[2] || match[1]);
     if (first < 1 || last < first || last > total) throw new Error("As páginas têm de estar entre 1 e " + total + ".");
