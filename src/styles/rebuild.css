@@ -986,3 +986,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(
 @media(prefers-reduced-motion:reduce){
   .nx-category-tools .nx-tool-card{transition:none}
 }
+
+/* Advanced PDF selection controls */
+.nx-order-toolbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.nx-pdf-range-input{width:100%;min-width:0;padding:7px 9px;border:1px solid #dfe6f0;border-radius:8px;background:#f8faff;color:#263957;font:600 10px/1.4 'DM Sans',sans-serif;outline:none}
+.nx-pdf-range-input:focus{border-color:#6b8ce2;box-shadow:0 0 0 3px rgba(73,115,218,.12)}
+.nx-page-presets{grid-template-columns:repeat(auto-fit,minmax(76px,1fr))}
+@media(max-width:560px){.nx-pdf-order-item{align-items:flex-start;flex-wrap:wrap}.nx-pdf-file-info{min-width:calc(100% - 100px)}.nx-order-controls{margin-left:auto}.nx-list-heading{align-items:flex-start;flex-direction:column}.nx-order-toolbar{width:100%}}
