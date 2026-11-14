@@ -50,6 +50,12 @@ export default function PDFMerger() {
     setUrl((previous) => { if (previous) URL.revokeObjectURL(previous); return ""; });
     setProgress(0); setMessage("Ordem actualizada. O resultado anterior foi invalidado.");
   }
+  function reverseOrder() {
+    if (items.length < 2 || busy) return;
+    setItems((previous) => [...previous].reverse());
+    setUrl((previous) => { if (previous) URL.revokeObjectURL(previous); return ""; });
+    setProgress(0); setMessage("Ordem dos documentos invertida. Confirma antes de combinar.");
+  }
   function remove(id: string) {
     setItems((previous) => previous.filter((item) => item.id !== id));
     setUrl((previous) => { if (previous) URL.revokeObjectURL(previous); return ""; });
@@ -92,7 +98,7 @@ export default function PDFMerger() {
           <span className="nx-upload-symbol">PDF</span><strong>Adicionar documentos PDF</strong><small>Arrasta os ficheiros para aqui ou escolhe no dispositivo · até 60 MB cada</small>
           <span className="upload-cta">Escolher PDFs</span>
         </label>
-        <div className="nx-list-heading"><div><h3>Ordem de combinação</h3><p>{items.length} documentos · {totalPages} páginas · {sizeText(totalBytes)}</p></div><button type="button" className="nx-ghost-button" disabled={!items.length || busy} onClick={() => { setItems([]); setUrl(""); setPages(0); setProgress(0); setMessage("Lista limpa."); }}>Limpar lista</button></div>
+        <div className="nx-list-heading"><div><h3>Ordem de combinação</h3><p>{items.length} documentos · {totalPages} páginas · {sizeText(totalBytes)}</p></div><div className="nx-order-toolbar"><button type="button" className="nx-ghost-button" disabled={items.length < 2 || busy} onClick={reverseOrder}>Inverter ordem</button><button type="button" className="nx-ghost-button" disabled={!items.length || busy} onClick={() => { setItems([]); setUrl(""); setPages(0); setProgress(0); setMessage("Lista limpa."); }}>Limpar lista</button></div></div>
         {items.length ? <div className="nx-pdf-order-list">
           {items.map((item, index) => <article className="nx-pdf-order-item" key={item.id}>
             <span className="nx-pdf-order-number">{String(index + 1).padStart(2, "0")}</span>
