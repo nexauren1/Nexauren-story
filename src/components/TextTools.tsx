@@ -115,7 +115,7 @@ export default function TextTools() {
           {operation === "replace" && <div className="nx-replace-fields"><label>Localizar<input value={findText} onChange={(event) => setFindText(event.target.value)} placeholder="Texto a localizar"/></label><label>Substituir por<input value={replaceText} onChange={(event) => setReplaceText(event.target.value)} placeholder="Novo texto"/></label><label className="nx-check-line"><input type="checkbox" checked={caseSensitive} onChange={(event) => setCaseSensitive(event.target.checked)}/> Distinguir maiúsculas e minúsculas</label></div>}
           <div className="nx-selected-operation"><span>Operação seleccionada</span><strong>{chosen?.label ?? "—"}</strong><small>{chosen?.description}</small></div>
           <button className="nx-run-button" type="button" disabled={busy || !source.trim() || (operation === "replace" && !findText)} onClick={() => void process()}><span>{busy ? "A processar texto…" : "Executar transformação"}</span><b>{busy ? "◌" : "↗"}</b></button>
-          <p className="nx-tool-status" aria-live="polite">{busy ? "A processar localmente…" : status}</p>
+          <p className={status === "Transformação concluída. Resultado pronto." ? "success-banner nx-tool-status" : "nx-tool-status"} aria-live="polite">{busy ? "A processar localmente…" : status}</p>
           {error && <div className="error-banner" role="alert">{error}</div>}
         </section>
         <section className="tool-panel nx-text-result-panel">
