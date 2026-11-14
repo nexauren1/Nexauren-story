@@ -878,5 +878,15 @@
   "Pinterest · 1000 × 1500": "Pinterest · 1000 × 1500",
   "A4 · 2480 × 3508": "A4 · 2480 × 3508",
   "Concluído. O ficheiro ficou ${sizeDifference}% mais leve.": "Done. The file is ${sizeDifference}% smaller.",
-  " · Resultado: ${newWidth} × ${newHeight} px": " · Result: ${newWidth} × ${newHeight} px"
+  " · Resultado: ${newWidth} × ${newHeight} px": " · Result: ${newWidth} × ${newHeight} px",
+  "Escala da imagem": "Image scale",
+  "25% · Muito pequeno": "25% · Very small",
+  "50% · Metade": "50% · Half size",
+  "100% · Original": "100% · Original",
+  "200% · Dobro": "200% · Double size",
+  "400% · Máximo": "400% · Maximum",
+  "75%": "75%",
+  "125%": "125%",
+  "150%": "150%",
+  "300%": "300%"
 }
