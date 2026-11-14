@@ -5,6 +5,7 @@ const site = "https://nexaurenstory.com";
 const active = JSON.parse(await readFile("src/data/activeTools.json", "utf8"));
 const sitemap = await readFile("dist/sitemap.xml", "utf8");
 const robots = await readFile("dist/robots.txt", "utf8");
+const redirects = await readFile("dist/_redirects", "utf8");
 const toolsPage = await readFile("dist/tools/index.html", "utf8");
 const categoryPages = new Map();
 const errors = [];
@@ -44,6 +45,9 @@ for (const tool of active.tools) {
   }
 }
 
+if (!redirects.includes("/blog https://nexauren.blogspot.com/?m=1 301")) errors.push("Redirect permanente /blog para Blogger ausente.");
+if (!redirects.includes("/blog/* https://nexauren.blogspot.com/?m=1 301")) errors.push("Redirect dos artigos antigos para Blogger ausente.");
+
 for (const route of ["/about", "/contact"]) {
   if (!sitemap.includes(site + route)) errors.push("Página institucional ausente do sitemap: " + route);
 }
@@ -58,4 +62,4 @@ if (errors.length) {
 }
 console.log("Diretório verificado: /tools apresenta " + active.tools.length + " ferramentas pesquisáveis e filtros por categoria.");
 console.log("Ferramentas verificadas: " + active.tools.length + " páginas dedicadas, com presença no diretório, categoria e sitemap.");
-console.log("SEO verificado: sitemap, robots.txt e painel privado excluído.");
+console.log("SEO verificado: sitemap, robots.txt, painel privado e encaminhamento externo do blog.");
