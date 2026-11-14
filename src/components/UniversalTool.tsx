@@ -21,7 +21,7 @@ function parsePages(value: string, total: number) {
 function parsePageOrder(value: string, total: number): number[] {
   const chosen: number[] = [];
   for (const part of value.split(",")) {
-    const match = part.trim().match(/^(\\d+)(?:\\s*-\\s*(\\d+))?$/);
+    const match = part.trim().match(/^(\d+)(?:\s*-\s*(\d+))?$/);
     if (!match) throw new Error("Usa a ordem desejada, por exemplo 3,1-2,5.");
     const first = Number(match[1]); const last = Number(match[2] || match[1]);
     if (first < 1 || last < first || last > total) throw new Error("As páginas têm de estar entre 1 e " + total + ".");
@@ -431,7 +431,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
   }
 
   const fields = kind === "calculators" || kind === "colors" || kind === "dates" || kind === "developer" || (kind === "pdf" && ["pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "pdf-duplicate-page"].includes(toolId)) || (kind === "generators" && ["password-generator", "random-number-generator", "hex-generator"].includes(toolId)) || (kind === "image" && ["image-crop", "image-rotate"].includes(toolId)) || (kind === "audio" && ["audio-volume", "audio-speed"].includes(toolId));
-  const labelA = toolId === "regex-tester" ? "Expressão regular" : toolId === "date-difference" || toolId === "age-calculator" || toolId === "contrast-checker" || toolId === "color-mixer" ? "Segundo valor" : toolId === "unit-converter" ? "Valor numérico" : toolId === "pdf-split" || toolId === "pdf-remove-pages" || toolId === "pdf-reorder-pages" ? "Páginas (ex.: 1-3,5)" : toolId === "image-crop" ? "Largura de corte" : toolId === "image-rotate" ? "Ângulo em graus" : toolId === "rgb-to-hex" ? "Canal vermelho (R)" : toolId === "password-generator" || toolId === "hex-generator" ? "Comprimento" : toolId === "random-number-generator" ? "Valor mínimo" : toolId === "audio-volume" ? "Ganho em dB" : toolId === "audio-speed" ? "Velocidade (0,5 a 2)" : "Valor / opção";
+  const labelA = toolId === "regex-tester" ? "Expressão regular" : toolId === "date-difference" || toolId === "age-calculator" || toolId === "contrast-checker" || toolId === "color-mixer" ? "Segundo valor" : toolId === "unit-converter" ? "Valor numérico" : toolId === "pdf-duplicate-page" ? "Número da página a duplicar" : toolId === "pdf-split" || toolId === "pdf-remove-pages" || toolId === "pdf-reorder-pages" ? (toolId === "pdf-reorder-pages" ? "Nova ordem (ex.: 3,1-2,5)" : "Páginas (ex.: 1-3,5)") : toolId === "image-crop" ? "Largura de corte" : toolId === "image-rotate" ? "Ângulo em graus" : toolId === "rgb-to-hex" ? "Canal vermelho (R)" : toolId === "password-generator" || toolId === "hex-generator" ? "Comprimento" : toolId === "random-number-generator" ? "Valor mínimo" : toolId === "audio-volume" ? "Ganho em dB" : toolId === "audio-speed" ? "Velocidade (0,5 a 2)" : "Valor / opção";
   const labelB = toolId === "regex-tester" ? "Opções RegEx" : toolId === "contrast-checker" || toolId === "color-mixer" ? "Segunda cor HEX" : toolId === "image-crop" ? "Altura de corte" : toolId === "rgb-to-hex" ? "Canal verde (G)" : toolId === "random-number-generator" ? "Valor máximo" : toolId === "unit-converter" ? "Conversão (ex.: km-mi)" : "Segundo valor";
   const showMainText = !isFileTool || kind === "dates" || kind === "colors" || kind === "calculators" && toolId === "average-calculator";
   return <div className="universal-tool">
@@ -440,9 +440,18 @@ export default function UniversalTool({ toolId, name, category, description, kin
         <div className="panel-topline"><div><h2>Área de trabalho</h2><p>{description}</p></div><span className="text-live-badge">● MOTOR LOCAL</span></div>
         {isFileTool && <label className="upload-zone universal-upload"><input ref={fileInput} className="file-input-hidden" type="file" accept={accepts} multiple={toolId === "pdf-merge"} onChange={onFileChange}/><span className="upload-icon">{kind === "pdf" ? "PDF" : kind === "audio" ? "♫" : "◈"}</span><strong>{files.length ? files.map((file) => file.name).join(", ") : "Seleciona ou arrasta o ficheiro"}</strong><small>{files.length ? files.map((file) => sizeLabel(file.size)).join(" · ") : helper}</small><span className="upload-cta">{files.length ? "Trocar ficheiro" : "Selecionar ficheiro"}</span></label>}
         {showMainText && <label className="universal-label"><span>{kind === "dates" ? "Data ou hora principal" : kind === "colors" ? "Cor HEX / texto principal" : kind === "calculators" ? "Lista de valores / entrada" : "Entrada"}</span><textarea value={text} onChange={(e) => setText(e.target.value)} className="universal-editor" placeholder={kind === "colors" ? "#3158C7" : kind === "dates" ? "2026-11-09" : "Escreve ou cola os dados aqui…"} spellCheck={false}/></label>}
-        {fields && <div className="universal-fields">
+        {kind === "pdf" && ["pdf-split", "pdf-remove-pages", "pdf-reorder-pages"].includes(toolId) && <div className="pdf-page-presets" aria-label="Selecção rápida de páginas">
+  <span>Selecção rápida</span>
+  <div className="pdf-page-preset-buttons">
+    <button type="button" onClick={() => setParamA("1")}>Página 1</button>
+    <button type="button" onClick={() => setParamA("1-3")}>Primeiras 3</button>
+    <button type="button" onClick={() => setParamA("1-5")}>Primeiras 5</button>
+    <button type="button" onClick={() => setParamA("")}>Limpar</button>
+  </div>
+}
+         {fields && <div className="universal-fields">
           <label className="universal-label"><span>{labelA}</span><input value={paramA} onChange={(e) => setParamA(e.target.value)} placeholder={toolId === "regex-tester" ? "\\d+" : toolId.includes("date") || toolId === "age-calculator" ? "2026-12-31" : "Introduz um valor"}/></label>
-          <label className="universal-label"><span>{labelB}</span><input value={paramB} onChange={(e) => setParamB(e.target.value)} placeholder={toolId === "regex-tester" ? "g, i, m…" : "Introduz um valor"}/></label>
+          {kind !== "pdf" && <label className="universal-label"><span>{labelB}</span><input value={paramB} onChange={(e) => setParamB(e.target.value)} placeholder={toolId === "regex-tester" ? "g, i, m…" : "Introduz um valor"}/></label>}
           {(kind === "calculators" || toolId === "rgb-to-hex" || toolId === "random-number-generator") && <label className="universal-label"><span>Terceiro valor</span><input value={paramC} onChange={(e) => setParamC(e.target.value)} placeholder="Se necessário"/></label>}
         </div>}
         {kind === "image" && <label className="universal-label format-select"><span>Formato de saída</span><select value={format} onChange={(e) => setFormat(e.target.value)}><option value="image/webp">WebP</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></label>}
