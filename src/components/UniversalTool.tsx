@@ -334,8 +334,15 @@ export default function UniversalTool({ toolId, name, category, description, kin
     }
     if (kind === "image") {
       if (!file) throw new Error("Seleciona uma imagem.");
-      const imageUrl = URL.createObjectURL(file); const image = new Image(); image.src = imageUrl;
-      await new Promise<void>((resolve, reject) => { image.onload = () => resolve(); image.onerror = () => reject(new Error("Não foi possível descodificar a imagem.")); });
+      const imageUrl = URL.createObjectURL(file); const image = new Image();
+      try {
+        await new Promise<void>((resolve, reject) => {
+          image.onload = () => resolve();
+          image.onerror = () => reject(new Error("Não foi possível abrir esta imagem. Tenta JPG, PNG ou WebP."));
+          image.src = imageUrl;
+          if (image.complete && image.naturalWidth > 0) resolve();
+        });
+      } catch (error) { URL.revokeObjectURL(imageUrl); throw error; }
       const w = image.naturalWidth; const h = image.naturalHeight;
       if (toolId === "image-info") { setResult("Nome: " + file.name + "\nFormato: " + file.type + "\nDimensões: " + w + " × " + h + " px\nTamanho: " + sizeLabel(file.size)); URL.revokeObjectURL(imageUrl); return; }
       if (toolId === "image-base64") { const data = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = () => reject(new Error("Falha ao ler a imagem.")); reader.readAsDataURL(file); }); setResult(data); URL.revokeObjectURL(imageUrl); return; }
@@ -346,14 +353,15 @@ export default function UniversalTool({ toolId, name, category, description, kin
       const ctx = canvas.getContext("2d"); if (!ctx) throw new Error("O navegador não conseguiu iniciar o processamento.");
       if (toolId === "image-grayscale") ctx.filter = "grayscale(1)";
       if (toolId === "image-invert") ctx.filter = "invert(1)";
-      if (toolId === "image-compress") ctx.filter = "contrast(1.02) saturate(.98)";
+      
       if (toolId === "image-rotate") { const angle = Number(paramA) || 90; ctx.translate(width / 2, height / 2); ctx.rotate(angle * Math.PI / 180); ctx.drawImage(image, -w / 2, -h / 2, w, h); }
       else if (toolId === "image-flip") { ctx.translate(width, 0); ctx.scale(-1, 1); ctx.drawImage(image, 0, 0, width, height); }
       else if (toolId === "image-crop") { const sx = Math.floor((w - width) / 2); const sy = Math.floor((h - height) / 2); ctx.drawImage(image, sx, sy, width, height, 0, 0, width, height); }
       else ctx.drawImage(image, 0, 0, width, height);
       URL.revokeObjectURL(imageUrl); setProgress(65);
       const mime = toolId === "image-convert" ? format : "image/webp";
-      const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((value) => value ? resolve(value) : reject(new Error("Não foi possível gerar a imagem.")), mime, .84));
+      const quality = toolId === "image-compress" ? Math.max(.2, Math.min(.95, (Number(paramA) || 78) / 100)) : .84;
+      const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((value) => value ? resolve(value) : reject(new Error("O navegador não conseguiu exportar a imagem. Experimenta outro formato.")), mime, quality));
       const extension = mime === "image/jpeg" ? "jpg" : mime === "image/png" ? "png" : "webp";
       setDownloadName(file.name.replace(/\.[^.]+$/, "") + "-nexauren." + extension);
       setResult("Imagem processada: " + width + " × " + height + " px\nOriginal: " + sizeLabel(file.size) + "\nNovo: " + sizeLabel(blob.size));
