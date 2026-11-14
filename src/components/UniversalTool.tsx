@@ -448,7 +448,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
     <button type="button" onClick={() => setParamA("1-5")}>Primeiras 5</button>
     <button type="button" onClick={() => setParamA("")}>Limpar</button>
   </div>
-}
+</div>}
          {fields && <div className="universal-fields">
           <label className="universal-label"><span>{labelA}</span><input value={paramA} onChange={(e) => setParamA(e.target.value)} placeholder={toolId === "regex-tester" ? "\\d+" : toolId.includes("date") || toolId === "age-calculator" ? "2026-12-31" : "Introduz um valor"}/></label>
           {kind !== "pdf" && <label className="universal-label"><span>{labelB}</span><input value={paramB} onChange={(e) => setParamB(e.target.value)} placeholder={toolId === "regex-tester" ? "g, i, m…" : "Introduz um valor"}/></label>}
