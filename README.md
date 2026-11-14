@@ -75,6 +75,8 @@ Set the PUBLIC_FIREBASE_* variables in .env using the Firebase Web app configura
 - Production branch: main
 - A successful build does not replace testing the deployed domain and tool pages.
 
+For the current Cloudflare Workers Builds setup (Build command set to `None` and a Wrangler deploy command), set **Deploy command** to `npm run deploy` instead of `npx wrangler deploy`. This script runs the Astro build and the `postbuild` sitemap generator before publishing the Worker assets. New public routes are then included automatically.
+
 ## Routes
 - / — bilingual home page (English default, Portuguese available)
 - /tools — searchable public catalogue with category filters
