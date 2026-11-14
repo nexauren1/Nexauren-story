@@ -1010,5 +1010,10 @@
   "Optimizar estrutura dos PDFs": "Optimise PDF structure",
   "Baixar todos individualmente": "Download all individually",
   "O processamento ocorre no navegador. Os ficheiros não são enviados para a Nexauren.": "Processing happens in your browser. Files are not uploaded to Nexauren.",
-  "Optimização concluída. Os documentos foram regravados; não houve redução significativa no tamanho.": "Optimisation complete. The documents were rewritten; there was no significant size reduction."
+  "Optimização concluída. Os documentos foram regravados; não houve redução significativa no tamanho.": "Optimisation complete. The documents were rewritten; there was no significant size reduction.",
+  "Selecção rápida": "Quick selection",
+  "Página 1": "Page 1",
+  "Primeiras 3": "First 3",
+  "Número da página a duplicar": "Page number to duplicate",
+  "Nova ordem (ex.: 3,1-2,5)": "New order (e.g. 3,1-2,5)"
 }
