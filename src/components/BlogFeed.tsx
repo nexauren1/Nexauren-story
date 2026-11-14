@@ -3,12 +3,21 @@ import { collection, onSnapshot, query, where, type Timestamp } from "firebase/f
 import { getFirebaseClient } from "../lib/firebase";
 
 type Article = { slug: string; title: string; excerpt: string; coverUrl?: string; tags?: string[]; publishedAt?: Timestamp; readingMinutes?: number };
-function dateLabel(value?: Timestamp) { return value?.toDate().toLocaleDateString("pt-PT", { day:"numeric", month:"long", year:"numeric" }) ?? "Publicado recentemente"; }
+function dateLabel(value?: Timestamp, locale = "en-US") { return value?.toDate().toLocaleDateString(locale, { day:"numeric", month:"long", year:"numeric" }) ?? "Publicado recentemente"; }
 
 export default function BlogFeed() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [dateLocale, setDateLocale] = useState("en-US");
+  useEffect(() => {
+    const root = document.documentElement;
+    const updateLocale = () => setDateLocale(root.lang === "pt" ? "pt-PT" : "en-US");
+    updateLocale();
+    const observer = new MutationObserver(updateLocale);
+    observer.observe(root, { attributes: true, attributeFilter: ["lang"] });
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     const { db } = getFirebaseClient();
     const stop = onSnapshot(query(collection(db, "articles"), where("status", "==", "published")), (snapshot) => {
@@ -24,9 +33,9 @@ export default function BlogFeed() {
     {!loading && !error && !articles.length && <div className="blog-empty"><span className="blog-art-icon">N.</span><h2>O próximo artigo começa aqui.</h2><p>Ainda não existem artigos publicados. O conteúdo publicado no painel de administração vai aparecer automaticamente nesta página.</p></div>}
     {!!articles.length && <div className="editorial-grid">{articles.map((article) => <article className="editorial-card blog-article-card" key={article.slug}>
       {article.coverUrl ? <img className="blog-card-cover" src={article.coverUrl} alt="" loading="lazy"/> : <span className="article-card-icon">N.</span>}
-      <span className="article-kicker">{(article.tags?.[0] || "NEXAUREN").toUpperCase()} · {dateLabel(article.publishedAt)}</span>
+      <span className="article-kicker">{(article.tags?.[0] || "NEXAUREN").toUpperCase()} · {dateLabel(article.publishedAt, dateLocale)}</span>
       <h2>{article.title}</h2><p>{article.excerpt}</p>
-      <a href={"/blog/post?slug=" + encodeURIComponent(article.slug)}>Ler artigo <b>↗</b></a>
+      <a href={"/blog/article?slug=" + encodeURIComponent(article.slug)}>Ler artigo <b>↗</b></a>
     </article>)}</div>}
   </section>;
 }

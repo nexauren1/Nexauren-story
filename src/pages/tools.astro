@@ -5,78 +5,66 @@ import SiteFooter from "../components/SiteFooter.astro";
 import catalog from "../data/activeTools.json";
 const initialQuery = Astro.url.searchParams.get("q") ?? "";
 ---
-<SiteLayout title="Categorias de ferramentas online — Nexauren" description="Escolhe uma categoria Nexauren: imagem, PDF, texto ou áudio. Cada categoria tem uma página própria com as suas ferramentas.">
+<SiteLayout title="Ferramentas online gratuitas — Imagem, PDF, texto e áudio | Nexauren Story" description="Explore 50 ferramentas online gratuitas para editar imagens, organizar PDFs, transformar texto e processar áudio. Pesquise e filtre o catálogo Nexauren Story.">
 <div class="site-shell">
   <SiteHeader />
-  <main class="nx-catalog-page nx-category-directory">
-    <header class="nx-page-heading">
-      <span class="nx-overline"><i></i> CENTRAL DE FERRAMENTAS</span>
-      <h1>Escolhe uma categoria<br /><span>para começares.</span></h1>
-      <p>As ferramentas estão organizadas por área. Abre uma categoria para veres as funções disponíveis e escolheres a que precisas.</p>
-      <div class="nx-catalog-meta">
-        <span><b>{catalog.categories.length}</b> categorias</span>
-        <span class="nx-meta-dot"></span>
-        <span><b>{catalog.tools.length}</b> ferramentas disponíveis</span>
-      </div>
+  <main class="ns-main ns-catalog-page">
+    <header class="ns-page-hero">
+      <div><span class="ns-eyebrow"><i>▦</i> DIRETÓRIO DE FERRAMENTAS</span><h1>Todas as <em>ferramentas.</em></h1><p>Encontra a solução certa para editar, converter, organizar e transformar os teus ficheiros. Todas as ferramentas estão organizadas por categoria.</p></div>
+      <div class="ns-page-hero-art"><span class="ns-toolbox-symbol">⚙</span><span class="ns-page-glow"></span></div>
     </header>
-
-    <section class="nx-catalog-controls nx-category-directory-controls" aria-label="Pesquisar categorias">
-      <label class="nx-search-box">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
-        <input id="category-search" type="search" value={initialQuery} placeholder="Pesquisar categoria…" aria-label="Pesquisar categorias" autocomplete="off" />
-        <button id="category-clear" type="button" aria-label="Limpar pesquisa" hidden>Limpar</button>
-      </label>
+    <section class="ns-catalog-controls" aria-label="Pesquisar e filtrar ferramentas">
+      <label class="ns-search-field"><span aria-hidden="true">⌕</span><input id="tool-search" type="search" value={initialQuery} placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas" autocomplete="off"/><button id="tool-search-clear" type="button" aria-label="Limpar pesquisa" hidden>×</button></label>
+      <div class="ns-filter-row" role="group" aria-label="Filtrar por categoria">
+        <button type="button" class="ns-filter-chip is-active" data-tool-filter="all">Todas as ferramentas</button>
+        {catalog.categories.map(category => <button type="button" class="ns-filter-chip" data-tool-filter={category.id}><span>{category.icon}</span>{category.name}</button>)}
+      </div>
     </section>
-
-    <div class="nx-catalog-results-heading">
-      <div><span class="nx-section-label">EXPLORAR POR ÁREA</span><h2>Todas as categorias</h2></div>
-      <span id="category-count">{catalog.categories.length} categorias</span>
-    </div>
-
-    <section class="nx-category-directory-grid" aria-label="Categorias disponíveis">
-      {catalog.categories.map((category, index) => {
-        const tools = catalog.tools.filter((tool) => tool.category === category.id);
-        return (
-          <a class="nx-directory-category-card" data-category-card data-search={(category.name + " " + category.description).toLocaleLowerCase()} href={"/tools/" + category.id} data-tone={category.tone}>
-            <div class="nx-directory-card-top">
-              <span class="nx-category-icon" data-tone={category.tone}>{category.icon}</span>
-              <span class="nx-directory-index">{String(index + 1).padStart(2, "0")} / {String(catalog.categories.length).padStart(2, "0")}</span>
-            </div>
-            <h2>{category.name}</h2>
-            <p>{category.description}</p>
-            <div class="nx-directory-card-bottom">
-              <span><b>{String(tools.length).padStart(2, "0")}</b> {tools.length === 1 ? "ferramenta disponível" : "ferramentas disponíveis"}</span>
-              <span class="nx-directory-open">Abrir categoria <b>↗</b></span>
-            </div>
-          </a>
-        );
+    <div class="ns-results-heading"><div><span class="ns-section-kicker">CATÁLOGO COMPLETO</span><h2>Encontra o que precisas.</h2></div><span id="tool-results-count">{catalog.tools.length} ferramentas</span></div>
+    <section class="ns-tool-grid ns-directory-grid" id="tool-grid" aria-label="Todas as ferramentas">
+      {catalog.tools.map(tool => {
+        const category = catalog.categories.find(item => item.id === tool.category);
+        return <a class="ns-tool-card ns-directory-card" data-tool-card data-category={tool.category} data-search={(tool.name+" "+tool.description+" "+(category?.name ?? "")).toLocaleLowerCase()} href={tool.path}>
+          <div class="ns-tool-card-top"><span class="ns-tool-icon">{tool.icon}</span><span class="ns-tool-pill">{category?.name}</span></div>
+          <h2>{tool.name}</h2><p>{tool.description}</p>
+          <span class="ns-tool-card-link">Abrir ferramenta <b>↗</b></span>
+        </a>;
       })}
     </section>
-    <p id="category-empty" class="nx-empty-state" hidden>Não encontrámos essa categoria. Experimenta outro nome.</p>
-    <div class="nx-catalog-footnote"><span>◈</span> Cada categoria tem a sua própria página e apresenta apenas as ferramentas dessa área.</div>
+    <p id="tool-empty-state" class="ns-empty-state" hidden>Não encontrámos ferramentas com essa pesquisa. Experimenta outras palavras ou uma categoria diferente.</p>
+    <div class="ns-catalog-note"><span>◈</span><p>O processamento das ferramentas compatíveis acontece diretamente no teu navegador. Os ficheiros originais não são enviados para os nossos servidores.</p></div>
   </main>
   <SiteFooter />
 </div>
 <script>
-const search = document.querySelector("#category-search");
-const clear = document.querySelector("#category-clear");
-const cards = [...document.querySelectorAll("[data-category-card]")];
-const count = document.querySelector("#category-count");
-const empty = document.querySelector("#category-empty");
-function filterCategories() {
-  const query = (search?.value || "").trim().toLocaleLowerCase();
+const input = document.querySelector("#tool-search");
+const clearButton = document.querySelector("#tool-search-clear");
+const cards = [...document.querySelectorAll("[data-tool-card]")];
+const filters = [...document.querySelectorAll("[data-tool-filter]")];
+const count = document.querySelector("#tool-results-count");
+const empty = document.querySelector("#tool-empty-state");
+let activeCategory = "all";
+function filterTools() {
+  const query = (input?.value || "").trim().toLocaleLowerCase();
   let visible = 0;
-  cards.forEach((card) => {
-    const matches = !query || (card.getAttribute("data-search") || "").includes(query);
-    card.hidden = !matches;
-    if (matches) visible++;
+  cards.forEach(card => {
+    const categoryMatch = activeCategory === "all" || card.getAttribute("data-category") === activeCategory;
+    const searchMatch = !query || (card.getAttribute("data-search") || "").includes(query);
+    const show = categoryMatch && searchMatch;
+    card.hidden = !show;
+    if (show) visible++;
   });
-  if (count) count.textContent = visible + (visible === 1 ? " categoria" : " categorias");
-  if (empty) empty.hidden = visible !== 0;
-  if (clear) clear.hidden = !query;
+  if (count) count.textContent = visible + (visible === 1 ? " ferramenta" : " ferramentas");
+  if (empty) empty.hidden = visible > 0;
+  if (clearButton) clearButton.hidden = !query;
 }
-search?.addEventListener("input", filterCategories);
-clear?.addEventListener("click", () => { if (search) search.value = ""; search?.focus(); filterCategories(); });
-filterCategories();
+filters.forEach(button => button.addEventListener("click", () => {
+  activeCategory = button.getAttribute("data-tool-filter") || "all";
+  filters.forEach(item => item.classList.toggle("is-active", item === button));
+  filterTools();
+}));
+input?.addEventListener("input", filterTools);
+clearButton?.addEventListener("click", () => { if (input) input.value = ""; input?.focus(); filterTools(); });
+filterTools();
 </script>
 </SiteLayout>

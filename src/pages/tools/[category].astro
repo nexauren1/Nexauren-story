@@ -4,38 +4,30 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import catalog from "../../data/activeTools.json";
 export function getStaticPaths() {
-  return catalog.categories.map((category) => ({
+  return catalog.categories.map(category => ({
     params: { category: category.id },
-    props: { category, tools: catalog.tools.filter((tool) => tool.category === category.id) }
+    props: { category, tools: catalog.tools.filter(tool => tool.category === category.id) }
   }));
 }
 const { category, tools } = Astro.props;
 ---
-<SiteLayout title={category.name + " — Ferramentas online | Nexauren"} description={category.description + " Explora " + tools.length + " ferramentas disponíveis na Nexauren."}>
+<SiteLayout title={category.name+" — Ferramentas online gratuitas | Nexauren Story"} description={category.description+" Explora "+tools.length+" ferramentas online gratuitas desta categoria na Nexauren Story."}>
 <div class="site-shell">
   <SiteHeader />
-  <main class="nx-category-page">
-    <nav class="nx-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span aria-current="page">{category.name}</span></nav>
-    <header class="nx-page-heading nx-category-heading">
-      <span class="nx-overline"><i></i> CATEGORIA / {category.id.toUpperCase()}</span>
-      <span class="nx-category-large-icon" data-tone={category.tone}>{category.icon}</span>
-      <h1>{category.name}<span>.</span></h1>
-      <p>{category.description}</p>
-      <div class="nx-catalog-meta"><span><b>{tools.length}</b> ferramentas disponíveis</span><span class="nx-meta-dot"></span><a href="/tools">Ver todas as categorias ↗</a></div>
+  <main class="ns-main ns-category-page">
+    <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><span aria-current="page">{category.name}</span></nav>
+    <header class="ns-page-hero ns-category-hero">
+      <div><span class="ns-eyebrow"><i>{category.icon}</i> CATEGORIA / {category.id.toUpperCase()}</span><h1>Ferramentas de <em>{category.name.toLowerCase()}.</em></h1><p>{category.description} Escolhe uma ferramenta para começares a trabalhar diretamente no navegador.</p><div class="ns-category-meta"><b>{tools.length}</b> ferramentas disponíveis <span>·</span> <a href="/tools">Ver todas as ferramentas ↗</a></div></div>
+      <div class="ns-category-hero-icon" data-tone={category.tone}>{category.icon}</div>
     </header>
-    <section class="nx-category-tools">
-      <div class="nx-catalog-results-heading"><div><span class="nx-section-label">FERRAMENTAS DE {category.name.toUpperCase()}</span><h2>Escolhe por onde começar</h2></div><span>{tools.length.toString().padStart(2, "0")} disponíveis</span></div>
-      <div class="nx-tool-grid">
-        {tools.map((tool) => (
-          <a class="nx-tool-card" href={tool.path} data-tone={category.tone}>
-            <div class="nx-tool-card-top"><span class="nx-tool-icon">{tool.icon}</span><span class="nx-tool-category">{category.name}</span></div>
-            <h3>{tool.name}</h3><p>{tool.description}</p>
-            <span class="nx-tool-card-action">Abrir ferramenta <b>↗</b></span>
-          </a>
-        ))}
-      </div>
+    <div class="ns-results-heading"><div><span class="ns-section-kicker">EXPLORAR CATEGORIA</span><h2>Escolhe a tua ferramenta.</h2></div><span>{tools.length} ferramentas</span></div>
+    <section class="ns-tool-grid ns-directory-grid" aria-label={"Ferramentas de "+category.name}>
+      {tools.map(tool => <a class="ns-tool-card ns-directory-card" href={tool.path} data-tone={category.tone}>
+        <div class="ns-tool-card-top"><span class="ns-tool-icon">{tool.icon}</span><span class="ns-tool-pill">{category.name}</span></div>
+        <h2>{tool.name}</h2><p>{tool.description}</p><span class="ns-tool-card-link">Abrir ferramenta <b>↗</b></span>
+      </a>)}
     </section>
-    <a class="nx-back-link" href="/tools">← Voltar ao catálogo completo</a>
+    <a class="ns-back-link" href="/tools">← Voltar a todas as ferramentas</a>
   </main>
   <SiteFooter />
 </div>

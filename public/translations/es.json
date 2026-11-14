@@ -630,5 +630,7 @@
   "Não foi possível carregar os artigos. Verifica a ligação e as regras do Firestore.": "No se pudieron cargar los artículos. Comprueba la conexión y las reglas de Firestore.",
   "Este artigo não existe ou ainda não foi publicado.": "Este artículo no existe o todavía no se ha publicado.",
   "Guardar favoritos": "Guardar favoritos",
-  "Descobre novas formas de fazer mais.": "Descubre nuevas formas de hacer más."
+  "Descobre novas formas de fazer mais.": "Descubre nuevas formas de hacer más.",
+  "Compressor e redimensionador de imagens": "Compresor y redimensionador de imágenes",
+  "Comprime imagens JPG, PNG e WebP, ajusta dimensões e proporções e controla a qualidade antes de exportar.": "Comprime imágenes JPG, PNG y WebP, ajusta las dimensiones y proporciones y controla la calidad antes de exportar."
 }

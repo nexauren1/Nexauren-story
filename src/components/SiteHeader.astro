@@ -1,38 +1,48 @@
 ---
-import AccountLink from "./AccountLink";
+const current = Astro.url.pathname;
 ---
-<header class="nx-site-header">
-  <a class="nx-brand" href="/" aria-label="Nexauren — página inicial">
-    <svg viewBox="0 0 44 44" role="img" aria-label="Nexauren">
-      <defs><linearGradient id="nx-brand-gradient" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#28c4b2"/><stop offset="1" stop-color="#4774f5"/></linearGradient></defs>
-      <path d="M22 2.5 41 13.3v17.4L22 41.5 3 30.7V13.3z" fill="url(#nx-brand-gradient)"/>
-      <path d="M13 30V14l18 16V14" fill="none" stroke="#fff" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <span>Nexauren<small>TOOLS & DIGITAL</small></span>
-  </a>
-  <nav class="nx-desktop-nav" aria-label="Navegação principal">
-    <a href="/tools" data-i18n="nav.tools">Ferramentas</a>
-    <a href="/highlights" data-i18n="nav.highlights">Destaques</a>
-    <a href="/apps" data-i18n="nav.apps">Aplicações</a>
-    <a href="/blog" data-i18n="nav.blog">Blog</a>
-  </nav>
-  <div class="nx-header-actions">
-    <label class="nx-language-control" title="Idioma do site"><span aria-hidden="true">◎</span><select data-language-select aria-label="Idioma do site">
-      <option value="pt">PT</option><option value="en">EN</option><option value="es">ES</option><option value="fr">FR</option><option value="de">DE</option>
-    </select></label>
-    <AccountLink client:load />
-    <button class="nx-menu-toggle" type="button" data-menu-toggle aria-label="Abrir menu" aria-expanded="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-    </button>
+<header class="ns-header">
+  <div class="ns-header-inner">
+    <a class="ns-brand" href="/" aria-label="Nexauren Story — página inicial">
+      <span class="ns-brand-mark" aria-hidden="true">N</span>
+      <span class="ns-brand-name">Nexauren <b>Story</b></span>
+    </a>
+    <nav class="ns-desktop-nav" aria-label="Navegação principal">
+      <a href="/" class:list={{active:current==="/"}}>Início</a>
+      <a href="/tools" class:list={{active:current.startsWith("/tools")}}>Ferramentas</a>
+      <a href="/blog" class:list={{active:current.startsWith("/blog")}}>Blog</a>
+      <a href="/about" class:list={{active:current==="/about"}}>Sobre</a>
+      <a href="/contact" class:list={{active:current==="/contact"}}>Contacto</a>
+    </nav>
+    <div class="ns-header-actions">
+      <form class="ns-header-search" action="/tools" method="get" role="search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" name="q" placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas" />
+      </form>
+      <button class="ns-icon-button" type="button" data-theme-toggle aria-label="Ativar modo claro" aria-pressed="true"><span data-theme-icon>☼</span></button>
+      <label class="ns-language-select" title="Idioma do site">
+        <span class="sr-only">Idioma do site</span>
+        <select data-language-select aria-label="Idioma do site">
+          <option value="en">EN</option>
+          <option value="pt">PT</option>
+        </select>
+      </label>
+      <a class="ns-account-link" href="/account"><span aria-hidden="true">◉</span><span>Conta</span></a>
+      <button class="ns-menu-toggle" type="button" data-menu-toggle aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
-<nav class="nx-mobile-nav" data-mobile-menu aria-label="Navegação móvel">
-  <a href="/tools" data-i18n="nav.tools">Ferramentas</a>
-  <a href="/highlights" data-i18n="nav.highlights">Destaques</a>
-  <a href="/apps" data-i18n="nav.apps">Aplicações</a>
-  <a href="/blog" data-i18n="nav.blog">Blog</a>
-  <a href="/account" data-i18n="nav.account">Minha conta</a>
-  <label class="nx-mobile-language-label">Idioma / Language
-    <select data-language-select aria-label="Idioma do site"><option value="pt">Português</option><option value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option></select>
-  </label>
+<nav class="ns-mobile-nav" data-mobile-menu aria-label="Navegação móvel">
+  <a href="/">Início</a>
+  <a href="/tools">Ferramentas</a>
+  <a href="/blog">Blog</a>
+  <a href="/about">Sobre</a>
+  <a href="/contact">Contacto</a>
+  <a href="/account">A minha conta</a>
+  <div class="ns-mobile-controls">
+    <label>Idioma <select data-language-select aria-label="Idioma do site"><option value="en">English</option><option value="pt">Português</option></select></label>
+    <button class="ns-icon-button" type="button" data-theme-toggle aria-label="Ativar modo claro"><span data-theme-icon>☼</span> Tema</button>
+  </div>
 </nav>

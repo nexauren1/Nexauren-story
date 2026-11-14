@@ -1,6 +1,6 @@
-# Nexauren
+# Nexauren Story
 
-Plataforma de ferramentas digitais para imagem, PDF, texto e áudio, com conta pessoal, favoritos, blog e catálogo de aplicações Android.
+Portal de ferramentas online gratuitas e conteúdo tecnológico, com conta pessoal, favoritos, blog e catálogo de aplicações Android.
 
 ## Stack
 - Astro 7 + TypeScript
@@ -33,9 +33,9 @@ O catálogo público tem **50 ferramentas activas**, distribuídas por quatro ca
 The image, PDF, audio and text operations run in the browser. Tool descriptions state format and output limitations; file processing does not upload source files to Nexauren servers.
 
 ## Languages
-- Portuguese (default), English, Spanish, French and German.
+- English is the default language for first-time visitors; Portuguese is the secondary language.
 - The language selector is available in the desktop header and mobile menu.
-- The selected language is saved in the browser and applied across navigation, pages, tool descriptions, controls, account screens and legal information.
+- The selected language is saved in the browser and applied across navigation, tool pages, descriptions, controls, account screens and legal information.
 - Articles written by site administrators remain in their original publishing language.
 
 ## Catalogue rules
@@ -75,14 +75,14 @@ Set the PUBLIC_FIREBASE_* variables in .env using the Firebase Web app configura
 - A successful build does not replace testing the deployed domain and tool pages.
 
 ## Routes
-- / — home page
-- /tools — public catalogue (only verified tools)
+- / — bilingual home page (English default, Portuguese available)
+- /tools — searchable public catalogue with category filters
 - /tools/image, /tools/pdf, /tools/text, /tools/audio — category pages
 - 50 dedicated tool pages across image, PDF, text and audio categories
 - /account — account, favorites and activity
 - /apps — Android app catalogue
 - /blog and individual articles
-- /highlights — featured tools and achievements
+- /about and /contact — public information pages
 - /privacy, /terms
 - /nexauren-control — private editorial admin page; excluded from indexing
 
