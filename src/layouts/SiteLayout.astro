@@ -88,8 +88,8 @@ const schema = {
       if (current !== "en") return source;
       if (Object.prototype.hasOwnProperty.call(dictionary, clean)) return source.replace(clean, dictionary[clean]);
       const patterns = [
-        [/^(\\d+)% mais pequeno$/i, n => n + "% smaller"],
-        [/^(\\d+)% maior$/i, n => n + "% larger"],
+        [/^(\d+)% mais pequeno$/i, n => n + "% smaller"],
+        [/^(\d+)% maior$/i, n => n + "% larger"],
         [/^Concluído\. A nova imagem ficou (\d+)% mais leve\.$/i, n => "Done. The new image is " + n + "% smaller."],
         [/^(\d+)\s+ferramentas?$/i, n => n + " tools"],
         [/^(\d+)\s+categorias?$/i, n => n + " categories"],
