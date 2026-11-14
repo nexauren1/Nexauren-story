@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type DragEvent, type ChangeEvent } from "react";
 
 type ImageFormat = "image/jpeg" | "image/png" | "image/webp";
-type SizePreset = "custom" | "original" | "square" | "portrait" | "story" | "cover" | "hd";
+type SizePreset = "custom" | "original" | "square" | "portrait" | "story" | "cover" | "hd" | "youtube" | "avatar" | "pinterest" | "a4";
 const sizePresets = [
   { id:"square", label:"Quadrado · 1080 × 1080", width:1080, height:1080 },
   { id:"portrait", label:"Retrato · 1080 × 1350", width:1080, height:1350 },
