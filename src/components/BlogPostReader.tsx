@@ -6,6 +6,15 @@ export default function BlogPostReader() {
   const [article,setArticle]=useState<Article|null>(null);
   const [loading,setLoading]=useState(true);
   const [error,setError]=useState("");
+  const [dateLocale,setDateLocale]=useState("en-US");
+  useEffect(()=>{
+    const root=document.documentElement;
+    const updateLocale=()=>setDateLocale(root.lang==="pt"?"pt-PT":"en-US");
+    updateLocale();
+    const observer=new MutationObserver(updateLocale);
+    observer.observe(root,{attributes:true,attributeFilter:["lang"]});
+    return()=>observer.disconnect();
+  },[]);
   useEffect(()=>{
     const slug=new URLSearchParams(window.location.search).get("slug");
     if(!slug){setError("O endereço do artigo não contém um identificador.");setLoading(false);return;}
@@ -23,7 +32,7 @@ export default function BlogPostReader() {
   if(loading)return <div className="blog-loading"><span className="loading-orbit"/>A preparar o artigo…</div>;
   if(error||!article)return <div className="blog-empty"><h2>Artigo indisponível</h2><p>{error}</p><a className="text-link" href="/blog">Voltar ao blog ↗</a></div>;
   return <article className="article-page blog-post-reader">
-    <div className="article-meta">{(article.tags||["NEXAUREN"]).join(" · ").toUpperCase()} <span>•</span> {article.publishedAt?.toDate().toLocaleDateString("pt-PT")||"Publicado"}</div>
+    <div className="article-meta">{(article.tags||["NEXAUREN"]).join(" · ").toUpperCase()} <span>•</span> {article.publishedAt?.toDate().toLocaleDateString(dateLocale)||"Publicado"}</div>
     <h1>{article.title}</h1><p className="article-intro">{article.excerpt}</p>
     {article.coverUrl&&<img className="blog-post-cover" src={article.coverUrl} alt={article.title}/>}
     <div className="article-body-text">{article.body.split(/\n{2,}/).map((paragraph,index)=>{
