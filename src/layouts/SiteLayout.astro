@@ -164,7 +164,7 @@ const schema = {
       if (localeMeta) localeMeta.setAttribute("content", selected === "en" ? "en_US" : "pt_PT");
       const alternate = document.querySelector('meta[property="og:locale:alternate"]');
       if (alternate) alternate.setAttribute("content", selected === "en" ? "pt_PT" : "en_US");
-      try { localStorage.setItem("nexauren:language", selected); } catch {}
+      try { localStorage.setItem("nexauren:portal-language", selected); } catch {}
       document.querySelectorAll("[data-language-select]").forEach(select => { select.value = selected; });
       const title = document.querySelector("title");
       if (title) {
@@ -185,7 +185,7 @@ const schema = {
     }
 
     let savedLanguage = "en";
-    try { savedLanguage = localStorage.getItem("nexauren:language") || "en"; } catch {}
+    try { savedLanguage = localStorage.getItem("nexauren:portal-language") || "en"; } catch {}
     void setLanguage(savedLanguage);
 
     let theme = document.documentElement.dataset.theme || "dark";
