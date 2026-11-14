@@ -332,7 +332,7 @@ const schema = {
     });
 
     function maybeShowFollowCard() {
-      const success = document.querySelector(".success-banner");
+      const success = document.querySelector(".universal-tool .success-banner, .tool-page .success-banner, .ns-tool-page .success-banner");
       if (!success || !success.textContent.trim() || document.querySelector("[data-nexa-follow-card]")) return;
       const card = document.createElement("section");
       card.className = "ns-follow-after-task";
