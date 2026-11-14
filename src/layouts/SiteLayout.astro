@@ -76,43 +76,43 @@ const schema = {
       if (!clean) return source;
       if (Object.prototype.hasOwnProperty.call(dictionary, clean)) return source.replace(clean, dictionary[clean]);
       const patterns = [
-        [/^(\\d+)\\s+ferramentas?$/i, n => n + " tools"],
-        [/^(\\d+)\\s+categorias?$/i, n => n + " categories"],
-        [/^(\\d+)\\s+ferramentas disponíveis$/i, n => n + " available tools"],
-        [/^(\\d+)\\s+ferramenta disponível$/i, n => n + " available tool"],
-        [/^(\\d+)\\s+documentos?$/i, n => n + " documents"],
-        [/^(\\d+)\\s+páginas?$/i, n => n + " pages"],
-        [/^(\\d+)\\s+caracteres?$/i, n => n + " characters"],
-        [/^(\\d+)\\s+palavras?$/i, n => n + " words"],
-        [/^(\\d+)\\s+linhas?$/i, n => n + " lines"],
-        [/^(\\d+)\\s+minutos?$/i, n => n + " minutes"],
-        [/^(\\d+)\\s+documentos?\\s+·\\s+(\\d+)\\s+páginas?\\s+·\\s+(.+)$/i, (docs, pages, size) => docs + " documents · " + pages + " pages · " + size],
-        [/^Combinar\\s+(\\d+)\\s+PDFs$/i, n => "Merge " + n + " PDFs"],
-        [/^Extrair\\s+(\\d+)\\s+página\\(s\\)$/i, n => "Extract " + n + " page(s)"],
-        [/^([\\d,]+)\\s+página\\(s\\) extraída\\(s\\) com sucesso\\.$/i, n => n + " page(s) extracted successfully."],
-        [/^Documento criado com (\\d+) páginas, pela ordem escolhida\\.$/i, n => "Document created with " + n + " pages, in the selected order."],
-        [/^(\\d+) documento\\(s\\) adicionado\\(s\\)\\. Podes alterar a ordem antes de combinar\\.$/i, n => n + " document(s) added. You can change the order before merging."],
-        [/^A extrair (\\d+) página\\(s\\)…$/i, n => "Extracting " + n + " page(s)…"],
-        [/^PALAVRAS\\s+(.+)$/i, value => "WORDS  " + value],
-        [/^CARACTERES\\s+(.+)$/i, value => "CHARACTERS  " + value],
-        [/^SEM ESPAÇOS\\s+(.+)$/i, value => "NO SPACES  " + value],
-        [/^LINHAS\\s+(.+)$/i, value => "LINES  " + value],
-        [/^PARÁGRAFOS\\s+(.+)$/i, value => "PARAGRAPHS  " + value],
-        [/^Caracteres:\\s*(.+)$/i, value => "Characters: " + value],
-        [/^Sem espaços:\\s*(.+)$/i, value => "Without spaces: " + value],
-        [/^Bytes UTF-8:\\s*(.+)$/i, value => "UTF-8 bytes: " + value],
-        [/^CSV válido:\\s*(.+)$/i, value => "Valid CSV: " + value],
-        [/^Linha (\\d+): (\\d+) colunas$/i, (line, columns) => "Row " + line + ": " + columns + " columns"],
-        [/^(\\d+) documento\\(s\\) adicionado\\(s\\)\\. Podes alterar a ordem antes de combinar\\.$/i, n => n + " document(s) added. You can change the order before merging."],
-        [/^Análise concluída\\. Foram encontradas (\\d+) páginas\\.$/i, n => "Analysis complete. " + n + " pages found."],
-        [/^Orientação actualizada em (\\d+) página\\(s\\)\\.$/i, n => "Orientation updated on " + n + " page(s)."],
-        [/^(\\d+) página\\(s\\) extraída\\(s\\) com sucesso\\.$/i, n => n + " page(s) extracted successfully."],
-        [/^A aplicar rotação a (\\d+) página\\(s\\)…$/i, n => "Applying rotation to " + n + " page(s)…"],
-        [/^Indica um número de página entre 1 e (\\d+)\\.$/i, n => "Enter a page number between 1 and " + n + "."],
-        [/^O intervalo deve estar entre 1 e (\\d+)\\.$/i, n => "The range must be between 1 and " + n + "."],
-        [/^Processamento concluído\\. (\\d+) páginas no ficheiro final\\.$/i, n => "Processing complete. " + n + " pages in the final file."],
+        [/^(\d+)\s+ferramentas?$/i, n => n + " tools"],
+        [/^(\d+)\s+categorias?$/i, n => n + " categories"],
+        [/^(\d+)\s+ferramentas disponíveis$/i, n => n + " available tools"],
+        [/^(\d+)\s+ferramenta disponível$/i, n => n + " available tool"],
+        [/^(\d+)\s+documentos?$/i, n => n + " documents"],
+        [/^(\d+)\s+páginas?$/i, n => n + " pages"],
+        [/^(\d+)\s+caracteres?$/i, n => n + " characters"],
+        [/^(\d+)\s+palavras?$/i, n => n + " words"],
+        [/^(\d+)\s+linhas?$/i, n => n + " lines"],
+        [/^(\d+)\s+minutos?$/i, n => n + " minutes"],
+        [/^(\d+)\s+documentos?\s+·\s+(\d+)\s+páginas?\s+·\s+(.+)$/i, (docs, pages, size) => docs + " documents · " + pages + " pages · " + size],
+        [/^Combinar\s+(\d+)\s+PDFs$/i, n => "Merge " + n + " PDFs"],
+        [/^Extrair\s+(\d+)\s+página\(s\)$/i, n => "Extract " + n + " page(s)"],
+        [/^([\d,]+)\s+página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
+        [/^Documento criado com (\d+) páginas, pela ordem escolhida\.$/i, n => "Document created with " + n + " pages, in the selected order."],
+        [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
+        [/^A extrair (\d+) página\(s\)…$/i, n => "Extracting " + n + " page(s)…"],
+        [/^PALAVRAS\s+(.+)$/i, value => "WORDS  " + value],
+        [/^CARACTERES\s+(.+)$/i, value => "CHARACTERS  " + value],
+        [/^SEM ESPAÇOS\s+(.+)$/i, value => "NO SPACES  " + value],
+        [/^LINHAS\s+(.+)$/i, value => "LINES  " + value],
+        [/^PARÁGRAFOS\s+(.+)$/i, value => "PARAGRAPHS  " + value],
+        [/^Caracteres:\s*(.+)$/i, value => "Characters: " + value],
+        [/^Sem espaços:\s*(.+)$/i, value => "Without spaces: " + value],
+        [/^Bytes UTF-8:\s*(.+)$/i, value => "UTF-8 bytes: " + value],
+        [/^CSV válido:\s*(.+)$/i, value => "Valid CSV: " + value],
+        [/^Linha (\d+): (\d+) colunas$/i, (line, columns) => "Row " + line + ": " + columns + " columns"],
+        [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
+        [/^Análise concluída\. Foram encontradas (\d+) páginas\.$/i, n => "Analysis complete. " + n + " pages found."],
+        [/^Orientação actualizada em (\d+) página\(s\)\.$/i, n => "Orientation updated on " + n + " page(s)."],
+        [/^(\d+) página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
+        [/^A aplicar rotação a (\d+) página\(s\)…$/i, n => "Applying rotation to " + n + " page(s)…"],
+        [/^Indica um número de página entre 1 e (\d+)\.$/i, n => "Enter a page number between 1 and " + n + "."],
+        [/^O intervalo deve estar entre 1 e (\d+)\.$/i, n => "The range must be between 1 and " + n + "."],
+        [/^Processamento concluído\. (\d+) páginas no ficheiro final\.$/i, n => "Processing complete. " + n + " pages in the final file."],
         [/^Imagem processada: (.+)$/i, value => "Image processed: " + value],
-        [/^Recorte criado\\. (.+), pronto para descarregar\\.$/i, value => "Crop created. " + value + ", ready to download."],
+        [/^Recorte criado\. (.+), pronto para descarregar\.$/i, value => "Crop created. " + value + ", ready to download."],
         [/^Duração final: (.+)$/i, value => "Final duration: " + value],
         [/^Duração: (.+)$/i, value => "Duration: " + value],
         [/^Páginas: (.+)$/i, value => "Pages: " + value],
@@ -122,14 +122,38 @@ const schema = {
         [/^Rácio de contraste: (.+)$/i, value => "Contrast ratio: " + value],
         [/^Média: (.+)$/i, value => "Average: " + value],
         [/^Preço final: (.+)$/i, value => "Final price: " + value],
-        [/^(\\d+)\\. (.+) \\(posição (\\d+)\\)$/i, (n, match, position) => n + ". " + match + " (position " + position + ")"],
+        [/^(\d+)\. (.+) \(posição (\d+)\)$/i, (n, match, position) => n + ". " + match + " (position " + position + ")"],
         [/^A importar (.+)…$/i, value => "Importing " + value + "…"],
-        [/^PDF combinado com (\\d+) páginas\\.$/i, n => "PDF merged with " + n + " pages."],
+        [/^PDF combinado com (\d+) páginas\.$/i, n => "PDF merged with " + n + " pages."],
         [/^Páginas a incluir em (.+)$/i, value => "Pages to include in " + value],
-        [/^Não foi possível ler este PDF\\. (.+)$/i, value => "Unable to read this PDF. " + value],
-        [/^Não foi possível combinar os ficheiros\\. (.+)$/i, value => "Unable to merge the files. " + value],
-        [/^Não foi possível descodificar este áudio\\. (.+)$/i, value => "Unable to decode this audio. " + value],
-        [/^Não foi possível otimizar o PDF\\. (.+)$/i, value => "Unable to optimise the PDF. " + value]
+        [/^Não foi possível ler este PDF\. (.+)$/i, value => "Unable to read this PDF. " + value],
+        [/^Não foi possível combinar os ficheiros\. (.+)$/i, value => "Unable to merge the files. " + value],
+        [/^Não foi possível descodificar este áudio\. (.+)$/i, value => "Unable to decode this audio. " + value],
+        [/^Não foi possível otimizar o PDF\. (.+)$/i, value => "Unable to optimise the PDF. " + value]
+
+        [/^Original: (.+)$/i, value => "Original: " + value],
+        [/^Novo: (.+)$/i, value => "New: " + value],
+        [/^Tamanho: (.+)$/i, value => "Size: " + value],
+        [/^Nome: (.+)$/i, value => "Name: " + value],
+        [/^Formato: (.+)$/i, value => "Format: " + value],
+        [/^Dimensões: (.+)$/i, value => "Dimensions: " + value],
+        [/^Título: (.+)$/i, value => "Title: " + value],
+        [/^Canais: (.+)$/i, value => "Channels: " + value],
+        [/^Frequência: (.+)$/i, value => "Sample rate: " + value],
+        [/^PALAVRA\\s+(.+)$/i, value => "WORD  " + value],
+        [/^(\\d+) substituição\\(ões\\) preparada\\(s\\)\\.$/i, n => n + " replacement(s) ready."],
+        [/^Otimização concluída\\. Os ficheiros ficaram (\\d+)% mais pequenos no total\\.$/i, n => "Optimisation complete. The files are " + n + "% smaller overall."],
+        [/^Otimização concluída\\. Os documentos foram regravados; não houve redução significativa no tamanho\\.$/i, () => "Optimisation complete. The documents were rewritten; there was no significant size reduction."],
+        [/^A rotação será aplicada a todas as (\\d+) páginas\\.$/i, n => "Rotation will be applied to all " + n + " pages."],
+        [/^A aplicar rotação a (\\d+) página\\(s\\)…$/i, n => "Applying rotation to " + n + " page(s)…"],
+        [/^A extrair (\\d+) página\\(s\\)…$/i, n => "Extracting " + n + " page(s)…"],
+        [/^A processar (\\d+) ficheiro\\(s\\)…$/i, n => "Processing " + n + " file(s)…"],
+        [/^Imagem processada: (.+)$/i, value => "Image processed: " + value],
+        [/^Trecho exportado em WAV PCM 16-bit, com os fades e o volume seleccionados\\.$/i, () => "Clip exported as 16-bit PCM WAV, with the selected fades and volume."],
+        [/^Áudio processado com sucesso\\.$/i, () => "Audio processed successfully."],
+        [/^Duração final: (.+)$/i, value => "Final duration: " + value],
+        [/^Limite de (\\d+) MB excedido\\.$/i, n => "The " + n + " MB limit has been exceeded."]
+
       ];
       for (const [pattern, render] of patterns) {
         const match = clean.match(pattern);
@@ -140,14 +164,15 @@ const schema = {
 
     function translateValue(source) {
       if (current !== "en" || !source) return source;
-      const lines = source.split("\\n");
+      const lines = source.split("\n");
       if (lines.length === 1) return translateSingle(source);
-      return lines.map(line => translateSingle(line)).join("\\n");
+      return lines.map(line => translateSingle(line)).join("\n");
     }
     function translateTextNode(node) {
       if (!node || !node.nodeValue || !node.nodeValue.trim()) return;
       const parent = node.parentElement;
-      if (parent && parent.closest("script,style,noscript,code,pre,textarea")) return;
+      if (parent && parent.closest("script,style,noscript,code,textarea")) return;
+      if (parent && parent.closest("pre") && !parent.closest("[data-translate-content]")) return;
       let state = textStates.get(node);
       if (!state) {
         state = { original: node.nodeValue, last: null };
