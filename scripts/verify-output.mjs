@@ -75,7 +75,7 @@ for (const page of publicPages) {
   if (!sitemap.includes("<loc>" + site + page.route + "</loc>") && !sitemap.includes("<loc>" + site + page.route.replace(/\/$/, "") + "/</loc>")) {
     errors.push("Página pública ausente do sitemap: " + page.route);
   }
-  const adSlots = (page.html.match(/data-ad-slot/g) || []).length;
+  const adSlots = (page.html.match(/<div[^>]*\\bdata-ad-slot\\b/g) || []).length;
   if (adSlots !== 2) errors.push("Página pública deve ter dois espaços de anúncio: " + page.route + " (encontrados " + adSlots + ").");
 }
 
