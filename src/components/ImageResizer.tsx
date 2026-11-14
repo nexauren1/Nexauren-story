@@ -122,6 +122,7 @@ export default function ImageResizer() {
     setError("");
     setNotice("");
     setProgress(0);
+    setSourceUrl("");
     setResultUrl("");
     setProcessedBlob(null);
     setImageReady(false);
@@ -246,13 +247,21 @@ export default function ImageResizer() {
             <input ref={inputRef} className="file-input-hidden" type="file" accept="image/*" onChange={onFileChange}/>
             <span className="upload-icon">☁</span>
             <strong>Arraste e solte uma imagem aqui</strong>
-            <small>ou clique para selecionar do seu dispositivo<br/>JPG, PNG, WebP · máximo 35 MB</small>
+            <small>ou clique para selecionar do seu dispositivo<br/>JPG, PNG, WebP, AVIF · máximo 50 MB</small>
             <span className="upload-cta">Selecionar imagem</span>
           </label>
         ) : (
           <>
             <div className="preview-stage image-result-stage">
-              <img src={previewOriginal ? sourceUrl : (resultUrl || sourceUrl)} alt={resultUrl && !previewOriginal ? "Imagem processada" : "Imagem original"} />
+              {(previewOriginal ? sourceUrl : (resultUrl || sourceUrl)) ? (
+                <img
+                  src={previewOriginal ? sourceUrl : (resultUrl || sourceUrl)}
+                  alt={resultUrl && !previewOriginal ? "Imagem processada" : "Imagem original"}
+                  onError={() => setError("A pré-visualização não conseguiu abrir esta imagem. Experimenta JPG, PNG ou WebP.")}
+                />
+              ) : (
+                <div className="ns-image-loading" role="status"><span className="ns-compressor-spinner"/>A carregar a imagem…</div>
+              )}
               <span className="image-preview-badge">{resultUrl && !previewOriginal ? "RESULTADO" : "ORIGINAL"}</span>
             </div>
             {resultUrl && <div className="nx-preview-switch"><button type="button" className={previewOriginal ? "is-active" : ""} onClick={() => setPreviewOriginal(true)}>Original</button><button type="button" className={!previewOriginal ? "is-active" : ""} onClick={() => setPreviewOriginal(false)}>Resultado</button></div>}

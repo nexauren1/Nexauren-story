@@ -121,6 +121,13 @@ export default function ImageCompressor() {
       return;
     }
     setError("");
+    setNotice("");
+    setSourceUrl("");
+    setOriginalDimensions({ width: 0, height: 0 });
+    setOutput(null);
+    setResultUrl("");
+    setPreviewResult(false);
+    setProgress(0);
     setFile(next);
   }
   function onFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -186,9 +193,13 @@ export default function ImageCompressor() {
         setResultUrl(URL.createObjectURL(blob));
         setPreviewResult(true);
         const reduction = Math.round((1 - blob.size / file.size) * 100);
-        setNotice(blob.size < file.size
+        const actualFormat = blob.type || format;
+        const fallbackNotice = actualFormat !== format
+          ? " O navegador exportou em " + actualFormat.replace("image/", "").toUpperCase() + " porque não conseguiu gerar o formato escolhido."
+          : "";
+        setNotice((blob.size < file.size
           ? "Concluído. A nova imagem ficou " + reduction + "% mais leve."
-          : "A imagem foi convertida, mas o ficheiro não ficou mais pequeno. Experimenta reduzir a qualidade ou as dimensões.");
+          : "A imagem foi convertida, mas o ficheiro não ficou mais pequeno. Experimenta reduzir a qualidade ou as dimensões.") + fallbackNotice);
         setProgress(100);
       } finally {
         decoded.dispose();
@@ -202,7 +213,8 @@ export default function ImageCompressor() {
   }
 
   const reduction = output && file ? Math.round((1 - output.size / file.size) * 100) : null;
-  const extension = format === "image/jpeg" ? "jpg" : format === "image/png" ? "png" : "webp";
+  const actualOutputFormat = output?.type || format;
+  const extension = actualOutputFormat === "image/jpeg" ? "jpg" : actualOutputFormat === "image/png" ? "png" : "webp";
 
   return (
     <div className="ns-compressor-workspace">
@@ -227,11 +239,15 @@ export default function ImageCompressor() {
         ) : (
           <>
             <div className="ns-compressor-image-stage">
-              <img
-                src={previewResult && resultUrl ? resultUrl : sourceUrl}
-                alt={previewResult && resultUrl ? "Pré-visualização da imagem comprimida" : "Pré-visualização da imagem original"}
-                onError={() => setError("The image preview could not be displayed. Try JPG, PNG or WebP.")}
-              />
+              {(previewResult && resultUrl) || sourceUrl ? (
+                <img
+                  src={previewResult && resultUrl ? resultUrl : sourceUrl}
+                  alt={previewResult && resultUrl ? "Pré-visualização da imagem comprimida" : "Pré-visualização da imagem original"}
+                  onError={() => setError("A pré-visualização não conseguiu abrir esta imagem. Experimenta JPG, PNG ou WebP.")}
+                />
+              ) : (
+                <div className="ns-compressor-preview-loading" role="status"><span className="ns-compressor-spinner"/>A preparar a pré-visualização…</div>
+              )}
               <span>{previewResult && resultUrl ? "COMPRIMIDA" : "ORIGINAL"}</span>
             </div>
             <div className="ns-compressor-file">

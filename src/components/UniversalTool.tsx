@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 
 type Props = { toolId: string; name: string; category: string; description: string; kind: string };
 const encoder = new TextEncoder();
@@ -109,6 +109,9 @@ export default function UniversalTool({ toolId, name, category, description, kin
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [complete, setComplete] = useState(false);
+  useEffect(() => () => {
+    if (resultUrl) URL.revokeObjectURL(resultUrl);
+  }, [resultUrl]);
   const isFileTool = ["image", "pdf", "audio"].includes(kind);
   const accepts = kind === "image" ? "image/*" : kind === "pdf" ? ".pdf,application/pdf" : "audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac";
   const helper = useMemo(() => {
@@ -243,6 +246,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
       case "compound-interest": return "Montante final: " + fmt(a * Math.pow(1 + b / 100, c)) + "\nJuros acumulados: " + fmt(a * Math.pow(1 + b / 100, c) - a);
       case "bill-splitter": if (b <= 0) throw new Error("O número de pessoas tem de ser superior a zero."); return "Cada pessoa paga: " + fmt(a / b);
       case "unit-converter": {
+        if (!paramA.trim() || !Number.isFinite(a)) throw new Error("Introduz um valor numérico válido.");
         const unit = paramB || "km-mi"; const factors: Record<string, number> = { "km-mi": .621371, "mi-km": 1.60934, "kg-lb": 2.20462, "lb-kg": .453592, "c-f": 1.8, "m-ft": 3.28084, "ft-m": .3048 };
         if (unit === "c-f") return fmt(a * 1.8 + 32) + " °F";
         if (unit === "f-c") return fmt((a - 32) / 1.8) + " °C";
@@ -354,12 +358,21 @@ export default function UniversalTool({ toolId, name, category, description, kin
     }
     if (kind === "image") {
       if (!file) throw new Error("Seleciona uma imagem.");
+      if (toolId === "image-base64") {
+        const data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result));
+          reader.onerror = () => reject(new Error("Falha ao ler a imagem."));
+          reader.readAsDataURL(file);
+        });
+        setResult(data);
+        return;
+      }
       const decoded = await decodeImageFile(file);
       try {
         const image = decoded.source;
         const w = decoded.width; const h = decoded.height;
         if (toolId === "image-info") { setResult("Nome: " + file.name + "\nFormato: " + file.type + "\nDimensões: " + w + " × " + h + " px\nTamanho: " + sizeLabel(file.size)); return; }
-        if (toolId === "image-base64") { const data = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = () => reject(new Error("Falha ao ler a imagem.")); reader.readAsDataURL(file); }); setResult(data); return; }
         let width = w; let height = h;
         if (toolId === "image-crop") { width = Math.max(1, Math.min(w, Number(paramA) || Math.floor(w * .75))); height = Math.max(1, Math.min(h, Number(paramB) || Math.floor(h * .75))); }
         if (toolId === "image-rotate" && Math.round(Number(paramA) || 90) % 180 !== 0) { width = h; height = w; }
@@ -375,9 +388,10 @@ export default function UniversalTool({ toolId, name, category, description, kin
         setProgress(65);
         const mime = toolId === "image-convert" ? format : "image/webp";
         const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((value) => value ? resolve(value) : reject(new Error("Não foi possível gerar a imagem.")), mime, .84));
-        const extension = mime === "image/jpeg" ? "jpg" : mime === "image/png" ? "png" : "webp";
+        const actualMime = blob.type || mime;
+        const extension = actualMime === "image/jpeg" ? "jpg" : actualMime === "image/png" ? "png" : "webp";
         setDownloadName(file.name.replace(/\.[^.]+$/, "") + "-nexauren." + extension);
-        setResult("Imagem processada: " + width + " × " + height + " px\nOriginal: " + sizeLabel(file.size) + "\nNovo: " + sizeLabel(blob.size));
+        setResult("Imagem processada: " + width + " × " + height + " px\nFormato final: " + actualMime.replace("image/", "").toUpperCase() + "\nOriginal: " + sizeLabel(file.size) + "\nNovo: " + sizeLabel(blob.size));
         setResultUrl(URL.createObjectURL(blob)); return;
       } finally {
         decoded.dispose();
@@ -426,7 +440,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
 
   async function process() {
     if (busy) return;
-    setBusy(true); setProgress(8); setError(""); setNotice("A preparar o motor de processamento…"); setResult(""); setComplete(false);
+    setBusy(true); setProgress(8); setError(""); setNotice("A preparar o motor de processamento…"); setResult(""); setResultUrl(""); setComplete(false);
     try {
       await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
       setProgress(28);
@@ -446,10 +460,27 @@ export default function UniversalTool({ toolId, name, category, description, kin
     } finally { setBusy(false); }
   }
 
-  const fields = kind === "calculators" || kind === "colors" || kind === "dates" || kind === "developer" || (kind === "pdf" && ["pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "pdf-duplicate-page"].includes(toolId)) || (kind === "generators" && ["password-generator", "random-number-generator", "hex-generator"].includes(toolId)) || (kind === "image" && ["image-crop", "image-rotate"].includes(toolId)) || (kind === "audio" && ["audio-volume", "audio-speed"].includes(toolId));
+  const paramATools = new Set([
+    "percentage-calculator", "percentage-change", "discount-calculator", "vat-calculator", "rule-of-three", "simple-interest", "compound-interest", "bill-splitter", "unit-converter",
+    "date-difference", "date-add-days", "date-subtract-days", "age-calculator",
+    "regex-tester", "contrast-checker", "color-mixer", "alpha-color", "gradient-css", "css-gradient-generator", "rgb-to-hex",
+    "pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "pdf-duplicate-page",
+    "password-generator", "random-number-generator", "hex-generator",
+    "image-crop", "image-rotate", "audio-volume", "audio-speed"
+  ]);
+  const paramBTools = new Set([
+    "percentage-calculator", "percentage-change", "discount-calculator", "vat-calculator", "rule-of-three", "simple-interest", "compound-interest", "bill-splitter", "unit-converter",
+    "date-difference", "age-calculator", "regex-tester", "contrast-checker", "color-mixer",
+    "pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "image-crop", "random-number-generator"
+  ]);
+  const paramCTools = new Set(["rule-of-three", "simple-interest", "compound-interest", "rgb-to-hex", "random-number-generator"]);
+  const showParamA = paramATools.has(toolId);
+  const showParamB = paramBTools.has(toolId);
+  const showParamC = paramCTools.has(toolId);
+  const fields = showParamA || showParamB || showParamC;
   const labelA = toolId === "regex-tester" ? "Expressão regular" : toolId === "date-difference" || toolId === "age-calculator" || toolId === "contrast-checker" || toolId === "color-mixer" ? "Segundo valor" : toolId === "unit-converter" ? "Valor numérico" : toolId === "pdf-split" || toolId === "pdf-remove-pages" || toolId === "pdf-reorder-pages" ? "Páginas (ex.: 1-3,5)" : toolId === "image-crop" ? "Largura de corte" : toolId === "image-rotate" ? "Ângulo em graus" : toolId === "rgb-to-hex" ? "Canal vermelho (R)" : toolId === "password-generator" || toolId === "hex-generator" ? "Comprimento" : toolId === "random-number-generator" ? "Valor mínimo" : toolId === "audio-volume" ? "Ganho em dB" : toolId === "audio-speed" ? "Velocidade (0,5 a 2)" : "Valor / opção";
   const labelB = toolId === "regex-tester" ? "Opções RegEx" : toolId === "contrast-checker" || toolId === "color-mixer" ? "Segunda cor HEX" : toolId === "image-crop" ? "Altura de corte" : toolId === "rgb-to-hex" ? "Canal verde (G)" : toolId === "random-number-generator" ? "Valor máximo" : toolId === "unit-converter" ? "Conversão (ex.: km-mi)" : "Segundo valor";
-  const showMainText = !["password-generator", "uuid-generator"].includes(toolId) && (!isFileTool || kind === "dates" || kind === "colors" || kind === "calculators" && toolId === "average-calculator");
+  const showMainText = !isFileTool && (["text", "converters", "developer", "colors", "dates"].includes(kind) || toolId === "average-calculator" || toolId === "sha256-generator");
   return <div className="universal-tool">
     <div className="universal-tool-main">
       <section className="tool-panel universal-input-panel">
@@ -457,9 +488,9 @@ export default function UniversalTool({ toolId, name, category, description, kin
         {isFileTool && <label className="upload-zone universal-upload"><input ref={fileInput} className="file-input-hidden" type="file" accept={accepts} multiple={toolId === "pdf-merge"} onChange={onFileChange}/><span className="upload-icon">{kind === "pdf" ? "PDF" : kind === "audio" ? "♫" : "◈"}</span><strong>{files.length ? files.map((file) => file.name).join(", ") : "Seleciona ou arrasta o ficheiro"}</strong><small>{files.length ? files.map((file) => sizeLabel(file.size)).join(" · ") : helper}</small><span className="upload-cta">{files.length ? "Trocar ficheiro" : "Selecionar ficheiro"}</span></label>}
         {showMainText && <label className="universal-label"><span>{kind === "dates" ? "Data ou hora principal" : kind === "colors" ? "Cor HEX / texto principal" : kind === "calculators" ? "Lista de valores / entrada" : "Entrada"}</span><textarea value={text} onChange={(e) => setText(e.target.value)} className="universal-editor" placeholder={kind === "colors" ? "#3158C7" : kind === "dates" ? "2026-11-09" : "Escreve ou cola os dados aqui…"} spellCheck={false}/></label>}
         {fields && <div className="universal-fields">
-          <label className="universal-label"><span>{labelA}</span><input value={paramA} onChange={(e) => setParamA(e.target.value)} placeholder={toolId === "regex-tester" ? "\\d+" : toolId.includes("date") || toolId === "age-calculator" ? "2026-12-31" : "Introduz um valor"}/></label>
-          <label className="universal-label"><span>{labelB}</span><input value={paramB} onChange={(e) => setParamB(e.target.value)} placeholder={toolId === "regex-tester" ? "g, i, m…" : "Introduz um valor"}/></label>
-          {(kind === "calculators" || toolId === "rgb-to-hex" || toolId === "random-number-generator") && <label className="universal-label"><span>Terceiro valor</span><input value={paramC} onChange={(e) => setParamC(e.target.value)} placeholder="Se necessário"/></label>}
+          {showParamA && <label className="universal-label"><span>{labelA}</span><input value={paramA} onChange={(e) => setParamA(e.target.value)} placeholder={toolId === "regex-tester" ? "\\d+" : toolId.includes("date") || toolId === "age-calculator" ? "2026-12-31" : toolId === "password-generator" || toolId === "hex-generator" ? "24" : toolId === "unit-converter" ? "1.5" : "Introduz um valor"}/></label>}
+          {showParamB && <label className="universal-label"><span>{labelB}</span><input value={paramB} onChange={(e) => setParamB(e.target.value)} placeholder={toolId === "regex-tester" ? "g, i, m…" : toolId === "unit-converter" ? "km-mi" : "Introduz um valor"}/></label>}
+          {showParamC && <label className="universal-label"><span>Terceiro valor</span><input value={paramC} onChange={(e) => setParamC(e.target.value)} placeholder="Introduz um valor"/></label>}
         </div>}
         {kind === "image" && <label className="universal-label format-select"><span>Formato de saída</span><select value={format} onChange={(e) => setFormat(e.target.value)}><option value="image/webp">WebP</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></label>}
         {error && <div className="error-banner" role="alert">{error}</div>}

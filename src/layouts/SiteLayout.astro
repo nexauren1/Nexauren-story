@@ -6,13 +6,18 @@ import "../styles/account-premium.css";
 import "../styles/compressor.css";
 import "../styles/ads.css";
 import AdSlot from "../components/AdSlot.astro";
+import activeTools from "../data/activeTools.json";
 const {
   title = "Nexauren Story — Free Online Tools & Technology",
   description = "Explore free online tools for images, PDF, text and audio, plus practical technology guides.",
   noIndex = false,
   showAds = true
 } = Astro.props;
-const renderAds = showAds && !noIndex;
+const routePath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isAccountWorkspace = routePath === "/account";
+const isToolWorkspace = activeTools.tools.some((tool) => tool.path === routePath);
+// Keep third-party ad scripts away from authenticated account data and file/text workspaces.
+const renderAds = showAds && !noIndex && !isAccountWorkspace && !isToolWorkspace;
 const canonical = new URL(Astro.url.pathname, "https://nexaurenstory.com").toString();
 const robots = noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
 const schema = {

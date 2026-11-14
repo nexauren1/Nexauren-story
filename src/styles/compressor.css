@@ -40,3 +40,9 @@ html[data-theme="light"] .ns-compressor-file,html[data-theme="light"] .ns-compre
 html[data-theme="light"] .ns-compressor-file b,html[data-theme="light"] .ns-compressor-color b{color:#172644}
 @media(max-width:900px){.ns-compressor-workspace{grid-template-columns:1fr}.ns-compressor-upload{min-height:270px}}
 @media(max-width:520px){.ns-compressor-card{padding:15px}.ns-compressor-upload{min-height:230px;padding:17px}.ns-compressor-settings-grid{grid-template-columns:1fr}.ns-compressor-quality{grid-column:auto}.ns-compressor-stats{gap:6px}.ns-compressor-stats>div{padding:9px}.ns-compressor-stats b{font-size:11px}.ns-compressor-file{flex-wrap:wrap}.ns-compressor-file>span:nth-child(2){flex-basis:calc(100% - 50px)}.ns-compressor-file button{flex:1}}
+
+
+/* Clear, accessible preview states while a selected image is being decoded. */
+.ns-compressor-preview-loading,.ns-image-loading{display:flex;min-height:150px;align-items:center;justify-content:center;gap:11px;padding:18px;color:var(--ns-muted);font-size:11px;text-align:center}
+.ns-compressor-spinner{width:20px;height:20px;flex:0 0 20px;border:2px solid rgba(80,160,255,.22);border-top-color:#29baff;border-radius:50%;animation:ns-compressor-spin .8s linear infinite}
+@keyframes ns-compressor-spin{to{transform:rotate(360deg)}}

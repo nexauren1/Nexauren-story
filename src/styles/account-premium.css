@@ -62,3 +62,14 @@ html[data-theme="light"] .nx-account-welcome{background:linear-gradient(135deg,#
 html[data-theme="light"] .nx-account-identity h2{color:#172644}html[data-theme="light"] .nx-account-identity p{color:#657594}
 @media(max-width:900px){.nx-account-layout{grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);gap:14px}}
 @media(max-width:760px){.nx-account-page{padding:14px 0 45px}.nx-account-page-heading{margin:28px auto 23px;text-align:left}.nx-account-page-heading h1{font-size:39px;letter-spacing:-1.9px}.nx-account-page-heading>p{font-size:11px}.nx-account-layout{grid-template-columns:1fr;gap:13px}.nx-account-aside-visual{min-height:225px;padding:19px}.nx-account-benefits{grid-template-columns:1fr}.nx-auth-card,.nx-account-dashboard,.nx-auth-loading{padding:17px;border-radius:16px}.nx-account-welcome{align-items:flex-start;flex-wrap:wrap;padding:16px}.nx-account-identity{padding-top:3px}.nx-signout-button{margin-left:auto}.nx-account-stats{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px;gap:6px}.nx-account-stats>div:last-child{grid-column:1/-1}.nx-account-stats>div{align-items:flex-start;flex-direction:column;padding:9px}.nx-account-content-grid{grid-template-columns:1fr;padding:0 12px 12px}.nx-account-content-card{padding:12px}.nx-account-privacy{margin:0 12px 12px}.nx-account-page-foot{align-items:flex-start;text-align:left;line-height:1.55}}
+
+
+/* Final account interaction polish. */
+.nx-account-benefits>div,.nx-account-content-card,.nx-auth-card,.nx-account-backlink{transition:transform .2s,border-color .2s,box-shadow .2s}
+.nx-account-benefits>div:hover,.nx-account-content-card:hover{border-color:var(--ns-line-strong);transform:translateY(-2px)}
+.nx-auth-submit{cursor:pointer;transition:transform .2s,filter .2s,box-shadow .2s}
+.nx-auth-submit:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.08);box-shadow:0 13px 27px rgba(14,98,235,.28)}
+.nx-auth-submit:disabled,.nx-google-button:disabled,.nx-signout-button:disabled{opacity:.58;cursor:not-allowed}
+.nx-auth-form input:focus-visible,.nx-auth-form button:focus-visible,.nx-auth-submit:focus-visible,.nx-google-button:focus-visible{outline:2px solid #3bbcff;outline-offset:2px}
+.nx-account-list-copy a:hover,.nx-account-open:hover{color:#7bd5ff}
+@media(max-width:520px){.nx-account-page-heading h1{font-size:clamp(34px,9vw,42px)}.nx-auth-heading h2{font-size:23px}.nx-account-aside-visual{border-radius:18px}}
