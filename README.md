@@ -13,7 +13,7 @@ Portal de ferramentas online gratuitas e conteúdo tecnológico, com conta pesso
 
 ## Public tools
 
-O catálogo público tem **50 ferramentas activas**, distribuídas por quatro categorias. Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
+O catálogo público tem **54 ferramentas activas**, distribuídas por quatro categorias. Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
 
 ### Image — 10 tools
 - Resize image; crop image; image watermark; rotate and flip image.
@@ -44,7 +44,8 @@ The image, PDF, audio and text operations run in the browser. Tool descriptions 
 - Every public tool must have a dedicated Astro page at the exact path declared in that file.
 - The wider src/data/toolCatalog.json is retained for future development, but its entries are not advertised as live tools until they have a dedicated, tested page.
 - npm run check:catalog validates IDs, categories and the presence of each dedicated page.
-- scripts/verify-output.mjs validates generated tool pages, catalogue links, sitemap entries and private admin exclusion.
+- `npm run build` automatically generates `sitemap.xml` after each build by scanning every public HTML route.
+- `npm run verify:output` checks all tool pages, public pages, sitemap entries, two reserved advertisement slots per public page and private admin exclusion.
 
 ## Account and synchronization
 - Firebase sign-in with Google or email/password.
@@ -78,13 +79,14 @@ Set the PUBLIC_FIREBASE_* variables in .env using the Firebase Web app configura
 - / — bilingual home page (English default, Portuguese available)
 - /tools — searchable public catalogue with category filters
 - /tools/image, /tools/pdf, /tools/text, /tools/audio — category pages
-- 50 dedicated tool pages across image, PDF, text and audio categories
+- 54 dedicated tool pages across image, PDF, text and audio categories
 - /account — account, favorites and activity
 - /apps — Android app catalogue
 - Blog externo: https://nexauren.blogspot.com/?m=1 (redirects from /blog and /blog/*)
 - /about and /contact — public information pages
 - /privacy, /terms
 - Blog editorial management is handled in Blogger; no local article CMS is included.
+- The shared site layout reserves a responsive 728 × 90 advertisement slot above and below each public page. The third-party ad script is loaded from the publisher supplied in the site configuration.
 
 ## Firebase setup
 - Project ID: nexauren-story-e8327

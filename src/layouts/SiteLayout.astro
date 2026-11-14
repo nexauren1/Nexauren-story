@@ -2,11 +2,17 @@
 import "../styles/global.css";
 import "../styles/rebuild.css";
 import "../styles/portal.css";
+import "../styles/account-premium.css";
+import "../styles/compressor.css";
+import "../styles/ads.css";
+import AdSlot from "../components/AdSlot.astro";
 const {
   title = "Nexauren Story — Free Online Tools & Technology",
   description = "Explore free online tools for images, PDF, text and audio, plus practical technology guides.",
-  noIndex = false
+  noIndex = false,
+  showAds = true
 } = Astro.props;
+const renderAds = showAds && !noIndex;
 const canonical = new URL(Astro.url.pathname, "https://nexaurenstory.com").toString();
 const robots = noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
 const schema = {
@@ -59,7 +65,9 @@ const schema = {
 <body>
   <div class="site-ambient" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="navigation-progress" data-navigation-progress></div>
+  {renderAds && <AdSlot />}
   <slot />
+  {renderAds && <AdSlot />}
   <script is:inline>
   (() => {
     const supported = ["en", "pt"];
@@ -74,6 +82,7 @@ const schema = {
       const clean = source.trim();
       if (Object.prototype.hasOwnProperty.call(dictionary, clean)) return source.replace(clean, dictionary[clean]);
       const patterns = [
+        [/^Concluído\. A nova imagem ficou (\d+)% mais leve\.$/i, n => "Done. The new image is " + n + "% smaller."],
         [/^(\d+)\s+ferramentas?$/i, n => n + " tools"],
         [/^(\d+)\s+categorias?$/i, n => n + " categories"],
         [/^(\d+)\s+ferramentas disponíveis$/i, n => n + " available tools"],

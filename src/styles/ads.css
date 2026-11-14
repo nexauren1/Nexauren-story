@@ -1,0 +1,6 @@
+.ns-ad-rail{width:100%;display:grid;justify-items:center;gap:4px;margin:10px auto 13px;padding:0 8px;overflow:hidden}
+.ns-ad-label{color:var(--ns-dim);font-size:7px;font-weight:800;letter-spacing:1.4px;line-height:1;text-transform:uppercase}
+.ns-ad-frame{position:relative;width:min(728px,100%);height:90px;overflow:hidden;border:1px solid var(--ns-line);border-radius:9px;background:rgba(8,22,47,.25)}
+.ns-ad-frame iframe{position:absolute!important;top:0!important;left:50%!important;width:728px!important;min-width:728px!important;height:90px!important;max-width:none!important;border:0!important;transform:translateX(-50%) scale(var(--ns-ad-scale,1));transform-origin:top center}
+.ns-ad-rail.is-empty{display:none}
+@media(max-width:740px){.ns-ad-rail{margin:7px auto 10px}.ns-ad-frame{height:calc((100vw - 40px) * .123626);min-height:38px;max-height:90px}}

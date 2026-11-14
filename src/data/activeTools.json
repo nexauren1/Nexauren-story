@@ -32,11 +32,20 @@
   "tools": [
     {
       "id": "image-resizer",
-      "name": "Compressor e redimensionador de imagens",
-      "description": "Comprime imagens JPG, PNG e WebP, ajusta dimensões e proporções e controla a qualidade antes de exportar.",
+      "name": "Redimensionar imagem",
+      "description": "Redimensiona imagens JPG, PNG e WebP, ajusta largura, altura, proporção e qualidade e exporta uma cópia no formato escolhido.",
       "category": "image",
       "path": "/tools/image-resizer",
       "icon": "↔",
+      "featured": true
+    },
+    {
+      "id": "image-compressor",
+      "name": "Comprimir imagem",
+      "description": "Comprime imagens JPG, PNG e WebP, controla a qualidade, escolhe o formato e limita as dimensões antes de descarregar.",
+      "category": "image",
+      "path": "/tools/image-compressor",
+      "icon": "▧",
       "featured": true
     },
     {
@@ -478,6 +487,33 @@
       "description": "Acelera ou abranda o áudio entre 0,5× e 2×, ajustando a duração do ficheiro.",
       "path": "/tools/audio-speed",
       "icon": "⏩",
+      "featured": false
+    },
+    {
+      "id": "text-word-counter",
+      "name": "Contador de palavras",
+      "description": "Conta palavras, caracteres, linhas e parágrafos e apresenta estatísticas do texto.",
+      "category": "text",
+      "path": "/tools/text-word-counter",
+      "icon": "≡",
+      "featured": true
+    },
+    {
+      "id": "password-generator",
+      "name": "Gerador de palavras-passe",
+      "description": "Cria palavras-passe aleatórias com comprimento ajustável diretamente no navegador.",
+      "category": "text",
+      "path": "/tools/password-generator",
+      "icon": "⌑",
+      "featured": true
+    },
+    {
+      "id": "uuid-generator",
+      "name": "Gerador UUID",
+      "description": "Gera identificadores UUID aleatórios para aplicações, bases de dados e testes.",
+      "category": "text",
+      "path": "/tools/uuid-generator",
+      "icon": "✳",
       "featured": false
     }
   ]

@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Gerador UUID — Ferramenta online gratuita | Nexauren Story" description="Gera identificadores UUID aleatórios para aplicações, bases de dados e testes diretamente no navegador.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Gerador UUID</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / TEXT LAB</span><h1>Gerador UUID</h1><p>Gera identificadores UUID aleatórios para aplicações, bases de dados e testes diretamente no navegador.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="uuid-generator" title="Gerador UUID" kind="tool" href="/tools/uuid-generator"/></div></header>
+<UniversalTool client:load toolId="uuid-generator" name="Gerador UUID" category="text" description="Gera identificadores UUID aleatórios para aplicações, bases de dados e testes diretamente no navegador." kind="generators"/>
+<TrackActivity client:load activityId="uuid-generator" activityTitle="Usou Gerador UUID"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

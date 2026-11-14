@@ -1,5 +1,5 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { readdir, readFile } from "node:fs/promises";
+import { join, relative, sep } from "node:path";
 
 const site = "https://nexaurenstory.com";
 const active = JSON.parse(await readFile("src/data/activeTools.json", "utf8"));
@@ -30,15 +30,11 @@ for (const tool of active.tools) {
     if (!html.includes("<title>") || !html.includes(tool.name)) {
       errors.push("Página sem título/conteúdo esperado: " + tool.path);
     }
-    if (!sitemap.includes(site + tool.path)) {
-      errors.push("Página ausente no sitemap: " + tool.path);
-    }
-    if (!toolsPage.includes('href="' + tool.path + '"')) {
-      errors.push("Ferramenta ausente do diretório principal: " + tool.path);
-    }
+    if (!sitemap.includes(site + tool.path)) errors.push("Página ausente no sitemap: " + tool.path);
+    if (!toolsPage.includes('href="' + tool.path + '"')) errors.push("Ferramenta ausente do diretório principal: " + tool.path);
     const categoryHtml = categoryPages.get(tool.category);
     if (!categoryHtml || !categoryHtml.includes('href="' + tool.path + '"')) {
-      errors.push("Ferramenta ausente da página da categoria " + tool.category + ": " + tool.path);
+      errors.push("Ferramenta ausente da categoria " + tool.category + ": " + tool.path);
     }
   } catch {
     errors.push("Página de ferramenta não foi gerada: " + tool.path);
@@ -55,11 +51,41 @@ if (sitemap.includes("/nexauren-control")) errors.push("O painel privado aparece
 if (!robots.includes("Disallow: /nexauren-control")) errors.push("robots.txt não bloqueia o painel privado.");
 if (!robots.includes("Sitemap: " + site + "/sitemap.xml")) errors.push("robots.txt não referencia o sitemap correcto.");
 
+// Every indexable HTML page must be discoverable from the sitemap and carry two
+// reserved ad slots. Private/noindex pages are intentionally excluded.
+const publicPages = [];
+async function walk(folder) {
+  const entries = await readdir(folder, { withFileTypes: true });
+  for (const entry of entries) {
+    const filePath = join(folder, entry.name);
+    if (entry.isDirectory()) { await walk(filePath); continue; }
+    if (!entry.isFile() || !entry.name.endsWith(".html") || entry.name === "404.html") continue;
+    const html = await readFile(filePath, "utf8");
+    if (/<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i.test(html)) continue;
+    const local = relative("dist", filePath).split(sep).join("/");
+    let route;
+    if (local === "index.html") route = "/";
+    else if (local.endsWith("/index.html")) route = "/" + local.slice(0, -"index.html".length);
+    else route = "/" + local.replace(/\.html$/, "");
+    publicPages.push({ route, html });
+  }
+}
+await walk("dist");
+for (const page of publicPages) {
+  if (!sitemap.includes("<loc>" + site + page.route + "</loc>") && !sitemap.includes("<loc>" + site + page.route.replace(/\/$/, "") + "/</loc>")) {
+    errors.push("Página pública ausente do sitemap: " + page.route);
+  }
+  const adSlots = (page.html.match(/data-ad-slot/g) || []).length;
+  if (adSlots !== 2) errors.push("Página pública deve ter dois espaços de anúncio: " + page.route + " (encontrados " + adSlots + ").");
+}
+
 if (errors.length) {
   console.error("Verificação do site falhou:");
   for (const error of errors) console.error(" - " + error);
   process.exit(1);
 }
-console.log("Diretório verificado: /tools apresenta " + active.tools.length + " ferramentas pesquisáveis e filtros por categoria.");
-console.log("Ferramentas verificadas: " + active.tools.length + " páginas dedicadas, com presença no diretório, categoria e sitemap.");
-console.log("SEO verificado: sitemap, robots.txt, painel privado e encaminhamento externo do blog.");
+console.log("Diretório verificado: " + active.tools.length + " ferramentas com pesquisa e filtros.");
+console.log("Rotas verificadas: " + active.tools.length + " páginas de ferramentas e " + publicPages.length + " páginas públicas indexáveis.");
+console.log("Sitemap automático: todas as páginas públicas foram encontradas.");
+console.log("Publicidade: dois espaços responsivos confirmados em cada página pública.");
+console.log("SEO verificado: robots.txt, redirects Blogger e painel privado excluído do sitemap.");

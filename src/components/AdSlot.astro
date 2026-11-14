@@ -1,0 +1,34 @@
+<div class="ns-ad-rail" data-ad-slot aria-label="Área de publicidade">
+  <span class="ns-ad-label">PUBLICIDADE</span>
+  <div class="ns-ad-frame">
+    <script is:inline>
+      atOptions = {
+        'key' : '14e091b4996d3882c9269c228020612e',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    </script>
+    <script is:inline src="https://bauval.org/22/14e091b4996d3882c9269c228020612e"></script>
+    <script is:inline>
+      (() => {
+        const frame = document.currentScript && document.currentScript.parentElement;
+        const slot = frame && frame.closest("[data-ad-slot]");
+        if (!frame || !slot) return;
+        const resize = () => {
+          const scale = Math.min(1, frame.clientWidth / 728);
+          frame.style.setProperty("--ns-ad-scale", String(scale));
+          frame.style.height = (90 * scale) + "px";
+        };
+        resize();
+        if ("ResizeObserver" in window) new ResizeObserver(resize).observe(frame);
+        else window.addEventListener("resize", resize, { passive: true });
+        window.setTimeout(() => {
+          if (!frame.querySelector("iframe")) slot.classList.add("is-empty");
+        }, 7000);
+        new MutationObserver(resize).observe(frame, { childList: true, subtree: true });
+      })();
+    </script>
+  </div>
+</div>

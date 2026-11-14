@@ -1,0 +1,64 @@
+/* Premium account experience layered over the shared portal theme. */
+.nx-account-page{max-width:1160px;min-height:65vh;margin:0 auto;padding:24px 0 58px;color:var(--ns-text)}
+.nx-account-page .nx-breadcrumb{color:var(--ns-dim)}.nx-account-page .nx-breadcrumb a{color:#62c5ff}
+.nx-account-page-heading{max-width:760px;margin:38px auto 32px;text-align:center}
+.nx-account-page-heading h1{margin:14px 0 12px;color:var(--ns-text);font-family:'Space Grotesk',sans-serif;font-size:clamp(38px,5vw,58px);line-height:1.04;letter-spacing:-2.7px;font-weight:700}
+.nx-account-page-heading h1 span{background:linear-gradient(100deg,#21cfff,#4380ff,#a06bff);background-clip:text;-webkit-background-clip:text;color:transparent}
+.nx-account-page-heading>p{max-width:620px;margin:0 auto;color:var(--ns-muted);font-size:13px;line-height:1.8}
+.nx-account-layout{display:grid;grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr);gap:20px;align-items:start}
+.nx-account-aside{display:grid;gap:13px}
+.nx-account-aside-visual{position:relative;min-height:315px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:27px;overflow:hidden;border:1px solid rgba(115,167,255,.22);border-radius:22px;background:radial-gradient(circle at 79% 13%,rgba(83,134,255,.33),transparent 38%),radial-gradient(circle at 17% 86%,rgba(20,181,219,.16),transparent 37%),linear-gradient(145deg,#0d2a55,#09152c 75%);color:#fff;box-shadow:0 18px 42px rgba(0,0,0,.19)}
+.nx-account-emblem{border:1px solid rgba(255,255,255,.22);background:linear-gradient(135deg,#19c9e5,#2468ff 62%,#854dff);box-shadow:0 12px 24px rgba(5,17,41,.32)}
+.nx-account-aside-visual>b{color:#f2f5ff}
+.nx-account-benefits>div{border:1px solid var(--ns-line);border-radius:13px;background:var(--ns-panel);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.nx-account-benefits>div>span{background:rgba(24,142,255,.14);color:#65caff}
+.nx-account-benefits section b{color:var(--ns-text)}.nx-account-benefits section small{color:var(--ns-muted)}
+.nx-account-backlink{border:1px solid var(--ns-line-strong);border-radius:12px;background:linear-gradient(110deg,rgba(14,78,157,.24),rgba(39,41,131,.23));color:#69c9ff}
+.nx-account-auth-wrap{min-width:0}
+.nx-auth-card,.nx-account-dashboard,.nx-auth-loading{padding:clamp(20px,3vw,29px);border:1px solid var(--ns-line);border-radius:21px;background:linear-gradient(145deg,rgba(10,27,56,.97),rgba(5,17,38,.97));color:var(--ns-text);box-shadow:0 18px 46px rgba(0,0,0,.19)}
+.nx-auth-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nx-auth-card-mark{border-radius:13px;background:linear-gradient(135deg,#19c9e5,#2468ff 62%,#854dff);color:#fff;box-shadow:0 9px 22px rgba(12,110,255,.25)}
+.nx-auth-heading{margin:22px 0 18px}
+.nx-auth-heading h2{margin:7px 0 6px;color:var(--ns-text);font-family:'Space Grotesk',sans-serif;font-size:28px;letter-spacing:-1px;line-height:1.12}
+.nx-auth-heading p{margin:0;color:var(--ns-muted);font-size:11px;line-height:1.7}
+.nx-auth-tabs{border:1px solid var(--ns-line);border-radius:11px;background:rgba(2,11,27,.55)}
+.nx-auth-tabs button{color:var(--ns-muted)}
+.nx-auth-tabs button.is-active{background:linear-gradient(110deg,#087cff,#3148eb);color:#fff;box-shadow:0 5px 16px rgba(20,98,245,.2)}
+.nx-google-button{border:1px solid var(--ns-line-strong);border-radius:11px;background:rgba(9,26,55,.75);color:var(--ns-text)}
+.nx-google-button:hover{border-color:rgba(88,171,255,.65);background:rgba(15,42,84,.86)}
+.nx-auth-divider{color:var(--ns-dim)}.nx-auth-divider span{background:var(--ns-line)}
+.nx-auth-form>label,.nx-password-label label{color:var(--ns-muted)}
+.nx-auth-form input{height:45px;border:1px solid var(--ns-line-strong);border-radius:10px;background:rgba(2,12,29,.72);color:var(--ns-text)}
+.nx-auth-form input:focus{border-color:#3b9eff;box-shadow:0 0 0 3px rgba(40,137,255,.13)}
+.nx-auth-form input::placeholder{color:var(--ns-dim)}
+.nx-password-label button,.nx-password-field button{color:#6bc8ff}
+.nx-auth-submit{min-height:46px;border:1px solid rgba(102,176,255,.26);border-radius:11px;background:linear-gradient(110deg,#087cff,#274de9);color:#fff;box-shadow:0 10px 24px rgba(14,98,235,.2)}
+.nx-auth-footnote{border-top:1px solid var(--ns-line);color:#67cdbb}.nx-auth-footnote p{color:var(--ns-muted)}
+.nx-auth-message{border:1px solid rgba(45,188,153,.3);border-radius:10px;background:rgba(15,142,109,.12);color:#8de8cd}
+.nx-account-dashboard{padding:0;overflow:hidden}
+.nx-account-welcome{background:radial-gradient(circle at 95% 0,rgba(81,123,227,.2),transparent 32%),linear-gradient(135deg,#0d2850,#0a1834);border-bottom:1px solid var(--ns-line)}
+.nx-account-identity h2{color:#fff}.nx-account-identity p{color:#aec0dd}
+.nx-signout-button{border:1px solid rgba(119,174,255,.28);border-radius:10px;background:rgba(6,24,52,.72);color:#a8d8ff}
+.nx-account-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:16px 18px;border-bottom:1px solid var(--ns-line)}
+.nx-account-stats>div{border:1px solid var(--ns-line);border-radius:13px;background:var(--ns-panel2)}
+.nx-account-stats b{color:var(--ns-text)}.nx-account-stats small{color:var(--ns-muted)}
+.nx-account-content-grid{padding:0 18px 18px}
+.nx-account-content-card{border:1px solid var(--ns-line);border-radius:15px;background:rgba(4,16,36,.5)}
+.nx-account-card-heading{border-bottom:1px solid var(--ns-line)}
+.nx-account-card-heading h3{color:var(--ns-text)}.nx-account-card-heading>div>span{color:#64caff}
+.nx-account-list li{border-bottom:1px solid var(--ns-line)}
+.nx-account-list-copy a{color:var(--ns-text)}.nx-account-list-copy small{color:var(--ns-muted)}
+.nx-account-list-icon{background:rgba(26,121,255,.15);color:#71caff}
+.nx-account-open{background:rgba(27,114,255,.16);color:#70caff}
+.nx-account-empty{color:var(--ns-muted)}.nx-account-empty>b{color:var(--ns-text)}.nx-account-empty>span{color:#60caff}
+.nx-account-privacy{margin:0 18px 18px;border:1px solid rgba(39,190,151,.19);background:rgba(15,116,92,.13);color:#72e4c6}
+.nx-account-privacy p{color:#a0cfc2}.nx-account-page-foot{color:var(--ns-muted)}
+html[data-theme="light"] .nx-auth-card,html[data-theme="light"] .nx-account-dashboard,html[data-theme="light"] .nx-auth-loading{background:linear-gradient(145deg,#fff,#f0f5ff);color:#14233f}
+html[data-theme="light"] .nx-auth-heading h2,html[data-theme="light"] .nx-account-card-heading h3,html[data-theme="light"] .nx-account-empty>b,html[data-theme="light"] .nx-account-list-copy a{color:#14233f}
+html[data-theme="light"] .nx-auth-form input{background:#f8faff;color:#172644}
+html[data-theme="light"] .nx-account-benefits>div,html[data-theme="light"] .nx-account-content-card{background:#fff}
+html[data-theme="light"] .nx-account-stats>div{background:#f2f6ff}
+html[data-theme="light"] .nx-account-welcome{background:linear-gradient(135deg,#e9f2ff,#f6f8ff)}
+html[data-theme="light"] .nx-account-identity h2{color:#172644}html[data-theme="light"] .nx-account-identity p{color:#657594}
+@media(max-width:900px){.nx-account-layout{grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);gap:14px}}
+@media(max-width:760px){.nx-account-page{padding:14px 0 45px}.nx-account-page-heading{margin:28px auto 23px;text-align:left}.nx-account-page-heading h1{font-size:39px;letter-spacing:-1.9px}.nx-account-page-heading>p{font-size:11px}.nx-account-layout{grid-template-columns:1fr;gap:13px}.nx-account-aside-visual{min-height:225px;padding:19px}.nx-account-benefits{grid-template-columns:1fr}.nx-auth-card,.nx-account-dashboard,.nx-auth-loading{padding:17px;border-radius:16px}.nx-account-welcome{align-items:flex-start;flex-wrap:wrap;padding:16px}.nx-account-identity{padding-top:3px}.nx-signout-button{margin-left:auto}.nx-account-stats{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px;gap:6px}.nx-account-stats>div:last-child{grid-column:1/-1}.nx-account-stats>div{align-items:flex-start;flex-direction:column;padding:9px}.nx-account-content-grid{grid-template-columns:1fr;padding:0 12px 12px}.nx-account-content-card{padding:12px}.nx-account-privacy{margin:0 12px 12px}.nx-account-page-foot{align-items:flex-start;text-align:left;line-height:1.55}}
