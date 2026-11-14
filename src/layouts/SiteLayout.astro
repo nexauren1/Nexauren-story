@@ -84,7 +84,11 @@ const schema = {
         [/^(\d+)\s+caracteres?$/i, n => n + " characters"],
         [/^(\d+)\s+palavras?$/i, n => n + " words"],
         [/^(\d+)\s+linhas?$/i, n => n + " lines"],
-        [/^(\d+)\s+minutos?$/i, n => n + " minutes"]
+        [/^(\d+)\s+minutos?$/i, n => n + " minutes"],
+        [/^(\d+)\s+documentos?\s+·\s+(\d+)\s+páginas?\s+·\s+(.+)$/i, (docs, pages, size) => docs + " documents · " + pages + " pages · " + size],
+        [/^Combinar\s+(\d+)\s+PDFs$/i, n => "Merge " + n + " PDFs"],
+        [/^Extrair\s+(\d+)\s+página\(s\)$/i, n => "Extract " + n + " page(s)"],
+        /^([\d,]+)\s+página\(s\) extraída\(s\) com sucesso\.$/i.test(clean) ? [/.*/, () => clean.replace(/^([\d,]+)\s+página\(s\) extraída\(s\) com sucesso\.$/i, "$1 page(s) extracted successfully.")] : [/^$/, () => ""]
       ];
       for (const [pattern, render] of patterns) {
         const match = clean.match(pattern);
