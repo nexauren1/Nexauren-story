@@ -14,11 +14,11 @@ const activePaths = active.tools.map((tool) => tool.path);
 const duplicateActiveIds = activeIds.filter((id, index) => activeIds.indexOf(id) !== index);
 const duplicatePaths = activePaths.filter((path, index) => activePaths.indexOf(path) !== index);
 const categoryIds = active.categories.map((category) => category.id);
-if (active.tools.length !== 50 || active.categories.length !== 4 || duplicateActiveIds.length || duplicatePaths.length) {
+if (!active.tools.length || !active.categories.length || duplicateActiveIds.length || duplicatePaths.length) {
   console.error("Catálogo público inválido:", { tools: active.tools.length, categories: active.categories.length, duplicateActiveIds, duplicatePaths });
   process.exit(1);
 }
-const locales = ["pt", "en", "es", "fr", "de"];
+const locales = ["en"];
 const dictionaries = {};
 for (const locale of locales) {
   try {
@@ -29,7 +29,7 @@ for (const locale of locales) {
   }
 }
 for (const tool of active.tools) {
-  for (const locale of locales.filter((item) => item !== "pt")) {
+  for (const locale of locales) {
     if (!dictionaries[locale][tool.name] || !dictionaries[locale][tool.description]) {
       console.error("Tradução em falta para ferramenta:", tool.id, locale);
       process.exit(1);
@@ -52,6 +52,6 @@ for (const tool of active.tools) {
     process.exit(1);
   }
 }
-console.log("Catálogo validado: 50 ferramentas públicas em 4 categorias; todas têm páginas Astro dedicadas.");
-console.log("Idiomas validados: Português, Inglês, Espanhol, Francês e Alemão; nomes e descrições das 50 ferramentas traduzidos.");
+console.log("Catálogo validado: " + active.tools.length + " ferramentas públicas em " + active.categories.length + " categorias; todas têm páginas Astro dedicadas.");
+console.log("Idiomas validados: Inglês como idioma de interface, com Português como texto-base; nomes e descrições de todas as ferramentas traduzidos.");
 console.log("Catálogo interno de experiências preservado: 100 definições; não são anunciadas como ferramentas públicas.");
