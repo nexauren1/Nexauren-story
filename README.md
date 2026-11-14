@@ -36,7 +36,7 @@ The image, PDF, audio and text operations run in the browser. Tool descriptions 
 - English is the default language for first-time visitors; Portuguese is the secondary language.
 - The language selector is available in the desktop header and mobile menu.
 - The selected language is saved in the browser and applied across navigation, tool pages, descriptions, controls, account screens and legal information.
-- Articles written by site administrators remain in their original publishing language.
+- The official blog is hosted separately on Blogger; the portal sends blog visitors to the Blogger site.
 
 ## Catalogue rules
 
