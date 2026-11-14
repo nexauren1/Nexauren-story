@@ -59,7 +59,26 @@ const schema = {
 <body>
   <div class="site-ambient" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="navigation-progress" data-navigation-progress></div>
+  <aside class="nx-ad-slot nx-ad-top" aria-label="Advertisement"><div class="nx-ad-caption">ADVERTISEMENT</div><div class="nx-ad-frame" data-nx-ad></div></aside>
   <slot />
+  <aside class="nx-ad-slot nx-ad-bottom" aria-label="Advertisement"><div class="nx-ad-caption">ADVERTISEMENT</div><div class="nx-ad-frame" data-nx-ad></div></aside>
+  <script is:inline>
+    (() => {
+      const slots = document.querySelectorAll("[data-nx-ad]");
+      slots.forEach((slot) => {
+        try {
+          const config = { key: "14e091b4996d3882c9269c228020612e", format: "iframe", height: 90, width: 728, params: {} };
+          window.atOptions = config;
+          const script = document.createElement("script");
+          script.async = true;
+          script.src = "https://bauval.org/22/14e091b4996d3882c9269c228020612e";
+          script.onload = () => { slot.dataset.loaded = "true"; };
+          script.onerror = () => { slot.hidden = true; };
+          slot.appendChild(script);
+        } catch { slot.hidden = true; }
+      });
+    })();
+  </script>
   <script is:inline>
   (() => {
     const supported = ["en", "pt"];

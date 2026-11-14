@@ -22,3 +22,7 @@ jobs:
       - run: npm run build
       - name: Verify generated SEO files and all tool routes
         run: node scripts/verify-output.mjs
+      - name: Verify sitemap includes newly generated public pages
+        run: |
+          test -s dist/sitemap.xml
+          node --input-type=module -e 'import fs from "node:fs"; const xml=fs.readFileSync("dist/sitemap.xml","utf8"); const html=fs.readdirSync("dist",{recursive:true}).filter(p=>String(p).endsWith(".html")&&!String(p).endsWith("404.html")); const urls=(xml.match(/<url>/g)||[]).length; if(!urls) throw new Error("Sitemap is empty"); console.log("Sitemap verified:",urls,"URLs from",html.length,"HTML files");'
