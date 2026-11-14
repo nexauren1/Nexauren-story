@@ -573,7 +573,7 @@
       "description": "Converte caracteres especiais em entidades HTML.",
       "category": "converters",
       "path": "/tools/html-escape",
-      "icon": "&lt;",
+      "icon": "HTML",
       "featured": false
     },
     {
@@ -582,7 +582,7 @@
       "description": "Converte entidades HTML em texto.",
       "category": "converters",
       "path": "/tools/html-unescape",
-      "icon": "&gt;",
+      "icon": "H↙",
       "featured": false
     },
     {
