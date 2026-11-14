@@ -1015,5 +1015,6 @@
   "Página 1": "Page 1",
   "Primeiras 3": "First 3",
   "Número da página a duplicar": "Page number to duplicate",
-  "Nova ordem (ex.: 3,1-2,5)": "New order (e.g. 3,1-2,5)"
+  "Nova ordem (ex.: 3,1-2,5)": "New order (e.g. 3,1-2,5)",
+  "Indica um número de página entre 1 e ": "Enter a page number between 1 and "
 }
