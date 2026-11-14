@@ -10,7 +10,8 @@
     "check": "tsc --noEmit",
     "postbuild": "node scripts/generate-seo.mjs",
     "check:catalog": "node scripts/check-catalog.mjs",
-    "verify:output": "node scripts/verify-output.mjs"
+    "verify:output": "node scripts/verify-output.mjs",
+    "deploy": "npm run build && npx wrangler deploy"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.4",
