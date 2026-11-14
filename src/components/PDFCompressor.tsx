@@ -5,8 +5,8 @@ function sizeLabel(bytes: number) {
   return bytes < 1024 * 1024 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 }
 function outputName(name: string, suffix: string) {
-  const safeSuffix = suffix.trim().replace(/[\\\\/:*?"<>|]/g, "-").replace(/\\s+/g, "-");
-  return `${name.replace(/\\.pdf$/i, "")}${safeSuffix || "-otimizado"}.pdf`;
+  const safeSuffix = suffix.trim().replace(/[\\/:*?"<>|]/g, "-").replace(/\s+/g, "-");
+  return name.replace(/\.pdf$/i, "") + (safeSuffix || "-otimizado") + ".pdf";
 }
 
 export default function PDFCompressor() {
@@ -17,7 +17,8 @@ export default function PDFCompressor() {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [removeMetadata, setRemoveMetadata] = useState(false);\n  const [suffix, setSuffix] = useState("-otimizado");
+  const [removeMetadata, setRemoveMetadata] = useState(false);
+  const [suffix, setSuffix] = useState("-otimizado");
 
   useEffect(() => () => finished.forEach((file) => URL.revokeObjectURL(file.url)), [finished]);
 
