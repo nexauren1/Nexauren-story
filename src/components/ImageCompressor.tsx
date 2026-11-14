@@ -171,7 +171,7 @@ export default function ImageCompressor() {
           context.fillRect(0, 0, width, height);
         }
         context.imageSmoothingEnabled = true;
-        context.imageSmoothingQualidade = "high";
+        context.imageSmoothingQuality = "high";
         context.drawImage(decoded.source, 0, 0, width, height);
         setProgress(70);
         const blob = await new Promise<Blob>((resolve, reject) => {
