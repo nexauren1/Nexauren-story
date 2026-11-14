@@ -843,5 +843,18 @@
   "Contagem de palavras": "Word count",
   "caracteres": "characters",
   "linhas": "lines",
-  "parágrafos": "paragraphs"
+  "parágrafos": "paragraphs",
+  "Redimensiona imagens JPG, PNG e WebP, ajusta largura, altura, proporção e qualidade e exporta uma cópia no formato escolhido.": "Resize JPG, PNG and WebP images, adjust width, height, aspect ratio and quality, and export a copy in your chosen format.",
+  "Comprime imagens JPG, PNG e WebP, controla a qualidade, escolhe o formato e limita as dimensões antes de descarregar.": "Compress JPG, PNG and WebP images, control quality, choose the format and set maximum dimensions before downloading.",
+  "Contador de palavras": "Word counter",
+  "Conta palavras, caracteres, linhas e parágrafos e apresenta estatísticas do texto.": "Count words, characters, lines and paragraphs and display text statistics.",
+  "Gerador de palavras-passe": "Password generator",
+  "Cria palavras-passe aleatórias com comprimento ajustável diretamente no navegador.": "Create random passwords with an adjustable length directly in your browser.",
+  "Gerador UUID": "UUID generator",
+  "Gera identificadores UUID aleatórios para aplicações, bases de dados e testes.": "Generate random UUID identifiers for applications, databases and testing.",
+  "Compressed": "Comprimida",
+  "✓ PRONTA": "✓ READY",
+  "maior": "larger",
+  "↓ Descarregar imagem comprimida": "↓ Download compressed image",
+  "● LOCAL": "● LOCAL"
 }
