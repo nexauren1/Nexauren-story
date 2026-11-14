@@ -76,7 +76,8 @@ for (const page of publicPages) {
     errors.push("Página pública ausente do sitemap: " + page.route);
   }
   const adSlots = (page.html.match(/<div[^>]*\bdata-ad-slot\b/g) || []).length;
-  if (adSlots !== 2) errors.push("Página pública deve ter dois espaços de anúncio: " + page.route + " (encontrados " + adSlots + ").");
+  const expectedAdSlots = page.route === "/account" ? 0 : 2;
+  if (adSlots !== expectedAdSlots) errors.push("Número inesperado de espaços de anúncio em " + page.route + ": esperados " + expectedAdSlots + ", encontrados " + adSlots + ").");
 }
 
 if (errors.length) {
