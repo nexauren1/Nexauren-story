@@ -90,7 +90,10 @@ const schema = {
         [/^Extrair\s+(\d+)\s+página\(s\)$/i, n => "Extract " + n + " page(s)"],
         [/^([\d,]+)\s+página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
         [/^Documento criado com (\d+) páginas, pela ordem escolhida\.$/i, n => "Document created with " + n + " pages, in the selected order."],
-        /^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i.test(clean) ? [/.*/, () => ""] : [/^$/, () => ""]
+        [/^([\d,]+)\s+página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
+        [/^Documento criado com (\d+) páginas, pela ordem escolhida\.$/i, n => "Document created with " + n + " pages, in the selected order."],
+        [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
+        [/^A extrair (\d+) página\(s\)…$/i, n => "Extracting " + n + " page(s)…"]
       ];
       for (const [pattern, render] of patterns) {
         const match = clean.match(pattern);
