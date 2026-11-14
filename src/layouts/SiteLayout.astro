@@ -70,28 +70,66 @@ const schema = {
     let current = "en";
     let dictionary = {};
 
-    function translateValue(source) {
-      if (current !== "en" || !source) return source;
+    function translateSingle(source) {
+      if (!source) return source;
       const clean = source.trim();
+      if (!clean) return source;
       if (Object.prototype.hasOwnProperty.call(dictionary, clean)) return source.replace(clean, dictionary[clean]);
       const patterns = [
-        [/^(\d+)\s+ferramentas?$/i, n => n + " tools"],
-        [/^(\d+)\s+categorias?$/i, n => n + " categories"],
-        [/^(\d+)\s+ferramentas disponíveis$/i, n => n + " available tools"],
-        [/^(\d+)\s+ferramenta disponível$/i, n => n + " available tool"],
-        [/^(\d+)\s+documentos?$/i, n => n + " documents"],
-        [/^(\d+)\s+páginas?$/i, n => n + " pages"],
-        [/^(\d+)\s+caracteres?$/i, n => n + " characters"],
-        [/^(\d+)\s+palavras?$/i, n => n + " words"],
-        [/^(\d+)\s+linhas?$/i, n => n + " lines"],
-        [/^(\d+)\s+minutos?$/i, n => n + " minutes"],
-        [/^(\d+)\s+documentos?\s+·\s+(\d+)\s+páginas?\s+·\s+(.+)$/i, (docs, pages, size) => docs + " documents · " + pages + " pages · " + size],
-        [/^Combinar\s+(\d+)\s+PDFs$/i, n => "Merge " + n + " PDFs"],
-        [/^Extrair\s+(\d+)\s+página\(s\)$/i, n => "Extract " + n + " page(s)"],
-        [/^([\d,]+)\s+página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
-        [/^Documento criado com (\d+) páginas, pela ordem escolhida\.$/i, n => "Document created with " + n + " pages, in the selected order."],
-        [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
-        [/^A extrair (\d+) página\(s\)…$/i, n => "Extracting " + n + " page(s)…"]
+        [/^(\\d+)\\s+ferramentas?$/i, n => n + " tools"],
+        [/^(\\d+)\\s+categorias?$/i, n => n + " categories"],
+        [/^(\\d+)\\s+ferramentas disponíveis$/i, n => n + " available tools"],
+        [/^(\\d+)\\s+ferramenta disponível$/i, n => n + " available tool"],
+        [/^(\\d+)\\s+documentos?$/i, n => n + " documents"],
+        [/^(\\d+)\\s+páginas?$/i, n => n + " pages"],
+        [/^(\\d+)\\s+caracteres?$/i, n => n + " characters"],
+        [/^(\\d+)\\s+palavras?$/i, n => n + " words"],
+        [/^(\\d+)\\s+linhas?$/i, n => n + " lines"],
+        [/^(\\d+)\\s+minutos?$/i, n => n + " minutes"],
+        [/^(\\d+)\\s+documentos?\\s+·\\s+(\\d+)\\s+páginas?\\s+·\\s+(.+)$/i, (docs, pages, size) => docs + " documents · " + pages + " pages · " + size],
+        [/^Combinar\\s+(\\d+)\\s+PDFs$/i, n => "Merge " + n + " PDFs"],
+        [/^Extrair\\s+(\\d+)\\s+página\\(s\\)$/i, n => "Extract " + n + " page(s)"],
+        [/^([\\d,]+)\\s+página\\(s\\) extraída\\(s\\) com sucesso\\.$/i, n => n + " page(s) extracted successfully."],
+        [/^Documento criado com (\\d+) páginas, pela ordem escolhida\\.$/i, n => "Document created with " + n + " pages, in the selected order."],
+        [/^(\\d+) documento\\(s\\) adicionado\\(s\\)\\. Podes alterar a ordem antes de combinar\\.$/i, n => n + " document(s) added. You can change the order before merging."],
+        [/^A extrair (\\d+) página\\(s\\)…$/i, n => "Extracting " + n + " page(s)…"],
+        [/^PALAVRAS\\s+(.+)$/i, value => "WORDS  " + value],
+        [/^CARACTERES\\s+(.+)$/i, value => "CHARACTERS  " + value],
+        [/^SEM ESPAÇOS\\s+(.+)$/i, value => "NO SPACES  " + value],
+        [/^LINHAS\\s+(.+)$/i, value => "LINES  " + value],
+        [/^PARÁGRAFOS\\s+(.+)$/i, value => "PARAGRAPHS  " + value],
+        [/^Caracteres:\\s*(.+)$/i, value => "Characters: " + value],
+        [/^Sem espaços:\\s*(.+)$/i, value => "Without spaces: " + value],
+        [/^Bytes UTF-8:\\s*(.+)$/i, value => "UTF-8 bytes: " + value],
+        [/^CSV válido:\\s*(.+)$/i, value => "Valid CSV: " + value],
+        [/^Linha (\\d+): (\\d+) colunas$/i, (line, columns) => "Row " + line + ": " + columns + " columns"],
+        [/^(\\d+) documento\\(s\\) adicionado\\(s\\)\\. Podes alterar a ordem antes de combinar\\.$/i, n => n + " document(s) added. You can change the order before merging."],
+        [/^Análise concluída\\. Foram encontradas (\\d+) páginas\\.$/i, n => "Analysis complete. " + n + " pages found."],
+        [/^Orientação actualizada em (\\d+) página\\(s\\)\\.$/i, n => "Orientation updated on " + n + " page(s)."],
+        [/^(\\d+) página\\(s\\) extraída\\(s\\) com sucesso\\.$/i, n => n + " page(s) extracted successfully."],
+        [/^A aplicar rotação a (\\d+) página\\(s\\)…$/i, n => "Applying rotation to " + n + " page(s)…"],
+        [/^Indica um número de página entre 1 e (\\d+)\\.$/i, n => "Enter a page number between 1 and " + n + "."],
+        [/^O intervalo deve estar entre 1 e (\\d+)\\.$/i, n => "The range must be between 1 and " + n + "."],
+        [/^Processamento concluído\\. (\\d+) páginas no ficheiro final\\.$/i, n => "Processing complete. " + n + " pages in the final file."],
+        [/^Imagem processada: (.+)$/i, value => "Image processed: " + value],
+        [/^Recorte criado\\. (.+), pronto para descarregar\\.$/i, value => "Crop created. " + value + ", ready to download."],
+        [/^Duração final: (.+)$/i, value => "Final duration: " + value],
+        [/^Duração: (.+)$/i, value => "Duration: " + value],
+        [/^Páginas: (.+)$/i, value => "Pages: " + value],
+        [/^Dias: (.+)$/i, value => "Days: " + value],
+        [/^Anos completos: (.+)$/i, value => "Full years: " + value],
+        [/^Semana ISO: (.+)$/i, value => "ISO week: " + value],
+        [/^Rácio de contraste: (.+)$/i, value => "Contrast ratio: " + value],
+        [/^Média: (.+)$/i, value => "Average: " + value],
+        [/^Preço final: (.+)$/i, value => "Final price: " + value],
+        [/^(\\d+)\\. (.+) \\(posição (\\d+)\\)$/i, (n, match, position) => n + ". " + match + " (position " + position + ")"],
+        [/^A importar (.+)…$/i, value => "Importing " + value + "…"],
+        [/^PDF combinado com (\\d+) páginas\\.$/i, n => "PDF merged with " + n + " pages."],
+        [/^Páginas a incluir em (.+)$/i, value => "Pages to include in " + value],
+        [/^Não foi possível ler este PDF\\. (.+)$/i, value => "Unable to read this PDF. " + value],
+        [/^Não foi possível combinar os ficheiros\\. (.+)$/i, value => "Unable to merge the files. " + value],
+        [/^Não foi possível descodificar este áudio\\. (.+)$/i, value => "Unable to decode this audio. " + value],
+        [/^Não foi possível otimizar o PDF\\. (.+)$/i, value => "Unable to optimise the PDF. " + value]
       ];
       for (const [pattern, render] of patterns) {
         const match = clean.match(pattern);
@@ -100,6 +138,12 @@ const schema = {
       return source;
     }
 
+    function translateValue(source) {
+      if (current !== "en" || !source) return source;
+      const lines = source.split("\\n");
+      if (lines.length === 1) return translateSingle(source);
+      return lines.map(line => translateSingle(line)).join("\\n");
+    }
     function translateTextNode(node) {
       if (!node || !node.nodeValue || !node.nodeValue.trim()) return;
       const parent = node.parentElement;
@@ -156,16 +200,21 @@ const schema = {
     async function loadDictionary(locale) {
       if (dictionaryCache.has(locale)) return dictionaryCache.get(locale);
       if (locale !== "en") return {};
-      const response = await fetch("/translations/en.json", { cache: "force-cache" });
+      const response = await fetch("/translations/en.json", { cache: "no-cache" });
       if (!response.ok) throw new Error("Translation file unavailable");
       const result = await response.json();
       dictionaryCache.set(locale, result);
       return result;
     }
 
+    let languageRequestId = 0;
     async function setLanguage(locale) {
+      const requestId = ++languageRequestId;
       const selected = supported.includes(locale) ? locale : "en";
-      try { dictionary = await loadDictionary(selected); } catch { dictionary = {}; }
+      let nextDictionary = {};
+      try { nextDictionary = await loadDictionary(selected); } catch { nextDictionary = {}; }
+      if (requestId !== languageRequestId) return;
+      dictionary = nextDictionary;
       current = selected;
       document.documentElement.lang = selected;
       const localeMeta = document.querySelector('meta[property="og:locale"]');
@@ -215,17 +264,50 @@ const schema = {
       if (target && target.matches && target.matches("[data-language-select]")) void setLanguage(target.value);
     });
 
+    function maybeShowFollowCard() {
+      const success = document.querySelector(".success-banner");
+      if (!success || !success.textContent.trim() || document.querySelector("[data-nexa-follow-card]")) return;
+      const card = document.createElement("section");
+      card.className = "ns-follow-after-task";
+      card.dataset.nexaFollowCard = "true";
+      card.setAttribute("aria-label", "Segue a Nexauren Story");
+      const copy = document.createElement("p");
+      copy.className = "ns-follow-after-task-copy";
+      copy.textContent = "Segue a Nexauren Story para acompanhares novas ferramentas e novidades.";
+      const links = document.createElement("div");
+      links.className = "ns-follow-after-task-links";
+      for (const item of [
+        { label: "YouTube", href: "https://www.youtube.com/@Nexauren" },
+        { label: "Bluesky", href: "https://bsky.app/profile/nexauren.bsky.social" },
+        { label: "Facebook", href: "https://www.facebook.com/nexaurentech" }
+      ]) {
+        const link = document.createElement("a");
+        link.href = item.href;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = item.label;
+        links.append(link);
+      }
+      card.append(copy, links);
+      success.insertAdjacentElement("afterend", card);
+      translateTree(card);
+    }
+
     const observer = new MutationObserver(records => {
       for (const record of records) {
         if (record.type === "characterData") translateTextNode(record.target);
-        else {
+        else if (record.type === "attributes") {
+          if (["placeholder", "aria-label", "title"].includes(record.attributeName)) translateAttributes(record.target);
+        } else {
           for (const node of record.addedNodes) translateTree(node);
           if (record.target.nodeType === 1) translateAttributes(record.target);
         }
       }
+      maybeShowFollowCard();
     });
-    observer.observe(document.body, { subtree: true, childList: true, characterData: true });
+    observer.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["placeholder", "aria-label", "title", "class"] });
     observer.observe(document.head, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["content"] });
+    maybeShowFollowCard();
 
     document.addEventListener("click", event => {
       const target = event.target;
