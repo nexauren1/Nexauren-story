@@ -76,10 +76,16 @@ const schema = {
     const attributeStates = new WeakMap();
     let current = "en";
     let dictionary = {};
+    let reverseDictionary = new Map();
 
     function translateValue(source) {
-      if (current !== "en" || !source) return source;
+      if (!source) return source;
       const clean = source.trim();
+      if (current === "pt") {
+        const portuguese = reverseDictionary.get(clean);
+        return portuguese ? source.replace(clean, portuguese) : source;
+      }
+      if (current !== "en") return source;
       if (Object.prototype.hasOwnProperty.call(dictionary, clean)) return source.replace(clean, dictionary[clean]);
       const patterns = [
         [/^(\\d+)% mais pequeno$/i, n => n + "% smaller"],
@@ -170,6 +176,10 @@ const schema = {
       const selected = supported.includes(locale) ? locale : "en";
       try { dictionary = await loadDictionary(selected); } catch { dictionary = {}; }
       current = selected;
+      reverseDictionary = new Map();
+      for (const [portuguese, english] of Object.entries(dictionary)) {
+        if (typeof english === "string" && !reverseDictionary.has(english.trim())) reverseDictionary.set(english.trim(), portuguese);
+      }
       document.documentElement.lang = selected;
       const localeMeta = document.querySelector('meta[property="og:locale"]');
       if (localeMeta) localeMeta.setAttribute("content", selected === "en" ? "en_US" : "pt_PT");
