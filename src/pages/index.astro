@@ -2,12 +2,11 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import BlogFeed from "../components/BlogFeed";
 import catalog from "../data/activeTools.json";
 const featured = catalog.tools.filter((tool) => tool.featured).slice(0, 8);
 const getCategory = (id) => catalog.categories.find((category) => category.id === id);
 ---
-<SiteLayout title="Nexauren Story — Ferramentas online gratuitas e tecnologia" description="Ferramentas online gratuitas para imagens, PDF, texto e áudio. Explore utilitários digitais e artigos práticos de tecnologia na Nexauren Story.">
+<SiteLayout title="Nexauren Story — Ferramentas online gratuitas e tecnologia" description="Ferramentas online gratuitas para imagens, PDF, texto e áudio. Explore utilitários digitais e visita o nosso blog de tecnologia.">
 <div class="site-shell">
   <SiteHeader />
   <main class="ns-main ns-home">
@@ -18,7 +17,7 @@ const getCategory = (id) => catalog.categories.find((category) => category.id ==
         <p>Descobre ferramentas online poderosas, lê artigos úteis e acompanha as novidades tecnológicas. Tudo num espaço rápido, seguro e fácil de utilizar.</p>
         <div class="ns-hero-actions">
           <a class="ns-button ns-button-primary" href="/tools">Explorar ferramentas <span>↗</span></a>
-          <a class="ns-button ns-button-outline" href="/blog">Ler o blog <span>→</span></a>
+          <a class="ns-button ns-button-outline" href="https://nexauren.blogspot.com/?m=1" target="_blank" rel="noopener noreferrer">Ler o blog <span>→</span></a>
         </div>
         <form class="ns-hero-search" action="/tools" method="get" role="search">
           <span aria-hidden="true">⌕</span>
@@ -80,16 +79,8 @@ const getCategory = (id) => catalog.categories.find((category) => category.id ==
     </section>
 
     <section class="ns-feature-band ns-reveal">
-      <div class="ns-feature-band-copy"><span class="ns-section-kicker">MAIS DO QUE FERRAMENTAS</span><h2>Aprende algo novo.<br/><em>Usa melhor a tecnologia.</em></h2><p>Guias passo a passo, comparações, recomendações de aplicações e explicações para resolver problemas digitais do dia a dia.</p><a class="ns-button ns-button-primary" href="/blog">Explorar artigos <span>↗</span></a></div>
+      <div class="ns-feature-band-copy"><span class="ns-section-kicker">MAIS DO QUE FERRAMENTAS</span><h2>Aprende algo novo.<br/><em>Usa melhor a tecnologia.</em></h2><p>Guias passo a passo, comparações, recomendações de aplicações e explicações para resolver problemas digitais do dia a dia.</p><a class="ns-button ns-button-primary" href="https://nexauren.blogspot.com/?m=1" target="_blank" rel="noopener noreferrer">Explorar artigos <span>↗</span></a></div>
       <div class="ns-feature-band-art"><div class="ns-blog-screen"><div class="ns-blog-screen-top"><span></span><span></span><span></span></div><div class="ns-blog-screen-image">N.</div><b>Conhecimento que ajuda.</b><small>Guias · Tutoriais · Tecnologia</small></div><div class="ns-feature-orbit"></div></div>
-    </section>
-
-    <section class="ns-section ns-blog-preview ns-reveal">
-      <div class="ns-section-heading">
-        <div><span class="ns-section-kicker">DO BLOG NEXAUREN STORY</span><h2>Ideias, guias e <em>tecnologia.</em></h2><p>Artigos recentes, tutoriais e explicações práticas para acompanhares o mundo digital.</p></div>
-        <a class="ns-text-link" href="/blog">Ver todos os artigos <b>↗</b></a>
-      </div>
-      <BlogFeed client:load />
     </section>
 
     <section class="ns-section ns-reveal">

@@ -1,6 +1,6 @@
 # Nexauren Story
 
-Portal de ferramentas online gratuitas e conteúdo tecnológico, com conta pessoal, favoritos, blog e catálogo de aplicações Android.
+Portal de ferramentas online gratuitas e conteúdo tecnológico, com conta pessoal, favoritos e catálogo de aplicações Android. O blog é publicado separadamente no Blogger.
 
 ## Stack
 - Astro 7 + TypeScript
@@ -36,7 +36,7 @@ The image, PDF, audio and text operations run in the browser. Tool descriptions 
 - English is the default language for first-time visitors; Portuguese is the secondary language.
 - The language selector is available in the desktop header and mobile menu.
 - The selected language is saved in the browser and applied across navigation, tool pages, descriptions, controls, account screens and legal information.
-- Articles written by site administrators remain in their original publishing language.
+- The official blog is hosted separately on Blogger; the portal sends blog visitors to the Blogger site.
 
 ## Catalogue rules
 
@@ -81,10 +81,10 @@ Set the PUBLIC_FIREBASE_* variables in .env using the Firebase Web app configura
 - 50 dedicated tool pages across image, PDF, text and audio categories
 - /account — account, favorites and activity
 - /apps — Android app catalogue
-- /blog and individual articles
+- Blog externo: https://nexauren.blogspot.com/?m=1 (redirects from /blog and /blog/*)
 - /about and /contact — public information pages
 - /privacy, /terms
-- /nexauren-control — private editorial admin page; excluded from indexing
+- Blog editorial management is handled in Blogger; no local article CMS is included.
 
 ## Firebase setup
 - Project ID: nexauren-story-e8327
