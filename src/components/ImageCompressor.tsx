@@ -241,7 +241,7 @@ export default function ImageCompressor() {
               <button type="button" onClick={() => inputRef.current?.click()}>Substituir</button>
               <input ref={inputRef} type="file" accept="image/*" onChange={onFileChange} />
             </div>
-            {output && <div className="ns-compressor-switch"><button type="button" className={!previewResult ? "active" : ""} onClick={() => setPreviewResult(false)}>Original</button><button type="button" className={previewResult ? "active" : ""} onClick={() => setPreviewResult(true)}>Compressed</button></div>}
+            {output && <div className="ns-compressor-switch"><button type="button" className={!previewResult ? "active" : ""} onClick={() => setPreviewResult(false)}>Original</button><button type="button" className={previewResult ? "active" : ""} onClick={() => setPreviewResult(true)}>Comprimida</button></div>}
           </>
         )}
         {error && <p className="ns-compressor-error" role="alert">{error}</p>}
