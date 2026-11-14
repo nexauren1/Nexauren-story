@@ -1046,3 +1046,33 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(
 @media (max-width: 560px) {
   .pdf-page-preset-buttons button { flex: 1 1 calc(50% - 8px); }
 }
+
+
+/* A discreet social follow prompt, shown only after a successful tool operation. */
+.ns-follow-after-task {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 18px;
+  margin: 16px 0 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--line, rgba(120,130,150,.25));
+  border-radius: 14px;
+  background: var(--panel-soft, rgba(120,130,150,.07));
+}
+.ns-follow-after-task-copy { margin: 0; color: var(--text, inherit); font-size: .88rem; font-weight: 650; }
+.ns-follow-after-task-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.ns-follow-after-task-links a {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 34px; padding: 7px 12px; border-radius: 9px;
+  border: 1px solid var(--line, rgba(120,130,150,.28));
+  color: var(--text, inherit); text-decoration: none; font-size: .78rem; font-weight: 750;
+  transition: border-color .18s ease, transform .18s ease, background .18s ease;
+}
+.ns-follow-after-task-links a:hover { border-color: var(--accent, #6d83ff); transform: translateY(-1px); }
+@media (max-width: 560px) {
+  .ns-follow-after-task { align-items: flex-start; flex-direction: column; }
+  .ns-follow-after-task-links { width: 100%; }
+  .ns-follow-after-task-links a { flex: 1 1 0; }
+}
