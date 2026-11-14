@@ -1003,3 +1003,46 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(
 .nx-rotate-presets button{padding:7px 10px;border:1px solid #e1e8f2;border-radius:8px;background:#f8faff;color:#566783;font-size:10px;font-weight:700;cursor:pointer}
 .nx-rotate-presets button:hover:not(:disabled){border-color:#b9c9ef;background:#edf3ff;color:#315bc9}
 .nx-rotate-presets button:disabled{opacity:.45;cursor:not-allowed}
+
+
+/* PDF page-operation quick controls */
+.pdf-page-presets {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid var(--line, rgba(120, 130, 150, .22));
+  border-radius: 14px;
+  background: var(--panel-soft, rgba(120, 130, 150, .06));
+}
+.pdf-page-presets > span {
+  color: var(--muted, #8b93a5);
+  font-size: .76rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.pdf-page-preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pdf-page-preset-buttons button {
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid var(--line, rgba(120, 130, 150, .28));
+  border-radius: 9px;
+  background: var(--surface, rgba(120, 130, 150, .08));
+  color: inherit;
+  font: inherit;
+  font-size: .82rem;
+  cursor: pointer;
+  transition: border-color .18s ease, transform .18s ease, background .18s ease;
+}
+.pdf-page-preset-buttons button:hover {
+  border-color: var(--accent, #6d83ff);
+  transform: translateY(-1px);
+}
+@media (max-width: 560px) {
+  .pdf-page-preset-buttons button { flex: 1 1 calc(50% - 8px); }
+}
