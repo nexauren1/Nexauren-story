@@ -26,7 +26,7 @@ export default function BlogFeed() {
       {article.coverUrl ? <img className="blog-card-cover" src={article.coverUrl} alt="" loading="lazy"/> : <span className="article-card-icon">N.</span>}
       <span className="article-kicker">{(article.tags?.[0] || "NEXAUREN").toUpperCase()} · {dateLabel(article.publishedAt)}</span>
       <h2>{article.title}</h2><p>{article.excerpt}</p>
-      <a href={"/blog/post?slug=" + encodeURIComponent(article.slug)}>Ler artigo <b>↗</b></a>
+      <a href={"/blog/article?slug=" + encodeURIComponent(article.slug)}>Ler artigo <b>↗</b></a>
     </article>)}</div>}
   </section>;
 }
