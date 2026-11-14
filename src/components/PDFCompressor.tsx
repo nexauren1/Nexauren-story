@@ -5,7 +5,7 @@ function sizeLabel(bytes: number) {
   return bytes < 1024 * 1024 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 }
 function outputName(name: string, suffix: string) {
-  const safeSuffix = suffix.trim().replace(/[\\/:*?"<>|]/g, "-").replace(/\s+/g, "-");
+  const safeSuffix = suffix.trim().replace(/[\\:*?"<>|]/g, "-").replace(/\//g, "-").replace(/\s+/g, "-");
   return name.replace(/\.pdf$/i, "") + (safeSuffix || "-otimizado") + ".pdf";
 }
 
