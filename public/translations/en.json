@@ -971,5 +971,10 @@
   "A extrair ": "Extracting ",
   " página(s)…": " page(s)…",
   " página(s) extraída(s) com sucesso.": " page(s) extracted successfully.",
-  "Não foi possível dividir o PDF.": "Could not split the PDF."
+  "Não foi possível dividir o PDF.": "Could not split the PDF.",
+  "Adiciona documentos, escolhe as páginas de cada PDF e define a ordem final.": "Add documents, choose pages from each PDF and set the final order.",
+  "Confirma a selecção e a ordem antes de combinar.": "Review your page selections and order before merging.",
+  "páginas disponíveis ·": "pages available ·",
+  "seleccionadas ·": "selected ·",
+  "Páginas a incluir em ": "Pages to include in "
 }
