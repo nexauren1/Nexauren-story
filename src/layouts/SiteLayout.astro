@@ -200,6 +200,7 @@ const schema = {
         if (icon) icon.textContent = theme === "dark" ? "☼" : "☾";
       });
     }
+    setTheme(theme);
 
     document.addEventListener("change", event => {
       const target = event.target;

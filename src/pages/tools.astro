@@ -16,7 +16,7 @@ const initialQuery = Astro.url.searchParams.get("q") ?? "";
     <section class="ns-catalog-controls" aria-label="Pesquisar e filtrar ferramentas">
       <label class="ns-search-field"><span aria-hidden="true">⌕</span><input id="tool-search" type="search" value={initialQuery} placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas" autocomplete="off"/><button id="tool-search-clear" type="button" aria-label="Limpar pesquisa" hidden>×</button></label>
       <div class="ns-filter-row" role="group" aria-label="Filtrar por categoria">
-        <button type="button" class="ns-filter-chip is-active" data-tool-filter="all">Todas</button>
+        <button type="button" class="ns-filter-chip is-active" data-tool-filter="all">Todas as ferramentas</button>
         {catalog.categories.map(category => <button type="button" class="ns-filter-chip" data-tool-filter={category.id}><span>{category.icon}</span>{category.name}</button>)}
       </div>
     </section>

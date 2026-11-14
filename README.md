@@ -1,4 +1,4 @@
-# Nexauren Story Story
+# Nexauren Story
 
 Portal de ferramentas online gratuitas e conteúdo tecnológico, com conta pessoal, favoritos, blog e catálogo de aplicações Android.
 
