@@ -177,6 +177,25 @@ const schema = {
         [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
         [/^Documento criado com (\d+) páginas, pela ordem escolhida\.$/i, n => "Document created with " + n + " pages, in the selected order."]
 
+
+        [/^PALAVRAS\s+(.+)$/i, value => "WORDS  " + value],
+        [/^CARACTERES\s+(.+)$/i, value => "CHARACTERS  " + value],
+        [/^SEM ESPAÇOS\s+(.+)$/i, value => "NO SPACES  " + value],
+        [/^LINHAS\s+(.+)$/i, value => "LINES  " + value],
+        [/^PARÁGRAFOS\s+(.+)$/i, value => "PARAGRAPHS  " + value],
+        [/^Caracteres:\s*(.+)$/i, value => "Characters: " + value],
+        [/^Sem espaços:\s*(.+)$/i, value => "Without spaces: " + value],
+        [/^Bytes UTF-8:\s*(.+)$/i, value => "UTF-8 bytes: " + value],
+        [/^Linha (\d+): (\d+) colunas$/i, (line, columns) => "Row " + line + ": " + columns + " columns"],
+        [/^Análise concluída\. Foram encontradas (\d+) páginas\.$/i, n => "Analysis complete. " + n + " pages found."],
+        [/^Processamento concluído\. (\d+) páginas no ficheiro final\.$/i, n => "Processing complete. " + n + " pages in the final file."],
+        [/^Imagem processada: (.+)$/i, value => "Image processed: " + value],
+        [/^Otimização concluída\. Os documentos foram regravados; não houve redução significativa no tamanho\.$/i, () => "Optimisation complete. The documents were rewritten; there was no significant size reduction."],
+        [/^Tamanho: (.+)$/i, value => "Size: " + value],
+        [/^Formato: (.+)$/i, value => "Format: " + value],
+        [/^Local: (.+)$/i, value => "Local time: " + value],
+        [/^Unix \(s\): (.+)$/i, value => "Unix (s): " + value]
+
       ];
       for (const [pattern, render] of patterns) {
         const match = clean.match(pattern);
