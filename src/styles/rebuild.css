@@ -993,3 +993,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(
 .nx-pdf-range-input:focus{border-color:#6b8ce2;box-shadow:0 0 0 3px rgba(73,115,218,.12)}
 .nx-page-presets{grid-template-columns:repeat(auto-fit,minmax(76px,1fr))}
 @media(max-width:560px){.nx-pdf-order-item{align-items:flex-start;flex-wrap:wrap}.nx-pdf-file-info{min-width:calc(100% - 100px)}.nx-order-controls{margin-left:auto}.nx-list-heading{align-items:flex-start;flex-direction:column}.nx-order-toolbar{width:100%}}
+
+/* PDF optimizer naming and page rotation presets */
+.nx-output-name-setting{margin-top:14px;padding:13px;border:1px solid #e6ebf3;border-radius:12px;background:#f9fbff}
+.nx-output-name-setting .field-label{display:grid;gap:7px;color:#53627c;font-size:11px;font-weight:700}
+.nx-output-name-setting input{width:100%;min-width:0;padding:9px 11px;border:1px solid #dfe6f0;border-radius:9px;background:#fff;color:#263957;font:600 12px 'DM Sans',sans-serif}
+.nx-output-name-setting small{display:block;margin-top:7px;color:#8995a8;font-size:10px;overflow-wrap:anywhere}
+.nx-rotate-presets{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}
+.nx-rotate-presets button{padding:7px 10px;border:1px solid #e1e8f2;border-radius:8px;background:#f8faff;color:#566783;font-size:10px;font-weight:700;cursor:pointer}
+.nx-rotate-presets button:hover:not(:disabled){border-color:#b9c9ef;background:#edf3ff;color:#315bc9}
+.nx-rotate-presets button:disabled{opacity:.45;cursor:not-allowed}
