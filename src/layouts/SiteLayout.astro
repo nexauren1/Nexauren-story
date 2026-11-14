@@ -92,7 +92,7 @@ const schema = {
       ];
       for (const [pattern, render] of patterns) {
         const match = clean.match(pattern);
-        if (match) return source.replace(clean, render(match[1]));
+        if (match) return source.replace(clean, render(...match.slice(1)));
       }
       return source;
     }
