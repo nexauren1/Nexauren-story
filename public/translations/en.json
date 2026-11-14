@@ -1281,4 +1281,12 @@
   "texto-convertido.txt": "converted-text.txt",
   "texto-substituido.txt": "replaced-text.txt",
   "resultado-nexauren.txt": "nexauren-result.txt"
+,
+  "CABECALHO": "HEADER",
+  "CSV válido:": "Valid CSV:",
+  "A imagem ultrapassa ": "The image exceeds ",
+  "Imagem processada:": "Image processed:",
+  "Processamento concluído.": "Processing complete.",
+  "Operação desconhecida.": "Unknown operation.",
+  "Dados inválidos.": "Invalid data."
 }
