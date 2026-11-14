@@ -4,10 +4,19 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import BlogFeed from "../components/BlogFeed";
 ---
-<SiteLayout title="Blog Nexauren — Guias, tecnologia e produtividade" description="Guias, tutoriais e artigos práticos sobre imagem, PDF, áudio, ferramentas digitais e aplicações Android.">
-<div class="site-shell"><SiteHeader/><main class="simple-page editorial-page">
-<div class="eyebrow"><span class="eyebrow-line"></span> NEXAUREN / JOURNAL</div>
-<h1>Ideias que se transformam<br/><span>em conhecimento.</span></h1><p class="simple-lead">Guias práticos, novidades, tutoriais e recursos para aproveitares melhor as ferramentas e a tecnologia.</p>
-<div class="blog-intro-strip"><span class="blog-intro-icon">N.</span><div><b>O blog da Nexauren</b><small>Artigos publicados pelo painel editorial. Novas publicações aparecem automaticamente aqui.</small></div><span class="blog-live-indicator">● PUBLICAÇÕES ATIVAS</span></div>
-<BlogFeed client:load/>
-</main><SiteFooter/></div></SiteLayout>
+<SiteLayout title="Blog Nexauren Story — Guias de tecnologia, tutoriais e produtividade" description="Lê guias práticos, tutoriais e artigos sobre aplicações, ferramentas online, software e tecnologia no blog da Nexauren Story.">
+<div class="site-shell">
+  <SiteHeader />
+  <main class="ns-main ns-blog-page">
+    <header class="ns-page-hero">
+      <div><span class="ns-eyebrow"><i>✦</i> NEXAUREN STORY / JOURNAL</span><h1>Ideias que se transformam<br/><em>em conhecimento.</em></h1><p>Guias práticos, novidades, tutoriais e recursos para aproveitares melhor as ferramentas e a tecnologia.</p></div>
+      <div class="ns-page-hero-art"><span class="ns-toolbox-symbol">N.</span><span class="ns-page-glow"></span></div>
+    </header>
+    <section class="ns-section">
+      <div class="ns-section-heading"><div><span class="ns-section-kicker">PUBLICAÇÕES RECENTES</span><h2>Do nosso <em>blog.</em></h2><p>Artigos publicados pela equipa Nexauren Story.</p></div></div>
+      <BlogFeed client:load />
+    </section>
+  </main>
+  <SiteFooter />
+</div>
+</SiteLayout>

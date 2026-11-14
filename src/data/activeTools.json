@@ -32,8 +32,8 @@
   "tools": [
     {
       "id": "image-resizer",
-      "name": "Redimensionar imagem",
-      "description": "Redimensiona, comprime e converte JPG, PNG e WebP. Inclui tamanhos predefinidos para redes sociais, dimensões personalizadas, qualidade e fundo para JPG.",
+      "name": "Compressor e redimensionador de imagens",
+      "description": "Comprime imagens JPG, PNG e WebP, ajusta dimensões e proporções e controla a qualidade antes de exportar.",
       "category": "image",
       "path": "/tools/image-resizer",
       "icon": "↔",
