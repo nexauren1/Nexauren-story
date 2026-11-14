@@ -154,6 +154,29 @@ const schema = {
         [/^Duração final: (.+)$/i, value => "Final duration: " + value],
         [/^Limite de (\\d+) MB excedido\\.$/i, n => "The " + n + " MB limit has been exceeded."]
 
+
+        [/^Encontradas (\d+) linha\(s\) com número de colunas diferente de (\d+):$/i, (rows, columns) => "Found " + rows + " row(s) with a different number of columns than " + columns + ":"],
+        [/^CSV válido: (\d+) linhas e (\d+) colunas\.$/i, (rows, columns) => "Valid CSV: " + rows + " rows and " + columns + " columns."],
+        [/^O PDF ultrapassa o limite de (\d+) MB\.$/i, n => "The PDF exceeds the " + n + " MB limit."],
+        [/^O ficheiro ultrapassa o limite de (\d+) MB\.$/i, n => "The file exceeds the " + n + " MB limit."],
+        [/^A imagem ultrapassa (\d+) MB\.$/i, n => "The image exceeds " + n + " MB."],
+        [/^A aplicar rotação a (\d+) página\(s\)…$/i, n => "Applying rotation to " + n + " page(s)…"],
+        [/^A extrair (\d+) página\(s\)…$/i, n => "Extracting " + n + " page(s)…"],
+        [/^(\d+) substituição\(ões\) preparada\(s\)\.$/i, n => n + " replacement(s) ready."],
+        [/^Otimização concluída\. Os ficheiros ficaram (\d+)% mais pequenos no total\.$/i, n => "Optimisation complete. The files are " + n + "% smaller overall."],
+        [/^A rotação será aplicada a todas as (\d+) páginas\.$/i, n => "Rotation will be applied to all " + n + " pages."],
+        [/^Encontradas (\d+) linha\(s\) com número de colunas diferente de (\d+):$/i, (rows, columns) => "Found " + rows + " row(s) with a different number of columns than " + columns + ":"],
+        [/^Não foi possível ler este PDF\. (.+)$/i, value => "Unable to read this PDF. " + value],
+        [/^Não foi possível abrir um dos PDFs\. (.+)$/i, value => "Unable to open one of the PDFs. " + value],
+        [/^Não foi possível cortar o áudio\.$/i, () => "Could not cut the audio."],
+        [/^Não foi possível descodificar este áudio\. (.+)$/i, value => "Unable to decode this audio. " + value],
+        [/^A preparar a normalização…$/i, () => "Preparing normalisation…"],
+        [/^Áudio exportado\. (.+)$/i, value => "Audio exported. " + value],
+        [/^Orientação actualizada em (\d+) página\(s\)\.$/i, n => "Orientation updated on " + n + " page(s)."],
+        [/^(\d+) página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
+        [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
+        [/^Documento criado com (\d+) páginas, pela ordem escolhida\.$/i, n => "Document created with " + n + " pages, in the selected order."]
+
       ];
       for (const [pattern, render] of patterns) {
         const match = clean.match(pattern);
