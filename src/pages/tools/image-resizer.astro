@@ -6,9 +6,20 @@ import TrackActivity from "../../components/TrackActivity";
 import FavoriteButton from "../../components/FavoriteButton";
 import ImageResizer from "../../components/ImageResizer";
 ---
-<SiteLayout title="Redimensionar imagem — Compressor e conversor JPG, PNG, WebP | Nexauren" description="Redimensiona, comprime e converte imagens JPG, PNG e WebP diretamente no navegador com controlos de dimensão e qualidade.">
-<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
-<div class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/image">Imagem</a><span>›</span><span>Redimensionar imagem</span></div>
-<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN ENGINE / IMAGE LAB</span><h1>Redimensionar imagem</h1><p>Controla dimensões, proporção, qualidade e formato de exportação num espaço de trabalho dedicado.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="image-resizer" title="Redimensionar imagem" kind="tool" href="/tools/image-resizer"/></div></header>
-<ImageResizer client:load/><TrackActivity client:load activityId="image-resizer" activityTitle="Usou Redimensionar imagem"/>
-<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ JPG · PNG · WebP</span></section></main><SiteFooter/></div></SiteLayout>
+<SiteLayout title="Compressor e redimensionador de imagens — JPG, PNG e WebP | Nexauren Story" description="Comprima e redimensione imagens JPG, PNG e WebP online. Ajuste dimensões, proporção, qualidade e formato de exportação diretamente no navegador.">
+<div class="site-shell">
+  <SiteHeader />
+  <main class="ns-main ns-tool-page">
+    <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/image">Imagem</a><span>›</span><span aria-current="page">Compressor de imagens</span></nav>
+    <header class="ns-tool-heading">
+      <span class="ns-tool-heading-icon">▧</span>
+      <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN IMAGE LAB / FERRAMENTA ONLINE</span><h1>Compressor e redimensionador de imagens</h1><p>Reduz o tamanho das imagens e ajusta as dimensões sem sair do navegador.</p></div>
+      <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="image-resizer" title="Compressor e redimensionador de imagens" kind="tool" href="/tools/image-resizer"/></div>
+    </header>
+    <section class="ns-tool-benefits"><span>✓ Processamento local</span><span>✓ JPG · PNG · WebP</span><span>✓ Controlo de qualidade</span><span>✓ Sem instalação</span></section>
+    <ImageResizer client:load />
+    <TrackActivity client:load activityId="image-resizer" activityTitle="Usou o compressor e redimensionador de imagens"/>
+  </main>
+  <SiteFooter />
+</div>
+</SiteLayout>

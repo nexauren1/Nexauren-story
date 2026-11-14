@@ -3,114 +3,95 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import catalog from "../data/activeTools.json";
-const featured = catalog.tools.filter((tool) => tool.featured);
+const featured = catalog.tools.filter((tool) => tool.featured).slice(0, 8);
 const getCategory = (id) => catalog.categories.find((category) => category.id === id);
 ---
-<SiteLayout title="Nexauren — Ferramentas online para tarefas digitais" description="Ferramentas online para imagem, PDF, texto e áudio. Processa ficheiros no teu dispositivo, sem instalar programas.">
+<SiteLayout title="Nexauren Story — Ferramentas online gratuitas e tecnologia" description="Ferramentas online gratuitas para imagens, PDF, texto e áudio. Explore utilitários digitais e artigos práticos de tecnologia na Nexauren Story.">
 <div class="site-shell">
   <SiteHeader />
-  <main class="nx-home">
-    <section class="nx-hero">
-      <div class="nx-hero-copy">
-        <span class="nx-overline"><i></i> NEXAUREN DIGITAL WORKSPACE</span>
-        <h1>As tuas tarefas digitais.<br /><span>Mais simples. Mais rápidas.</span></h1>
-        <p>Um espaço organizado para editar imagens, trabalhar com PDFs, transformar texto e ajustar áudio. Escolhe uma ferramenta e começa logo no navegador.</p>
-        <div class="nx-hero-actions">
-          <a class="nx-button nx-button-primary" href="/tools">Explorar ferramentas <span>↗</span></a>
-          <a class="nx-button nx-button-quiet" href="/apps">Conhecer aplicações <span>→</span></a>
+  <main class="ns-main ns-home">
+    <section class="ns-hero">
+      <div class="ns-hero-copy">
+        <span class="ns-eyebrow"><i>⚡</i> O TEU CENTRO DE TECNOLOGIA</span>
+        <h1>Ferramentas, tecnologia<br/>e inovação <span>num só lugar.</span></h1>
+        <p>Descobre ferramentas online poderosas, lê artigos úteis e acompanha as novidades tecnológicas. Tudo num espaço rápido, seguro e fácil de utilizar.</p>
+        <div class="ns-hero-actions">
+          <a class="ns-button ns-button-primary" href="/tools">Explorar ferramentas <span>↗</span></a>
+          <a class="ns-button ns-button-outline" href="/blog">Ler o blog <span>→</span></a>
         </div>
-        <div class="nx-hero-trust">
-          <span><b>01</b> Sem instalação</span>
-          <span><b>02</b> Processamento local</span>
-          <span><b>03</b> Acesso no navegador</span>
-        </div>
+        <form class="ns-hero-search" action="/tools" method="get" role="search">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" name="q" placeholder="Pesquisa uma ferramenta ou solução..." aria-label="Pesquisar ferramentas ou soluções"/>
+          <button type="submit">Pesquisar <span>↗</span></button>
+        </form>
+        <div class="ns-trust-inline"><span>⚡ Rápido e gratuito</span><span>◈ Privacidade primeiro</span><span>☁ Sem instalação</span></div>
       </div>
-      <div class="nx-hero-visual" aria-label="Pré-visualização do espaço de ferramentas Nexauren">
-        <div class="nx-visual-top">
-          <span class="nx-visual-brand"><i>N.</i> NEXAUREN / WORKSPACE</span>
-          <span class="nx-online"><i></i> ONLINE</span>
+      <div class="ns-hero-art" aria-label="Ilustração tecnológica Nexauren Story">
+        <div class="ns-orbit ns-orbit-one"></div><div class="ns-orbit ns-orbit-two"></div><div class="ns-orbit ns-orbit-three"></div>
+        <div class="ns-laptop">
+          <div class="ns-laptop-screen"><div class="ns-screen-mark">N</div><small>NEXAUREN STORY</small></div>
+          <div class="ns-laptop-base"><span></span></div>
         </div>
-        <div class="nx-visual-heading">
-          <small>O TEU ESPAÇO DE TRABALHO</small>
-          <strong>Escolhe uma área<br />e começa a criar.</strong>
-        </div>
-        <div class="nx-visual-modules">
-          {catalog.categories.map((category) => (
-            <a href={"/tools/" + category.id} class="nx-visual-module" data-tone={category.tone}>
-              <span class="nx-module-icon">{category.icon}</span>
-              <span><b>{category.name}</b><small>{catalog.tools.filter((tool) => tool.category === category.id).length} ferramentas</small></span>
-              <i>↗</i>
-            </a>
-          ))}
-        </div>
-        <div class="nx-visual-foot"><span>LOCAL-FIRST TOOLS</span><span>DESIGNED FOR EVERYDAY WORK</span></div>
+        <div class="ns-float-tile ns-tile-image">▧</div><div class="ns-float-tile ns-tile-pdf">PDF</div><div class="ns-float-tile ns-tile-code">⌘</div><div class="ns-float-tile ns-tile-play">▶</div>
+        <div class="ns-art-caption"><i></i> FERRAMENTAS ONLINE / TECNOLOGIA / IDEIAS</div>
       </div>
     </section>
 
-    <section class="nx-proof-row" aria-label="Resumo da plataforma">
-      <div><strong>{catalog.tools.length.toString().padStart(2, "0")}</strong><span>ferramentas activas</span></div>
-      <div><strong>{catalog.categories.length.toString().padStart(2, "0")}</strong><span>áreas organizadas</span></div>
-      <div><strong>100%</strong><span>no navegador, sem instalação</span></div>
-      <div class="nx-proof-note"><i>◈</i><span>Os ficheiros das ferramentas compatíveis são processados localmente no teu dispositivo.</span></div>
+    <section class="ns-stat-strip" aria-label="Resumo da plataforma">
+      <div class="ns-stat"><span class="ns-stat-icon blue">✦</span><span><b>{catalog.tools.length}+</b><small>Ferramentas úteis</small></span></div>
+      <div class="ns-stat"><span class="ns-stat-icon green">◈</span><span><b>100%</b><small>Foco na privacidade</small></span></div>
+      <div class="ns-stat"><span class="ns-stat-icon purple">⚡</span><span><b>Rápido</b><small>Processamento no navegador</small></span></div>
+      <div class="ns-stat"><span class="ns-stat-icon cyan">◎</span><span><b>Gratuito</b><small>Sem instalação</small></span></div>
     </section>
 
-    <section class="nx-section nx-reveal">
-      <div class="nx-section-heading">
-        <div><span class="nx-section-label">COMEÇA POR AQUI</span><h2>Ferramentas em destaque</h2><p>Atalhos para as funções mais procuradas da plataforma.</p></div>
-        <a class="nx-text-link" href="/tools">Ver todas as ferramentas <span>↗</span></a>
+    <section class="ns-section ns-reveal">
+      <div class="ns-section-heading">
+        <div><span class="ns-section-kicker">EXPLORA A PLATAFORMA</span><h2>Ferramentas para <em>cada tarefa.</em></h2><p>Escolhe uma categoria e encontra rapidamente a ferramenta certa.</p></div>
+        <a class="ns-text-link" href="/tools">Ver todas as ferramentas <b>↗</b></a>
       </div>
-      <div class="nx-tool-grid nx-featured-grid">
+      <div class="ns-category-grid">
+        {catalog.categories.map((category, index) => {
+          const total = catalog.tools.filter((tool) => tool.category === category.id).length;
+          return <a class="ns-category-card" href={"/tools/" + category.id} data-tone={category.tone}>
+            <div class="ns-category-card-top"><span class="ns-category-icon">{category.icon}</span><span class="ns-category-index">0{index + 1}</span></div>
+            <h3>{category.name}</h3><p>{category.description}</p>
+            <div class="ns-category-bottom"><span>{total} ferramentas</span><b>↗</b></div>
+          </a>;
+        })}
+      </div>
+    </section>
+
+    <section class="ns-section ns-reveal">
+      <div class="ns-section-heading">
+        <div><span class="ns-section-kicker">ESCOLHAS POPULARES</span><h2>Ferramentas em <em>destaque.</em></h2><p>Atalhos para funções úteis que podes utilizar diretamente no navegador.</p></div>
+        <a class="ns-text-link" href="/tools">Explorar o catálogo <b>↗</b></a>
+      </div>
+      <div class="ns-tool-grid ns-featured-grid">
         {featured.map((tool) => {
           const category = getCategory(tool.category);
-          return (
-            <a class="nx-tool-card" href={tool.path} data-tone={category?.tone ?? "blue"}>
-              <div class="nx-tool-card-top"><span class="nx-tool-icon">{tool.icon}</span><span class="nx-tool-category">{category?.name}</span></div>
-              <h3>{tool.name}</h3><p>{tool.description}</p>
-              <span class="nx-tool-card-action">Abrir ferramenta <b>↗</b></span>
-            </a>
-          );
+          return <a class="ns-tool-card" href={tool.path} data-tone={category?.tone ?? "blue"}>
+            <div class="ns-tool-card-top"><span class="ns-tool-icon">{tool.icon}</span><span class="ns-tool-pill">{category?.name}</span></div>
+            <h3>{tool.name}</h3><p>{tool.description}</p>
+            <span class="ns-tool-card-link">Abrir ferramenta <b>↗</b></span>
+          </a>;
         })}
       </div>
     </section>
 
-    <section class="nx-section nx-category-section nx-reveal">
-      <div class="nx-section-heading">
-        <div><span class="nx-section-label">TUDO NO SEU LUGAR</span><h2>Explora por categoria</h2><p>Quatro áreas separadas para encontrares rapidamente o que precisas.</p></div>
-        <a class="nx-text-link" href="/tools">Abrir catálogo <span>↗</span></a>
-      </div>
-      <div class="nx-category-grid">
-        {catalog.categories.map((category) => {
-          const total = catalog.tools.filter((tool) => tool.category === category.id).length;
-          return (
-            <a class="nx-category-card" href={"/tools/" + category.id} data-tone={category.tone}>
-              <span class="nx-category-icon">{category.icon}</span>
-              <span class="nx-category-copy"><b>{category.name}</b><small>{category.description}</small></span>
-              <span class="nx-category-count">{total.toString().padStart(2, "0")} <i>ferramentas</i></span>
-              <span class="nx-category-arrow">↗</span>
-            </a>
-          );
-        })}
-      </div>
+    <section class="ns-feature-band ns-reveal">
+      <div class="ns-feature-band-copy"><span class="ns-section-kicker">MAIS DO QUE FERRAMENTAS</span><h2>Aprende algo novo.<br/><em>Usa melhor a tecnologia.</em></h2><p>Guias passo a passo, comparações, recomendações de aplicações e explicações para resolver problemas digitais do dia a dia.</p><a class="ns-button ns-button-primary" href="/blog">Explorar artigos <span>↗</span></a></div>
+      <div class="ns-feature-band-art"><div class="ns-blog-screen"><div class="ns-blog-screen-top"><span></span><span></span><span></span></div><div class="ns-blog-screen-image">N.</div><b>Conhecimento que ajuda.</b><small>Guias · Tutoriais · Tecnologia</small></div><div class="ns-feature-orbit"></div></div>
     </section>
 
-    <section class="nx-how-section nx-reveal">
-      <div class="nx-how-intro">
-        <span class="nx-section-label">FEITO PARA SER SIMPLES</span>
-        <h2>Escolhe. Processa.<br /><span>Guarda o resultado.</span></h2>
-        <p>Não precisas de instalar programas nem de enviar os teus ficheiros para começar a trabalhar.</p>
-        <a class="nx-text-link" href="/tools">Encontrar uma ferramenta <span>↗</span></a>
-      </div>
-      <div class="nx-how-steps">
-        <div><b>01</b><span><strong>Escolhe a ferramenta</strong><small>Entra na categoria certa e abre a função de que precisas.</small></span></div>
-        <div><b>02</b><span><strong>Adiciona o teu ficheiro ou texto</strong><small>Usa os controlos próprios de cada ferramenta.</small></span></div>
-        <div><b>03</b><span><strong>Descarrega o resultado</strong><small>Guarda o ficheiro final directamente no teu dispositivo.</small></span></div>
+    <section class="ns-section ns-reveal">
+      <div class="ns-section-heading"><div><span class="ns-section-kicker">COMEÇA EM TRÊS PASSOS</span><h2>Simples desde o <em>primeiro clique.</em></h2></div></div>
+      <div class="ns-steps-grid">
+        <article><span>01</span><b>Escolhe uma ferramenta</b><p>Pesquisa no catálogo ou navega pelas categorias.</p></article>
+        <article><span>02</span><b>Adiciona o teu ficheiro</b><p>Usa os controlos próprios de cada ferramenta.</p></article>
+        <article><span>03</span><b>Guarda o resultado</b><p>Descarrega o ficheiro processado no teu dispositivo.</p></article>
       </div>
     </section>
-
-    <section class="nx-bottom-cta nx-reveal">
-      <div><span class="nx-section-label">O TEU ESPAÇO PESSOAL</span><h2>Guarda o que usas mais.</h2><p>Inicia sessão para guardar favoritos e consultar a tua actividade em diferentes dispositivos.</p></div>
-      <a class="nx-button nx-button-light" href="/account">Abrir a minha conta <span>↗</span></a>
-    </section>
+    <section class="ns-bottom-cta ns-reveal"><div><span class="ns-section-kicker">O TEU ESPAÇO PESSOAL</span><h2>Guarda as tuas ferramentas favoritas.</h2><p>Inicia sessão para sincronizar favoritos e atividade entre dispositivos.</p></div><a class="ns-button ns-button-primary" href="/account">Abrir a minha conta <span>↗</span></a></section>
   </main>
   <SiteFooter />
 </div>
