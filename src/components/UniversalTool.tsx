@@ -318,8 +318,8 @@ export default function UniversalTool({ toolId, name, category, description, kin
       } else if (toolId === "pdf-rotate") {
         pages.forEach((page) => page.setRotation(degrees((page.getRotation().angle + 90) % 360)));
       } else if (toolId === "pdf-duplicate-page") {
-        const index = Math.max(1, Number(paramA) || 1) - 1; if (index >= total) throw new Error("A página indicada não existe.");
-        const copied = await doc.copyPages(doc, [index]); doc.insertPage(index + 1, copied[0]);
+        const requestedPage = Number(paramA); if (!Number.isInteger(requestedPage) || requestedPage < 1 || requestedPage > total) throw new Error("Indica um número de página entre 1 e " + total + ".");
+        const index = requestedPage - 1; const copied = await doc.copyPages(doc, [index]); doc.insertPage(index + 1, copied[0]);
       } else if (toolId === "pdf-clean-metadata") {
         doc.setTitle(""); doc.setAuthor(""); doc.setSubject(""); doc.setKeywords([]); doc.setCreator(""); doc.setProducer("");
       } else if (toolId === "pdf-compressor") {
