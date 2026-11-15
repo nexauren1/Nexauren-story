@@ -324,10 +324,10 @@ const schema = {
       top.append(mark, close);
       const title = document.createElement("h2");
       title.id = "nexa-download-title";
-      title.textContent = "Apoia a Nexauren Story";
+      title.textContent = "Segue a Nexauren Story";
       const description = document.createElement("p");
       description.id = "nexa-download-description";
-      description.textContent = "Antes de descarregar, acompanha as novidades e novas ferramentas nos nossos canais.";
+      description.textContent = "Segue a Nexauren nos teus canais favoritos. O download continua disponível mesmo sem seguires.";
       const socials = document.createElement("div");
       socials.className = "nexa-download-socials";
       for (const item of [
@@ -395,7 +395,7 @@ const schema = {
           link.style.display = "none";
           document.body.append(link);
           link.click();
-          link.remove();
+          window.setTimeout(() => link.remove(), 1000);
         } else if (action.element?.isConnected) {
           action.element.click();
         }
