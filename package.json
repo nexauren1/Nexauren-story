@@ -10,7 +10,8 @@
     "check": "tsc --noEmit",
     "postbuild": "node scripts/generate-seo.mjs",
     "check:catalog": "node scripts/check-catalog.mjs",
-    "check:translations": "node scripts/check-translations.mjs"
+    "check:translations": "node scripts/check-translations.mjs",
+    "check:search": "node scripts/check-tool-search.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.4",
