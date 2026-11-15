@@ -1,5 +1,6 @@
 name: Build Nexauren Story
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
@@ -22,8 +23,8 @@ jobs:
       - run: npm run check:search
       - run: npm run check:catalog
       - run: npm run build
-      - name: Verify generated SEO files and all tool routes
-        run: node scripts/verify-output.mjs
+      - name: Verify generated SEO files, ads and all tool routes
+        run: npm run verify:output
       - name: Verify sitemap includes newly generated public pages
         run: |
           test -s dist/sitemap.xml
