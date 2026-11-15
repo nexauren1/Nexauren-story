@@ -17,6 +17,33 @@ function readableSize(bytes: number): string {
 function safeBaseName(name: string): string {
   return name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9_-]+/gi, "-") || "imagem";
 }
+function loadImageElement(source: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+        settled = true;
+        resolve(image);
+      } else if (image.complete) {
+        settled = true;
+        reject(new Error("O formato desta imagem não é suportado pelo navegador. Usa JPG, PNG ou WebP."));
+      }
+    };
+    image.decoding = "async";
+    image.onload = finish;
+    image.onerror = () => {
+      if (!settled) {
+        settled = true;
+        reject(new Error("Não foi possível descodificar a imagem. Experimenta exportá-la como JPG, PNG ou WebP."));
+      }
+    };
+    image.src = source;
+    if (image.complete) queueMicrotask(finish);
+  });
+}
+
 
 export default function ImageResizer() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -24,6 +51,7 @@ export default function ImageResizer() {
   const [sourceUrl, setSourceUrl] = useState("");
   const [resultUrl, setResultUrl] = useState("");
   const [naturalSize, setNaturalSize] = useState({ width: 0, height: 0 });
+  const [imageReady, setImageReady] = useState(false);
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
   const [keepRatio, setKeepRatio] = useState(true);
@@ -42,27 +70,36 @@ export default function ImageResizer() {
   useEffect(() => {
     if (!file) {
       setSourceUrl("");
+      setImageReady(false);
+      setNaturalSize({ width: 0, height: 0 });
       return;
     }
     const url = URL.createObjectURL(file);
+    let cancelled = false;
     setSourceUrl(url);
-    const image = new Image();
-    image.onload = () => {
+    setImageReady(false);
+    setError("");
+    void loadImageElement(url).then(image => {
+      if (cancelled) return;
       setNaturalSize({ width: image.naturalWidth, height: image.naturalHeight });
       setWidth(String(image.naturalWidth));
       setHeight(String(image.naturalHeight));
       setPreset("original");
       setScalePercent(100);
+      setKeepRatio(true);
       setPreviewOriginal(false);
       setResultUrl("");
       setProcessedBlob(null);
       setProgress(0);
       setNotice("");
-      setError("");
-    };
-    image.onerror = () => setError("Não foi possível abrir esta imagem.");
-    image.src = url;
-    return () => URL.revokeObjectURL(url);
+      setImageReady(true);
+    }).catch(cause => {
+      if (!cancelled) {
+        setError(cause instanceof Error ? cause.message : "Não foi possível abrir esta imagem.");
+        setImageReady(false);
+      }
+    });
+    return () => { cancelled = true; URL.revokeObjectURL(url); };
   }, [file]);
 
   useEffect(() => () => {
@@ -79,14 +116,22 @@ export default function ImageResizer() {
 
   function setImage(next: File | undefined) {
     if (!next) return;
-    if (!next.type.startsWith("image/")) {
-      setError("Seleciona um ficheiro de imagem válido.");
+    const knownImageExtension = /\.(jpe?g|png|webp|gif|bmp|avif|tiff?)$/i.test(next.name);
+    if (!next.type.startsWith("image/") && !knownImageExtension) {
+      setError("Seleciona uma imagem válida em JPG, PNG ou WebP.");
       return;
     }
-    if (next.size > 35 * 1024 * 1024) {
-      setError("A imagem ultrapassa o limite de 35 MB.");
+    if (next.size > 50 * 1024 * 1024) {
+      setError("A imagem ultrapassa o limite de 50 MB.");
       return;
     }
+    setError("");
+    setNotice("");
+    setProgress(0);
+    setSourceUrl("");
+    setResultUrl("");
+    setProcessedBlob(null);
+    setImageReady(false);
     setFile(next);
   }
 
@@ -101,7 +146,7 @@ export default function ImageResizer() {
   }
 
   async function processImage() {
-    if (!file || !sourceUrl) return;
+    if (!file || !sourceUrl || !imageReady || busy) return;
     if (newWidth > 16000 || newHeight > 16000 || newWidth * newHeight > 120_000_000) {
       setError("Escolhe dimensões inferiores a 16.000 px e até 120 megapíxeis.");
       return;
@@ -111,12 +156,7 @@ export default function ImageResizer() {
     setError("");
     setNotice("");
     try {
-      const image = new Image();
-      image.src = sourceUrl;
-      await new Promise<void>((resolve, reject) => {
-        image.onload = () => resolve();
-        image.onerror = () => reject(new Error("Falha ao descodificar a imagem."));
-      });
+      const image = await loadImageElement(sourceUrl);
       setProgress(28);
 
       const canvas = document.createElement("canvas");
@@ -255,14 +295,14 @@ export default function ImageResizer() {
           <div className="settings-group">
             <span className="settings-label">Tamanho rápido</span>
             <label className="field-label nx-preset-select">Preset de exportação
-              <select value={preset} disabled={!file || busy} onChange={(event) => applyPreset(event.target.value as SizePreset)}>
+              <select value={preset} disabled={!imageReady || busy} onChange={(event) => applyPreset(event.target.value as SizePreset)}>
                 <option value="original">Dimensões originais</option>
                 {sizePresets.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
                 <option value="custom">Personalizado</option>
               </select>
             </label>
             <label className="field-label">Escala da imagem
-              <select value={scalePercent} disabled={!file || busy} onChange={(event) => applyScale(Number(event.target.value))}>
+              <select value={scalePercent} disabled={!imageReady || busy} onChange={(event) => applyScale(Number(event.target.value))}>
                 <option value="25">25% · Muito pequeno</option>
                 <option value="50">50% · Metade</option>
                 <option value="75">75%</option>
@@ -283,7 +323,7 @@ export default function ImageResizer() {
           </div>
           <div className="settings-group">
             <label className="field-label nx-background-field">Fundo para JPG
-              <span><input type="color" value={background} disabled={!file || busy || format !== "image/jpeg"} onChange={(event) => { setBackground(event.target.value); invalidateResult(); }}/><b>{background.toUpperCase()}</b></span>
+              <span><input type="color" value={background} disabled={!imageReady || busy || format !== "image/jpeg"} onChange={(event) => { setBackground(event.target.value); invalidateResult(); }}/><b>{background.toUpperCase()}</b></span>
             </label>
             <div className="range-heading"><span>Qualidade</span><span className="range-value">{quality}%</span></div>
             <input type="range" min="20" max="100" step="1" value={quality} disabled={!file || busy} onChange={(event) => { setQuality(Number(event.target.value)); invalidateResult(); }}/>
@@ -309,7 +349,7 @@ export default function ImageResizer() {
           <p className="status-note">{busy ? "A preparar a imagem…" : progress === 100 ? "Concluído — o processamento foi feito no teu navegador." : "Seleciona uma imagem para começar."}</p>
         </div>
         <div className="settings-actions">
-          <button className="nx-run-button" disabled={!file || busy} onClick={processImage}><span>{busy ? "A processar imagem…" : "Redimensionar e exportar"}</span><b>{busy ? "◌" : "↗"}</b></button>
+          <button className="nx-run-button" disabled={!file || !imageReady || busy} onClick={processImage}><span>{busy ? "A processar imagem…" : "Redimensionar e exportar"}</span><b>{busy ? "◌" : "↗"}</b></button>
           {resultUrl && <a className="download-button nx-download-button" href={resultUrl} download={`${safeBaseName(file?.name ?? "imagem")}-nexauren.${format==="image/jpeg"?"jpg":format==="image/png"?"png":"webp"}`}>↓  Baixar imagem</a>}
           <p className="settings-footnote">Os ficheiros são processados localmente no dispositivo. Não são enviados para um servidor.</p>
         </div>
