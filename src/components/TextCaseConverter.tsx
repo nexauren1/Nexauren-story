@@ -33,7 +33,7 @@ export default function TextCaseConverter(){
       <div className="nx-case-output"><span>{modes.find(m=>m.id===mode)?.name}</span><strong>{preview||"—"}</strong></div>
       <button className="nx-run-button" disabled={!source.trim()||busy} onClick={()=>void run()}><span>{busy?"A converter…":"Gerar conversão"}</span><b>{busy?"◌":"↗"}</b></button>
       {result&&<div className="success-banner"><b>✓</b>Conversão concluída. O resultado está pronto.</div>}
-      {result&&<div className="nx-result-actions"><button className="nx-ghost-button" onClick={()=>void copy()}>Copiar resultado</button><button className="nx-ghost-button" onClick={()=>{const url=URL.createObjectURL(new Blob([result],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="texto-convertido.txt";a.click();window.setTimeout(()=>URL.revokeObjectURL(url),1000);}}>Guardar TXT ↓</button></div>}
+      {result&&<div className="nx-result-actions"><button className="nx-ghost-button" onClick={()=>void copy()}>Copiar resultado</button><button type="button" data-nexa-download-trigger className="nx-ghost-button" onClick={()=>{const url=URL.createObjectURL(new Blob([result],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="texto-convertido.txt";a.click();window.setTimeout(()=>URL.revokeObjectURL(url),1000);}}>Guardar TXT ↓</button></div>}
       <p className="settings-footnote">A conversão utiliza caracteres Unicode e é executada localmente.</p>
     </section>
   </div>;
