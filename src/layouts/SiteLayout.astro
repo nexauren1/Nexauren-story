@@ -163,7 +163,7 @@ const schema = {
     function translateTextNode(node) {
       if (!node || !node.nodeValue || !node.nodeValue.trim()) return;
       const parent = node.parentElement;
-      if (parent && parent.closest("script,style,noscript,code,textarea,[translate=\"no\"])) return;
+      if (parent && parent.closest("script,style,noscript,code,textarea")) return;
       if (parent && parent.closest("pre") && !parent.closest("[data-translate-content]")) return;
       let state = textStates.get(node);
       if (!state) {
