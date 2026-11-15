@@ -38,7 +38,7 @@ for (const tool of catalog.tools ?? []) {
   }
 }
 const logoSource = fs.readFileSync("public/favicon.svg", "utf8");
-const logoDimensions = logoSource.match(/<svg\\b[^>]*\\bwidth="(\\d+)"[^>]*\\bheight="(\\d+)"/);
+const logoDimensions = logoSource.match(/<svg\b[^>]*\bwidth="(\d+)"[^>]*\bheight="(\d+)"/);
 if (!logoDimensions || Number(logoDimensions[1]) < 112 || Number(logoDimensions[2]) < 112) {
   missing.push("Organization logo must declare at least 112x112 dimensions");
 }
