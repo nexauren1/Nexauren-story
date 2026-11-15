@@ -1,3 +1,21 @@
+import { readFile, access } from "node:fs/promises";
+const legacy = JSON.parse(await readFile("src/data/toolCatalog.json", "utf8"));
+const legacyIds = legacy.tools.map((tool) => tool.id);
+const legacyDuplicates = legacyIds.filter((id, index) => legacyIds.indexOf(id) !== index);
+if (legacy.tools.length !== 100 || legacy.categories.length !== 10 || legacyDuplicates.length) {
+  console.error("Catálogo interno inválido:", { tools: legacy.tools.length, categories: legacy.categories.length, duplicates: legacyDuplicates });
+  process.exit(1);
+}
+const active = JSON.parse(await readFile("src/data/activeTools.json", "utf8"));
+const ids = active.tools.map((tool) => tool.id), paths = active.tools.map((tool) => tool.path);
+const categoryIds = active.categories.map((category) => category.id);
+const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
+const duplicatePaths = paths.filter((path, index) => paths.indexOf(path) !== index);
+const duplicateCategories = categoryIds.filter((id, index) => categoryIds.indexOf(id) !== index);
+if (!ids.length || !categoryIds.length || duplicateIds.length || duplicatePaths.length || duplicateCategories.length) {
+  console.error("Catálogo público inválido:", { duplicateIds, duplicatePaths, duplicateCategories });
+  process.exit(1);
+}
 const locales = ["en", "es", "fr", "de"];
 const dictionaries = Object.fromEntries(await Promise.all(locales.map(async (locale) => {
   try {
@@ -41,4 +59,4 @@ for (const tool of active.tools) {
 }
 await access("src/pages/tools/[category].astro");
 console.log("Catálogo validado:", active.tools.length, "ferramentas públicas em", active.categories.length, "categorias.");
-console.log("Páginas dedicadas e traduções validadas em inglês, espanhol, francês e alemão; catálogo interno preservado.");
+console.log("Páginas dedicadas e traduções inglesas validadas; catálogo interno preservado.");
