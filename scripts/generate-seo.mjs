@@ -17,7 +17,6 @@ async function walk(folder) {
     if (local === "index.html") route = "/";
     else if (local.endsWith("/index.html")) route = "/" + local.slice(0, -"/index.html".length);
     else route = "/" + local.replace(/\.html$/, "");
-    const info = await stat(filePath);
     pages.push({ route });
   }
 }
