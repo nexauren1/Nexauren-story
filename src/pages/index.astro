@@ -6,7 +6,7 @@ import catalog from "../data/activeTools.json";
 const featured = catalog.tools.filter((tool) => tool.featured).slice(0, 8);
 const getCategory = (id) => catalog.categories.find((category) => category.id === id);
 ---
-<SiteLayout title="Nexauren Story — Ferramentas online gratuitas e tecnologia" description="Ferramentas online gratuitas para imagens, PDF, texto e áudio. Explore utilitários digitais e visita o nosso blog de tecnologia.">
+<SiteLayout title="Nexauren Story | Ferramentas online gratuitas e tecnologia" description="Usa ferramentas online gratuitas para imagem, PDF, texto e áudio. Descobre aplicações Android e lê guias práticos de tecnologia no Nexauren Story.">
 <div class="site-shell">
   <SiteHeader />
   <main class="ns-main ns-home">
@@ -78,8 +78,25 @@ const getCategory = (id) => catalog.categories.find((category) => category.id ==
       </div>
     </section>
 
+    <section class="ns-section ns-reveal ns-home-apps" aria-labelledby="ns-home-apps-title">
+      <div class="ns-section-heading">
+        <div><span class="ns-section-kicker">APLICAÇÕES ANDROID</span><h2 id="ns-home-apps-title">Aplicações para o <em>dia a dia.</em></h2><p>Conhece as aplicações Android da Nexauren e consulta as páginas oficiais de distribuição.</p></div>
+        <a class="ns-text-link" href="/apps">Ver todas as aplicações <b>↗</b></a>
+      </div>
+      <div class="ns-home-app-grid">
+        <a class="ns-home-app-card" href="/apps#image-tools">
+          <span class="ns-home-app-mark ns-home-app-mark-image" aria-hidden="true">IT</span>
+          <span class="ns-home-app-copy"><small>ANDROID · APKPURE</small><b>Image Tools: Edit &amp; Resize</b><span>51 ferramentas para editar, redimensionar, comprimir e converter imagens no telemóvel.</span><strong>Ver detalhes da aplicação <i>↗</i></strong></span>
+        </a>
+        <a class="ns-home-app-card" href="/apps#archiver">
+          <span class="ns-home-app-mark ns-home-app-mark-archiver" aria-hidden="true">A</span>
+          <span class="ns-home-app-copy"><small>ANDROID · APKPURE</small><b>Archiver</b><span>Uma aplicação prática para gerir e organizar ficheiros compactados no Android.</span><strong>Ver detalhes da aplicação <i>↗</i></strong></span>
+        </a>
+      </div>
+    </section>
+
     <section class="ns-feature-band ns-reveal">
-      <div class="ns-feature-band-copy"><span class="ns-section-kicker">MAIS DO QUE FERRAMENTAS</span><h2>Aprende algo novo.<br/><em>Usa melhor a tecnologia.</em></h2><p>Guias passo a passo, comparações, recomendações de aplicações e explicações para resolver problemas digitais do dia a dia.</p><a class="ns-button ns-button-primary" href="https://nexauren.blogspot.com/?m=1" target="_blank" rel="noopener noreferrer">Explorar artigos <span>↗</span></a></div>
+      <div class="ns-feature-band-copy"><span class="ns-section-kicker">MAIS DO QUE FERRAMENTAS</span><h2>Aprende algo novo.<br/><em>Usa melhor a tecnologia.</em></h2><p>Guias práticos, análises de aplicações e explicações claras para compreender melhor a tecnologia e resolver problemas digitais do dia a dia.</p><div class="ns-editorial-topics" aria-label="Temas do blog"><span>Guias e tutoriais</span><span>Análises de aplicações</span><span>Novidades tecnológicas</span></div><a class="ns-button ns-button-primary" href="https://nexauren.blogspot.com/?m=1" target="_blank" rel="noopener noreferrer">Ler artigos no blog <span>↗</span></a></div>
       <div class="ns-feature-band-art"><div class="ns-blog-screen"><div class="ns-blog-screen-top"><span></span><span></span><span></span></div><div class="ns-blog-screen-image">N.</div><b>Conhecimento que ajuda.</b><small>Guias · Tutoriais · Tecnologia</small></div><div class="ns-feature-orbit"></div></div>
     </section>
 
