@@ -1,0 +1,48 @@
+.ns-compressor-workspace{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:16px;align-items:stretch;margin:0 0 22px}
+.ns-compressor-card{min-width:0;padding:22px;border:1px solid var(--ns-line);border-radius:20px;background:var(--ns-panel);box-shadow:0 15px 40px rgba(0,0,0,.12)}
+.ns-compressor-card-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.ns-compressor-card-heading h2{margin:7px 0 0;color:var(--ns-text);font:700 21px 'Space Grotesk';letter-spacing:-.6px}
+.ns-compressor-ready,.ns-compressor-engine-dot{padding:7px 10px;border:1px solid rgba(20,207,155,.24);border-radius:999px;background:rgba(20,190,142,.1);color:#65e4bc;font-size:9px;font-weight:850;letter-spacing:.6px;white-space:nowrap}
+.ns-compressor-engine-dot{border-color:var(--ns-line);background:rgba(40,124,255,.1);color:#74caff}
+.ns-compressor-upload{min-height:355px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:11px;padding:25px;border:1.5px dashed rgba(80,163,255,.54);border-radius:17px;background:radial-gradient(circle at 50% 0,rgba(33,119,255,.16),transparent 45%),rgba(4,17,39,.35);text-align:center;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+.ns-compressor-upload:hover,.ns-compressor-upload.is-dragging{border-color:#26b6ff;background:rgba(12,56,108,.33);transform:translateY(-2px)}
+.ns-compressor-upload input,.ns-compressor-file input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.ns-compressor-cloud{width:62px;height:62px;display:grid;place-items:center;border-radius:19px;background:linear-gradient(140deg,#087bff,#432eea);color:white;font-size:34px;font-weight:700;box-shadow:0 10px 30px rgba(17,115,255,.28)}
+.ns-compressor-upload strong{color:var(--ns-text);font:700 15px 'Space Grotesk'}.ns-compressor-upload small{color:var(--ns-muted);font-size:10px;line-height:1.7}
+.ns-compressor-choose{margin-top:6px;padding:11px 19px;border-radius:11px;background:linear-gradient(110deg,#087cff,#2c4de8);color:#fff;font-size:11px;font-weight:800}
+.ns-compressor-image-stage{position:relative;min-height:300px;display:grid;place-items:center;overflow:hidden;border:1px solid var(--ns-line);border-radius:15px;background-color:#06152e;background-image:linear-gradient(45deg,rgba(122,150,194,.06) 25%,transparent 25%),linear-gradient(-45deg,rgba(122,150,194,.06) 25%,transparent 25%),linear-gradient(45deg,transparent 75%,rgba(122,150,194,.06) 75%),linear-gradient(-45deg,transparent 75%,rgba(122,150,194,.06) 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}
+.ns-compressor-image-stage img{display:block;max-width:100%;max-height:430px;object-fit:contain}
+.ns-compressor-image-stage>span{position:absolute;top:11px;left:11px;padding:6px 9px;border:1px solid var(--ns-line);border-radius:8px;background:rgba(4,14,33,.8);color:#9fdcff;font-size:8px;font-weight:900;letter-spacing:.8px}
+.ns-compressor-file{display:flex;align-items:center;gap:10px;margin-top:13px;padding:11px;border:1px solid var(--ns-line);border-radius:12px;background:rgba(8,25,54,.66)}
+.ns-compressor-file-icon{width:36px;height:36px;display:grid;place-items:center;flex:0 0 36px;border-radius:10px;background:rgba(33,127,255,.18);color:#6acaff;font-size:19px}
+.ns-compressor-file>span:nth-child(2){min-width:0;flex:1}
+.ns-compressor-file b,.ns-compressor-file small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ns-compressor-file b{color:var(--ns-text);font-size:10px}.ns-compressor-file small{margin-top:4px;color:var(--ns-muted);font-size:8px}
+.ns-compressor-file button{padding:7px 8px;border:1px solid var(--ns-line);border-radius:8px;background:transparent;color:var(--ns-muted);font-size:8px;font-weight:700;cursor:pointer}
+.ns-compressor-switch{display:flex;gap:6px;margin-top:10px}.ns-compressor-switch button{padding:7px 11px;border:1px solid var(--ns-line);border-radius:8px;background:transparent;color:var(--ns-muted);font-size:9px;cursor:pointer}.ns-compressor-switch button.active{border-color:#278bff;background:rgba(24,117,255,.16);color:#70caff}
+.ns-compressor-error,.ns-compressor-success{margin:13px 0 0;padding:11px 13px;border-radius:10px;font-size:10px;line-height:1.55}
+.ns-compressor-error{border:1px solid rgba(255,97,121,.3);background:rgba(173,38,69,.13);color:#ffb6c5}.ns-compressor-success{border:1px solid rgba(37,210,160,.28);background:rgba(17,149,111,.12);color:#7be9c9}
+.ns-compressor-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.ns-compressor-settings-grid label{display:grid;gap:7px;color:var(--ns-muted);font-size:10px;font-weight:700}
+.ns-compressor-settings-grid input:not([type=range]):not([type=color]),.ns-compressor-settings-grid select{width:100%;min-width:0;height:42px;padding:0 11px;border:1px solid var(--ns-line-strong);border-radius:10px;background:rgba(3,13,31,.7);color:var(--ns-text);font-size:11px;outline:0}
+.ns-compressor-settings-grid input:focus,.ns-compressor-settings-grid select:focus{border-color:#329bff;box-shadow:0 0 0 3px rgba(38,139,255,.12)}
+.ns-compressor-quality{grid-column:1/-1}.ns-compressor-quality b{justify-self:end;color:#73caff;font:700 13px 'Space Grotesk'}.ns-compressor-quality input{width:100%;accent-color:#168bff}.ns-compressor-quality small{color:var(--ns-dim);font-size:9px;font-weight:400;line-height:1.5}
+.ns-compressor-color{display:flex;align-items:center;gap:8px}.ns-compressor-color input{width:38px;height:34px;border:0;background:transparent}.ns-compressor-color b{color:var(--ns-text);font-size:10px}
+.ns-compressor-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:18px}
+.ns-compressor-stats>div{min-width:0;padding:12px;border:1px solid var(--ns-line);border-radius:11px;background:rgba(7,22,48,.62)}
+.ns-compressor-stats small{display:block;color:var(--ns-dim);font-size:8px}.ns-compressor-stats b{display:block;overflow-wrap:anywhere;margin-top:6px;color:var(--ns-text);font:700 14px 'Space Grotesk'}.ns-compressor-stats b.positive{color:#52dfb0}
+.ns-compressor-progress{margin-top:17px}.ns-compressor-progress>div{display:flex;justify-content:space-between;color:var(--ns-muted);font-size:10px}.ns-compressor-progress>div b{color:#68caff}
+.ns-compressor-progress .track{display:block;height:7px;margin-top:9px;overflow:hidden;border-radius:99px;background:rgba(107,139,189,.17)}.ns-compressor-progress .track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#0abfff,#2767ff,#8c54ff);transition:width .25s}
+.ns-compressor-actions{display:grid;gap:9px;margin-top:19px}.ns-compressor-actions .ns-button{width:100%}.ns-compressor-actions>small{color:var(--ns-dim);font-size:9px;line-height:1.6;text-align:center}
+html[data-theme="light"] .ns-compressor-card{background:linear-gradient(145deg,#fff,#f0f5ff)}html[data-theme="light"] .ns-compressor-upload{background:linear-gradient(145deg,#f7faff,#edf3ff)}
+html[data-theme="light"] .ns-compressor-settings-grid input:not([type=range]):not([type=color]),html[data-theme="light"] .ns-compressor-settings-grid select{background:#fff;color:#172644}
+html[data-theme="light"] .ns-compressor-file,html[data-theme="light"] .ns-compressor-stats>div{background:#f5f8ff}
+html[data-theme="light"] .ns-compressor-file b,html[data-theme="light"] .ns-compressor-color b{color:#172644}
+@media(max-width:900px){.ns-compressor-workspace{grid-template-columns:1fr}.ns-compressor-upload{min-height:270px}}
+@media(max-width:520px){.ns-compressor-card{padding:15px}.ns-compressor-upload{min-height:230px;padding:17px}.ns-compressor-settings-grid{grid-template-columns:1fr}.ns-compressor-quality{grid-column:auto}.ns-compressor-stats{gap:6px}.ns-compressor-stats>div{padding:9px}.ns-compressor-stats b{font-size:11px}.ns-compressor-file{flex-wrap:wrap}.ns-compressor-file>span:nth-child(2){flex-basis:calc(100% - 50px)}.ns-compressor-file button{flex:1}}
+
+
+/* Clear, accessible preview states while a selected image is being decoded. */
+.ns-compressor-preview-loading,.ns-image-loading{display:flex;min-height:150px;align-items:center;justify-content:center;gap:11px;padding:18px;color:var(--ns-muted);font-size:11px;text-align:center}
+.ns-compressor-spinner{width:20px;height:20px;flex:0 0 20px;border:2px solid rgba(80,160,255,.22);border-top-color:#29baff;border-radius:50%;animation:ns-compressor-spin .8s linear infinite}
+@keyframes ns-compressor-spin{to{transform:rotate(360deg)}}
