@@ -44,6 +44,10 @@ The image, PDF, audio and text operations run in the browser. Tool descriptions 
 - Every public tool must have a dedicated Astro page at the exact path declared in that file.
 - The wider src/data/toolCatalog.json is retained for future development, but its entries are not advertised as live tools until they have a dedicated, tested page.
 - npm run check:catalog validates IDs, categories and the presence of each dedicated page.
+- The public catalogue searches in Portuguese and English, ignores accents, supports multi-word queries and common task aliases, and keeps search/category filters in shareable URL parameters.
+- Press `/` on the catalogue page to focus search; use `Escape` to clear the current query.
+- `npm run check:search` tests bilingual matching against all 50 active catalogue entries.
+- `npm run check:translations` checks required English labels, catalogue coverage and inline translation script syntax.
 - scripts/verify-output.mjs validates generated tool pages, catalogue links, sitemap entries and private admin exclusion.
 
 ## Account and synchronization
