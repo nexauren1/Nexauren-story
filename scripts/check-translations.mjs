@@ -48,6 +48,11 @@ const required = [
   "A converter…",
   "A aplicar substituições…",
   "Apoia a Nexauren Story",
+  "Pesquisa rápida:",
+  "Limpar pesquisa e filtros",
+  "Imagem",
+  "Áudio",
+  "Converter",
   "Antes de descarregar, acompanha as novidades e novas ferramentas nos nossos canais.",
   "Continuar para o download",
   "Segue a Nexauren Story para acompanhares novas ferramentas e novidades."
