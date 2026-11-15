@@ -299,3 +299,6 @@ html[data-theme="light"] .ns-search-suggestions button{background:#fff}
 .ns-search-field:focus-within{border-color:#328cff;box-shadow:0 0 0 3px rgba(49,139,255,.13)}
 .ns-filter-chip:focus-visible,.ns-search-suggestions button:focus-visible,.ns-empty-reset:focus-visible{outline:3px solid #4e9dff;outline-offset:3px}
 @media(max-width:640px){.ns-search-suggestions{gap:6px}.ns-search-suggestions>span{flex-basis:100%}.ns-filter-chip{min-height:38px;padding:9px 11px}}
+
+.ns-search-shortcut{display:inline-grid;min-width:25px;height:25px;place-items:center;border:1px solid var(--ns-line);border-radius:7px;color:var(--ns-dim);font-size:11px;font-family:inherit;font-weight:800}
+@media(max-width:520px){.ns-search-shortcut{display:none}}
