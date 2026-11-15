@@ -60,7 +60,25 @@ const required = [
   "Converter",
   "Antes de descarregar, acompanha as novidades e novas ferramentas nos nossos canais.",
   "Continuar para o download",
-  "Segue a Nexauren Story para acompanhares novas ferramentas e novidades."
+  "Segue a Nexauren Story para acompanhares novas ferramentas e novidades.",
+  "Aplicações",
+  "APLICAÇÕES ANDROID",
+  "Aplicações para o",
+  "dia a dia.",
+  "Conhece as aplicações Android da Nexauren e consulta as páginas oficiais de distribuição.",
+  "Ver todas as aplicações",
+  "ANDROID · APKPURE",
+  "51 ferramentas para editar, redimensionar, comprimir e converter imagens no telemóvel.",
+  "Ver detalhes da aplicação",
+  "Uma aplicação prática para gerir e organizar ficheiros compactados no Android.",
+  "Guias e tutoriais",
+  "Análises de aplicações",
+  "Novidades tecnológicas",
+  "Guias práticos, análises de aplicações e explicações claras para compreender melhor a tecnologia e resolver problemas digitais do dia a dia.",
+  "Ler artigos no blog",
+  "Confirma os detalhes antes de instalar",
+  "As versões, dimensões e requisitos podem mudar. Consulta sempre a informação atualizada na página oficial de distribuição.",
+  "Descobre aplicações Android da Nexauren para editar imagens e gerir ficheiros. Consulta funcionalidades, requisitos e as páginas oficiais na APKPure."
 ];
 for (const key of required) if (!(key in dictionary)) missing.push(key);
 for (const [key, value] of Object.entries(dictionary)) {
