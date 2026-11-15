@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="RGB para HEX — Ferramenta online | Nexauren Story" description="Converte canais RGB em HEX.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/colors">Cores e design</a><span>›</span><span aria-current="page">RGB para HEX</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">RGB</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>RGB para HEX</h1><p>Converte canais RGB em HEX.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="rgb-to-hex" title="RGB para HEX" kind="tool" href="/tools/rgb-to-hex"/></div>
+  </header>
+  <UniversalTool client:load toolId="rgb-to-hex" name="RGB para HEX" category="colors" description="Converte canais RGB em HEX." kind="colors"/>
+  <TrackActivity client:load activityId="rgb-to-hex" activityTitle="Usou RGB para HEX"/>
+</main><SiteFooter/></div>
+</SiteLayout>
