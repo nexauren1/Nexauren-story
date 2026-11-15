@@ -1,5 +1,6 @@
 name: Build Nexauren Story
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
@@ -23,8 +24,18 @@ jobs:
       - run: npm run check:catalog
       - run: npm run build
       - name: Verify generated SEO files and all tool routes
-        run: node scripts/verify-output.mjs
+        run: npm run verify:output
       - name: Verify sitemap includes newly generated public pages
         run: |
           test -s dist/sitemap.xml
           node --input-type=module -e 'import fs from "node:fs"; const xml=fs.readFileSync("dist/sitemap.xml","utf8"); const html=fs.readdirSync("dist",{recursive:true}).filter(p=>String(p).endsWith(".html")&&!String(p).endsWith("404.html")); const urls=(xml.match(/<url>/g)||[]).length; if(!urls) throw new Error("Sitemap is empty"); console.log("Sitemap verified:",urls,"URLs from",html.length,"HTML files");'
+
+      - name: Upload generated SEO files
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexauren-story-seo-files
+          path: |
+            dist/sitemap.xml
+            dist/robots.txt
+          if-no-files-found: error
