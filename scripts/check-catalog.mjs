@@ -16,16 +16,43 @@ if (!ids.length || !categoryIds.length || duplicateIds.length || duplicatePaths.
   console.error("Catálogo público inválido:", { duplicateIds, duplicatePaths, duplicateCategories });
   process.exit(1);
 }
-const dictionary = JSON.parse(await readFile("public/translations/en.json", "utf8"));
-for (const category of active.categories) for (const value of [category.name, category.description]) {
-  if (!dictionary[value]) { console.error("Tradução inglesa em falta para categoria:", category.id, value); process.exit(1); }
+const locales = ["en", "es", "fr", "de"];
+const dictionaries = Object.fromEntries(await Promise.all(locales.map(async (locale) => {
+  try {
+    const dictionary = JSON.parse(await readFile("public/translations/" + locale + ".json", "utf8"));
+    return [locale, dictionary];
+  } catch {
+    console.error("Ficheiro de tradução ausente ou inválido:", locale);
+    process.exit(1);
+  }
+})));
+for (const category of active.categories) {
+  if (!category.id || !category.name || !category.description) {
+    console.error("Categoria pública incompleta:", category);
+    process.exit(1);
+  }
+  for (const locale of locales) {
+    for (const value of [category.name, category.description]) {
+      if (typeof dictionaries[locale][value] !== "string" || !dictionaries[locale][value].trim()) {
+        console.error("Tradução em falta para categoria:", category.id, locale, value);
+        process.exit(1);
+      }
+    }
+  }
 }
 for (const tool of active.tools) {
-  if (!categoryIds.includes(tool.category) || !/^\/tools\/[a-z0-9-]+$/.test(tool.path)) {
-    console.error("Categoria ou endereço público inválido:", tool.id, tool.category, tool.path); process.exit(1);
+  const toolSlug = typeof tool.path === "string" && tool.path.startsWith("/tools/") ? tool.path.slice("/tools/".length) : "";
+  if (!categoryIds.includes(tool.category) || !/^[a-z0-9-]+$/.test(toolSlug)) {
+    console.error("Categoria ou endereço público inválido:", tool.id, tool.category, tool.path);
+    process.exit(1);
   }
-  for (const value of [tool.name, tool.description]) {
-    if (!dictionary[value]) { console.error("Tradução inglesa em falta para ferramenta:", tool.id, value); process.exit(1); }
+  for (const locale of locales) {
+    for (const value of [tool.name, tool.description]) {
+      if (typeof dictionaries[locale][value] !== "string" || !dictionaries[locale][value].trim()) {
+        console.error("Tradução em falta para ferramenta:", tool.id, locale, value);
+        process.exit(1);
+      }
+    }
   }
   try { await access("src/pages" + tool.path + ".astro"); }
   catch { console.error("A ferramenta não tem uma página dedicada:", tool.id, tool.path); process.exit(1); }
