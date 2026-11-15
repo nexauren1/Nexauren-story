@@ -74,7 +74,10 @@ const schema = {
       if (!source) return source;
       const clean = source.trim();
       if (!clean) return source;
-      if (Object.prototype.hasOwnProperty.call(dictionary, clean)) return source.replace(clean, dictionary[clean]);
+      if (Object.prototype.hasOwnProperty.call(dictionary, clean)) {
+        return source.replace(clean, dictionary[clean]);
+      }
+
       const patterns = [
         [/^(\d+)\s+ferramentas?$/i, n => n + " tools"],
         [/^(\d+)\s+categorias?$/i, n => n + " categories"],
@@ -89,48 +92,26 @@ const schema = {
         [/^(\d+)\s+documentos?\s+·\s+(\d+)\s+páginas?\s+·\s+(.+)$/i, (docs, pages, size) => docs + " documents · " + pages + " pages · " + size],
         [/^Combinar\s+(\d+)\s+PDFs$/i, n => "Merge " + n + " PDFs"],
         [/^Extrair\s+(\d+)\s+página\(s\)$/i, n => "Extract " + n + " page(s)"],
-        [/^([\d,]+)\s+página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
+        [/^(\d+)\s+página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
         [/^Documento criado com (\d+) páginas, pela ordem escolhida\.$/i, n => "Document created with " + n + " pages, in the selected order."],
         [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
         [/^A extrair (\d+) página\(s\)…$/i, n => "Extracting " + n + " page(s)…"],
-        [/^PALAVRAS\s+(.+)$/i, value => "WORDS  " + value],
-        [/^CARACTERES\s+(.+)$/i, value => "CHARACTERS  " + value],
-        [/^SEM ESPAÇOS\s+(.+)$/i, value => "NO SPACES  " + value],
-        [/^LINHAS\s+(.+)$/i, value => "LINES  " + value],
-        [/^PARÁGRAFOS\s+(.+)$/i, value => "PARAGRAPHS  " + value],
-        [/^Caracteres:\s*(.+)$/i, value => "Characters: " + value],
-        [/^Sem espaços:\s*(.+)$/i, value => "Without spaces: " + value],
-        [/^Bytes UTF-8:\s*(.+)$/i, value => "UTF-8 bytes: " + value],
-        [/^CSV válido:\s*(.+)$/i, value => "Valid CSV: " + value],
-        [/^Linha (\d+): (\d+) colunas$/i, (line, columns) => "Row " + line + ": " + columns + " columns"],
-        [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
-        [/^Análise concluída\. Foram encontradas (\d+) páginas\.$/i, n => "Analysis complete. " + n + " pages found."],
-        [/^Orientação actualizada em (\d+) página\(s\)\.$/i, n => "Orientation updated on " + n + " page(s)."],
-        [/^(\d+) página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
         [/^A aplicar rotação a (\d+) página\(s\)…$/i, n => "Applying rotation to " + n + " page(s)…"],
+        [/^Orientação actualizada em (\d+) página\(s\)\.$/i, n => "Orientation updated on " + n + " page(s)."],
+        [/^A rotação será aplicada a todas as (\d+) páginas\.$/i, n => "Rotation will be applied to all " + n + " pages."],
         [/^Indica um número de página entre 1 e (\d+)\.$/i, n => "Enter a page number between 1 and " + n + "."],
         [/^O intervalo deve estar entre 1 e (\d+)\.$/i, n => "The range must be between 1 and " + n + "."],
+        [/^Análise concluída\. Foram encontradas (\d+) páginas\.$/i, n => "Analysis complete. " + n + " pages found."],
         [/^Processamento concluído\. (\d+) páginas no ficheiro final\.$/i, n => "Processing complete. " + n + " pages in the final file."],
+        [/^PDF combinado com (\d+) páginas\.$/i, n => "PDF merged with " + n + " pages."],
         [/^Imagem processada: (.+)$/i, value => "Image processed: " + value],
         [/^Recorte criado\. (.+), pronto para descarregar\.$/i, value => "Crop created. " + value + ", ready to download."],
-        [/^Duração final: (.+)$/i, value => "Final duration: " + value],
-        [/^Duração: (.+)$/i, value => "Duration: " + value],
-        [/^Páginas: (.+)$/i, value => "Pages: " + value],
-        [/^Dias: (.+)$/i, value => "Days: " + value],
-        [/^Anos completos: (.+)$/i, value => "Full years: " + value],
-        [/^Semana ISO: (.+)$/i, value => "ISO week: " + value],
-        [/^Rácio de contraste: (.+)$/i, value => "Contrast ratio: " + value],
-        [/^Média: (.+)$/i, value => "Average: " + value],
-        [/^Preço final: (.+)$/i, value => "Final price: " + value],
-        [/^(\d+)\. (.+) \(posição (\d+)\)$/i, (n, match, position) => n + ". " + match + " (position " + position + ")"],
         [/^A importar (.+)…$/i, value => "Importing " + value + "…"],
-        [/^PDF combinado com (\d+) páginas\.$/i, n => "PDF merged with " + n + " pages."],
-        [/^Páginas a incluir em (.+)$/i, value => "Pages to include in " + value],
+        [/^A otimizar (.+)…$/i, value => "Optimising " + value + "…"],
         [/^Não foi possível ler este PDF\. (.+)$/i, value => "Unable to read this PDF. " + value],
-        [/^Não foi possível combinar os ficheiros\. (.+)$/i, value => "Unable to merge the files. " + value],
+        [/^Não foi possível abrir um dos PDFs\. (.+)$/i, value => "Unable to open one of the PDFs. " + value],
         [/^Não foi possível descodificar este áudio\. (.+)$/i, value => "Unable to decode this audio. " + value],
-        [/^Não foi possível otimizar o PDF\. (.+)$/i, value => "Unable to optimise the PDF. " + value]
-
+        [/^Não foi possível otimizar o PDF\. (.+)$/i, value => "Unable to optimise the PDF. " + value],
         [/^Original: (.+)$/i, value => "Original: " + value],
         [/^Novo: (.+)$/i, value => "New: " + value],
         [/^Tamanho: (.+)$/i, value => "Size: " + value],
@@ -138,46 +119,20 @@ const schema = {
         [/^Formato: (.+)$/i, value => "Format: " + value],
         [/^Dimensões: (.+)$/i, value => "Dimensions: " + value],
         [/^Título: (.+)$/i, value => "Title: " + value],
+        [/^Autor: (.+)$/i, value => "Author: " + value],
         [/^Canais: (.+)$/i, value => "Channels: " + value],
         [/^Frequência: (.+)$/i, value => "Sample rate: " + value],
-        [/^PALAVRA\\s+(.+)$/i, value => "WORD  " + value],
-        [/^(\\d+) substituição\\(ões\\) preparada\\(s\\)\\.$/i, n => n + " replacement(s) ready."],
-        [/^Otimização concluída\\. Os ficheiros ficaram (\\d+)% mais pequenos no total\\.$/i, n => "Optimisation complete. The files are " + n + "% smaller overall."],
-        [/^Otimização concluída\\. Os documentos foram regravados; não houve redução significativa no tamanho\\.$/i, () => "Optimisation complete. The documents were rewritten; there was no significant size reduction."],
-        [/^A rotação será aplicada a todas as (\\d+) páginas\\.$/i, n => "Rotation will be applied to all " + n + " pages."],
-        [/^A aplicar rotação a (\\d+) página\\(s\\)…$/i, n => "Applying rotation to " + n + " page(s)…"],
-        [/^A extrair (\\d+) página\\(s\\)…$/i, n => "Extracting " + n + " page(s)…"],
-        [/^A processar (\\d+) ficheiro\\(s\\)…$/i, n => "Processing " + n + " file(s)…"],
-        [/^Imagem processada: (.+)$/i, value => "Image processed: " + value],
-        [/^Trecho exportado em WAV PCM 16-bit, com os fades e o volume seleccionados\\.$/i, () => "Clip exported as 16-bit PCM WAV, with the selected fades and volume."],
-        [/^Áudio processado com sucesso\\.$/i, () => "Audio processed successfully."],
+        [/^Duração: (.+)$/i, value => "Duration: " + value],
         [/^Duração final: (.+)$/i, value => "Final duration: " + value],
-        [/^Limite de (\\d+) MB excedido\\.$/i, n => "The " + n + " MB limit has been exceeded."]
-
-
-        [/^Encontradas (\d+) linha\(s\) com número de colunas diferente de (\d+):$/i, (rows, columns) => "Found " + rows + " row(s) with a different number of columns than " + columns + ":"],
-        [/^CSV válido: (\d+) linhas e (\d+) colunas\.$/i, (rows, columns) => "Valid CSV: " + rows + " rows and " + columns + " columns."],
-        [/^O PDF ultrapassa o limite de (\d+) MB\.$/i, n => "The PDF exceeds the " + n + " MB limit."],
-        [/^O ficheiro ultrapassa o limite de (\d+) MB\.$/i, n => "The file exceeds the " + n + " MB limit."],
-        [/^A imagem ultrapassa (\d+) MB\.$/i, n => "The image exceeds " + n + " MB."],
-        [/^A aplicar rotação a (\d+) página\(s\)…$/i, n => "Applying rotation to " + n + " page(s)…"],
-        [/^A extrair (\d+) página\(s\)…$/i, n => "Extracting " + n + " page(s)…"],
-        [/^(\d+) substituição\(ões\) preparada\(s\)\.$/i, n => n + " replacement(s) ready."],
-        [/^Otimização concluída\. Os ficheiros ficaram (\d+)% mais pequenos no total\.$/i, n => "Optimisation complete. The files are " + n + "% smaller overall."],
-        [/^A rotação será aplicada a todas as (\d+) páginas\.$/i, n => "Rotation will be applied to all " + n + " pages."],
-        [/^Encontradas (\d+) linha\(s\) com número de colunas diferente de (\d+):$/i, (rows, columns) => "Found " + rows + " row(s) with a different number of columns than " + columns + ":"],
-        [/^Não foi possível ler este PDF\. (.+)$/i, value => "Unable to read this PDF. " + value],
-        [/^Não foi possível abrir um dos PDFs\. (.+)$/i, value => "Unable to open one of the PDFs. " + value],
-        [/^Não foi possível cortar o áudio\.$/i, () => "Could not cut the audio."],
-        [/^Não foi possível descodificar este áudio\. (.+)$/i, value => "Unable to decode this audio. " + value],
-        [/^A preparar a normalização…$/i, () => "Preparing normalisation…"],
-        [/^Áudio exportado\. (.+)$/i, value => "Audio exported. " + value],
-        [/^Orientação actualizada em (\d+) página\(s\)\.$/i, n => "Orientation updated on " + n + " page(s)."],
-        [/^(\d+) página\(s\) extraída\(s\) com sucesso\.$/i, n => n + " page(s) extracted successfully."],
-        [/^(\d+) documento\(s\) adicionado\(s\)\. Podes alterar a ordem antes de combinar\.$/i, n => n + " document(s) added. You can change the order before merging."],
-        [/^Documento criado com (\d+) páginas, pela ordem escolhida\.$/i, n => "Document created with " + n + " pages, in the selected order."]
-
-
+        [/^Dias: (.+)$/i, value => "Days: " + value],
+        [/^Anos completos: (.+)$/i, value => "Full years: " + value],
+        [/^Semana ISO: (.+)$/i, value => "ISO week: " + value],
+        [/^Rácio de contraste: (.+)$/i, value => "Contrast ratio: " + value],
+        [/^Média: (.+)$/i, value => "Average: " + value],
+        [/^Preço final: (.+)$/i, value => "Final price: " + value],
+        [/^A importar (.+)…$/i, value => "Importing " + value + "…"],
+        [/^A preparar (.+)…$/i, value => "Preparing " + value + "…"],
+        [/^A analisar (.+)…$/i, value => "Analysing " + value + "…"],
         [/^PALAVRAS\s+(.+)$/i, value => "WORDS  " + value],
         [/^CARACTERES\s+(.+)$/i, value => "CHARACTERS  " + value],
         [/^SEM ESPAÇOS\s+(.+)$/i, value => "NO SPACES  " + value],
@@ -187,16 +142,13 @@ const schema = {
         [/^Sem espaços:\s*(.+)$/i, value => "Without spaces: " + value],
         [/^Bytes UTF-8:\s*(.+)$/i, value => "UTF-8 bytes: " + value],
         [/^Linha (\d+): (\d+) colunas$/i, (line, columns) => "Row " + line + ": " + columns + " columns"],
-        [/^Análise concluída\. Foram encontradas (\d+) páginas\.$/i, n => "Analysis complete. " + n + " pages found."],
-        [/^Processamento concluído\. (\d+) páginas no ficheiro final\.$/i, n => "Processing complete. " + n + " pages in the final file."],
-        [/^Imagem processada: (.+)$/i, value => "Image processed: " + value],
-        [/^Otimização concluída\. Os documentos foram regravados; não houve redução significativa no tamanho\.$/i, () => "Optimisation complete. The documents were rewritten; there was no significant size reduction."],
-        [/^Tamanho: (.+)$/i, value => "Size: " + value],
-        [/^Formato: (.+)$/i, value => "Format: " + value],
-        [/^Local: (.+)$/i, value => "Local time: " + value],
-        [/^Unix \(s\): (.+)$/i, value => "Unix (s): " + value]
-
+        [/^CSV válido: (\d+) linhas e (\d+) colunas\.$/i, (rows, columns) => "Valid CSV: " + rows + " rows and " + columns + " columns."],
+        [/^Encontradas (\d+) linha\(s\) com número de colunas diferente de (\d+):$/i, (rows, columns) => "Found " + rows + " row(s) with a different number of columns than " + columns + ":"],
+        [/^(\d+) substituição\(ões\) preparada\(s\)\.$/i, n => n + " replacement(s) ready."],
+        [/^Otimização concluída\. Os ficheiros ficaram (\d+)% mais pequenos no total\.$/i, n => "Optimisation complete. The files are " + n + "% smaller overall."],
+        [/^A rotação será aplicada a todas as (\d+) páginas\.$/i, n => "Rotation will be applied to all " + n + " pages."]
       ];
+
       for (const [pattern, render] of patterns) {
         const match = clean.match(pattern);
         if (match) return source.replace(clean, render(...match.slice(1)));
@@ -206,14 +158,12 @@ const schema = {
 
     function translateValue(source) {
       if (current !== "en" || !source) return source;
-      const lines = source.split("\n");
-      if (lines.length === 1) return translateSingle(source);
-      return lines.map(line => translateSingle(line)).join("\n");
+      return source.split("\n").map(line => translateSingle(line)).join("\n");
     }
     function translateTextNode(node) {
       if (!node || !node.nodeValue || !node.nodeValue.trim()) return;
       const parent = node.parentElement;
-      if (parent && parent.closest("script,style,noscript,code,textarea")) return;
+      if (parent && parent.closest("script,style,noscript,code,textarea,[translate=\"no\"])) return;
       if (parent && parent.closest("pre") && !parent.closest("[data-translate-content]")) return;
       let state = textStates.get(node);
       if (!state) {
@@ -227,20 +177,15 @@ const schema = {
       if (node.nodeValue !== next) node.nodeValue = next;
     }
 
+    const translatableAttributes = ["placeholder", "aria-label", "aria-description", "title", "alt"];
     function translateAttributes(root) {
       const elements = [];
       if (root.nodeType === 1) elements.push(root);
-      if (root.querySelectorAll) elements.push(...root.querySelectorAll("[placeholder],[aria-label],[title]"));
+      if (root.querySelectorAll) elements.push(...root.querySelectorAll("[placeholder],[aria-label],[aria-description],[title],[alt]"));
       for (const element of elements) {
         let state = attributeStates.get(element);
-        if (!state) {
-          state = {};
-          for (const name of ["placeholder", "aria-label", "title"]) {
-            if (element.hasAttribute(name)) state[name] = { original: element.getAttribute(name), last: null };
-          }
-          attributeStates.set(element, state);
-        }
-        for (const name of ["placeholder", "aria-label", "title"]) {
+        if (!state) { state = {}; attributeStates.set(element, state); }
+        for (const name of translatableAttributes) {
           if (!element.hasAttribute(name)) continue;
           const now = element.getAttribute(name);
           let item = state[name];
@@ -250,9 +195,17 @@ const schema = {
           item.last = next;
           if (now !== next) element.setAttribute(name, next);
         }
+        if (element instanceof HTMLInputElement && ["button", "submit", "reset"].includes(element.type)) {
+          const now = element.value;
+          let item = state.value;
+          if (!item) { item = { original: now, last: null }; state.value = item; }
+          else if (now !== item.last) item.original = now;
+          const next = translateValue(item.original);
+          item.last = next;
+          if (now !== next) element.value = next;
+        }
       }
     }
-
     function translateTree(root) {
       if (!root) return;
       if (root.nodeType === 3) { translateTextNode(root); return; }
@@ -331,54 +284,149 @@ const schema = {
       if (target && target.matches && target.matches("[data-language-select]")) void setLanguage(target.value);
     });
 
-    function maybeShowFollowCard() {
-      const success = document.querySelector(".universal-tool .success-banner, .tool-page .success-banner, .ns-tool-page .success-banner");
-      if (!success || !success.textContent.trim() || document.querySelector("[data-nexa-follow-card]")) return;
-      const card = document.createElement("section");
-      card.className = "ns-follow-after-task";
-      card.dataset.nexaFollowCard = "true";
-      card.setAttribute("aria-label", "Segue a Nexauren Story");
-      const copy = document.createElement("p");
-      copy.className = "ns-follow-after-task-copy";
-      copy.textContent = "Segue a Nexauren Story para acompanhares novas ferramentas e novidades.";
-      const links = document.createElement("div");
-      links.className = "ns-follow-after-task-links";
-      for (const item of [
-        { label: "YouTube", href: "https://www.youtube.com/@Nexauren" },
-        { label: "Bluesky", href: "https://bsky.app/profile/nexauren.bsky.social" },
-        { label: "Facebook", href: "https://www.facebook.com/nexaurentech" }
-      ]) {
-        const link = document.createElement("a");
-        link.href = item.href;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.textContent = item.label;
-        links.append(link);
-      }
-      card.append(copy, links);
-      success.insertAdjacentElement("afterend", card);
-      translateTree(card);
-    }
 
     const observer = new MutationObserver(records => {
       for (const record of records) {
         if (record.type === "characterData") translateTextNode(record.target);
         else if (record.type === "attributes") {
-          if (["placeholder", "aria-label", "title"].includes(record.attributeName)) translateAttributes(record.target);
+          if (["placeholder", "aria-label", "aria-description", "title", "alt"].includes(record.attributeName)) translateAttributes(record.target);
         } else {
           for (const node of record.addedNodes) translateTree(node);
           if (record.target.nodeType === 1) translateAttributes(record.target);
         }
       }
-      maybeShowFollowCard();
     });
-    observer.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["placeholder", "aria-label", "title", "class"] });
+    observer.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["placeholder", "aria-label", "aria-description", "title", "alt", "class"] });
     observer.observe(document.head, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["content"] });
-    maybeShowFollowCard();
+    let pendingDownload = null;
+    let replayingDownload = false;
+    let downloadDialog = null;
+
+    function getDownloadDialog() {
+      if (downloadDialog) return downloadDialog;
+      const dialog = document.createElement("dialog");
+      dialog.className = "nexa-download-dialog";
+      dialog.setAttribute("aria-labelledby", "nexa-download-title");
+      dialog.setAttribute("aria-describedby", "nexa-download-description");
+      const panel = document.createElement("div");
+      panel.className = "nexa-download-dialog-panel";
+      const top = document.createElement("div");
+      top.className = "nexa-download-dialog-top";
+      const mark = document.createElement("span");
+      mark.className = "nexa-download-dialog-mark";
+      mark.textContent = "N";
+      const close = document.createElement("button");
+      close.type = "button";
+      close.className = "nexa-download-dialog-close";
+      close.setAttribute("aria-label", "Fechar");
+      close.textContent = "×";
+      close.addEventListener("click", () => { pendingDownload = null; dialog.close(); });
+      top.append(mark, close);
+      const title = document.createElement("h2");
+      title.id = "nexa-download-title";
+      title.textContent = "Apoia a Nexauren Story";
+      const description = document.createElement("p");
+      description.id = "nexa-download-description";
+      description.textContent = "Antes de descarregar, acompanha as novidades e novas ferramentas nos nossos canais.";
+      const socials = document.createElement("div");
+      socials.className = "nexa-download-socials";
+      for (const item of [
+        { label: "YouTube", href: "https://www.youtube.com/@Nexauren", icon: "▶" },
+        { label: "Bluesky", href: "https://bsky.app/profile/nexauren.bsky.social", icon: "✳" },
+        { label: "Facebook", href: "https://www.facebook.com/nexaurentech", icon: "f" }
+      ]) {
+        const link = document.createElement("a");
+        link.href = item.href;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.className = "nexa-download-social-link";
+        const icon = document.createElement("span");
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = item.icon;
+        const label = document.createElement("span");
+        label.textContent = item.label;
+        link.append(icon, label);
+        socials.append(link);
+      }
+      const actions = document.createElement("div");
+      actions.className = "nexa-download-dialog-actions";
+      const cancel = document.createElement("button");
+      cancel.type = "button";
+      cancel.className = "nexa-download-cancel";
+      cancel.textContent = "Agora não";
+      cancel.addEventListener("click", () => { pendingDownload = null; dialog.close(); });
+      const proceed = document.createElement("button");
+      proceed.type = "button";
+      proceed.className = "nexa-download-continue";
+      proceed.textContent = "Continuar para o download";
+      proceed.addEventListener("click", continuePendingDownload);
+      actions.append(cancel, proceed);
+      panel.append(top, title, description, socials, actions);
+      dialog.append(panel);
+      dialog.addEventListener("click", event => {
+        if (event.target === dialog) { pendingDownload = null; dialog.close(); }
+      });
+      document.body.append(dialog);
+      translateTree(dialog);
+      downloadDialog = dialog;
+      return dialog;
+    }
+
+    function openDownloadDialog(action) {
+      pendingDownload = action;
+      const dialog = getDownloadDialog();
+      if (!dialog.open) dialog.showModal();
+      const proceed = dialog.querySelector(".nexa-download-continue");
+      proceed?.focus();
+    }
+
+    function continuePendingDownload() {
+      const action = pendingDownload;
+      pendingDownload = null;
+      if (downloadDialog?.open) downloadDialog.close();
+      if (!action) return;
+
+      replayingDownload = true;
+      try {
+        if (action.type === "anchor") {
+          const link = document.createElement("a");
+          link.href = action.href;
+          link.download = action.filename;
+          link.style.display = "none";
+          document.body.append(link);
+          link.click();
+          link.remove();
+        } else if (action.element?.isConnected) {
+          action.element.click();
+        }
+      } finally {
+        replayingDownload = false;
+      }
+    }
 
     document.addEventListener("click", event => {
       const target = event.target;
       if (!(target instanceof Element)) return;
+
+      if (!replayingDownload && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+        const anchor = target.closest("a[download]");
+        const trigger = target.closest("[data-nexa-download-trigger]");
+        if (anchor || trigger) {
+          event.preventDefault();
+          event.stopPropagation();
+          if (anchor) {
+            openDownloadDialog({
+              type: "anchor",
+              href: anchor.href,
+              filename: anchor.getAttribute("download") || ""
+            });
+          } else {
+            openDownloadDialog({ type: "trigger", element: trigger });
+          }
+          return;
+        }
+      }
+
       const themeToggle = target.closest("[data-theme-toggle]");
       if (themeToggle) { setTheme(theme === "dark" ? "light" : "dark"); return; }
       const menuToggle = target.closest("[data-menu-toggle]");
@@ -395,7 +443,7 @@ const schema = {
       if (link && link.origin === location.origin && !link.hash && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
         document.querySelector("[data-navigation-progress]")?.classList.add("is-loading");
       }
-    });
+    }, true);
     document.addEventListener("keydown", event => {
       if (event.key === "Escape") {
         document.querySelector("[data-mobile-menu]")?.classList.remove("open");
