@@ -13,22 +13,30 @@ Portal de ferramentas online gratuitas e conteúdo tecnológico, com conta pesso
 
 ## Public tools
 
-O catálogo público tem **50 ferramentas activas**, distribuídas por quatro categorias. Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
+O catálogo público tem **78 ferramentas activas**, distribuídas por dez categorias: imagem (11), PDF (13), texto (22), áudio (9), conversores (5), geradores (3), calculadoras (2), programador (6), cores (3) e data/tempo (4). Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
 
-### Image — 10 tools
+### Image — 11 tools
 - Resize image; crop image; image watermark; rotate and flip image.
-- Image information; grayscale conversion; colour inversion; image format conversion; horizontal flip; image-to-Base64.
+- Image information; grayscale conversion; colour inversion; image format conversion; horizontal flip; image-to-Base64; image compression.
 
 ### PDF — 13 tools
 - PDF optimiser; merge PDFs; split PDFs; rotate PDFs; PDF inspection.
 - Page count; metadata viewer; extract page ranges; remove pages; reorder pages; rotate pages; duplicate pages; clear metadata.
 
-### Text — 18 tools
+### Text — 22 tools
 - Text toolbox; text case converter; find and replace.
-- Uppercase; lowercase; title case; clean spaces and lines; sort lines; remove duplicate lines; reverse lines; URL slug; Base64 encode/decode; URL encode/decode; JSON formatter/minifier; CSV to JSON.
+- Uppercase; lowercase; title case; clean spaces and lines; sort lines; remove duplicate lines; reverse lines; URL slug; Base64 encode/decode; URL encode/decode; JSON formatter/minifier; CSV to JSON; word and character counters; password and UUID generators.
 
 ### Audio — 9 tools
 - Audio cutter; volume normaliser; audio information; silence trimming; gain adjustment; fade-in; fade-out; reverse audio; speed adjustment.
+
+### Additional categories — 28 tools
+- Converters: HTML escaping/decoding, JSON to CSV, text/binary conversion.
+- Generators: SHA-256, random numbers and Lorem Ipsum.
+- Calculators: unit conversion and percentages.
+- Developer: JSON validation, JWT decoding, RegEx testing, URL parsing, CSS minification and timestamp conversion.
+- Colours: contrast checking and HEX/RGB conversion.
+- Dates: date difference, weekday, days in month and ISO week.
 
 The image, PDF, audio and text operations run in the browser. Tool descriptions state format and output limitations; file processing does not upload source files to Nexauren servers.
 
@@ -46,9 +54,9 @@ The image, PDF, audio and text operations run in the browser. Tool descriptions 
 - npm run check:catalog validates IDs, categories and the presence of each dedicated page.
 - The public catalogue searches in Portuguese and English, ignores accents, supports multi-word queries and common task aliases, and keeps search/category filters in shareable URL parameters.
 - Press `/` on the catalogue page to focus search; use `Escape` to clear the current query.
-- `npm run check:search` tests bilingual matching against all 50 active catalogue entries.
+- `npm run check:search` tests bilingual matching against all 78 active catalogue entries.
 - `npm run check:translations` checks required English labels, catalogue coverage and inline translation script syntax.
-- scripts/verify-output.mjs validates generated tool pages, catalogue links, sitemap entries and private admin exclusion.
+- `scripts/verify-output.mjs` validates generated tool pages, catalogue links, sitemap entries, AdSense publisher authorisation and the private admin exclusion.
 
 ## Account and synchronization
 - Firebase sign-in with Google or email/password.
@@ -76,13 +84,16 @@ Set the PUBLIC_FIREBASE_* variables in .env using the Firebase Web app configura
 - Node.js version: 24.12.0 or newer
 - Add all PUBLIC_FIREBASE_* variables as Cloudflare Pages build environment variables.
 - Production branch: main
+- For Cloudflare Workers Builds with Build command set to `None` and a Wrangler deploy command, use `npm run deploy` as the Deploy command so Astro and the sitemap are built before publishing.
+- Google AdSense Auto ads is loaded only on public discovery/information pages. It is not loaded in the authenticated account or individual file/data-processing workspaces.
+- `public/ads.txt` declares the publisher ID configured in the global AdSense script.
 - A successful build does not replace testing the deployed domain and tool pages.
 
 ## Routes
 - / — bilingual home page (English default, Portuguese available)
 - /tools — searchable public catalogue with category filters
 - /tools/image, /tools/pdf, /tools/text, /tools/audio — category pages
-- 50 dedicated tool pages across image, PDF, text and audio categories
+- 78 dedicated tool pages across ten categories
 - /account — account, favorites and activity
 - /apps — Android app catalogue
 - Blog externo: https://nexauren.blogspot.com/?m=1 (redirects from /blog and /blog/*)
