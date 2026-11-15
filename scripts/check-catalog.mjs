@@ -23,7 +23,8 @@ for (const category of active.categories) {
   }
 }
 for (const tool of active.tools) {
-  if (!categoryIds.includes(tool.category) || !/^\\/tools\\/[a-z0-9-]+$/.test(tool.path)) {
+  const toolSlug = typeof tool.path === "string" && tool.path.startsWith("/tools/") ? tool.path.slice("/tools/".length) : "";
+  if (!categoryIds.includes(tool.category) || !/^[a-z0-9-]+$/.test(toolSlug)) {
     console.error("Categoria ou endereço público inválido:", tool.id, tool.category, tool.path);
     process.exit(1);
   }
@@ -40,4 +41,4 @@ for (const tool of active.tools) {
 }
 await access("src/pages/tools/[category].astro");
 console.log("Catálogo validado:", active.tools.length, "ferramentas públicas em", active.categories.length, "categorias.");
-console.log("Páginas dedicadas e traduções inglesas validadas; catálogo interno preservado.");
+console.log("Páginas dedicadas e traduções validadas em inglês, espanhol, francês e alemão; catálogo interno preservado.");
