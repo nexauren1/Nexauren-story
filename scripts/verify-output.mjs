@@ -10,11 +10,73 @@ const toolsPage = await readFile("dist/tools/index.html", "utf8");
 const categoryPages = new Map();
 const errors = [];
 
+function readStructuredData(html, route) {
+  const match = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/i);
+  if (!match) {
+    errors.push("JSON-LD em falta: " + route);
+    return null;
+  }
+  try { return JSON.parse(match[1]); }
+  catch {
+    errors.push("JSON-LD inválido: " + route);
+    return null;
+  }
+}
+
+function verifyOrganization(html, route) {
+  const data = readStructuredData(html, route);
+  if (!data) return;
+  const graph = data["@graph"] ?? [];
+  const organization = graph.find((item) => item["@type"] === "Organization");
+  if (!organization) {
+    errors.push("Organization schema em falta: " + route);
+    return;
+  }
+  for (const social of [
+    "https://www.youtube.com/@Nexauren",
+    "https://bsky.app/profile/nexauren.bsky.social",
+    "https://www.facebook.com/nexaurentech"
+  ]) {
+    if (!(organization.sameAs ?? []).includes(social)) {
+      errors.push("Perfil social ausente do Organization schema: " + social);
+    }
+  }
+}
+
+function verifyBreadcrumb(html, route) {
+  const data = readStructuredData(html, route);
+  if (!data) return;
+  const breadcrumb = (data["@graph"] ?? []).find((item) => item["@type"] === "BreadcrumbList");
+  if (!breadcrumb) {
+    errors.push("BreadcrumbList em falta: " + route);
+    return;
+  }
+  const items = breadcrumb.itemListElement ?? [];
+  if (items.length < 2) errors.push("BreadcrumbList tem menos de dois níveis: " + route);
+  items.forEach((item, index) => {
+    if (item.position !== index + 1 || !item.name) {
+      errors.push("BreadcrumbList com posição ou nome inválido: " + route);
+    }
+    if (index < items.length - 1 && !item.item) {
+      errors.push("Breadcrumb intermédio sem URL: " + route);
+    }
+  });
+}
+
+verifyOrganization(toolsPage, "/tools");
+verifyBreadcrumb(toolsPage, "/tools");
+const searchCards = (toolsPage.match(/data-search-values=/g) ?? []).length;
+if (searchCards !== active.tools.length) {
+  errors.push("Índice de pesquisa bilingue incompleto: " + searchCards + "/" + active.tools.length);
+}
+
 for (const category of active.categories) {
   const output = join("dist", "tools", category.id, "index.html");
   try {
     const html = await readFile(output, "utf8");
     categoryPages.set(category.id, html);
+    verifyOrganization(html, "/tools/" + category.id);
+    verifyBreadcrumb(html, "/tools/" + category.id);
     if (!toolsPage.includes('data-tool-filter="' + category.id + '"')) {
       errors.push("Filtro de categoria ausente no diretório: " + category.id);
     }
@@ -30,6 +92,8 @@ for (const tool of active.tools) {
     if (!html.includes("<title>") || !html.includes(tool.name)) {
       errors.push("Página sem título/conteúdo esperado: " + tool.path);
     }
+    verifyOrganization(html, tool.path);
+    verifyBreadcrumb(html, tool.path);
     if (!sitemap.includes(site + tool.path)) {
       errors.push("Página ausente no sitemap: " + tool.path);
     }
@@ -57,9 +121,10 @@ if (!robots.includes("Sitemap: " + site + "/sitemap.xml")) errors.push("robots.t
 
 if (errors.length) {
   console.error("Verificação do site falhou:");
-  for (const error of errors) console.error(" - " + error);
+  for (const error of [...new Set(errors)]) console.error(" - " + error);
   process.exit(1);
 }
-console.log("Diretório verificado: /tools apresenta " + active.tools.length + " ferramentas pesquisáveis e filtros por categoria.");
+console.log("Pesquisa bilingue verificada: " + searchCards + " ferramentas no diretório.");
+console.log("BreadcrumbList e Organization schema válidos em " + (active.categories.length + active.tools.length + 1) + " páginas de navegação.");
 console.log("Ferramentas verificadas: " + active.tools.length + " páginas dedicadas, com presença no diretório, categoria e sitemap.");
-console.log("SEO verificado: sitemap, robots.txt, painel privado e encaminhamento externo do blog.");
+console.log("SEO verificado: sitemap, robots.txt, painel privado, perfis oficiais e encaminhamento externo do blog.");
