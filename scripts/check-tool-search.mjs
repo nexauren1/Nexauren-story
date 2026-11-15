@@ -4,6 +4,9 @@ import { buildTranslatedSearchText, matchesToolSearch, normaliseToolSearch } fro
 
 const dictionary = JSON.parse(await readFile(new URL("../public/translations/en.json", import.meta.url), "utf8"));
 const catalog = JSON.parse(await readFile(new URL("../src/data/activeTools.json", import.meta.url), "utf8"));
+const toolsPage = await readFile(new URL("../src/pages/tools.astro", import.meta.url), "utf8");
+assert.ok(toolsPage.includes("new URLSearchParams(window.location.search)"), "Directory search must read query parameters in the browser for static hosting");
+assert.ok(toolsPage.includes('input.value = initialParams.get("q") || ""'), "Homepage search query must prefill the catalogue search");
 
 assert.equal(normaliseToolSearch("Áudio e Imagens"), "audio e imagens");
 
