@@ -1,0 +1,16 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Contador de palavras — Ferramenta online gratuita | Nexauren Story" description="Conta palavras, caracteres, linhas, parágrafos e espaços em tempo real e gera um resumo do texto.">
+<div class="site-shell"><SiteHeader/><main class="tool-page tool-page-premium">
+<nav class="tool-breadcrumb"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/text">Texto</a><span>›</span><span>Contador de palavras</span></nav>
+<header class="tool-page-header"><div class="tool-title"><span class="section-kicker">NEXAUREN / LABORATÓRIO DE TEXTO</span><h1>Contador de palavras</h1><p>Conta palavras, caracteres, linhas, parágrafos e espaços em tempo real e gera um resumo do texto.</p></div><div class="tool-header-actions"><span class="tool-state"><i></i> MOTOR DISPONÍVEL</span><FavoriteButton client:load itemId="text-word-counter" title="Contador de palavras" kind="tool" href="/tools/text-word-counter"/></div></header>
+<UniversalTool client:load toolId="text-word-counter" name="Contador de palavras" category="text" description="Conta palavras, caracteres, linhas, parágrafos e espaços em tempo real e gera um resumo do texto." kind="text"/>
+<TrackActivity client:load activityId="text-word-counter" activityTitle="Usou Contador de palavras"/>
+<section class="tool-trust-strip"><span>◈ Processamento local</span><span>⌁ Sem instalação</span><span>↗ Resultado descarregável</span></section>
+</main><SiteFooter/></div></SiteLayout>

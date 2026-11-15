@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Diferença entre datas — Ferramenta online | Nexauren Story" description="Calcula dias, semanas e meses entre datas.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/dates">Data e tempo</a><span>›</span><span aria-current="page">Diferença entre datas</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">Δ</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Diferença entre datas</h1><p>Calcula dias, semanas e meses entre datas.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="date-difference" title="Diferença entre datas" kind="tool" href="/tools/date-difference"/></div>
+  </header>
+  <UniversalTool client:load toolId="date-difference" name="Diferença entre datas" category="dates" description="Calcula dias, semanas e meses entre datas." kind="dates"/>
+  <TrackActivity client:load activityId="date-difference" activityTitle="Usou Diferença entre datas"/>
+</main><SiteFooter/></div>
+</SiteLayout>

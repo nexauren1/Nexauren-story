@@ -2,15 +2,21 @@
 import "../styles/global.css";
 import "../styles/rebuild.css";
 import "../styles/portal.css";
+import "../styles/account-premium.css";
+import "../styles/compressor.css";
 import catalog from "../data/activeTools.json";
 const {
   title = "Nexauren Story — Free Online Tools & Technology",
   description = "Explore free online tools for images, PDF, text and audio, plus practical technology guides.",
-  noIndex = false
+  noIndex = false,
+  showAds = true
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, "https://nexaurenstory.com").toString();
 const robots = noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
 const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isAccountWorkspace = currentPath === "/account";
+const isToolWorkspace = catalog.tools.some((tool) => tool.path === currentPath);
+const renderAds = showAds && !noIndex && !isAccountWorkspace && !isToolWorkspace;
 const currentCategory = catalog.categories.find((category) => currentPath === "/tools/" + category.id);
 const currentTool = catalog.tools.find((tool) => currentPath === tool.path);
 const breadcrumbTrail = currentPath === "/tools"
@@ -77,7 +83,7 @@ const schema = {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2381605116846917" crossorigin="anonymous"></script>
+  {renderAds && <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2381605116846917" crossorigin="anonymous"></script>}
   <meta name="theme-color" content="#050b1c" />
   <meta name="color-scheme" content="dark light" />
   <meta name="description" content={description} />

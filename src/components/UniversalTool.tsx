@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 
 type Props = { toolId: string; name: string; category: string; description: string; kind: string };
 const encoder = new TextEncoder();
@@ -7,6 +7,25 @@ function escapeHtml(value: string) { return value.replace(/&/g, "&amp;").replace
 function decodeEntities(value: string) { const el = document.createElement("textarea"); el.innerHTML = value; return el.value; }
 function slugify(value: string) { return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 function sizeLabel(bytes: number) { return bytes < 1048576 ? (bytes / 1024).toFixed(1) + " KB" : (bytes / 1048576).toFixed(2) + " MB"; }
+type DecodedImageFile = { source: CanvasImageSource; width: number; height: number; dispose: () => void };
+async function decodeImageFile(file: File): Promise<DecodedImageFile> {
+  if (typeof createImageBitmap === "function") {
+    try { const bitmap = await createImageBitmap(file); return { source: bitmap, width: bitmap.width, height: bitmap.height, dispose: () => bitmap.close() }; }
+    catch { /* Use the browser image element as a fallback. */ }
+  }
+  const url = URL.createObjectURL(file);
+  try {
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const element = new Image(); let settled = false;
+      const finish = () => { if (settled) return; if (element.naturalWidth && element.naturalHeight) { settled = true; resolve(element); } else if (element.complete) { settled = true; reject(new Error("O formato da imagem não é suportado. Usa JPG, PNG ou WebP.")); } };
+      element.onload = finish;
+      element.onerror = () => { if (!settled) { settled = true; reject(new Error("Não foi possível descodificar a imagem. Experimenta JPG, PNG ou WebP.")); } };
+      element.src = url;
+      if (element.complete) queueMicrotask(finish);
+    });
+    return { source: image, width: image.naturalWidth, height: image.naturalHeight, dispose: () => URL.revokeObjectURL(url) };
+  } catch (error) { URL.revokeObjectURL(url); throw error; }
+}
 function parsePages(value: string, total: number) {
   const chosen = new Set<number>();
   for (const part of value.split(",")) {
@@ -21,7 +40,7 @@ function parsePages(value: string, total: number) {
 function parsePageOrder(value: string, total: number): number[] {
   const chosen: number[] = [];
   for (const part of value.split(",")) {
-    const match = part.trim().match(/^(\d+)(?:\s*-\s*(\d+))?$/);
+    const match = part.trim().match(/^(\\d+)(?:\\s*-\\s*(\\d+))?$/);
     if (!match) throw new Error("Usa a ordem desejada, por exemplo 3,1-2,5.");
     const first = Number(match[1]); const last = Number(match[2] || match[1]);
     if (first < 1 || last < first || last > total) throw new Error("As páginas têm de estar entre 1 e " + total + ".");
@@ -90,12 +109,16 @@ export default function UniversalTool({ toolId, name, category, description, kin
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [complete, setComplete] = useState(false);
+  useEffect(() => () => {
+    if (resultUrl) URL.revokeObjectURL(resultUrl);
+  }, [resultUrl]);
   const isFileTool = ["image", "pdf", "audio"].includes(kind);
   const accepts = kind === "image" ? "image/*" : kind === "pdf" ? ".pdf,application/pdf" : "audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac";
   const helper = useMemo(() => {
     if (toolId.startsWith("pdf-")) return "Seleciona um PDF. Para operações de várias páginas, indica intervalos como 1-3,5.";
     if (toolId.startsWith("audio-")) return "O áudio é descodificado no dispositivo e exportado em WAV PCM.";
     if (toolId.startsWith("image-")) return "O processamento da imagem é feito localmente no teu navegador.";
+    if (toolId === "text-word-counter") return "Cola ou escreve o texto para contar palavras, caracteres, linhas e parágrafos.";
     if (toolId.includes("date") || toolId.includes("weekday") || toolId.includes("days-in") || toolId.includes("unix-time") || toolId.includes("age-")) return "Usa uma data no formato indicado. Os cálculos são feitos no teu dispositivo.";
     if (kind === "calculators") return "Introduz os valores nos campos e executa o cálculo.";
     return "Os dados são processados no teu dispositivo. Nada é enviado para a Nexauren.";
@@ -223,6 +246,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
       case "compound-interest": return "Montante final: " + fmt(a * Math.pow(1 + b / 100, c)) + "\nJuros acumulados: " + fmt(a * Math.pow(1 + b / 100, c) - a);
       case "bill-splitter": if (b <= 0) throw new Error("O número de pessoas tem de ser superior a zero."); return "Cada pessoa paga: " + fmt(a / b);
       case "unit-converter": {
+        if (!paramA.trim() || !Number.isFinite(a)) throw new Error("Introduz um valor numérico válido.");
         const unit = paramB || "km-mi"; const factors: Record<string, number> = { "km-mi": .621371, "mi-km": 1.60934, "kg-lb": 2.20462, "lb-kg": .453592, "c-f": 1.8, "m-ft": 3.28084, "ft-m": .3048 };
         if (unit === "c-f") return fmt(a * 1.8 + 32) + " °F";
         if (unit === "f-c") return fmt((a - 32) / 1.8) + " °C";
@@ -318,8 +342,8 @@ export default function UniversalTool({ toolId, name, category, description, kin
       } else if (toolId === "pdf-rotate") {
         pages.forEach((page) => page.setRotation(degrees((page.getRotation().angle + 90) % 360)));
       } else if (toolId === "pdf-duplicate-page") {
-        const requestedPage = Number(paramA); if (!Number.isInteger(requestedPage) || requestedPage < 1 || requestedPage > total) throw new Error("Indica um número de página entre 1 e " + total + ".");
-        const index = requestedPage - 1; const copied = await doc.copyPages(doc, [index]); doc.insertPage(index + 1, copied[0]);
+        const index = Math.max(1, Number(paramA) || 1) - 1; if (index >= total) throw new Error("A página indicada não existe.");
+        const copied = await doc.copyPages(doc, [index]); doc.insertPage(index + 1, copied[0]);
       } else if (toolId === "pdf-clean-metadata") {
         doc.setTitle(""); doc.setAuthor(""); doc.setSubject(""); doc.setKeywords([]); doc.setCreator(""); doc.setProducer("");
       } else if (toolId === "pdf-compressor") {
@@ -334,38 +358,44 @@ export default function UniversalTool({ toolId, name, category, description, kin
     }
     if (kind === "image") {
       if (!file) throw new Error("Seleciona uma imagem.");
-      const imageUrl = URL.createObjectURL(file); const image = new Image();
-      try {
-        await new Promise<void>((resolve, reject) => {
-          image.onload = () => resolve();
-          image.onerror = () => reject(new Error("Não foi possível abrir esta imagem. Tenta JPG, PNG ou WebP."));
-          image.src = imageUrl;
-          if (image.complete && image.naturalWidth > 0) resolve();
+      if (toolId === "image-base64") {
+        const data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result));
+          reader.onerror = () => reject(new Error("Falha ao ler a imagem."));
+          reader.readAsDataURL(file);
         });
-      } catch (error) { URL.revokeObjectURL(imageUrl); throw error; }
-      const w = image.naturalWidth; const h = image.naturalHeight;
-      if (toolId === "image-info") { setResult("Nome: " + file.name + "\nFormato: " + file.type + "\nDimensões: " + w + " × " + h + " px\nTamanho: " + sizeLabel(file.size)); URL.revokeObjectURL(imageUrl); return; }
-      if (toolId === "image-base64") { const data = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = () => reject(new Error("Falha ao ler a imagem.")); reader.readAsDataURL(file); }); setResult(data); URL.revokeObjectURL(imageUrl); return; }
-      let width = w; let height = h;
-      if (toolId === "image-crop") { width = Math.max(1, Math.min(w, Number(paramA) || Math.floor(w * .75))); height = Math.max(1, Math.min(h, Number(paramB) || Math.floor(h * .75))); }
-      if (toolId === "image-rotate" && Math.round(Number(paramA) || 90) % 180 !== 0) { width = h; height = w; }
-      const canvas = document.createElement("canvas"); canvas.width = width; canvas.height = height;
-      const ctx = canvas.getContext("2d"); if (!ctx) throw new Error("O navegador não conseguiu iniciar o processamento.");
-      if (toolId === "image-grayscale") ctx.filter = "grayscale(1)";
-      if (toolId === "image-invert") ctx.filter = "invert(1)";
-      
-      if (toolId === "image-rotate") { const angle = Number(paramA) || 90; ctx.translate(width / 2, height / 2); ctx.rotate(angle * Math.PI / 180); ctx.drawImage(image, -w / 2, -h / 2, w, h); }
-      else if (toolId === "image-flip") { ctx.translate(width, 0); ctx.scale(-1, 1); ctx.drawImage(image, 0, 0, width, height); }
-      else if (toolId === "image-crop") { const sx = Math.floor((w - width) / 2); const sy = Math.floor((h - height) / 2); ctx.drawImage(image, sx, sy, width, height, 0, 0, width, height); }
-      else ctx.drawImage(image, 0, 0, width, height);
-      URL.revokeObjectURL(imageUrl); setProgress(65);
-      const mime = toolId === "image-convert" ? format : "image/webp";
-      const quality = toolId === "image-compress" ? Math.max(.2, Math.min(.95, (Number(paramA) || 78) / 100)) : .84;
-      const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((value) => value ? resolve(value) : reject(new Error("O navegador não conseguiu exportar a imagem. Experimenta outro formato.")), mime, quality));
-      const extension = mime === "image/jpeg" ? "jpg" : mime === "image/png" ? "png" : "webp";
-      setDownloadName(file.name.replace(/\.[^.]+$/, "") + "-nexauren." + extension);
-      setResult("Imagem processada: " + width + " × " + height + " px\nOriginal: " + sizeLabel(file.size) + "\nNovo: " + sizeLabel(blob.size));
-      setResultUrl(URL.createObjectURL(blob)); return;
+        setResult(data);
+        return;
+      }
+      const decoded = await decodeImageFile(file);
+      try {
+        const image = decoded.source;
+        const w = decoded.width; const h = decoded.height;
+        if (toolId === "image-info") { setResult("Nome: " + file.name + "\nFormato: " + file.type + "\nDimensões: " + w + " × " + h + " px\nTamanho: " + sizeLabel(file.size)); return; }
+        let width = w; let height = h;
+        if (toolId === "image-crop") { width = Math.max(1, Math.min(w, Number(paramA) || Math.floor(w * .75))); height = Math.max(1, Math.min(h, Number(paramB) || Math.floor(h * .75))); }
+        if (toolId === "image-rotate" && Math.round(Number(paramA) || 90) % 180 !== 0) { width = h; height = w; }
+        const canvas = document.createElement("canvas"); canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext("2d"); if (!ctx) throw new Error("O navegador não conseguiu iniciar o processamento.");
+        if (toolId === "image-grayscale") ctx.filter = "grayscale(1)";
+        if (toolId === "image-invert") ctx.filter = "invert(1)";
+        if (toolId === "image-compress") ctx.filter = "contrast(1.02) saturate(.98)";
+        if (toolId === "image-rotate") { const angle = Number(paramA) || 90; ctx.translate(width / 2, height / 2); ctx.rotate(angle * Math.PI / 180); ctx.drawImage(image, -w / 2, -h / 2, w, h); }
+        else if (toolId === "image-flip") { ctx.translate(width, 0); ctx.scale(-1, 1); ctx.drawImage(image, 0, 0, width, height); }
+        else if (toolId === "image-crop") { const sx = Math.floor((w - width) / 2); const sy = Math.floor((h - height) / 2); ctx.drawImage(image, sx, sy, width, height, 0, 0, width, height); }
+        else ctx.drawImage(image, 0, 0, width, height);
+        setProgress(65);
+        const mime = toolId === "image-convert" ? format : "image/webp";
+        const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((value) => value ? resolve(value) : reject(new Error("Não foi possível gerar a imagem.")), mime, .84));
+        const actualMime = blob.type || mime;
+        const extension = actualMime === "image/jpeg" ? "jpg" : actualMime === "image/png" ? "png" : "webp";
+        setDownloadName(file.name.replace(/\.[^.]+$/, "") + "-nexauren." + extension);
+        setResult("Imagem processada: " + width + " × " + height + " px\nFormato final: " + actualMime.replace("image/", "").toUpperCase() + "\nOriginal: " + sizeLabel(file.size) + "\nNovo: " + sizeLabel(blob.size));
+        setResultUrl(URL.createObjectURL(blob)); return;
+      } finally {
+        decoded.dispose();
+      }
     }
     if (kind === "audio") {
       if (!file) throw new Error("Seleciona um áudio.");
@@ -410,7 +440,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
 
   async function process() {
     if (busy) return;
-    setBusy(true); setProgress(8); setError(""); setNotice("A preparar o motor de processamento…"); setResult(""); setComplete(false);
+    setBusy(true); setProgress(8); setError(""); setNotice("A preparar o motor de processamento…"); setResult(""); setResultUrl(""); setComplete(false);
     try {
       await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
       setProgress(28);
@@ -430,32 +460,44 @@ export default function UniversalTool({ toolId, name, category, description, kin
     } finally { setBusy(false); }
   }
 
-  const translateResult = (isFileTool && !["image-base64", "pdf-metadata"].includes(toolId)) || ["calculators", "dates", "colors"].includes(kind) || ["text-word-counter", "text-character-counter", "timestamp-converter", "csv-validator", "json-validator"].includes(toolId);
-  const fields = kind === "calculators" || kind === "colors" || kind === "dates" || kind === "developer" || (kind === "pdf" && ["pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "pdf-duplicate-page"].includes(toolId)) || (kind === "generators" && ["password-generator", "random-number-generator", "hex-generator"].includes(toolId)) || (kind === "image" && ["image-crop", "image-rotate"].includes(toolId)) || (kind === "audio" && ["audio-volume", "audio-speed"].includes(toolId));
-  const labelA = toolId === "regex-tester" ? "Expressão regular" : toolId === "date-difference" || toolId === "age-calculator" || toolId === "contrast-checker" || toolId === "color-mixer" ? "Segundo valor" : toolId === "unit-converter" ? "Valor numérico" : toolId === "pdf-duplicate-page" ? "Número da página a duplicar" : toolId === "pdf-split" || toolId === "pdf-remove-pages" || toolId === "pdf-reorder-pages" ? (toolId === "pdf-reorder-pages" ? "Nova ordem (ex.: 3,1-2,5)" : "Páginas (ex.: 1-3,5)") : toolId === "image-crop" ? "Largura de corte" : toolId === "image-rotate" ? "Ângulo em graus" : toolId === "rgb-to-hex" ? "Canal vermelho (R)" : toolId === "password-generator" || toolId === "hex-generator" ? "Comprimento" : toolId === "random-number-generator" ? "Valor mínimo" : toolId === "audio-volume" ? "Ganho em dB" : toolId === "audio-speed" ? "Velocidade (0,5 a 2)" : "Valor / opção";
-  const labelB = toolId === "regex-tester" ? "Opções RegEx" : toolId === "contrast-checker" || toolId === "color-mixer" ? "Segunda cor HEX" : toolId === "image-crop" ? "Altura de corte" : toolId === "rgb-to-hex" ? "Canal verde (G)" : toolId === "random-number-generator" ? "Valor máximo" : toolId === "unit-converter" ? "Conversão (ex.: km-mi)" : "Segundo valor";
-  const showMainText = !isFileTool || kind === "dates" || kind === "colors" || kind === "calculators" && toolId === "average-calculator";
+  const paramATools = new Set([
+    "percentage-calculator", "percentage-change", "discount-calculator", "vat-calculator", "rule-of-three", "simple-interest", "compound-interest", "bill-splitter", "unit-converter",
+    "date-difference", "date-add-days", "date-subtract-days", "age-calculator",
+    "regex-tester", "contrast-checker", "color-mixer", "rgb-to-hex", "alpha-color", "gradient-css", "css-gradient-generator",
+    "pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "pdf-duplicate-page",
+    "password-generator", "random-number-generator", "hex-generator", "lorem-generator",
+    "image-crop", "image-rotate", "audio-volume", "audio-speed"
+  ]);
+  const paramBTools = new Set([
+    "percentage-calculator", "percentage-change", "discount-calculator", "vat-calculator", "rule-of-three", "simple-interest", "compound-interest", "bill-splitter", "unit-converter",
+    "date-difference", "age-calculator", "regex-tester", "contrast-checker", "color-mixer", "rgb-to-hex",
+    "pdf-split", "pdf-remove-pages", "pdf-reorder-pages", "image-crop", "random-number-generator"
+  ]);
+  const paramCTools = new Set(["rule-of-three", "simple-interest", "compound-interest", "rgb-to-hex", "random-number-generator"]);
+  const showParamA = paramATools.has(toolId);
+  const showParamB = paramBTools.has(toolId);
+  const showParamC = paramCTools.has(toolId);
+  const fields = showParamA || showParamB || showParamC;
+  const labelA = toolId === "regex-tester" ? "Expressão regular" : toolId === "date-difference" ? "Segunda data" : toolId === "age-calculator" ? "Data de referência" : toolId === "contrast-checker" || toolId === "color-mixer" ? "Segunda cor HEX" : toolId === "unit-converter" ? "Valor numérico" : toolId === "percentage-calculator" || toolId === "percentage-change" || toolId === "discount-calculator" || toolId === "vat-calculator" ? "Valor principal" : toolId === "lorem-generator" ? "Número de palavras" : toolId === "pdf-split" || toolId === "pdf-remove-pages" || toolId === "pdf-reorder-pages" ? "Páginas (ex.: 1-3,5)" : toolId === "image-crop" ? "Largura de corte" : toolId === "image-rotate" ? "Ângulo em graus" : toolId === "rgb-to-hex" ? "Canal vermelho (R)" : toolId === "password-generator" || toolId === "hex-generator" ? "Comprimento" : toolId === "random-number-generator" ? "Valor mínimo" : toolId === "audio-volume" ? "Ganho em dB" : toolId === "audio-speed" ? "Velocidade (0,5 a 2)" : "Valor / opção";
+  const labelB = toolId === "regex-tester" ? "Opções RegEx" : toolId === "contrast-checker" || toolId === "color-mixer" ? "Segunda cor HEX" : toolId === "percentage-calculator" || toolId === "percentage-change" || toolId === "discount-calculator" || toolId === "vat-calculator" ? "Percentagem (%)" : toolId === "rgb-to-hex" ? "Canal verde (G)" : toolId === "image-crop" ? "Altura de corte" : toolId === "random-number-generator" ? "Valor máximo" : toolId === "unit-converter" ? "Conversão (ex.: km-mi)" : "Segundo valor";
+  const showMainText = !isFileTool && (
+    ["text", "converters", "developer", "dates"].includes(kind) ||
+    (kind === "colors" && toolId !== "rgb-to-hex") ||
+    toolId === "average-calculator" ||
+    toolId === "sha256-generator"
+  );
   return <div className="universal-tool">
     <div className="universal-tool-main">
       <section className="tool-panel universal-input-panel">
         <div className="panel-topline"><div><h2>Área de trabalho</h2><p>{description}</p></div><span className="text-live-badge">● MOTOR LOCAL</span></div>
         {isFileTool && <label className="upload-zone universal-upload"><input ref={fileInput} className="file-input-hidden" type="file" accept={accepts} multiple={toolId === "pdf-merge"} onChange={onFileChange}/><span className="upload-icon">{kind === "pdf" ? "PDF" : kind === "audio" ? "♫" : "◈"}</span><strong>{files.length ? files.map((file) => file.name).join(", ") : "Seleciona ou arrasta o ficheiro"}</strong><small>{files.length ? files.map((file) => sizeLabel(file.size)).join(" · ") : helper}</small><span className="upload-cta">{files.length ? "Trocar ficheiro" : "Selecionar ficheiro"}</span></label>}
         {showMainText && <label className="universal-label"><span>{kind === "dates" ? "Data ou hora principal" : kind === "colors" ? "Cor HEX / texto principal" : kind === "calculators" ? "Lista de valores / entrada" : "Entrada"}</span><textarea value={text} onChange={(e) => setText(e.target.value)} className="universal-editor" placeholder={kind === "colors" ? "#3158C7" : kind === "dates" ? "2026-11-09" : "Escreve ou cola os dados aqui…"} spellCheck={false}/></label>}
-        {kind === "pdf" && ["pdf-split", "pdf-remove-pages", "pdf-reorder-pages"].includes(toolId) && <div className="pdf-page-presets" aria-label="Selecção rápida de páginas">
-  <span>Selecção rápida</span>
-  <div className="pdf-page-preset-buttons">
-    <button type="button" onClick={() => setParamA("1")}>Página 1</button>
-    <button type="button" onClick={() => setParamA("1-3")}>Primeiras 3</button>
-    <button type="button" onClick={() => setParamA("1-5")}>Primeiras 5</button>
-    <button type="button" onClick={() => setParamA("")}>Limpar</button>
-  </div>
-</div>}
-         {fields && <div className="universal-fields">
-          <label className="universal-label"><span>{labelA}</span><input value={paramA} onChange={(e) => setParamA(e.target.value)} placeholder={toolId === "regex-tester" ? "\\d+" : toolId.includes("date") || toolId === "age-calculator" ? "2026-12-31" : "Introduz um valor"}/></label>
-          {kind !== "pdf" && <label className="universal-label"><span>{labelB}</span><input value={paramB} onChange={(e) => setParamB(e.target.value)} placeholder={toolId === "regex-tester" ? "g, i, m…" : "Introduz um valor"}/></label>}
-          {(kind === "calculators" || toolId === "rgb-to-hex" || toolId === "random-number-generator") && <label className="universal-label"><span>Terceiro valor</span><input value={paramC} onChange={(e) => setParamC(e.target.value)} placeholder="Se necessário"/></label>}
+        {fields && <div className="universal-fields">
+          {showParamA && <label className="universal-label"><span>{labelA}</span><input value={paramA} onChange={(e) => setParamA(e.target.value)} placeholder={toolId === "regex-tester" ? "\\d+" : toolId.includes("date") || toolId === "age-calculator" ? "2026-12-31" : toolId === "password-generator" || toolId === "hex-generator" ? "24" : toolId === "unit-converter" ? "1.5" : "Introduz um valor"}/></label>}
+          {showParamB && <label className="universal-label"><span>{labelB}</span><input value={paramB} onChange={(e) => setParamB(e.target.value)} placeholder={toolId === "regex-tester" ? "g, i, m…" : toolId === "unit-converter" ? "km-mi" : "Introduz um valor"}/></label>}
+          {showParamC && <label className="universal-label"><span>{toolId === "random-number-generator" ? "Quantidade de números" : toolId === "rgb-to-hex" ? "Canal azul (B)" : "Terceiro valor"}</span><input value={paramC} onChange={(e) => setParamC(e.target.value)} placeholder="Introduz um valor"/></label>}
         </div>}
-        {kind === "image" && <label className="universal-label format-select"><span>Formato de saída</span><select value={format} onChange={(e) => setFormat(e.target.value)}><option value="image/webp">WebP</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></label>}
+        {kind === "image" && toolId === "image-convert" && <label className="universal-label format-select"><span>Formato de saída</span><select value={format} onChange={(e) => setFormat(e.target.value)}><option value="image/webp">WebP</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></label>}
         {error && <div className="error-banner" role="alert">{error}</div>}
         {notice && <div className={complete ? "success-banner" : "processing-message"}><b>{complete ? "✓" : "◌"}</b>{notice}</div>}
       </section>
@@ -471,7 +513,7 @@ export default function UniversalTool({ toolId, name, category, description, kin
     </div>
     <section className="tool-panel universal-result-panel">
       <div className="panel-topline"><div><h2>Resultado</h2><p>{result ? "O processamento terminou. Revê e guarda o resultado." : "O resultado da operação vai aparecer nesta área."}</p></div><span className="text-output-count">{result.length.toLocaleString("pt-PT")} caracteres</span></div>
-      {result && <pre className="universal-result" aria-live="polite" data-translate-content={translateResult ? "true" : undefined}>{result}</pre>}
+      {result && <pre className="universal-result" aria-live="polite">{result}</pre>}
       {resultUrl && <div className="universal-download-row"><span><b>Ficheiro pronto</b><small>{downloadName}</small></span><a className="download-button" href={resultUrl} download={downloadName}>↓ Descarregar resultado</a></div>}
       {!result && !resultUrl && <div className="tool-empty universal-empty"><span>✧</span>O resultado será apresentado aqui depois da execução.</div>}
       <div className="universal-result-actions"><button className="secondary-button" disabled={!result} onClick={() => navigator.clipboard.writeText(result).then(() => setNotice("Resultado copiado para a área de transferência.")).catch(() => setError("Não foi possível copiar automaticamente."))}>Copiar texto</button><button className="secondary-button" disabled={!result && !resultUrl} onClick={() => { setText(""); setResult(""); setResultUrl(""); setProgress(0); setNotice(""); setComplete(false); setFiles([]); }}>Reiniciar ferramenta</button></div>

@@ -46,25 +46,13 @@ export default function PDFSplitter() {
     } catch (cause) { setTotal(0); setError(cause instanceof Error ? "Não foi possível ler o PDF. " + cause.message : "PDF inválido ou protegido."); }
   }
   function change(event: ChangeEvent<HTMLInputElement>) { void choose(event.target.files?.[0]); event.target.value = ""; }
-  function invertSelection() {
-    if (!total || busy) return;
-    try {
-      const selected = new Set(parsePages(range, total));
-      const remaining = Array.from({length: total}, (_, index) => index).filter((index) => !selected.has(index));
-      if (!remaining.length) { setError("A selecção já inclui todas as páginas."); return; }
-      setRange(remaining.map((index) => String(index + 1)).join(","));
-      setUrl(""); setProgress(0); setMessage(""); setError("");
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "Verifica a selecção atual."); }
-  }
-  function setPreset(kind: "all" | "odd" | "even" | "first" | "last" | "firstFive" | "lastFive") {
+  function setPreset(kind: "all" | "odd" | "even" | "first" | "last") {
     if (!total) return;
     if (kind === "all") setRange("1-" + total);
     if (kind === "odd") setRange(Array.from({length:Math.ceil(total/2)},(_,i)=>String(i*2+1)).join(","));
     if (kind === "even") setRange(Array.from({length:Math.floor(total/2)},(_,i)=>String(i*2+2)).join(","));
     if (kind === "first") setRange("1");
     if (kind === "last") setRange(String(total));
-    if (kind === "firstFive") setRange("1-" + Math.min(5, total));
-    if (kind === "lastFive") setRange(Math.max(1, total - 4) + "-" + total);
     setUrl(""); setProgress(0); setMessage("");
   }
   async function split() {
@@ -107,9 +95,6 @@ export default function PDFSplitter() {
           <button type="button" disabled={!file||busy} onClick={()=>setPreset("even")}>Pares</button>
           <button type="button" disabled={!file||busy} onClick={()=>setPreset("first")}>Primeira</button>
           <button type="button" disabled={!file||busy} onClick={()=>setPreset("last")}>Última</button>
-          <button type="button" disabled={!file||busy} onClick={()=>setPreset("firstFive")}>Primeiras 5</button>
-          <button type="button" disabled={!file||busy} onClick={()=>setPreset("lastFive")}>Últimas 5</button>
-          <button type="button" disabled={!file||busy||!range.trim()} onClick={invertSelection}>Inverter selecção</button>
         </div>
         {error && <div className="error-banner" role="alert">{error}</div>}
         {message && <div className={progress===100?"success-banner":"processing-message"}><b>{progress===100?"✓":"◌"}</b>{message}</div>}

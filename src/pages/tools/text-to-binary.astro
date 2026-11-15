@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Texto para binário — Ferramenta online | Nexauren Story" description="Converte texto UTF-8 em bits.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/converters">Conversores</a><span>›</span><span aria-current="page">Texto para binário</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">01</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Texto para binário</h1><p>Converte texto UTF-8 em bits.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="text-to-binary" title="Texto para binário" kind="tool" href="/tools/text-to-binary"/></div>
+  </header>
+  <UniversalTool client:load toolId="text-to-binary" name="Texto para binário" category="converters" description="Converte texto UTF-8 em bits." kind="converters"/>
+  <TrackActivity client:load activityId="text-to-binary" activityTitle="Usou Texto para binário"/>
+</main><SiteFooter/></div>
+</SiteLayout>

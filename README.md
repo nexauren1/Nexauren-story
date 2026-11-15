@@ -13,9 +13,9 @@ Portal de ferramentas online gratuitas e conteúdo tecnológico, com conta pesso
 
 ## Public tools
 
-O catálogo público tem **50 ferramentas activas**, distribuídas por quatro categorias. Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
+O catálogo público tem **78 ferramentas activas**, distribuídas por dez categorias. Cada ferramenta tem uma página dedicada e operações próprias; os cartões só são publicados depois de existir um motor de processamento.
 
-### Image — 10 tools
+### Image — 11 tools
 - Resize image; crop image; image watermark; rotate and flip image.
 - Image information; grayscale conversion; colour inversion; image format conversion; horizontal flip; image-to-Base64.
 
@@ -23,9 +23,27 @@ O catálogo público tem **50 ferramentas activas**, distribuídas por quatro ca
 - PDF optimiser; merge PDFs; split PDFs; rotate PDFs; PDF inspection.
 - Page count; metadata viewer; extract page ranges; remove pages; reorder pages; rotate pages; duplicate pages; clear metadata.
 
-### Text — 18 tools
-- Text toolbox; text case converter; find and replace.
+### Text — 22 tools
+- Text toolbox; text case converter; find and replace; word counter; character counter; password and UUID generators.
 - Uppercase; lowercase; title case; clean spaces and lines; sort lines; remove duplicate lines; reverse lines; URL slug; Base64 encode/decode; URL encode/decode; JSON formatter/minifier; CSV to JSON.
+
+### Converters — 5 tools
+- HTML escape/unescape; JSON to CSV; text to binary; binary to text.
+
+### Generators — 3 tools
+- SHA-256 hash; random number; Lorem text.
+
+### Calculators — 2 tools
+- Unit conversion; percentage calculation.
+
+### Developer — 6 tools
+- JSON validation; JWT decoding; regular-expression testing; URL parsing; CSS minification; timestamp conversion.
+
+### Colours and design — 3 tools
+- Contrast checking; HEX to RGB; RGB to HEX.
+
+### Date and time — 4 tools
+- Date difference; weekday finder; days in month; ISO week.
 
 ### Audio — 9 tools
 - Audio cutter; volume normaliser; audio information; silence trimming; gain adjustment; fade-in; fade-out; reverse audio; speed adjustment.
@@ -46,7 +64,7 @@ The image, PDF, audio and text operations run in the browser. Tool descriptions 
 - npm run check:catalog validates IDs, categories and the presence of each dedicated page.
 - The public catalogue searches in Portuguese and English, ignores accents, supports multi-word queries and common task aliases, and keeps search/category filters in shareable URL parameters.
 - Press `/` on the catalogue page to focus search; use `Escape` to clear the current query.
-- `npm run check:search` tests bilingual matching against all 50 active catalogue entries.
+- `npm run check:search` tests bilingual matching against all 78 active catalogue entries.
 - `npm run check:translations` checks required English labels, catalogue coverage and inline translation script syntax.
 - scripts/verify-output.mjs validates generated tool pages, catalogue links, sitemap entries and private admin exclusion.
 
@@ -81,8 +99,8 @@ Set the PUBLIC_FIREBASE_* variables in .env using the Firebase Web app configura
 ## Routes
 - / — bilingual home page (English default, Portuguese available)
 - /tools — searchable public catalogue with category filters
-- /tools/image, /tools/pdf, /tools/text, /tools/audio — category pages
-- 50 dedicated tool pages across image, PDF, text and audio categories
+- /tools/image, /tools/pdf, /tools/text, /tools/audio, /tools/converters, /tools/generators, /tools/calculators, /tools/developer, /tools/colors, /tools/dates — category pages
+- 78 dedicated tool pages across ten categories
 - /account — account, favorites and activity
 - /apps — Android app catalogue
 - Blog externo: https://nexauren.blogspot.com/?m=1 (redirects from /blog and /blog/*)
