@@ -302,3 +302,23 @@ html[data-theme="light"] .ns-search-suggestions button{background:#fff}
 
 .ns-search-shortcut{display:inline-grid;min-width:25px;height:25px;place-items:center;border:1px solid var(--ns-line);border-radius:7px;color:var(--ns-dim);font-size:11px;font-family:inherit;font-weight:800}
 @media(max-width:520px){.ns-search-shortcut{display:none}}
+
+
+/* Homepage: improve discovery of Nexauren Android apps and editorial topics. */
+.ns-home-app-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.ns-home-app-card{display:flex;align-items:center;gap:17px;min-width:0;padding:19px;border:1px solid var(--ns-line);border-radius:17px;background:var(--ns-panel);box-shadow:0 10px 28px rgba(0,0,0,.08);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.ns-home-app-card:hover{transform:translateY(-3px);border-color:var(--ns-line-strong);box-shadow:0 16px 34px rgba(0,0,0,.14)}
+.ns-home-app-mark{width:58px;height:58px;flex:0 0 58px;display:grid;place-items:center;border:1px solid rgba(120,180,255,.22);border-radius:16px;color:#fff;font:800 19px 'Space Grotesk';box-shadow:0 9px 22px rgba(0,0,0,.2)}
+.ns-home-app-mark-image{background:linear-gradient(145deg,#239eaa,#4059d7 65%,#9065d8)}
+.ns-home-app-mark-archiver{background:linear-gradient(145deg,#1e9c92,#305aa2 65%,#694fb4)}
+.ns-home-app-copy{display:grid;gap:6px;min-width:0}
+.ns-home-app-copy>small{color:#55c7ff;font-size:8px;font-weight:850;letter-spacing:1.35px}
+.ns-home-app-copy>b{color:var(--ns-text);font:700 16px/1.3 'Space Grotesk'}
+.ns-home-app-copy>span{color:var(--ns-muted);font-size:11px;line-height:1.6}
+.ns-home-app-copy>strong{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:5px;color:#62c6ff;font-size:10px}
+.ns-home-app-copy>strong i{font-style:normal;font-size:16px}
+.ns-editorial-topics{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 21px}
+.ns-editorial-topics span{padding:7px 10px;border:1px solid var(--ns-line);border-radius:999px;background:rgba(15,45,88,.32);color:var(--ns-muted);font-size:9px;font-weight:750}
+html[data-theme="light"] .ns-editorial-topics span{background:rgba(255,255,255,.72)}
+@media(max-width:800px){.ns-home-app-grid{grid-template-columns:1fr}.ns-home-app-card{padding:16px}}
+@media(max-width:480px){.ns-home-app-card{align-items:flex-start;gap:12px;padding:14px}.ns-home-app-mark{width:48px;height:48px;flex-basis:48px;border-radius:13px;font-size:17px}.ns-home-app-copy>b{font-size:14px}.ns-home-app-copy>span{font-size:10px}}
