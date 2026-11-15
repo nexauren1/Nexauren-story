@@ -12,7 +12,7 @@ const {
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, "https://nexaurenstory.com").toString();
 const robots = noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
-const routePath = Astro.url.pathname.replace(/\\/+$/, "") || "/";
+const routePath = Astro.url.pathname !== "/" && Astro.url.pathname.endsWith("/") ? Astro.url.pathname.slice(0, -1) : Astro.url.pathname;
 const isToolWorkspace = catalog.tools.some((tool) => tool.path === routePath);
 const adsEnabled = !noIndex && routePath !== "/account" && !isToolWorkspace;
 const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
