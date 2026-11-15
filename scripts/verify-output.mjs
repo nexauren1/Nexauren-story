@@ -11,6 +11,7 @@ const categoryPages = new Map();
 const errors = [];
 
 const homePage = await readFile("dist/index.html", "utf8");
+const accountPage = await readFile("dist/account/index.html", "utf8");
 const adsTxt = await readFile("dist/ads.txt", "utf8");
 const adsPublisherLine = "google.com, pub-2381605116846917, DIRECT, f08c47fec0942fa0";
 const faviconPng = await readFile("dist/favicon.png");
@@ -27,6 +28,9 @@ if (!homePage.includes('content="https://nexaurenstory.com/favicon.png"')) {
   errors.push("Imagem social não aponta para o logótipo Nexauren.");
 }
 const adsScriptMarker = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+if (!accountPage.includes('content="noindex,nofollow"')) errors.push("A conta deve estar marcada como noindex.");
+if (accountPage.includes(adsScriptMarker)) errors.push("O script AdSense não deve carregar na conta privada.");
+if (sitemap.includes(site + "/account")) errors.push("A conta privada não deve aparecer no sitemap.");
 const adsScriptCount = homePage.split(adsScriptMarker).length - 1;
 if (adsScriptCount !== 1) {
   errors.push("O código AdSense deve aparecer exactamente uma vez na página inicial; encontrado: " + adsScriptCount);
@@ -116,6 +120,7 @@ for (const tool of active.tools) {
     }
     verifyOrganization(html, tool.path);
     verifyBreadcrumb(html, tool.path);
+    if (html.includes(adsScriptMarker)) errors.push("O script AdSense não deve carregar em ferramentas de processamento: " + tool.path);
     if (!sitemap.includes(site + tool.path)) {
       errors.push("Página ausente no sitemap: " + tool.path);
     }
