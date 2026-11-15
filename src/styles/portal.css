@@ -282,3 +282,20 @@ html[data-theme="light"] .editorial-card.blog-article-card{background:linear-gra
 .nx-account-benefits>div{padding:14px 12px;border-bottom:1px solid var(--ns-line)}
 .nx-account-benefits>div:last-child{border-bottom:0}
 @media(max-width:600px){.nx-ad-slot{margin:10px auto;min-height:90px}.nx-ad-frame{overflow:hidden}.nx-account-layout{gap:16px}.nx-account-auth-wrap{padding:16px}.nx-account-page-heading{margin:24px auto}}
+
+
+/* Better catalogue search discoverability and keyboard ergonomics. */
+.ns-search-suggestions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:12px 2px 0;color:var(--ns-dim);font-size:10px}
+.ns-search-suggestions>span{font-weight:700;margin-right:2px}
+.ns-search-suggestions button{min-height:29px;padding:5px 10px;border:1px solid var(--ns-line);border-radius:999px;background:rgba(12,31,65,.55);color:var(--ns-muted);font-size:10px;font-weight:750;cursor:pointer;transition:background .18s ease,border-color .18s ease,color .18s ease,transform .18s ease}
+html[data-theme="light"] .ns-search-suggestions button{background:#fff}
+.ns-search-suggestions button:hover{border-color:#348eff;background:rgba(21,111,236,.12);color:var(--ns-text);transform:translateY(-1px)}
+.ns-filter-chip small{display:inline-grid;min-width:18px;height:18px;place-items:center;padding:0 4px;border-radius:999px;background:rgba(120,150,205,.14);font-size:9px;font-weight:800}
+.ns-filter-chip.is-active small{background:rgba(255,255,255,.2);color:#fff}
+.ns-empty-state{display:grid;justify-items:center;gap:13px}
+.ns-empty-state p{margin:0;max-width:540px;line-height:1.6}
+.ns-empty-reset{min-height:39px;padding:9px 14px;border:1px solid var(--ns-line-strong);border-radius:10px;background:rgba(13,95,208,.12);color:var(--ns-text);font-size:11px;font-weight:800;cursor:pointer;transition:background .18s ease,border-color .18s ease}
+.ns-empty-reset:hover{border-color:#348eff;background:rgba(21,111,236,.22)}
+.ns-search-field:focus-within{border-color:#328cff;box-shadow:0 0 0 3px rgba(49,139,255,.13)}
+.ns-filter-chip:focus-visible,.ns-search-suggestions button:focus-visible,.ns-empty-reset:focus-visible{outline:3px solid #4e9dff;outline-offset:3px}
+@media(max-width:640px){.ns-search-suggestions{gap:6px}.ns-search-suggestions>span{flex-basis:100%}.ns-filter-chip{min-height:38px;padding:9px 11px}}
