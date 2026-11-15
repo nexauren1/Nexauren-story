@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import "../styles/rebuild.css";
 import "../styles/portal.css";
+import catalog from "../data/activeTools.json";
 const {
   title = "Nexauren Story — Free Online Tools & Technology",
   description = "Explore free online tools for images, PDF, text and audio, plus practical technology guides.",
@@ -9,11 +10,55 @@ const {
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, "https://nexaurenstory.com").toString();
 const robots = noIndex ? "noindex,nofollow" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const currentCategory = catalog.categories.find((category) => currentPath === "/tools/" + category.id);
+const currentTool = catalog.tools.find((tool) => currentPath === tool.path);
+const breadcrumbTrail = currentPath === "/tools"
+  ? [{ name: "Início", url: "https://nexaurenstory.com/" }, { name: "Ferramentas" }]
+  : currentCategory
+    ? [{ name: "Início", url: "https://nexaurenstory.com/" }, { name: "Ferramentas", url: "https://nexaurenstory.com/tools" }, { name: currentCategory.name }]
+    : currentTool
+      ? [
+          { name: "Início", url: "https://nexaurenstory.com/" },
+          { name: "Ferramentas", url: "https://nexaurenstory.com/tools" },
+          { name: catalog.categories.find((category) => category.id === currentTool.category)?.name ?? "Ferramentas", url: "https://nexaurenstory.com/tools/" + currentTool.category },
+          { name: currentTool.name }
+        ]
+      : [];
+const breadcrumbSchema = breadcrumbTrail.length >= 2 ? {
+  "@type": "BreadcrumbList",
+  "@id": canonical + "#breadcrumbs",
+  "itemListElement": breadcrumbTrail.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    ...(item.url ? { "item": item.url } : {})
+  }))
+} : null;
 const schema = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "Organization", "@id": "https://nexaurenstory.com/#organization", "name": "Nexauren Story", "url": "https://nexaurenstory.com/", "logo": "https://nexaurenstory.com/favicon.svg" },
-    { "@type": "WebSite", "@id": "https://nexaurenstory.com/#website", "name": "Nexauren Story", "url": "https://nexaurenstory.com/", "inLanguage": ["en", "pt"], "publisher": { "@id": "https://nexaurenstory.com/#organization" }, "potentialAction": { "@type": "SearchAction", "target": "https://nexaurenstory.com/tools?q={search_term_string}", "query-input": "required name=search_term_string" } }
+    {
+      "@type": "Organization",
+      "@id": "https://nexaurenstory.com/#organization",
+      "name": "Nexauren Story",
+      "url": "https://nexaurenstory.com/",
+      "logo": "https://nexaurenstory.com/favicon.svg",
+      "sameAs": [
+        "https://www.youtube.com/@Nexauren",
+        "https://bsky.app/profile/nexauren.bsky.social",
+        "https://www.facebook.com/nexaurentech"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://nexaurenstory.com/#website",
+      "name": "Nexauren Story",
+      "url": "https://nexaurenstory.com/",
+      "inLanguage": ["en", "pt"],
+      "publisher": { "@id": "https://nexaurenstory.com/#organization" }
+    },
+    ...(breadcrumbSchema ? [breadcrumbSchema] : [])
   ]
 };
 ---
@@ -47,7 +92,7 @@ const schema = {
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content="https://nexaurenstory.com/og-cover.svg" />
   <title>{title}</title>
-  <script type="application/ld+json" set:html={JSON.stringify(schema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, "\\u003c")}></script>
   <script is:inline>
     (() => {
       try {
