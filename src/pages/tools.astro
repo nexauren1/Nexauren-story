@@ -4,67 +4,145 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import catalog from "../data/activeTools.json";
 const initialQuery = Astro.url.searchParams.get("q") ?? "";
+const requestedCategory = Astro.url.searchParams.get("category") ?? "all";
+const initialCategory = ["all", ...catalog.categories.map((item) => item.id)].includes(requestedCategory) ? requestedCategory : "all";
 ---
 <SiteLayout title="Ferramentas online gratuitas — Imagem, PDF, texto e áudio | Nexauren Story" description="Explore 50 ferramentas online gratuitas para editar imagens, organizar PDFs, transformar texto e processar áudio. Pesquise e filtre o catálogo Nexauren Story.">
 <div class="site-shell">
   <SiteHeader />
   <main class="ns-main ns-catalog-page">
     <header class="ns-page-hero">
-      <div><span class="ns-eyebrow"><i>▦</i> DIRETÓRIO DE FERRAMENTAS</span><h1>Todas as <em>ferramentas.</em></h1><p>Encontra a solução certa para editar, converter, organizar e transformar os teus ficheiros. Todas as ferramentas estão organizadas por categoria.</p></div>
+      <div><span class="ns-eyebrow"><i>▦</i> DIRETÓRIO DE FERRAMENTAS</span><h1>Todas as <em>ferramentas.</em></h1><p>Encontra a solução certa para editar, converter, organizar e transformar os teus ficheiros. Pesquisa em português ou inglês e filtra por categoria.</p></div>
       <div class="ns-page-hero-art"><span class="ns-toolbox-symbol">⚙</span><span class="ns-page-glow"></span></div>
     </header>
     <section class="ns-catalog-controls" aria-label="Pesquisar e filtrar ferramentas">
       <label class="ns-search-field"><span aria-hidden="true">⌕</span><input id="tool-search" type="search" value={initialQuery} placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas" autocomplete="off"/><button id="tool-search-clear" type="button" aria-label="Limpar pesquisa" hidden>×</button></label>
+      <div class="ns-search-suggestions" aria-label="Pesquisas rápidas"><span>Pesquisa rápida:</span><button type="button" data-search-suggestion="pdf">PDF</button><button type="button" data-search-suggestion="image">Image</button><button type="button" data-search-suggestion="audio">Audio</button><button type="button" data-search-suggestion="convert">Convert</button></div>
       <div class="ns-filter-row" role="group" aria-label="Filtrar por categoria">
-        <button type="button" class="ns-filter-chip is-active" data-tool-filter="all">Todas as ferramentas</button>
-        {catalog.categories.map(category => <button type="button" class="ns-filter-chip" data-tool-filter={category.id}><span>{category.icon}</span>{category.name}</button>)}
+        <button type="button" class:list={["ns-filter-chip", { "is-active": initialCategory === "all" }]} data-tool-filter="all" aria-pressed={initialCategory === "all"}>Todas as ferramentas</button>
+        {catalog.categories.map(category => <button type="button" class:list={["ns-filter-chip", { "is-active": initialCategory === category.id }]} data-tool-filter={category.id} aria-pressed={initialCategory === category.id}><span>{category.icon}</span>{category.name}<small>{catalog.tools.filter(tool => tool.category === category.id).length}</small></button>)}
       </div>
     </section>
-    <div class="ns-results-heading"><div><span class="ns-section-kicker">CATÁLOGO COMPLETO</span><h2>Encontra o que precisas.</h2></div><span id="tool-results-count">{catalog.tools.length} ferramentas</span></div>
+    <div class="ns-results-heading"><div><span class="ns-section-kicker">CATÁLOGO COMPLETO</span><h2>Encontra o que precisas.</h2></div><span id="tool-results-count" role="status" aria-live="polite" aria-atomic="true">{catalog.tools.length} ferramentas</span></div>
     <section class="ns-tool-grid ns-directory-grid" id="tool-grid" aria-label="Todas as ferramentas">
       {catalog.tools.map(tool => {
         const category = catalog.categories.find(item => item.id === tool.category);
-        return <a class="ns-tool-card ns-directory-card" data-tool-card data-category={tool.category} data-search={(tool.name+" "+tool.description+" "+(category?.name ?? "")).toLocaleLowerCase()} href={tool.path}>
+        const searchValues = [tool.name, tool.description, tool.id, tool.id.replaceAll("-", " "), category?.name ?? "", category?.description ?? "", category?.id ?? ""];
+        return <a class="ns-tool-card ns-directory-card" data-tool-card data-category={tool.category} data-search-values={JSON.stringify(searchValues)} href={tool.path}>
           <div class="ns-tool-card-top"><span class="ns-tool-icon">{tool.icon}</span><span class="ns-tool-pill">{category?.name}</span></div>
           <h2>{tool.name}</h2><p>{tool.description}</p>
           <span class="ns-tool-card-link">Abrir ferramenta <b>↗</b></span>
         </a>;
       })}
     </section>
-    <p id="tool-empty-state" class="ns-empty-state" hidden>Não encontrámos ferramentas com essa pesquisa. Experimenta outras palavras ou uma categoria diferente.</p>
+    <div id="tool-empty-state" class="ns-empty-state" hidden>
+      <p>Não encontrámos ferramentas com essa pesquisa. Experimenta palavras em português ou inglês.</p>
+      <button id="tool-reset-filters" class="ns-empty-reset" type="button">Limpar pesquisa e filtros</button>
+    </div>
     <div class="ns-catalog-note"><span>◈</span><p>O processamento das ferramentas compatíveis acontece diretamente no teu navegador. Os ficheiros originais não são enviados para os nossos servidores.</p></div>
   </main>
   <SiteFooter />
 </div>
 <script>
+import { matchesToolSearch } from "../lib/tool-search.js";
+
 const input = document.querySelector("#tool-search");
 const clearButton = document.querySelector("#tool-search-clear");
 const cards = [...document.querySelectorAll("[data-tool-card]")];
 const filters = [...document.querySelectorAll("[data-tool-filter]")];
+const suggestions = [...document.querySelectorAll("[data-search-suggestion]")];
 const count = document.querySelector("#tool-results-count");
 const empty = document.querySelector("#tool-empty-state");
-let activeCategory = "all";
-function filterTools() {
-  const query = (input?.value || "").trim().toLocaleLowerCase();
+const resetButton = document.querySelector("#tool-reset-filters");
+let activeCategory = filters.find((button) => button.classList.contains("is-active"))?.getAttribute("data-tool-filter") || "all";
+let searchDictionary = {};
+
+function updateAddressBar() {
+  const url = new URL(window.location.href);
+  const query = (input?.value || "").trim();
+  if (query) url.searchParams.set("q", query);
+  else url.searchParams.delete("q");
+  if (activeCategory !== "all") url.searchParams.set("category", activeCategory);
+  else url.searchParams.delete("category");
+  window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+}
+
+function filterTools(updateUrl = false) {
+  const query = (input?.value || "").trim();
   let visible = 0;
   cards.forEach(card => {
     const categoryMatch = activeCategory === "all" || card.getAttribute("data-category") === activeCategory;
-    const searchMatch = !query || (card.getAttribute("data-search") || "").includes(query);
+    let values = [];
+    try { values = JSON.parse(card.getAttribute("data-search-values") || "[]"); } catch {}
+    const searchMatch = !query || matchesToolSearch(query, values, searchDictionary);
     const show = categoryMatch && searchMatch;
     card.hidden = !show;
     if (show) visible++;
   });
-  if (count) count.textContent = visible + (visible === 1 ? " ferramenta" : " ferramentas");
+  if (count) count.textContent = visible + " " + (visible === 1 ? "ferramenta" : "ferramentas");
   if (empty) empty.hidden = visible > 0;
   if (clearButton) clearButton.hidden = !query;
+  if (updateUrl) updateAddressBar();
 }
-filters.forEach(button => button.addEventListener("click", () => {
-  activeCategory = button.getAttribute("data-tool-filter") || "all";
-  filters.forEach(item => item.classList.toggle("is-active", item === button));
-  filterTools();
+
+filters.forEach(button => {
+  const selected = button.getAttribute("data-tool-filter") === activeCategory;
+  button.classList.toggle("is-active", selected);
+  button.setAttribute("aria-pressed", String(selected));
+  button.addEventListener("click", () => {
+    activeCategory = button.getAttribute("data-tool-filter") || "all";
+    filters.forEach(item => {
+      const isActive = item === button;
+      item.classList.toggle("is-active", isActive);
+      item.setAttribute("aria-pressed", String(isActive));
+    });
+    filterTools(true);
+  });
+});
+
+input?.addEventListener("input", () => filterTools(true));
+clearButton?.addEventListener("click", () => {
+  if (input) input.value = "";
+  input?.focus();
+  filterTools(true);
+});
+suggestions.forEach(button => button.addEventListener("click", () => {
+  if (input) input.value = button.getAttribute("data-search-suggestion") || "";
+  filterTools(true);
+  input?.focus();
 }));
-input?.addEventListener("input", filterTools);
-clearButton?.addEventListener("click", () => { if (input) input.value = ""; input?.focus(); filterTools(); });
+resetButton?.addEventListener("click", () => {
+  if (input) input.value = "";
+  activeCategory = "all";
+  filters.forEach(button => {
+    const selected = button.getAttribute("data-tool-filter") === "all";
+    button.classList.toggle("is-active", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+  filterTools(true);
+  input?.focus();
+});
+
+document.addEventListener("keydown", event => {
+  const target = event.target;
+  const isTyping = target instanceof HTMLElement && (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
+  if (event.key === "/" && !isTyping && !event.ctrlKey && !event.metaKey && !event.altKey) {
+    event.preventDefault();
+    input?.focus();
+  }
+  if (event.key === "Escape" && target === input && input?.value) {
+    input.value = "";
+    filterTools(true);
+  }
+});
+
 filterTools();
+void fetch("/translations/en.json", { cache: "force-cache" })
+  .then(response => response.ok ? response.json() : {})
+  .then(dictionary => {
+    searchDictionary = dictionary;
+    filterTools();
+  })
+  .catch(() => {});
 </script>
 </SiteLayout>
