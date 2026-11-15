@@ -26,7 +26,8 @@ assert.equal(matchesToolSearch("cortar audio", getTool("audio-cutter"), dictiona
 for (const tool of catalog.tools) {
   const values = getTool(tool.id);
   assert.ok(buildTranslatedSearchText(values, dictionary).length > 0, "Empty search index: " + tool.id);
-  for (const value of [tool.name, tool.description, catalog.categories.find((category) => category.id === tool.category)?.name, catalog.categories.find((category) => category.id === tool.category)?.description]) {
+  const category = catalog.categories.find((item) => item.id === tool.category);
+  for (const value of [tool.name, tool.description, category?.name, category?.description]) {
     assert.equal(typeof dictionary[value], "string", "Missing English search translation: " + value);
   }
 }
