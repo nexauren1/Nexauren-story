@@ -7,6 +7,9 @@ const sitemap = await readFile("dist/sitemap.xml", "utf8");
 const robots = await readFile("dist/robots.txt", "utf8");
 const redirects = await readFile("dist/_redirects", "utf8");
 const toolsPage = await readFile("dist/tools/index.html", "utf8");
+const categoryPages = new Map();
+const errors = [];
+
 const homePage = await readFile("dist/index.html", "utf8");
 const adsTxt = await readFile("dist/ads.txt", "utf8");
 const adsPublisherLine = "google.com, pub-2381605116846917, DIRECT, f08c47fec0942fa0";
@@ -23,12 +26,11 @@ if (!homePage.includes('href="/favicon.png"')) {
 if (!homePage.includes('content="https://nexaurenstory.com/favicon.png"')) {
   errors.push("Imagem social não aponta para o logótipo Nexauren.");
 }
-const adsScriptCount = (homePage.match(/pagead\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/g) ?? []).length;
+const adsScriptMarker = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+const adsScriptCount = homePage.split(adsScriptMarker).length - 1;
 if (adsScriptCount !== 1) {
   errors.push("O código AdSense deve aparecer exactamente uma vez na página inicial; encontrado: " + adsScriptCount);
 }
-const categoryPages = new Map();
-const errors = [];
 
 function readStructuredData(html, route) {
   const match = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/i);
