@@ -58,6 +58,16 @@ const schema = {
       "inLanguage": ["en", "pt"],
       "publisher": { "@id": "https://nexaurenstory.com/#organization" }
     },
+    {
+      "@type": "WebPage",
+      "@id": canonical + "#webpage",
+      "url": canonical,
+      "name": title,
+      "description": description,
+      "isPartOf": { "@id": "https://nexaurenstory.com/#website" },
+      "publisher": { "@id": "https://nexaurenstory.com/#organization" },
+      "inLanguage": ["en", "pt"]
+    },
     ...(breadcrumbSchema ? [breadcrumbSchema] : [])
   ]
 };
