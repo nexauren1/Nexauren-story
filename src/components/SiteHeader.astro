@@ -10,6 +10,7 @@ const current = Astro.url.pathname;
     <nav class="ns-desktop-nav" aria-label="Navegação principal">
       <a href="/" class:list={{active:current==="/"}}>Início</a>
       <a href="/tools" class:list={{active:current.startsWith("/tools")}}>Ferramentas</a>
+      <a href="/apps" class:list={{active:current==="/apps"}}>Aplicações</a>
       <a href="https://nexauren.blogspot.com/?m=1" target="_blank" rel="noopener noreferrer">Blog</a>
       <a href="/about" class:list={{active:current==="/about"}}>Sobre</a>
       <a href="/contact" class:list={{active:current==="/contact"}}>Contacto</a>
@@ -37,6 +38,7 @@ const current = Astro.url.pathname;
 <nav class="ns-mobile-nav" data-mobile-menu aria-label="Navegação móvel">
   <a href="/">Início</a>
   <a href="/tools">Ferramentas</a>
+  <a href="/apps">Aplicações</a>
   <a href="https://nexauren.blogspot.com/?m=1" target="_blank" rel="noopener noreferrer">Blog</a>
   <a href="/about">Sobre</a>
   <a href="/contact">Contacto</a>
