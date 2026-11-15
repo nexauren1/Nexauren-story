@@ -5,10 +5,25 @@ const dictionary = JSON.parse(fs.readFileSync("public/translations/en.json", "ut
 const catalog = JSON.parse(fs.readFileSync("src/data/activeTools.json", "utf8"));
 const missing = [];
 const layoutSource = fs.readFileSync("src/layouts/SiteLayout.astro", "utf8");
-const inlineScripts = [...layoutSource.matchAll(/<script is:inline>([\\s\\S]*?)<\\/script>/g)];
-if (!inlineScripts.length) missing.push("SiteLayout has no inline translation script");
+const inlineScripts = [];
+let searchFrom = 0;
+const openScript = "<script is:inline>";
+const closeScript = "</script>";
+while (true) {
+  const openAt = layoutSource.indexOf(openScript, searchFrom);
+  if (openAt < 0) break;
+  const bodyStart = openAt + openScript.length;
+  const closeAt = layoutSource.indexOf(closeScript, bodyStart);
+  if (closeAt < 0) {
+    missing.push("Unclosed inline script in SiteLayout");
+    break;
+  }
+  inlineScripts.push(layoutSource.slice(bodyStart, closeAt));
+  searchFrom = closeAt + closeScript.length;
+}
+if (inlineScripts.length < 2) missing.push("SiteLayout is missing one of its expected inline scripts");
 for (let index = 0; index < inlineScripts.length; index++) {
-  try { new vm.Script(inlineScripts[index][1], { filename: "SiteLayout.astro:inline-script-" + index }); }
+  try { new vm.Script(inlineScripts[index], { filename: "SiteLayout.astro:inline-script-" + index }); }
   catch (error) { missing.push("Invalid inline JavaScript: " + error.message); }
 }
 
