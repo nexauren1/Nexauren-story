@@ -7,6 +7,26 @@ const sitemap = await readFile("dist/sitemap.xml", "utf8");
 const robots = await readFile("dist/robots.txt", "utf8");
 const redirects = await readFile("dist/_redirects", "utf8");
 const toolsPage = await readFile("dist/tools/index.html", "utf8");
+const homePage = await readFile("dist/index.html", "utf8");
+const adsTxt = await readFile("dist/ads.txt", "utf8");
+const adsPublisherLine = "google.com, pub-2381605116846917, DIRECT, f08c47fec0942fa0";
+const faviconPng = await readFile("dist/favicon.png");
+if (faviconPng.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a") {
+  errors.push("Favicon PNG ausente ou inválido.");
+}
+if (!adsTxt.split("\n").includes(adsPublisherLine)) {
+  errors.push("ads.txt não contém a autorização do publicador AdSense configurado.");
+}
+if (!homePage.includes('href="/favicon.png"')) {
+  errors.push("Favicon PNG não está ligado no cabeçalho do site.");
+}
+if (!homePage.includes('content="https://nexaurenstory.com/favicon.png"')) {
+  errors.push("Imagem social não aponta para o logótipo Nexauren.");
+}
+const adsScriptCount = (homePage.match(/pagead\\.googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js/g) ?? []).length;
+if (adsScriptCount !== 1) {
+  errors.push("O código AdSense deve aparecer exactamente uma vez na página inicial; encontrado: " + adsScriptCount);
+}
 const categoryPages = new Map();
 const errors = [];
 
