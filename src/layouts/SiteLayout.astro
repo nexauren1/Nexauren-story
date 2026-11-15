@@ -84,7 +84,9 @@ const schema = {
   <meta name="robots" content={robots} />
   <meta name="author" content="Nexauren Story" />
   <link rel="canonical" href={canonical} />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.png" type="image/png" sizes="256x256" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -96,11 +98,16 @@ const schema = {
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
-  <meta property="og:image" content="https://nexaurenstory.com/og-cover.svg" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:image" content="https://nexaurenstory.com/favicon.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="256" />
+  <meta property="og:image:height" content="256" />
+  <meta property="og:image:alt" content="Logótipo Nexauren: um N em gradiente azul, violeta e rosa." />
+  <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content="https://nexaurenstory.com/og-cover.svg" />
+  <meta name="twitter:image" content="https://nexaurenstory.com/favicon.png" />
+  <meta name="twitter:image:alt" content="Logótipo Nexauren: um N em gradiente azul, violeta e rosa." />
   <title>{title}</title>
   <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, "\\u003c")}></script>
   <script is:inline>
