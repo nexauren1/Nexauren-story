@@ -4,9 +4,8 @@ type FinishedFile = { id: string; name: string; originalSize: number; blob: Blob
 function sizeLabel(bytes: number) {
   return bytes < 1024 * 1024 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 }
-function outputName(name: string, suffix: string) {
-  const safeSuffix = suffix.trim().replace(/[\\:*?"<>|]/g, "-").replace(/\//g, "-").replace(/\s+/g, "-");
-  return name.replace(/\.pdf$/i, "") + (safeSuffix || "-otimizado") + ".pdf";
+function outputName(name: string) {
+  return `${name.replace(/\.pdf$/i, "")}-otimizado.pdf`;
 }
 
 export default function PDFCompressor() {
@@ -18,7 +17,6 @@ export default function PDFCompressor() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [removeMetadata, setRemoveMetadata] = useState(false);
-  const [suffix, setSuffix] = useState("-otimizado");
 
   useEffect(() => () => finished.forEach((file) => URL.revokeObjectURL(file.url)), [finished]);
 
@@ -168,15 +166,11 @@ export default function PDFCompressor() {
               <div className="pdf-result-row" key={file.id}>
                 <span className="file-type-icon">PDF</span>
                 <div><b>{file.name}</b><small>Original: {sizeLabel(file.originalSize)} → Novo: {sizeLabel(file.savedSize)} · {Math.round((1 - file.savedSize / file.originalSize) * 100)}%</small></div>
-                <a href={file.url} download={outputName(file.name, suffix)} className="pdf-download-single">↓</a>
+                <a href={file.url} download={outputName(file.name)} className="pdf-download-single">↓</a>
               </div>
             ))}
           </div>
         )}
-        {files.length > 0 && <div className="nx-output-name-setting">
-          <label className="field-label">Sufixo do nome dos ficheiros<input value={suffix} onChange={(event) => setSuffix(event.target.value)} disabled={busy} maxLength={32} placeholder="-otimizado"/></label>
-          <small>Exemplo: documento{suffix.trim() || "-otimizado"}.pdf</small>
-        </div>}
         {error && <div className="error-banner" role="alert">{error}</div>}
         {message && <div className={progress === 100 ? "success-banner" : "processing-message"}><b>{progress === 100 ? "✓" : "◌"}</b>{message}</div>}
       </section>
@@ -204,7 +198,7 @@ export default function PDFCompressor() {
         </div>
         <div className="settings-actions">
           <button className="primary-button" onClick={compress} disabled={!files.length || busy}>{busy ? "A processar PDFs…" : "Optimizar estrutura dos PDFs"}</button>
-          {finished.length > 0 && <button type="button" data-nexa-download-trigger className="secondary-button" onClick={() => finished.forEach((file, index) => window.setTimeout(() => { const link = document.createElement("a"); link.href = file.url; link.download = outputName(file.name, suffix); link.click(); }, index * 350))}>↓  Baixar todos individualmente</button>}
+          {finished.length > 0 && <button className="secondary-button" onClick={() => finished.forEach((file, index) => window.setTimeout(() => { const link = document.createElement("a"); link.href = file.url; link.download = outputName(file.name); link.click(); }, index * 350))}>↓  Baixar todos individualmente</button>}
           <p className="settings-footnote">O processamento ocorre no navegador. Os ficheiros não são enviados para a Nexauren.</p>
         </div>
       </section>

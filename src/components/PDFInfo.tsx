@@ -39,7 +39,7 @@ export default function PDFInfo(){
       {busy&&<div className="processing-message"><b>◌</b>A analisar as páginas e os metadados…</div>}
       {error&&<div className="error-banner" role="alert">{error}</div>}
       {message&&!busy&&<div className={info?"success-banner":"processing-message"}><b>{info?"✓":"◌"}</b>{message}</div>}
-      {info&&<div className="nx-pdf-report-actions"><button type="button" data-nexa-download-trigger className="nx-ghost-button" onClick={()=>report("json")}>Exportar relatório JSON ↓</button><button type="button" data-nexa-download-trigger className="nx-ghost-button" onClick={()=>report("csv")}>Exportar páginas CSV ↓</button></div>}
+      {info&&<div className="nx-pdf-report-actions"><button className="nx-ghost-button" onClick={()=>report("json")}>Exportar relatório JSON ↓</button><button className="nx-ghost-button" onClick={()=>report("csv")}>Exportar páginas CSV ↓</button></div>}
     </section>
     <section className="tool-panel settings-panel nx-pdf-settings">
       <div><div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">02 / RESUMO</span><h2>Propriedades PDF</h2><p>Dados detectados no ficheiro carregado.</p></div></div>

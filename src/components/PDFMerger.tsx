@@ -1,23 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent } from "react";
 
-type PdfItem = { id: string; file: File; pages: number; range: string };
-function parsePageRange(value: string, total: number): number[] {
-  const selected = new Set<number>();
-  for (const part of value.split(",")) {
-    const token = part.trim();
-    if (!token) continue;
-    const match = token.match(/^(\d+)(?:\s*-\s*(\d+))?$/);
-    if (!match) throw new Error("Usa páginas como 1-3,5,8-10.");
-    const first = Number(match[1]), last = Number(match[2] || match[1]);
-    if (first < 1 || last < first || last > total) throw new Error("As páginas têm de estar entre 1 e " + total + ".");
-    for (let page = first; page <= last; page++) selected.add(page - 1);
-  }
-  if (!selected.size) throw new Error("Indica pelo menos uma página.");
-  return [...selected].sort((a, b) => a - b);
-}
-function selectedPageCount(range: string, total: number) {
-  try { return parsePageRange(range, total).length; } catch { return 0; }
-}
+type PdfItem = { id: string; file: File; pages: number };
 function sizeText(bytes: number) { return bytes < 1048576 ? (bytes / 1024).toFixed(1) + " KB" : (bytes / 1048576).toFixed(2) + " MB"; }
 
 export default function PDFMerger() {
@@ -30,8 +13,7 @@ export default function PDFMerger() {
   const [url, setUrl] = useState("");
   const [pages, setPages] = useState(0);
   const totalBytes = items.reduce((sum, item) => sum + item.file.size, 0);
-  const totalPages = items.reduce((sum, item) => sum + selectedPageCount(item.range, item.pages), 0);
-  const allRangesValid = items.every((item) => selectedPageCount(item.range, item.pages) > 0);
+  const totalPages = items.reduce((sum, item) => sum + item.pages, 0);
 
   useEffect(() => () => { if (url) URL.revokeObjectURL(url); }, [url]);
 
@@ -47,7 +29,7 @@ export default function PDFMerger() {
       const parsed: PdfItem[] = [];
       for (const file of unique) {
         const document = await PDFDocument.load(await file.arrayBuffer());
-        parsed.push({ id: file.name + "-" + file.lastModified + "-" + Math.random().toString(36).slice(2), file, pages: document.getPageCount(), range: "1-" + document.getPageCount() });
+        parsed.push({ id: file.name + "-" + file.lastModified + "-" + Math.random().toString(36).slice(2), file, pages: document.getPageCount() });
       }
       setItems((previous) => [...previous, ...parsed]);
       setMessage(parsed.length + " documento(s) adicionado(s). Podes alterar a ordem antes de combinar.");
@@ -68,12 +50,6 @@ export default function PDFMerger() {
     setUrl((previous) => { if (previous) URL.revokeObjectURL(previous); return ""; });
     setProgress(0); setMessage("Ordem actualizada. O resultado anterior foi invalidado.");
   }
-  function reverseOrder() {
-    if (items.length < 2 || busy) return;
-    setItems((previous) => [...previous].reverse());
-    setUrl((previous) => { if (previous) URL.revokeObjectURL(previous); return ""; });
-    setProgress(0); setMessage("Ordem dos documentos invertida. Confirma antes de combinar.");
-  }
   function remove(id: string) {
     setItems((previous) => previous.filter((item) => item.id !== id));
     setUrl((previous) => { if (previous) URL.revokeObjectURL(previous); return ""; });
@@ -90,7 +66,7 @@ export default function PDFMerger() {
         const item = items[index];
         setMessage("A importar " + item.file.name + "…");
         const source = await PDFDocument.load(await item.file.arrayBuffer());
-        const copied = await output.copyPages(source, parsePageRange(item.range, source.getPageCount()));
+        const copied = await output.copyPages(source, source.getPageIndices());
         copied.forEach((page) => output.addPage(page));
         added += copied.length;
         setProgress(Math.round((index + 1) / items.length * 82));
@@ -110,18 +86,18 @@ export default function PDFMerger() {
   return (
     <div className="tool-workspace nx-pdf-workspace">
       <section className="tool-panel nx-pdf-main-panel">
-        <div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">01 / DOCUMENTOS</span><h2>Organiza os teus PDFs</h2><p>Adiciona documentos, escolhe as páginas de cada PDF e define a ordem final.</p></div><span className="nx-local-indicator"><i/> LOCAL</span></div>
+        <div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">01 / DOCUMENTOS</span><h2>Organiza os teus PDFs</h2><p>Adiciona documentos e usa as setas para definir a ordem final.</p></div><span className="nx-local-indicator"><i/> LOCAL</span></div>
         <label className="upload-zone nx-upload-zone" onDragOver={(event) => { event.preventDefault(); event.currentTarget.classList.add("is-dragging"); }} onDragLeave={(event) => event.currentTarget.classList.remove("is-dragging")} onDrop={drop}>
           <input ref={input} className="file-input-hidden" type="file" accept="application/pdf,.pdf" multiple onChange={change}/>
           <span className="nx-upload-symbol">PDF</span><strong>Adicionar documentos PDF</strong><small>Arrasta os ficheiros para aqui ou escolhe no dispositivo · até 60 MB cada</small>
           <span className="upload-cta">Escolher PDFs</span>
         </label>
-        <div className="nx-list-heading"><div><h3>Ordem de combinação</h3><p>{items.length} documentos · {totalPages} páginas · {sizeText(totalBytes)}</p></div><div className="nx-order-toolbar"><button type="button" className="nx-ghost-button" disabled={items.length < 2 || busy} onClick={reverseOrder}>Inverter ordem</button><button type="button" className="nx-ghost-button" disabled={!items.length || busy} onClick={() => { setItems([]); setUrl(""); setPages(0); setProgress(0); setMessage("Lista limpa."); }}>Limpar lista</button></div></div>
+        <div className="nx-list-heading"><div><h3>Ordem de combinação</h3><p>{items.length} documentos · {totalPages} páginas · {sizeText(totalBytes)}</p></div><button type="button" className="nx-ghost-button" disabled={!items.length || busy} onClick={() => { setItems([]); setUrl(""); setPages(0); setProgress(0); setMessage("Lista limpa."); }}>Limpar lista</button></div>
         {items.length ? <div className="nx-pdf-order-list">
           {items.map((item, index) => <article className="nx-pdf-order-item" key={item.id}>
             <span className="nx-pdf-order-number">{String(index + 1).padStart(2, "0")}</span>
             <span className="nx-pdf-file-icon">PDF</span>
-            <div className="nx-pdf-file-info"><b>{item.file.name}</b><small>{item.pages} páginas disponíveis · {selectedPageCount(item.range, item.pages)} seleccionadas · {sizeText(item.file.size)}</small><input className="nx-pdf-range-input" type="text" value={item.range} aria-label={"Páginas a incluir em " + item.file.name} placeholder="Ex.: 1-3,5" disabled={busy} onChange={(event) => { const value = event.target.value; setItems((previous) => previous.map((entry) => entry.id === item.id ? { ...entry, range: value } : entry)); setUrl((previous) => { if (previous) URL.revokeObjectURL(previous); return ""; }); setProgress(0); setMessage(""); setError(""); }}/></div>
+            <div className="nx-pdf-file-info"><b>{item.file.name}</b><small>{item.pages} páginas · {sizeText(item.file.size)}</small></div>
             <div className="nx-order-controls">
               <button type="button" disabled={busy || index === 0} onClick={() => move(index, -1)} aria-label="Mover para cima">↑</button>
               <button type="button" disabled={busy || index === items.length - 1} onClick={() => move(index, 1)} aria-label="Mover para baixo">↓</button>
@@ -136,7 +112,7 @@ export default function PDFMerger() {
 
       <section className="tool-panel settings-panel nx-pdf-settings">
         <div>
-          <div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">02 / RESUMO</span><h2>Documento final</h2><p>Confirma a selecção e a ordem antes de combinar.</p></div></div>
+          <div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">02 / RESUMO</span><h2>Documento final</h2><p>Confirma o conteúdo antes de combinar.</p></div></div>
           <div className="nx-pdf-summary">
             <div><span>Documentos</span><strong>{items.length}</strong></div>
             <div><span>Total de páginas</span><strong>{totalPages}</strong></div>
@@ -147,7 +123,7 @@ export default function PDFMerger() {
           <div className="tool-help-note"><strong>Privacidade:</strong> as páginas são copiadas no navegador. Os ficheiros originais não são enviados para a Nexauren.</div>
         </div>
         <div className="settings-actions">
-          <button className="nx-run-button" disabled={items.length < 2 || busy || !allRangesValid} onClick={() => void merge()}><span>{busy ? "A combinar documentos…" : "Combinar " + items.length + " PDFs"}</span><b>{busy ? "◌" : "↗"}</b></button>
+          <button className="nx-run-button" disabled={items.length < 2 || busy} onClick={() => void merge()}><span>{busy ? "A combinar documentos…" : "Combinar " + items.length + " PDFs"}</span><b>{busy ? "◌" : "↗"}</b></button>
         </div>
       </section>
     </div>

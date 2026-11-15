@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Analisador de URL — Ferramenta online | Nexauren Story" description="Separa protocolo, domínio, caminho e parâmetros.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/developer">Programador</a><span>›</span><span aria-current="page">Analisador de URL</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">↗</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Analisador de URL</h1><p>Separa protocolo, domínio, caminho e parâmetros.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="url-parser" title="Analisador de URL" kind="tool" href="/tools/url-parser"/></div>
+  </header>
+  <UniversalTool client:load toolId="url-parser" name="Analisador de URL" category="developer" description="Separa protocolo, domínio, caminho e parâmetros." kind="developer"/>
+  <TrackActivity client:load activityId="url-parser" activityTitle="Usou Analisador de URL"/>
+</main><SiteFooter/></div>
+</SiteLayout>

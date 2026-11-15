@@ -44,32 +44,6 @@ export default function PDFRotator() {
     }
   }
   function change(event: ChangeEvent<HTMLInputElement>) { void choose(event.target.files?.[0]); event.target.value = ""; }
-  function setPagePreset(preset: "all" | "odd" | "even" | "first" | "last" | "firstFive" | "lastFive") {
-    if (!pageCount || busy) return;
-    setScope("custom");
-    if (preset === "all") setPageRange("1-" + pageCount);
-    if (preset === "odd") setPageRange(Array.from({length: pageCount}, (_, i) => i + 1).filter(n => n % 2 === 1).join(","));
-    if (preset === "even") setPageRange(Array.from({length: pageCount}, (_, i) => i + 1).filter(n => n % 2 === 0).join(","));
-    if (preset === "first") setPageRange("1");
-    if (preset === "last") setPageRange(String(pageCount));
-    if (preset === "firstFive") setPageRange("1-" + Math.min(5, pageCount));
-    if (preset === "lastFive") setPageRange(Math.max(1, pageCount - 4) + "-" + pageCount);
-    setUrl(""); setProgress(0); setMessage(""); setError("");
-  }
-  function invertPageSelection() {
-    if (!pageCount || busy) return;
-    try {
-      const selected = new Set(parsePageSet(pageRange, pageCount));
-      const remaining = Array.from({length: pageCount}, (_, i) => i).filter(i => !selected.has(i));
-      if (!remaining.length) throw new Error("A selecção já inclui todas as páginas.");
-      setPageRange(remaining.map(i => String(i + 1)).join(","));
-      setUrl(""); setProgress(0); setMessage(""); setError("");
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "Verifica a selecção atual."); }
-  }
-  const customSelectionCount = (() => {
-    if (scope !== "custom" || !pageCount) return pageCount;
-    try { return parsePageSet(pageRange, pageCount).length; } catch { return 0; }
-  })();
 
   async function rotate() {
     if (!file || !pageCount || busy) return;
@@ -131,23 +105,12 @@ export default function PDFRotator() {
               <button type="button" className={scope === "all" ? "is-active" : ""} onClick={() => setScope("all")} disabled={!file || busy}>Todas as páginas</button>
               <button type="button" className={scope === "custom" ? "is-active" : ""} onClick={() => setScope("custom")} disabled={!file || busy}>Páginas específicas</button>
             </div>
-            {scope === "custom" && <>
-              <div className="nx-rotate-presets">
-                <button type="button" onClick={() => setPagePreset("all")} disabled={!file || busy}>Todas</button>
-                <button type="button" onClick={() => setPagePreset("odd")} disabled={!file || busy}>Ímpares</button>
-                <button type="button" onClick={() => setPagePreset("even")} disabled={!file || busy}>Pares</button>
-                <button type="button" onClick={() => setPagePreset("firstFive")} disabled={!file || busy}>Primeiras 5</button>
-                <button type="button" onClick={() => setPagePreset("lastFive")} disabled={!file || busy}>Últimas 5</button>
-                <button type="button" onClick={invertPageSelection} disabled={!file || busy || !pageRange.trim()}>Inverter</button>
-              </div>
-              <label className="field-label nx-page-range-field">Números e intervalos<input value={pageRange} onChange={(event) => { setPageRange(event.target.value); setUrl(""); setProgress(0); setError(""); }} placeholder="Ex.: 1-3,5,8-10" disabled={!file || busy}/></label>
-              <p className="range-help">{customSelectionCount ? customSelectionCount + " de " + pageCount + " páginas seleccionadas." : "Intervalo inválido. Usa números como 1-3,5."}</p>
-            </>}
+            {scope === "custom" && <label className="field-label nx-page-range-field">Números e intervalos<input value={pageRange} onChange={(event) => { setPageRange(event.target.value); setUrl(""); }} placeholder="Ex.: 1-3,5,8-10" disabled={!file || busy}/></label>}
             <p className="range-help">{scope === "all" ? "A rotação será aplicada a todas as " + pageCount + " páginas." : "Indica páginas separadas por vírgulas e intervalos. Exemplo: 1-3,5."}</p>
           </div>
           <div className="nx-progress-card"><div className="progress-heading"><span>Processamento</span><b>{progress}%</b></div><div className="progress-track"><div className="progress-fill" style={{ width: progress + "%" }}/></div><p>{busy ? "A aplicar alterações ao PDF…" : progress === 100 ? "Documento pronto." : "O documento original não é alterado."}</p></div>
         </div>
-        <div className="settings-actions"><button className="nx-run-button" disabled={!file || !pageCount || busy || (scope === "custom" && (!pageRange.trim() || !customSelectionCount))} onClick={() => void rotate()}><span>{busy ? "A rodar documento…" : "Aplicar rotação"}</span><b>{busy ? "◌" : "↗"}</b></button><p className="settings-footnote">A rotação altera a orientação da página sem converter o conteúdo em imagem.</p></div>
+        <div className="settings-actions"><button className="nx-run-button" disabled={!file || !pageCount || busy || (scope === "custom" && !pageRange.trim())} onClick={() => void rotate()}><span>{busy ? "A rodar documento…" : "Aplicar rotação"}</span><b>{busy ? "◌" : "↗"}</b></button><p className="settings-footnote">A rotação altera a orientação da página sem converter o conteúdo em imagem.</p></div>
       </section>
     </div>
   );

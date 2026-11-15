@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Conversor Timestamp — Ferramenta online | Nexauren Story" description="Converte Unix timestamp para data.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/developer">Programador</a><span>›</span><span aria-current="page">Conversor Timestamp</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">◷</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Conversor Timestamp</h1><p>Converte Unix timestamp para data.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="timestamp-converter" title="Conversor Timestamp" kind="tool" href="/tools/timestamp-converter"/></div>
+  </header>
+  <UniversalTool client:load toolId="timestamp-converter" name="Conversor Timestamp" category="developer" description="Converte Unix timestamp para data." kind="developer"/>
+  <TrackActivity client:load activityId="timestamp-converter" activityTitle="Usou Conversor Timestamp"/>
+</main><SiteFooter/></div>
+</SiteLayout>

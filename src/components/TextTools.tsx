@@ -115,13 +115,13 @@ export default function TextTools() {
           {operation === "replace" && <div className="nx-replace-fields"><label>Localizar<input value={findText} onChange={(event) => setFindText(event.target.value)} placeholder="Texto a localizar"/></label><label>Substituir por<input value={replaceText} onChange={(event) => setReplaceText(event.target.value)} placeholder="Novo texto"/></label><label className="nx-check-line"><input type="checkbox" checked={caseSensitive} onChange={(event) => setCaseSensitive(event.target.checked)}/> Distinguir maiúsculas e minúsculas</label></div>}
           <div className="nx-selected-operation"><span>Operação seleccionada</span><strong>{chosen?.label ?? "—"}</strong><small>{chosen?.description}</small></div>
           <button className="nx-run-button" type="button" disabled={busy || !source.trim() || (operation === "replace" && !findText)} onClick={() => void process()}><span>{busy ? "A processar texto…" : "Executar transformação"}</span><b>{busy ? "◌" : "↗"}</b></button>
-          <p className={status === "Transformação concluída. Resultado pronto." ? "success-banner nx-tool-status" : "nx-tool-status"} aria-live="polite">{busy ? "A processar localmente…" : status}</p>
+          <p className="nx-tool-status" aria-live="polite">{busy ? "A processar localmente…" : status}</p>
           {error && <div className="error-banner" role="alert">{error}</div>}
         </section>
         <section className="tool-panel nx-text-result-panel">
           <div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">03 / SAÍDA</span><h2>Resultado</h2><p>{output ? "O resultado está pronto para copiar ou guardar." : "O conteúdo transformado aparece aqui."}</p></div><span className="nx-result-count">{output.length.toLocaleString("pt-PT")} caracteres</span></div>
           <textarea className="nx-textarea nx-output-area" value={output} onChange={(event) => setOutput(event.target.value)} placeholder="O resultado aparecerá aqui…" spellCheck aria-label="Resultado"/>
-          <div className="nx-result-actions"><button className="nx-ghost-button" type="button" disabled={!output} onClick={() => void copyOutput()}>Copiar resultado</button><button className="nx-run-button nx-save-button" type="button" data-nexa-download-trigger disabled={!output} onClick={download}>Guardar TXT <b>↓</b></button></div>
+          <div className="nx-result-actions"><button className="nx-ghost-button" type="button" disabled={!output} onClick={() => void copyOutput()}>Copiar resultado</button><button className="nx-run-button nx-save-button" type="button" disabled={!output} onClick={download}>Guardar TXT <b>↓</b></button></div>
         </section>
       </div>
     </div>

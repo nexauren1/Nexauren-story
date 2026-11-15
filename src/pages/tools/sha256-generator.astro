@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Gerador SHA-256 — Ferramenta online | Nexauren Story" description="Calcula o resumo criptográfico SHA-256.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/generators">Geradores</a><span>›</span><span aria-current="page">Gerador SHA-256</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">#</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Gerador SHA-256</h1><p>Calcula o resumo criptográfico SHA-256.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="sha256-generator" title="Gerador SHA-256" kind="tool" href="/tools/sha256-generator"/></div>
+  </header>
+  <UniversalTool client:load toolId="sha256-generator" name="Gerador SHA-256" category="generators" description="Calcula o resumo criptográfico SHA-256." kind="generators"/>
+  <TrackActivity client:load activityId="sha256-generator" activityTitle="Usou Gerador SHA-256"/>
+</main><SiteFooter/></div>
+</SiteLayout>
