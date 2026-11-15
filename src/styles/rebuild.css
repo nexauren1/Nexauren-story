@@ -1076,3 +1076,148 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(
   .ns-follow-after-task-links { width: 100%; }
   .ns-follow-after-task-links a { flex: 1 1 0; }
 }
+
+
+/* User-initiated social follow prompt before downloading a generated file. */
+.nexa-download-dialog {
+  width: min(520px, calc(100vw - 28px));
+  max-width: calc(100vw - 28px);
+  max-height: min(90dvh, 640px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--line, rgba(135, 155, 190, .28));
+  border-radius: 22px;
+  color: var(--text, #eef3ff);
+  background: transparent;
+  box-shadow: 0 28px 100px rgba(0, 0, 0, .38);
+}
+.nexa-download-dialog::backdrop {
+  background: rgba(3, 8, 20, .66);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+}
+.nexa-download-dialog[open] { animation: nexa-download-dialog-in .18s ease-out; }
+@keyframes nexa-download-dialog-in {
+  from { opacity: 0; transform: translateY(10px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.nexa-download-dialog-panel {
+  padding: clamp(20px, 5vw, 30px);
+  border-radius: inherit;
+  background: var(--panel, #0c1529);
+  color: var(--text, #eef3ff);
+}
+.nexa-download-dialog-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.nexa-download-dialog-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #3158c7, #637ef2);
+  color: #fff;
+  font-size: 21px;
+  font-weight: 850;
+  box-shadow: 0 8px 24px rgba(49, 88, 199, .3);
+}
+.nexa-download-dialog-close {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--line, rgba(135, 155, 190, .25));
+  border-radius: 11px;
+  color: inherit;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+.nexa-download-dialog h2 {
+  margin: 0 0 8px;
+  font-size: clamp(20px, 4vw, 25px);
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+.nexa-download-dialog p {
+  margin: 0;
+  color: var(--muted, #9aa8c1);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.nexa-download-socials {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin: 22px 0;
+}
+.nexa-download-social-link {
+  display: flex;
+  min-width: 0;
+  min-height: 52px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid var(--line, rgba(135, 155, 190, .25));
+  border-radius: 12px;
+  color: inherit;
+  background: var(--surface, rgba(130, 150, 190, .08));
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 750;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.nexa-download-social-link span:first-child { font-size: 17px; line-height: 1; }
+.nexa-download-social-link:hover { transform: translateY(-2px); border-color: var(--accent, #718bff); }
+.nexa-download-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.nexa-download-cancel,
+.nexa-download-continue {
+  min-height: 44px;
+  padding: 10px 15px;
+  border-radius: 11px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.nexa-download-cancel {
+  border: 1px solid var(--line, rgba(135, 155, 190, .25));
+  color: inherit;
+  background: transparent;
+}
+.nexa-download-continue {
+  border: 1px solid transparent;
+  color: white;
+  background: linear-gradient(135deg, #3158c7, #5578ed);
+  box-shadow: 0 8px 22px rgba(49, 88, 199, .22);
+}
+.nexa-download-cancel:focus-visible,
+.nexa-download-continue:focus-visible,
+.nexa-download-social-link:focus-visible,
+.nexa-download-dialog-close:focus-visible {
+  outline: 3px solid var(--accent, #718bff);
+  outline-offset: 3px;
+}
+@media (max-width: 420px) {
+  .nexa-download-dialog { width: calc(100vw - 20px); max-width: calc(100vw - 20px); }
+  .nexa-download-dialog-panel { padding: 19px; }
+  .nexa-download-socials { gap: 6px; }
+  .nexa-download-social-link { min-height: 48px; font-size: 11px; }
+  .nexa-download-dialog-actions { align-items: stretch; flex-direction: column-reverse; }
+  .nexa-download-cancel, .nexa-download-continue { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nexa-download-dialog[open] { animation: none; }
+  .nexa-download-social-link { transition: none; }
+}
