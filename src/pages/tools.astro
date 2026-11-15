@@ -3,9 +3,6 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import catalog from "../data/activeTools.json";
-const initialQuery = Astro.url.searchParams.get("q") ?? "";
-const requestedCategory = Astro.url.searchParams.get("category") ?? "all";
-const initialCategory = ["all", ...catalog.categories.map((item) => item.id)].includes(requestedCategory) ? requestedCategory : "all";
 ---
 <SiteLayout title="Ferramentas online gratuitas — Imagem, PDF, texto e áudio | Nexauren Story" description="Explore 50 ferramentas online gratuitas para editar imagens, organizar PDFs, transformar texto e processar áudio. Pesquise e filtre o catálogo Nexauren Story.">
 <div class="site-shell">
@@ -16,11 +13,11 @@ const initialCategory = ["all", ...catalog.categories.map((item) => item.id)].in
       <div class="ns-page-hero-art"><span class="ns-toolbox-symbol">⚙</span><span class="ns-page-glow"></span></div>
     </header>
     <section class="ns-catalog-controls" aria-label="Pesquisar e filtrar ferramentas">
-      <label class="ns-search-field"><span aria-hidden="true">⌕</span><input id="tool-search" type="search" value={initialQuery} placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas" autocomplete="off"/><kbd class="ns-search-shortcut" aria-hidden="true">/</kbd><button id="tool-search-clear" type="button" aria-label="Limpar pesquisa" hidden>×</button></label>
+      <label class="ns-search-field"><span aria-hidden="true">⌕</span><input id="tool-search" type="search" value="" placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas" autocomplete="off"/><kbd class="ns-search-shortcut" aria-hidden="true">/</kbd><button id="tool-search-clear" type="button" aria-label="Limpar pesquisa" hidden>×</button></label>
       <div class="ns-search-suggestions" aria-label="Pesquisas rápidas"><span>Pesquisa rápida:</span><button type="button" data-search-suggestion="pdf">PDF</button><button type="button" data-search-suggestion="image">Imagem</button><button type="button" data-search-suggestion="audio">Áudio</button><button type="button" data-search-suggestion="convert">Converter</button></div>
       <div class="ns-filter-row" role="group" aria-label="Filtrar por categoria">
-        <button type="button" class:list={["ns-filter-chip", { "is-active": initialCategory === "all" }]} data-tool-filter="all" aria-pressed={initialCategory === "all"}>Todas as ferramentas</button>
-        {catalog.categories.map(category => <button type="button" class:list={["ns-filter-chip", { "is-active": initialCategory === category.id }]} data-tool-filter={category.id} aria-pressed={initialCategory === category.id}><span>{category.icon}</span>{category.name}<small>{catalog.tools.filter(tool => tool.category === category.id).length}</small></button>)}
+        <button type="button" class="ns-filter-chip is-active" data-tool-filter="all" aria-pressed="true">Todas as ferramentas</button>
+        {catalog.categories.map(category => <button type="button" class="ns-filter-chip" data-tool-filter={category.id} aria-pressed="false"><span>{category.icon}</span>{category.name}<small>{catalog.tools.filter(tool => tool.category === category.id).length}</small></button>)}
       </div>
     </section>
     <div class="ns-results-heading"><div><span class="ns-section-kicker">CATÁLOGO COMPLETO</span><h2>Encontra o que precisas.</h2></div><span id="tool-results-count" role="status" aria-live="polite" aria-atomic="true">{catalog.tools.length} ferramentas</span></div>
@@ -54,7 +51,10 @@ const suggestions = [...document.querySelectorAll("[data-search-suggestion]")];
 const count = document.querySelector("#tool-results-count");
 const empty = document.querySelector("#tool-empty-state");
 const resetButton = document.querySelector("#tool-reset-filters");
-let activeCategory = filters.find((button) => button.classList.contains("is-active"))?.getAttribute("data-tool-filter") || "all";
+const initialParams = new URLSearchParams(window.location.search);
+if (input) input.value = initialParams.get("q") || "";
+const requestedCategory = initialParams.get("category") || "all";
+let activeCategory = filters.some((button) => button.getAttribute("data-tool-filter") === requestedCategory) ? requestedCategory : "all";
 let searchDictionary = {};
 
 function updateAddressBar() {
