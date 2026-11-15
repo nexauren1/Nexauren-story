@@ -1,0 +1,21 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import FavoriteButton from "../../components/FavoriteButton";
+import TrackActivity from "../../components/TrackActivity";
+import UniversalTool from "../../components/UniversalTool";
+---
+<SiteLayout title="Número da semana — Ferramenta online | Nexauren Story" description="Calcula a semana ISO do ano.">
+<div class="site-shell"><SiteHeader/>
+<main class="ns-main ns-tool-page">
+  <nav class="ns-breadcrumb" aria-label="Trilho de navegação"><a href="/">Início</a><span>›</span><a href="/tools">Ferramentas</a><span>›</span><a href="/tools/dates">Data e tempo</a><span>›</span><span aria-current="page">Número da semana</span></nav>
+  <header class="ns-tool-heading">
+    <span class="ns-tool-heading-icon">W</span>
+    <div class="ns-tool-heading-copy"><span class="ns-section-kicker">NEXAUREN / FERRAMENTA ONLINE</span><h1>Número da semana</h1><p>Calcula a semana ISO do ano.</p></div>
+    <div class="ns-tool-heading-actions"><span class="ns-live-pill"><i></i> MOTOR LOCAL</span><FavoriteButton client:load itemId="iso-week" title="Número da semana" kind="tool" href="/tools/iso-week"/></div>
+  </header>
+  <UniversalTool client:load toolId="iso-week" name="Número da semana" category="dates" description="Calcula a semana ISO do ano." kind="dates"/>
+  <TrackActivity client:load activityId="iso-week" activityTitle="Usou Número da semana"/>
+</main><SiteFooter/></div>
+</SiteLayout>
