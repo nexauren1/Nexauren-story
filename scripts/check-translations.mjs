@@ -60,6 +60,8 @@ const required = [
   "Converter",
   "Antes de descarregar, acompanha as novidades e novas ferramentas nos nossos canais.",
   "Continuar para o download",
+  "Exportar relatório JSON ↓",
+  "Exportar páginas CSV ↓",
   "Segue a Nexauren Story para acompanhares novas ferramentas e novidades.",
   "Aplicações",
   "APLICAÇÕES ANDROID",
@@ -80,6 +82,23 @@ const required = [
   "As versões, dimensões e requisitos podem mudar. Consulta sempre a informação atualizada na página oficial de distribuição.",
   "Descobre aplicações Android da Nexauren para editar imagens e gerir ficheiros. Consulta funcionalidades, requisitos e as páginas oficiais na APKPure."
 ];
+const downloadClickHandler = layoutSource.match(/document\\.addEventListener\\("click",\\s*event\\s*=>\\s*\\{[\\s\\S]*?\\n\\s*\\},\\s*true\\);/);
+if (!downloadClickHandler || !downloadClickHandler[0].includes('target.closest("a[download]")') ||
+    !downloadClickHandler[0].includes('target.closest("[data-nexa-download-trigger]")') ||
+    !downloadClickHandler[0].includes("replayingDownload")) {
+  missing.push("Download interception must cover download links and explicit triggers in the capture phase");
+}
+for (const [file, expected] of [
+  ["src/components/PDFInfo.tsx", 2],
+  ["src/components/PDFCompressor.tsx", 1],
+  ["src/components/TextCaseConverter.tsx", 1],
+  ["src/components/TextFindReplace.tsx", 1],
+  ["src/components/TextTools.tsx", 1]
+]) {
+  const source = fs.readFileSync(file, "utf8");
+  const actual = (source.match(/data-nexa-download-trigger/g) ?? []).length;
+  if (actual !== expected) missing.push(file + ": expected " + expected + " optional download prompt trigger(s), found " + actual);
+}
 for (const key of required) if (!(key in dictionary)) missing.push(key);
 for (const [key, value] of Object.entries(dictionary)) {
   if (!key.trim() || typeof value !== "string" || !value.trim()) {
