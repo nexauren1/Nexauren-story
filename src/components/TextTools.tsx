@@ -121,7 +121,7 @@ export default function TextTools() {
         <section className="tool-panel nx-text-result-panel">
           <div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">03 / SAÍDA</span><h2>Resultado</h2><p>{output ? "O resultado está pronto para copiar ou guardar." : "O conteúdo transformado aparece aqui."}</p></div><span className="nx-result-count">{output.length.toLocaleString("pt-PT")} caracteres</span></div>
           <textarea className="nx-textarea nx-output-area" value={output} onChange={(event) => setOutput(event.target.value)} placeholder="O resultado aparecerá aqui…" spellCheck aria-label="Resultado"/>
-          <div className="nx-result-actions"><button className="nx-ghost-button" type="button" disabled={!output} onClick={() => void copyOutput()}>Copiar resultado</button><button className="nx-run-button nx-save-button" type="button" disabled={!output} onClick={download}>Guardar TXT <b>↓</b></button></div>
+          <div className="nx-result-actions"><button className="nx-ghost-button" type="button" disabled={!output} onClick={() => void copyOutput()}>Copiar resultado</button><button className="nx-run-button nx-save-button" type="button" data-nexa-download-trigger disabled={!output} onClick={download}>Guardar TXT <b>↓</b></button></div>
         </section>
       </div>
     </div>

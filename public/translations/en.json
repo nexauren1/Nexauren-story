@@ -1498,5 +1498,7 @@
   "Definições de anúncios da Google": "Google Ads Settings",
   "e saber mais em": "and learn more in",
   "Como a Google utiliza dados quando utiliza sites ou aplicações dos seus parceiros": "How Google uses data when you use its partners' sites or apps",
-  "Para visitantes do Espaço Económico Europeu, Reino Unido e Suíça, os anúncios personalizados exigem uma plataforma de gestão de consentimento certificada pela Google e integrada com o TCF. Esta configuração deve ser concluída no AdSense antes de servir anúncios personalizados nessas regiões.": "For visitors in the European Economic Area, the United Kingdom and Switzerland, personalised ads require a Google-certified consent management platform integrated with the TCF. Complete this configuration in AdSense before serving personalised ads in those regions."
+  "Para visitantes do Espaço Económico Europeu, Reino Unido e Suíça, os anúncios personalizados exigem uma plataforma de gestão de consentimento certificada pela Google e integrada com o TCF. Esta configuração deve ser concluída no AdSense antes de servir anúncios personalizados nessas regiões.": "For visitors in the European Economic Area, the United Kingdom and Switzerland, personalised ads require a Google-certified consent management platform integrated with the TCF. Complete this configuration in AdSense before serving personalised ads in those regions.",
+  "Exportar relatório JSON ↓": "Export JSON report ↓",
+  "Exportar páginas CSV ↓": "Export pages as CSV ↓"
 }

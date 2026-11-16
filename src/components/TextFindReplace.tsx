@@ -18,7 +18,7 @@ export default function TextFindReplace(){
     </section>
     <section className="tool-panel"><div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">02 / RESULTADO</span><h2>Texto actualizado</h2><p>Confirma o resultado antes de copiar ou guardar.</p></div></div>
       <textarea className="nx-textarea nx-output-area" value={result} onChange={e=>setResult(e.target.value)} placeholder="O resultado da substituição aparece aqui…"/>
-      <div className="nx-result-actions"><button className="nx-ghost-button" disabled={!result} onClick={()=>void copy()}>Copiar resultado</button><button className="nx-ghost-button" disabled={!result} onClick={()=>{const url=URL.createObjectURL(new Blob([result],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="texto-substituido.txt";a.click();window.setTimeout(()=>URL.revokeObjectURL(url),1000);}}>Guardar TXT ↓</button></div>
+      <div className="nx-result-actions"><button className="nx-ghost-button" disabled={!result} onClick={()=>void copy()}>Copiar resultado</button><button className="nx-ghost-button" data-nexa-download-trigger disabled={!result} onClick={()=>{const url=URL.createObjectURL(new Blob([result],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="texto-substituido.txt";a.click();window.setTimeout(()=>URL.revokeObjectURL(url),1000);}}>Guardar TXT ↓</button></div>
     </section>
   </div>;
 }
