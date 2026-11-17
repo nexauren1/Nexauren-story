@@ -83,7 +83,8 @@ const required = [
   "Descobre aplicações Android da Nexauren para editar imagens e gerir ficheiros. Consulta funcionalidades, requisitos e as páginas oficiais na APKPure."
 ];
 const downloadClickHandler = layoutSource.match(/document\.addEventListener\("click",\s*event\s*=>\s*\{[\s\S]*?\n\s*\},\s*true\);/);
-if (!downloadClickHandler || !downloadClickHandler[0].includes('target.closest("a[download]")') ||
+if (!downloadClickHandler || !downloadClickHandler[0].includes("event.isTrusted && event.button === 0") ||
+    !downloadClickHandler[0].includes('target.closest("a[download]")') ||
     !downloadClickHandler[0].includes('target.closest("[data-nexa-download-trigger]")') ||
     !downloadClickHandler[0].includes("replayingDownload")) {
   missing.push("Download interception must cover download links and explicit triggers in the capture phase");
