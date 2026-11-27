@@ -93,7 +93,15 @@ const required = [
   "Produtos publicados e respetivas páginas oficiais.",
   "Novas aplicações serão adicionadas gradualmente.",
   "Esta página apresenta apenas produtos com uma página de distribuição identificada.",
-  "Blog externo ↗"
+  "Blog externo ↗",
+  "Ferramentas para ler, editar, organizar, comprimir e converter documentos PDF no Android.",
+  "Ferramentas para ler, editar, organizar e converter documentos PDF.",
+  "Cria, personaliza, lê e organiza códigos QR e códigos de barras diretamente no telemóvel.",
+  "Cria, personaliza e lê códigos QR e códigos de barras.",
+  "QR e códigos de barras",
+  "Leitor e editor PDF",
+  "Leitor de música",
+  "Leitor de música para ouvir e organizar ficheiros de áudio no dispositivo Android."
 ];
 const downloadClickHandler = layoutSource.match(/document\.addEventListener\("click",\s*event\s*=>\s*\{[\s\S]*?\n\s*\},\s*true\);/);
 if (!downloadClickHandler || !downloadClickHandler[0].includes('target.closest("a[download]")') ||
