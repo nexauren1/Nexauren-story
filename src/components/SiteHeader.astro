@@ -12,6 +12,7 @@ const current = Astro.url.pathname;
       <a href="/tools" class:list={{active:current.startsWith("/tools")}}>Ferramentas</a>
       <a href="/apps" class:list={{active:current==="/apps"}}>Aplicações</a>
       <a href="/about" class:list={{active:current==="/about"}}>Sobre</a>
+      <a href="/contact" class:list={{active:current==="/contact"}}>Contacto</a>
     </nav>
     <div class="ns-header-actions">
       <form class="ns-header-search" action="/tools" method="get" role="search">
@@ -34,11 +35,10 @@ const current = Astro.url.pathname;
   </div>
 </header>
 <nav class="ns-mobile-nav" data-mobile-menu aria-label="Navegação móvel">
+  <form class="ns-mobile-search" action="/tools" method="get" role="search"><label class="sr-only" for="ns-mobile-search-input">Pesquisar ferramentas</label><input id="ns-mobile-search-input" type="search" name="q" placeholder="Pesquisar ferramentas..." /><button type="submit" aria-label="Pesquisar">⌕</button></form>
   <a href="/">Início</a>
   <a href="/tools">Ferramentas</a>
   <a href="/apps">Aplicações</a>
-  <a href="/contact">Contacto</a>
-  <a href="https://nexauren.blogspot.com/?m=1" target="_blank" rel="noopener noreferrer">Blog externo ↗</a>
   <a href="/about">Sobre</a>
   <a href="/contact">Contacto</a>
   <a href="/account">A minha conta</a>
