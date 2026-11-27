@@ -7,6 +7,7 @@ export default function PDFMerger() {
   const input = useRef<HTMLInputElement>(null);
   const [items, setItems] = useState<PdfItem[]>([]);
   const [busy, setBusy] = useState(false);
+  const [loadingFiles, setLoadingFiles] = useState(false);
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -18,12 +19,13 @@ export default function PDFMerger() {
   useEffect(() => () => { if (url) URL.revokeObjectURL(url); }, [url]);
 
   async function addFiles(list: FileList | File[]) {
+    if (busy || loadingFiles) return;
     const incoming = Array.from(list).filter((file) => file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf"));
     if (!incoming.length) { setError("Selecciona ficheiros PDF válidos."); return; }
     if (incoming.some((file) => file.size > 60 * 1048576)) { setError("Cada PDF deve ter no máximo 60 MB."); return; }
     const unique = incoming.filter((file) => !items.some((item) => item.file.name === file.name && item.file.size === file.size && item.file.lastModified === file.lastModified));
     if (!unique.length) { setMessage("Os documentos seleccionados já estão na lista."); return; }
-    setError(""); setMessage("A analisar os documentos…"); setProgress(0);
+    setError(""); setMessage("A analisar os documentos…"); setProgress(0); setLoadingFiles(true);
     try {
       const { PDFDocument } = await import("pdf-lib");
       const parsed: PdfItem[] = [];
@@ -37,10 +39,10 @@ export default function PDFMerger() {
     } catch (cause) {
       setError(cause instanceof Error ? "Não foi possível abrir um dos PDFs. " + cause.message : "Verifica se os PDFs não estão protegidos.");
       setMessage("");
-    }
+    } finally { setLoadingFiles(false); }
   }
   function change(event: ChangeEvent<HTMLInputElement>) { if (event.target.files) void addFiles(event.target.files); event.target.value = ""; }
-  function drop(event: DragEvent<HTMLLabelElement>) { event.preventDefault(); event.currentTarget.classList.remove("is-dragging"); void addFiles(event.dataTransfer.files); }
+  function drop(event: DragEvent<HTMLLabelElement>) { event.preventDefault(); event.currentTarget.classList.remove("is-dragging"); if (busy || loadingFiles) return; void addFiles(event.dataTransfer.files); }
   function move(index: number, direction: -1 | 1) {
     setItems((previous) => {
       const target = index + direction;
@@ -88,11 +90,11 @@ export default function PDFMerger() {
       <section className="tool-panel nx-pdf-main-panel">
         <div className="nx-tool-panel-heading"><div><span className="nx-panel-kicker">01 / DOCUMENTOS</span><h2>Organiza os teus PDFs</h2><p>Adiciona documentos e usa as setas para definir a ordem final.</p></div><span className="nx-local-indicator"><i/> LOCAL</span></div>
         <label className="upload-zone nx-upload-zone" onDragOver={(event) => { event.preventDefault(); event.currentTarget.classList.add("is-dragging"); }} onDragLeave={(event) => event.currentTarget.classList.remove("is-dragging")} onDrop={drop}>
-          <input ref={input} className="file-input-hidden" type="file" accept="application/pdf,.pdf" multiple onChange={change}/>
+          <input ref={input} className="file-input-hidden" type="file" accept="application/pdf,.pdf" multiple onChange={change} disabled={busy || loadingFiles}/>
           <span className="nx-upload-symbol">PDF</span><strong>Adicionar documentos PDF</strong><small>Arrasta os ficheiros para aqui ou escolhe no dispositivo · até 60 MB cada</small>
           <span className="upload-cta">Escolher PDFs</span>
         </label>
-        <div className="nx-list-heading"><div><h3>Ordem de combinação</h3><p>{items.length} documentos · {totalPages} páginas · {sizeText(totalBytes)}</p></div><button type="button" className="nx-ghost-button" disabled={!items.length || busy} onClick={() => { setItems([]); setUrl(""); setPages(0); setProgress(0); setMessage("Lista limpa."); }}>Limpar lista</button></div>
+        <div className="nx-list-heading"><div><h3>Ordem de combinação</h3><p>{items.length} documentos · {totalPages} páginas · {sizeText(totalBytes)}</p></div><button type="button" className="nx-ghost-button" disabled={!items.length || busy || loadingFiles} onClick={() => { setItems([]); setUrl(""); setPages(0); setProgress(0); setMessage("Lista limpa."); }}>Limpar lista</button></div>
         {items.length ? <div className="nx-pdf-order-list">
           {items.map((item, index) => <article className="nx-pdf-order-item" key={item.id}>
             <span className="nx-pdf-order-number">{String(index + 1).padStart(2, "0")}</span>
@@ -123,7 +125,7 @@ export default function PDFMerger() {
           <div className="tool-help-note"><strong>Privacidade:</strong> as páginas são copiadas no navegador. Os ficheiros originais não são enviados para a Nexauren.</div>
         </div>
         <div className="settings-actions">
-          <button className="nx-run-button" disabled={items.length < 2 || busy} onClick={() => void merge()}><span>{busy ? "A combinar documentos…" : "Combinar " + items.length + " PDFs"}</span><b>{busy ? "◌" : "↗"}</b></button>
+          <button className="nx-run-button" disabled={items.length < 2 || busy || loadingFiles} onClick={() => void merge()}><span>{busy ? "A combinar documentos…" : loadingFiles ? "A analisar PDFs…" : "Combinar " + items.length + " PDFs"}</span><b>{busy ? "◌" : "↗"}</b></button>
         </div>
       </section>
     </div>
