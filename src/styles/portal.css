@@ -371,3 +371,17 @@ html[data-theme="light"] .ns-quick-tool{background:#fff}
  .ns-quick-tool{padding:11px}
  .apps-overview-strip>a{margin-left:0}
 }
+
+/* App cards scale cleanly as the catalogue grows. */
+.app-catalog-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.app-product-card{min-width:0}
+.app-product-card .app-product-info{min-width:0}
+.app-product-card .app-product-info h2{overflow-wrap:anywhere}
+.app-product-card .app-product-meta{display:flex;flex-wrap:wrap;gap:7px}
+.app-product-card .app-product-meta span{max-width:100%}
+.pdfmax-product-icon{background:linear-gradient(145deg,#fa5272,#a51e55)!important}
+.qr-product-icon{background:linear-gradient(145deg,#15c7d8,#1755cc)!important}
+.music-product-icon{background:linear-gradient(145deg,#9b5bff,#5225c5)!important}
+.ns-home-app-mark-pdf{background:linear-gradient(145deg,#fa5272,#a51e55)!important}
+.ns-home-app-mark-qr{background:linear-gradient(145deg,#15c7d8,#1755cc)!important}
+@media(max-width:800px){.app-catalog-grid{grid-template-columns:1fr}}
