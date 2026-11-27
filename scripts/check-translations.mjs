@@ -80,7 +80,28 @@ const required = [
   "Ler artigos no blog",
   "Confirma os detalhes antes de instalar",
   "As versões, dimensões e requisitos podem mudar. Consulta sempre a informação atualizada na página oficial de distribuição.",
-  "Descobre aplicações Android da Nexauren para editar imagens e gerir ficheiros. Consulta funcionalidades, requisitos e as páginas oficiais na APKPure."
+  "Descobre aplicações Android da Nexauren para editar imagens e gerir ficheiros. Consulta funcionalidades, requisitos e as páginas oficiais na APKPure.",
+  "ACESSO RÁPIDO",
+  "O que precisas de fazer?",
+  "Abre uma ferramenta diretamente, sem percorrer todo o catálogo.",
+  "Ver catálogo completo",
+  "Aplicações Nexauren",
+  "Explora os produtos disponíveis, consulta os detalhes e instala apenas a partir das páginas oficiais.",
+  "Explorar aplicações",
+  "CATÁLOGO ANDROID",
+  "Aplicações disponíveis",
+  "Produtos publicados e respetivas páginas oficiais.",
+  "Novas aplicações serão adicionadas gradualmente.",
+  "Esta página apresenta apenas produtos com uma página de distribuição identificada.",
+  "Blog externo ↗",
+  "Ferramentas para ler, editar, organizar, comprimir e converter documentos PDF no Android.",
+  "Ferramentas para ler, editar, organizar e converter documentos PDF.",
+  "Cria, personaliza, lê e organiza códigos QR e códigos de barras diretamente no telemóvel.",
+  "Cria, personaliza e lê códigos QR e códigos de barras.",
+  "QR e códigos de barras",
+  "Leitor e editor PDF",
+  "Leitor de música",
+  "Leitor de música para ouvir e organizar ficheiros de áudio no dispositivo Android."
 ];
 const downloadClickHandler = layoutSource.match(/document\.addEventListener\("click",\s*event\s*=>\s*\{[\s\S]*?\n\s*\},\s*true\);/);
 if (!downloadClickHandler || !downloadClickHandler[0].includes("event.isTrusted && event.button === 0") ||

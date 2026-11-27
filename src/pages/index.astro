@@ -44,6 +44,18 @@ const getCategory = (id) => catalog.categories.find((category) => category.id ==
       <div class="ns-stat"><span class="ns-stat-icon cyan">◎</span><span><b>Gratuito</b><small>Sem instalação</small></span></div>
     </section>
 
+    <section class="ns-quick-tools ns-reveal" aria-labelledby="ns-quick-tools-title">
+      <div class="ns-quick-tools-heading">
+        <div><span class="ns-section-kicker">ACESSO RÁPIDO</span><h2 id="ns-quick-tools-title">O que precisas de fazer?</h2><p>Abre uma ferramenta diretamente, sem percorrer todo o catálogo.</p></div>
+        <a class="ns-text-link" href="/tools">Ver catálogo completo <b>↗</b></a>
+      </div>
+      <div class="ns-quick-tools-list">
+        {featured.slice(0, 6).map((tool) => <a href={tool.path} class="ns-quick-tool" data-tone={getCategory(tool.category)?.tone ?? "blue"}>
+          <span>{tool.icon}</span><b>{tool.name}</b><i aria-hidden="true">↗</i>
+        </a>)}
+      </div>
+    </section>
+
     <section class="ns-section ns-reveal">
       <div class="ns-section-heading">
         <div><span class="ns-section-kicker">EXPLORA A PLATAFORMA</span><h2>Ferramentas para <em>cada tarefa.</em></h2><p>Escolhe uma categoria e encontra rapidamente a ferramenta certa.</p></div>
@@ -91,6 +103,14 @@ const getCategory = (id) => catalog.categories.find((category) => category.id ==
         <a class="ns-home-app-card" href="/apps#archiver">
           <span class="ns-home-app-mark ns-home-app-mark-archiver" aria-hidden="true">A</span>
           <span class="ns-home-app-copy"><small>ANDROID · APKPURE</small><b>Archiver</b><span>Uma aplicação prática para gerir e organizar ficheiros compactados no Android.</span><strong>Ver detalhes da aplicação <i>↗</i></strong></span>
+        </a>
+        <a class="ns-home-app-card" href="/apps#pdf-max">
+          <span class="ns-home-app-mark ns-home-app-mark-pdf" aria-hidden="true">PDF</span>
+          <span class="ns-home-app-copy"><small>ANDROID · APKPURE</small><b>PDF Max: PDF Editor, Reader &amp; Converter</b><span>Ferramentas para ler, editar, organizar e converter documentos PDF.</span><strong>Ver detalhes da aplicação <i>↗</i></strong></span>
+        </a>
+        <a class="ns-home-app-card" href="/apps#qr-studio">
+          <span class="ns-home-app-mark ns-home-app-mark-qr" aria-hidden="true">QR</span>
+          <span class="ns-home-app-copy"><small>ANDROID · APKPURE</small><b>QR Studio</b><span>Cria, personaliza e lê códigos QR e códigos de barras.</span><strong>Ver detalhes da aplicação <i>↗</i></strong></span>
         </a>
       </div>
     </section>
