@@ -322,3 +322,52 @@ html[data-theme="light"] .ns-search-suggestions button{background:#fff}
 html[data-theme="light"] .ns-editorial-topics span{background:rgba(255,255,255,.72)}
 @media(max-width:800px){.ns-home-app-grid{grid-template-columns:1fr}.ns-home-app-card{padding:16px}}
 @media(max-width:480px){.ns-home-app-card{align-items:flex-start;gap:12px;padding:14px}.ns-home-app-mark{width:48px;height:48px;flex-basis:48px;border-radius:13px;font-size:17px}.ns-home-app-copy>b{font-size:14px}.ns-home-app-copy>span{font-size:10px}}
+
+
+/* Nexauren Story: quick discovery, app catalogue and small-screen polish */
+.ns-quick-tools{margin:0 0 58px;padding:24px;border:1px solid var(--ns-line);border-radius:22px;background:linear-gradient(115deg,rgba(8,28,61,.9),rgba(8,19,43,.86))}
+.ns-quick-tools-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}
+.ns-quick-tools-heading h2{margin:7px 0 5px;font:700 clamp(20px,2.4vw,27px) 'Space Grotesk';letter-spacing:-.7px}
+.ns-quick-tools-heading p{margin:0;color:var(--ns-muted);font-size:12px;line-height:1.6}
+.ns-quick-tools-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.ns-quick-tool{display:flex;align-items:center;gap:12px;min-width:0;padding:13px;border:1px solid var(--ns-line);border-radius:13px;background:rgba(9,27,58,.75);transition:transform .2s,border-color .2s,background .2s}
+.ns-quick-tool:hover{transform:translateY(-2px);border-color:var(--ns-line-strong);background:rgba(18,53,105,.8)}
+.ns-quick-tool>span{width:37px;height:37px;display:grid;place-items:center;flex:0 0 37px;border-radius:11px;background:linear-gradient(140deg,#087bff,#283ee4);color:#fff;font-size:17px;font-weight:800}
+.ns-quick-tool[data-tone="green"]>span{background:linear-gradient(140deg,#17d69a,#079c71)}
+.ns-quick-tool[data-tone="rose"]>span{background:linear-gradient(140deg,#ff6d9d,#d83b6d)}
+.ns-quick-tool[data-tone="violet"]>span{background:linear-gradient(140deg,#b33df7,#652df0)}
+.ns-quick-tool b{min-width:0;flex:1;color:var(--ns-text);font-size:11px;line-height:1.4}
+.ns-quick-tool i{color:#61c7ff;font-style:normal}
+html[data-theme="light"] .ns-quick-tools{background:linear-gradient(115deg,#fff,#edf3ff)}
+html[data-theme="light"] .ns-quick-tool{background:#fff}
+.apps-overview-strip{display:flex;align-items:center;gap:15px;margin:27px 0 34px;padding:18px 20px;border:1px solid var(--ns-line-strong);border-radius:17px;background:linear-gradient(110deg,rgba(10,65,145,.25),rgba(67,43,143,.16))}
+.apps-overview-mark{width:45px;height:45px;display:grid;place-items:center;flex:0 0 45px;border-radius:13px;background:linear-gradient(140deg,#17caff,#2458ee,#914cff);color:#fff;font:700 25px 'Space Grotesk'}
+.apps-overview-strip>div{display:grid;gap:4px;flex:1;min-width:0}
+.apps-overview-strip b{color:var(--ns-text);font:700 14px 'Space Grotesk'}
+.apps-overview-strip small{color:var(--ns-muted);font-size:11px;line-height:1.55}
+.apps-overview-strip>a{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;color:#63c8ff;font-size:11px;font-weight:700}
+.apps-section-heading{margin:0 0 16px}
+.apps-section-heading>span{color:#61c7ff;font-size:9px;font-weight:800;letter-spacing:1.2px}
+.apps-section-heading h2{margin:7px 0;font:700 clamp(22px,3vw,30px) 'Space Grotesk';letter-spacing:-.8px}
+.apps-section-heading p{margin:0;color:var(--ns-muted);font-size:12px}
+.apps-future-note{display:flex;align-items:center;gap:12px;margin:22px 0;padding:15px 17px;border:1px dashed var(--ns-line-strong);border-radius:14px;background:rgba(10,29,60,.35)}
+.apps-future-note>span{color:#62c8ff;font-size:22px}
+.apps-future-note p{display:grid;gap:3px;margin:0}
+.apps-future-note b{color:var(--ns-text);font-size:11px}
+.apps-future-note small{color:var(--ns-muted);font-size:10px;line-height:1.5}
+@media(max-width:800px){
+ .ns-quick-tools{margin-bottom:43px;padding:17px;border-radius:17px}
+ .ns-quick-tools-heading{align-items:flex-start;flex-direction:column;gap:9px}
+ .ns-quick-tools-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .ns-quick-tool{gap:9px;padding:10px}
+ .ns-quick-tool>span{width:33px;height:33px;flex-basis:33px}
+ .apps-overview-strip{align-items:flex-start;flex-wrap:wrap;padding:15px}
+ .apps-overview-strip>div{flex:1 1 calc(100% - 65px)}
+ .apps-overview-strip>a{margin-left:60px}
+}
+@media(max-width:480px){
+ .ns-quick-tools{padding:14px}
+ .ns-quick-tools-list{grid-template-columns:1fr}
+ .ns-quick-tool{padding:11px}
+ .apps-overview-strip>a{margin-left:0}
+}
