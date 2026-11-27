@@ -94,18 +94,18 @@ export default function PDFRotator() {
           <div className="settings-group">
             <span className="settings-label">Ângulo de rotação</span>
             <div className="nx-angle-options">
-              <button type="button" className={angle === -90 ? "is-active" : ""} onClick={() => setAngle(-90)} disabled={!file || busy}><b>↶</b><span>90° esquerda</span></button>
-              <button type="button" className={angle === 90 ? "is-active" : ""} onClick={() => setAngle(90)} disabled={!file || busy}><b>↻</b><span>90° direita</span></button>
-              <button type="button" className={angle === 180 ? "is-active" : ""} onClick={() => setAngle(180)} disabled={!file || busy}><b>↕</b><span>180°</span></button>
+              <button type="button" className={angle === -90 ? "is-active" : ""} onClick={() => { setAngle(-90); setUrl(""); setProgress(0); setMessage(""); }} disabled={!file || busy}><b>↶</b><span>90° esquerda</span></button>
+              <button type="button" className={angle === 90 ? "is-active" : ""} onClick={() => { setAngle(90); setUrl(""); setProgress(0); setMessage(""); }} disabled={!file || busy}><b>↻</b><span>90° direita</span></button>
+              <button type="button" className={angle === 180 ? "is-active" : ""} onClick={() => { setAngle(180); setUrl(""); setProgress(0); setMessage(""); }} disabled={!file || busy}><b>↕</b><span>180°</span></button>
             </div>
           </div>
           <div className="settings-group">
             <span className="settings-label">Aplicar a</span>
             <div className="nx-scope-switch">
-              <button type="button" className={scope === "all" ? "is-active" : ""} onClick={() => setScope("all")} disabled={!file || busy}>Todas as páginas</button>
-              <button type="button" className={scope === "custom" ? "is-active" : ""} onClick={() => setScope("custom")} disabled={!file || busy}>Páginas específicas</button>
+              <button type="button" className={scope === "all" ? "is-active" : ""} onClick={() => { setScope("all"); setUrl(""); setProgress(0); setMessage(""); }} disabled={!file || busy}>Todas as páginas</button>
+              <button type="button" className={scope === "custom" ? "is-active" : ""} onClick={() => { setScope("custom"); setUrl(""); setProgress(0); setMessage(""); }} disabled={!file || busy}>Páginas específicas</button>
             </div>
-            {scope === "custom" && <label className="field-label nx-page-range-field">Números e intervalos<input value={pageRange} onChange={(event) => { setPageRange(event.target.value); setUrl(""); }} placeholder="Ex.: 1-3,5,8-10" disabled={!file || busy}/></label>}
+            {scope === "custom" && <label className="field-label nx-page-range-field">Números e intervalos<input value={pageRange} onChange={(event) => { setPageRange(event.target.value); setUrl(""); setProgress(0); setMessage(""); }} placeholder="Ex.: 1-3,5,8-10" disabled={!file || busy}/></label>}
             <p className="range-help">{scope === "all" ? "A rotação será aplicada a todas as " + pageCount + " páginas." : "Indica páginas separadas por vírgulas e intervalos. Exemplo: 1-3,5."}</p>
           </div>
           <div className="nx-progress-card"><div className="progress-heading"><span>Processamento</span><b>{progress}%</b></div><div className="progress-track"><div className="progress-fill" style={{ width: progress + "%" }}/></div><p>{busy ? "A aplicar alterações ao PDF…" : progress === 100 ? "Documento pronto." : "O documento original não é alterado."}</p></div>
