@@ -119,3 +119,11 @@ Set the PUBLIC_FIREBASE_* variables in .env using the Firebase Web app configura
 5. Verify Firestore security rules allow an authenticated user to read and write only their own users/{uid} data.
 
 Never place service-account keys in browser code or commit them to this repository.
+
+## Future plan architecture
+
+The portal launches free-first. `src/lib/plan-access.ts` centralises the future feature-entitlement model and keeps Premium disabled by default. It does not activate billing, subscriptions or client-side paywalls. Before any paid feature is released, entitlement checks must be backed by a trusted server-side source; browser-provided plan values must never grant access. Core basic tools should remain available without an account.
+
+## Quality checks
+
+The pull-request workflow runs TypeScript checks, translation validation, bilingual catalogue search tests, catalogue route checks, a production Astro build and generated-output/sitemap verification. These checks catch structural regressions; each browser-based tool still needs hands-on testing with representative files and devices before being described as fully verified.
