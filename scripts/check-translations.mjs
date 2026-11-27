@@ -80,7 +80,20 @@ const required = [
   "Ler artigos no blog",
   "Confirma os detalhes antes de instalar",
   "As versões, dimensões e requisitos podem mudar. Consulta sempre a informação atualizada na página oficial de distribuição.",
-  "Descobre aplicações Android da Nexauren para editar imagens e gerir ficheiros. Consulta funcionalidades, requisitos e as páginas oficiais na APKPure."
+  "Descobre aplicações Android da Nexauren para editar imagens e gerir ficheiros. Consulta funcionalidades, requisitos e as páginas oficiais na APKPure.",
+  "ACESSO RÁPIDO",
+  "O que precisas de fazer?",
+  "Abre uma ferramenta diretamente, sem percorrer todo o catálogo.",
+  "Ver catálogo completo",
+  "Aplicações Nexauren",
+  "Explora os produtos disponíveis, consulta os detalhes e instala apenas a partir das páginas oficiais.",
+  "Explorar aplicações",
+  "CATÁLOGO ANDROID",
+  "Aplicações disponíveis",
+  "Produtos publicados e respetivas páginas oficiais.",
+  "Novas aplicações serão adicionadas gradualmente.",
+  "Esta página apresenta apenas produtos com uma página de distribuição identificada.",
+  "Blog externo ↗"
 ];
 const downloadClickHandler = layoutSource.match(/document\.addEventListener\("click",\s*event\s*=>\s*\{[\s\S]*?\n\s*\},\s*true\);/);
 if (!downloadClickHandler || !downloadClickHandler[0].includes('target.closest("a[download]")') ||
