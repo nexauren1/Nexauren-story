@@ -385,3 +385,55 @@ html[data-theme="light"] .ns-quick-tool{background:#fff}
 .ns-home-app-mark-pdf{background:linear-gradient(145deg,#fa5272,#a51e55)!important}
 .ns-home-app-mark-qr{background:linear-gradient(145deg,#15c7d8,#1755cc)!important}
 @media(max-width:800px){.app-catalog-grid{grid-template-columns:1fr}}
+
+
+/* Nexauren Story refresh: clearer app catalogue, quieter blog promotion and better mobile search. */
+.ns-blog-secondary{margin-top:8px;padding:30px 34px;border-radius:20px;grid-template-columns:minmax(0,1.15fr) minmax(180px,.85fr);background:linear-gradient(115deg,rgba(8,28,59,.82),rgba(17,30,69,.62));}
+.ns-blog-secondary .ns-feature-band-copy p{max-width:620px}
+.ns-blog-text-link{display:inline-flex;align-items:center;gap:9px;color:#75caff;font-size:12px;font-weight:800}
+.ns-blog-text-link span{font-size:16px;transition:transform .18s ease}
+.ns-blog-text-link:hover span{transform:translate(3px,-2px)}
+.ns-mobile-search{grid-column:1/-1;display:flex;align-items:center;gap:8px;padding:5px 6px 5px 13px;border:1px solid var(--ns-line-strong);border-radius:12px;background:var(--ns-bg2)}
+.ns-mobile-search input{flex:1;min-width:0;height:39px;border:0;outline:0;background:transparent;color:var(--ns-text);font-size:13px}
+.ns-mobile-search input::placeholder{color:var(--ns-dim)}
+.ns-mobile-search button{width:39px;height:39px;border:0;border-radius:9px;background:#147cff;color:#fff;font-size:22px;cursor:pointer}
+.apps-page{max-width:1120px}
+.apps-intro{display:flex;align-items:center;justify-content:space-between;gap:30px;margin:17px 0 34px;padding:clamp(24px,4vw,42px);border:1px solid var(--ns-line);border-radius:24px;background:radial-gradient(circle at 88% 40%,rgba(30,130,255,.2),transparent 30%),linear-gradient(125deg,var(--ns-panel),var(--ns-panel2));box-shadow:var(--ns-shadow)}
+.apps-intro h1{margin:0 0 13px;color:var(--ns-text);font:800 clamp(32px,4.5vw,51px)/1.08 'Space Grotesk';letter-spacing:-1.9px}
+.apps-intro h1 span{background:linear-gradient(100deg,#20ccff,#3984ff,#a76bff);background-clip:text;-webkit-background-clip:text;color:transparent}
+.apps-intro .simple-lead{max-width:620px;margin:0;color:var(--ns-muted);font-size:14px;line-height:1.75}
+.apps-intro-mark{width:150px;height:150px;flex:0 0 150px;display:grid;place-content:center;justify-items:center;border:1px solid rgba(75,159,255,.35);border-radius:35px;background:linear-gradient(145deg,rgba(16,123,255,.2),rgba(129,76,255,.17));box-shadow:0 18px 50px rgba(0,88,255,.16);transform:rotate(5deg)}
+.apps-intro-mark span{font:800 82px/.9 'Space Grotesk';background:linear-gradient(145deg,#2bd9f4,#247bff 60%,#a56aff);background-clip:text;-webkit-background-clip:text;color:transparent}
+.apps-intro-mark small{margin-top:12px;color:var(--ns-muted);font-size:8px;font-weight:800;letter-spacing:2px}
+.apps-catalog-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:0 0 16px}
+.apps-catalog-toolbar>div{display:grid;gap:4px}
+.apps-catalog-toolbar>div b{color:var(--ns-text);font:700 19px 'Space Grotesk'}
+.apps-catalog-toolbar>div span{color:var(--ns-muted);font-size:11px}
+.apps-live-count{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid var(--ns-line);border-radius:999px;color:var(--ns-muted);font-size:10px;font-weight:750}
+.apps-live-count i{width:7px;height:7px;border-radius:50%;background:#20d6a0;box-shadow:0 0 10px rgba(32,214,160,.65)}
+.app-catalog-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.app-product-card{position:relative;display:grid;grid-template-columns:58px minmax(0,1fr);align-items:start;gap:14px;padding:21px;border:1px solid var(--ns-line);border-radius:19px;background:var(--ns-panel);box-shadow:0 12px 32px rgba(0,0,0,.1);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.app-product-card:hover{transform:translateY(-3px);border-color:var(--ns-line-strong);box-shadow:var(--ns-shadow)}
+.app-product-icon{width:58px;height:58px;display:grid;place-items:center;border-radius:16px;color:#fff;font:800 20px 'Space Grotesk';box-shadow:0 9px 22px rgba(0,0,0,.2)}
+.image-product-icon{background:linear-gradient(145deg,#239eaa,#4059d7 65%,#9065d8)}
+.archiver-product-icon{background:linear-gradient(145deg,#1e9c92,#305aa2 65%,#694fb4)}
+.app-product-status{position:absolute;top:17px;right:17px;padding:5px 8px;border:1px solid rgba(32,214,160,.25);border-radius:999px;background:rgba(32,214,160,.09);color:#39d9a8;font-size:8px;font-weight:850;letter-spacing:.5px;text-transform:uppercase}
+.app-product-info{min-width:0;padding-right:55px}
+.app-product-label{color:#55c7ff;font-size:8px;font-weight:850;letter-spacing:1.3px}
+.app-product-info h2{margin:7px 0;color:var(--ns-text);font:700 17px/1.3 'Space Grotesk'}
+.app-product-info p{margin:0;color:var(--ns-muted);font-size:11px;line-height:1.7}
+.app-product-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
+.app-product-meta span{padding:5px 8px;border:1px solid var(--ns-line);border-radius:7px;color:var(--ns-muted);font-size:9px}
+.app-product-card>.primary-button{grid-column:1/-1;justify-self:start;display:inline-flex;align-items:center;gap:12px;margin-top:4px;padding:11px 15px;border-radius:10px;font-size:11px}
+.app-catalog-note,.app-development-strip{margin-top:17px;padding:15px 17px;border:1px solid var(--ns-line);border-radius:14px;background:var(--ns-panel)}
+.app-catalog-note{display:flex;align-items:center;gap:12px}
+.app-catalog-note>b{width:27px;height:27px;display:grid;place-items:center;flex:0 0 27px;border-radius:9px;background:rgba(44,139,255,.14);color:#69bdff}
+.app-catalog-note>span,.app-development-strip>span:nth-child(2){display:grid;gap:4px}
+.app-catalog-note strong,.app-development-strip b{color:var(--ns-text);font-size:11px}
+.app-catalog-note small,.app-development-strip small{color:var(--ns-muted);font-size:10px;line-height:1.6}
+.app-development-strip{display:flex;align-items:center;gap:12px}
+.app-development-icon{width:38px;height:38px;display:grid;place-items:center;flex:0 0 38px;border-radius:11px;background:linear-gradient(135deg,#18c9ef,#2867ed,#8b55e8);color:#fff;font:800 17px 'Space Grotesk'}
+.app-development-strip>span:nth-child(2){flex:1}
+.app-development-strip>a{color:#6bc8ff;font-size:10px;font-weight:800;white-space:nowrap}
+@media(max-width:800px){.apps-intro{padding:25px}.apps-intro-mark{width:112px;height:112px;flex-basis:112px;border-radius:27px}.apps-intro-mark span{font-size:62px}.app-catalog-grid{grid-template-columns:1fr}.ns-blog-secondary{grid-template-columns:1fr}.ns-blog-secondary .ns-feature-band-art{display:none}}
+@media(max-width:520px){.apps-intro{margin:13px 0 25px;padding:21px;min-height:0}.apps-intro-mark{display:none}.apps-intro h1{font-size:35px}.apps-intro .simple-lead{font-size:12px}.apps-catalog-toolbar{align-items:flex-start;flex-direction:column}.app-product-card{grid-template-columns:48px minmax(0,1fr);gap:11px;padding:15px}.app-product-icon{width:48px;height:48px;border-radius:13px}.app-product-info{padding-right:0}.app-product-info h2{font-size:15px}.app-product-status{top:14px;right:14px}.app-product-card>.primary-button{min-height:42px}.app-development-strip{align-items:flex-start;flex-wrap:wrap}.app-development-strip>a{margin-left:50px}}
