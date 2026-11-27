@@ -4,7 +4,7 @@ function parsePages(value: string, total: number) {
   const selected = new Set<number>();
   for (const part of value.split(",")) {
     const token = part.trim();
-    if (!token) continue;
+    if (!token) throw new Error("Remove vírgulas repetidas e indica apenas números ou intervalos válidos.");
     const match = token.match(/^(\d+)(?:\s*-\s*(\d+))?$/);
     if (!match) throw new Error("Usa páginas como 1-3,5,8-10.");
     const first = Number(match[1]), last = Number(match[2] || match[1]);
