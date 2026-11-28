@@ -1,0 +1,81 @@
+/* Nexauren Store / site brand palette — v1 */
+:root {
+  --brand-blue: #145BFF;
+  --brand-blue-strong: #0647E8;
+  --brand-blue-deep: #0736B8;
+  --brand-teal: #00B8A9;
+  --brand-teal-soft: #DDF9F5;
+  --brand-pink: #F34F9B;
+  --brand-pink-soft: #FFE4F0;
+  --brand-yellow: #F5B900;
+  --brand-yellow-soft: #FFF4CC;
+  --brand-red: #E53950;
+  --brand-red-soft: #FFE3E7;
+  --brand-green: #12A86B;
+  --brand-green-strong: #078653;
+  --brand-green-soft: #DDF7E9;
+
+  /* Compatibility tokens used throughout the existing site */
+  --blue: var(--brand-blue);
+  --blue-dark: var(--brand-blue-strong);
+  --teal: var(--brand-teal);
+  --green: var(--brand-green);
+  --focus-ring: 0 0 0 3px rgba(20, 91, 255, .24);
+}
+
+/* Blue is the identity/accent; green is reserved for primary actions. */
+.primary-button,
+.tool-search button,
+.ns-primary-button,
+.btn-primary,
+button[data-variant="primary"] {
+  background: var(--brand-green) !important;
+  border-color: var(--brand-green) !important;
+  color: #fff !important;
+  box-shadow: 0 7px 18px rgba(18, 168, 107, .2);
+}
+.primary-button:hover,
+.tool-search button:hover,
+.ns-primary-button:hover,
+.btn-primary:hover,
+button[data-variant="primary"]:hover {
+  background: var(--brand-green-strong) !important;
+  border-color: var(--brand-green-strong) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 22px rgba(18, 168, 107, .27);
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+a:not(.primary-button):not(.ns-primary-button):not(.btn-primary) {
+  --link-accent: var(--brand-blue);
+}
+.eyebrow,
+.section-kicker,
+.apps-live-count,
+.text-link,
+.popular-tools a:hover {
+  color: var(--brand-blue);
+}
+.eyebrow-line {
+  background: var(--brand-teal);
+}
+.status-success,
+.badge-success,
+.app-status-success { color: var(--brand-green); }
+.status-warning,
+.badge-warning,
+.app-status-warning { color: #946900; }
+.status-danger,
+.badge-danger,
+.app-status-danger { color: var(--brand-red); }
+.status-info,
+.badge-info,
+.app-status-info { color: var(--brand-blue); }
+.status-premium,
+.badge-premium { color: var(--brand-pink); }
