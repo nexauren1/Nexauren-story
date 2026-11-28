@@ -1,81 +1,216 @@
-/* Nexauren Store / site brand palette — v1 */
+/* Nexauren visual system — site-wide refresh, including every tool workspace. */
 :root {
-  --brand-blue: #145BFF;
-  --brand-blue-strong: #0647E8;
-  --brand-blue-deep: #0736B8;
-  --brand-teal: #00B8A9;
-  --brand-teal-soft: #DDF9F5;
-  --brand-pink: #F34F9B;
-  --brand-pink-soft: #FFE4F0;
-  --brand-yellow: #F5B900;
-  --brand-yellow-soft: #FFF4CC;
-  --brand-red: #E53950;
-  --brand-red-soft: #FFE3E7;
-  --brand-green: #12A86B;
-  --brand-green-strong: #078653;
-  --brand-green-soft: #DDF7E9;
+  --brand-blue:#145BFF;
+  --brand-blue-strong:#0647E8;
+  --brand-blue-deep:#0736B8;
+  --brand-teal:#00B8A9;
+  --brand-pink:#F34F9B;
+  --brand-yellow:#F5B900;
+  --brand-red:#E53950;
+  --brand-green:#12A86B;
+  --brand-green-strong:#078653;
 
-  /* Compatibility tokens used throughout the existing site */
-  --blue: var(--brand-blue);
-  --blue-dark: var(--brand-blue-strong);
-  --teal: var(--brand-teal);
-  --green: var(--brand-green);
-  --focus-ring: 0 0 0 3px rgba(20, 91, 255, .24);
+  --ink:#101B35; --muted:#65738D; --line:#E1E8F4;
+  --blue:var(--brand-blue); --blue-dark:var(--brand-blue-strong);
+  --teal:var(--brand-teal); --green:var(--brand-green);
+  --nx-blue:var(--brand-blue); --nx-teal:var(--brand-teal);
+  --ns-blue:var(--brand-blue); --ns-cyan:#54D7FF; --ns-green:var(--brand-green);
+  --focus-ring:0 0 0 3px rgba(20,91,255,.25);
+  --brand-gradient:linear-gradient(115deg,#145BFF 0%,#477BFF 58%,#00B8A9 100%);
+  --brand-shadow:0 12px 30px rgba(20,91,255,.16);
+  accent-color:var(--brand-blue);
+}
+html[data-theme="dark"] {
+  color-scheme:dark;
+  --ns-bg:#071126; --ns-bg2:#0B1B38; --ns-panel:rgba(12,29,58,.94); --ns-panel2:#102448;
+  --ns-line:rgba(117,158,230,.19); --ns-line-strong:rgba(58,123,255,.48);
+  --ns-text:#F4F7FF; --ns-muted:#A9B9D4; --ns-dim:#7F94B7;
+  --ns-shadow:0 20px 55px rgba(0,0,0,.25);
+  --nx-bg:#071126; --nx-surface:#0C1D3A; --nx-ink:#F4F7FF; --nx-muted:#A9B9D4; --nx-line:rgba(117,158,230,.19);
+}
+html[data-theme="light"] {
+  color-scheme:light;
+  --ns-bg:#F4F7FF; --ns-bg2:#EAF0FF; --ns-panel:rgba(255,255,255,.97); --ns-panel2:#EDF3FF;
+  --ns-line:rgba(39,77,145,.14); --ns-line-strong:rgba(20,91,255,.34);
+  --ns-text:#14213D; --ns-muted:#566783; --ns-dim:#7B8BA6;
+  --ns-shadow:0 18px 48px rgba(40,73,130,.10);
+  --nx-bg:#F4F7FF; --nx-surface:#fff; --nx-ink:#14213D; --nx-muted:#566783; --nx-line:#E1E8F4;
+}
+html {scroll-behavior:smooth;scroll-padding-top:112px}
+body {background-color:var(--ns-bg);color:var(--ns-text)}
+::selection {background:rgba(20,91,255,.28);color:inherit}
+
+/* Global shell and navigation */
+.site-shell {width:min(1380px,calc(100% - 48px));}
+.ns-header {border-color:var(--ns-line);border-radius:20px;box-shadow:0 12px 34px rgba(0,0,0,.12)}
+.ns-brand-mark {background:linear-gradient(140deg,#00B8A9 0%,#145BFF 58%,#F34F9B 100%);box-shadow:0 8px 26px rgba(20,91,255,.3)}
+.ns-brand-name b {color:#54A5FF}
+.ns-desktop-nav a:hover,.ns-desktop-nav a.active {background:rgba(20,91,255,.16)}
+.ns-desktop-nav a.active:after {background:var(--brand-teal)}
+.ns-account-link,.ns-header-actions .account-link {background:var(--brand-green);color:#fff;box-shadow:0 8px 20px rgba(18,168,107,.2)}
+.ns-account-link:hover,.ns-header-actions .account-link:hover {background:var(--brand-green-strong)}
+.ns-icon-button,.ns-menu-toggle {border-radius:12px}
+.ns-header-search:focus-within,.ns-hero-search:focus-within,.ns-search-field:focus-within {border-color:var(--brand-blue);box-shadow:var(--focus-ring)}
+
+/* Landing page: cleaner blue identity with restrained secondary accents */
+.ns-hero {border-color:var(--ns-line);box-shadow:var(--ns-shadow)}
+.ns-eyebrow,.ns-section-kicker {color:#54BFFF}
+.ns-eyebrow {border-color:rgba(20,91,255,.3);background:rgba(20,91,255,.13)}
+.ns-hero h1 span,.ns-page-hero h1 em,.ns-section-heading h2 em,.ns-feature-band h2 em {
+  background:linear-gradient(100deg,#2F7BFF 0%,#145BFF 52%,#00B8A9 100%);
+  background-clip:text;-webkit-background-clip:text;color:transparent;
+}
+.ns-button-primary,.ns-hero-search button,.ns-mobile-search button,
+.primary-button,.ns-primary-button,.btn-primary,.ns-empty-reset,
+.ns-compressor-choose,.ns-auth-submit,.nexa-download-continue {
+  border-color:var(--brand-green)!important;
+  background:var(--brand-green)!important;
+  color:#fff!important;
+  box-shadow:0 8px 20px rgba(18,168,107,.2);
+}
+.ns-button-primary:hover,.ns-hero-search button:hover,.ns-mobile-search button:hover,
+.primary-button:hover,.ns-primary-button:hover,.btn-primary:hover,
+.ns-empty-reset:hover,.ns-compressor-choose:hover,.ns-auth-submit:hover,
+.nexa-download-continue:hover {
+  background:var(--brand-green-strong)!important;
+  border-color:var(--brand-green-strong)!important;
+  box-shadow:0 11px 25px rgba(18,168,107,.27);
+}
+.ns-button-outline,.ns-button-quiet {border-color:var(--ns-line-strong);color:var(--ns-text)}
+.ns-text-link,.ns-blog-text-link,.ns-tool-card-link,.ns-category-bottom b {color:#54A5FF}
+.ns-stat-icon.blue,.ns-stat-icon.cyan {background:rgba(20,91,255,.15);color:#67A6FF}
+.ns-stat-icon.green {background:rgba(18,168,107,.14);color:#35D69A}
+.ns-stat-icon.purple {background:rgba(243,79,155,.13);color:#FF8FC1}
+
+/* Cards, catalog and categories */
+.ns-category-card,.ns-tool-card,.ns-stat,.ns-home-app-card,.app-product-card,
+.ns-quick-tool,.ns-catalog-controls,.ns-catalog-note,.ns-results-heading,
+.ns-compressor-card,.ns-tool-panel,.tool-panel,.tool-card {
+  border-color:var(--ns-line);
+}
+.ns-category-card:hover,.ns-tool-card:hover,.app-product-card:hover,
+.ns-quick-tool:hover {border-color:var(--ns-line-strong)}
+.ns-category-icon,.ns-tool-icon {background:linear-gradient(140deg,#145BFF,#0736B8);box-shadow:0 8px 22px rgba(20,91,255,.25)}
+[data-tone="green"] .ns-category-icon,[data-tone="green"] .ns-tool-icon {background:linear-gradient(140deg,#00B8A9,#078653)}
+[data-tone="purple"] .ns-category-icon,[data-tone="purple"] .ns-tool-icon {background:linear-gradient(140deg,#F34F9B,#9B3BBD)}
+.ns-tool-pill,.ns-category-index {border-color:var(--ns-line)}
+.ns-search-field {border-color:var(--ns-line-strong)}
+.ns-filter-chip.is-active,.ns-filter-chip[aria-pressed="true"] {border-color:var(--brand-blue);background:rgba(20,91,255,.16);color:var(--ns-text)}
+.ns-filter-chip:hover {border-color:var(--brand-blue)}
+.ns-directory-card {min-height:220px}
+.ns-tool-card h2,.ns-tool-card h3 {letter-spacing:-.35px}
+.ns-empty-state {border-color:rgba(229,57,80,.28)}
+.ns-catalog-note>span {color:var(--brand-teal)}
+
+/* App catalogue */
+.app-product-status,.apps-live-count i {color:var(--brand-green)}
+.app-product-card>.primary-button {background:var(--brand-green)!important}
+.app-product-label {color:#54BFFF}
+.apps-intro h1 span {background:linear-gradient(100deg,#145BFF,#00B8A9,#F34F9B);background-clip:text;-webkit-background-clip:text;color:transparent}
+.apps-intro-mark {border-color:rgba(20,91,255,.3);background:linear-gradient(145deg,rgba(20,91,255,.18),rgba(0,184,169,.13))}
+.apps-intro-mark span {background:linear-gradient(145deg,#00B8A9,#145BFF 62%,#F34F9B);background-clip:text;-webkit-background-clip:text;color:transparent}
+
+/* Shared tool-page layout: breadcrumbs, headings, workspaces and panels */
+.ns-tool-page,.tool-page,.simple-page {padding-bottom:clamp(38px,6vw,76px)}
+.ns-breadcrumb,.tool-breadcrumb {display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:24px 0 18px;color:var(--ns-dim);font-size:11px}
+.ns-breadcrumb a,.tool-breadcrumb a {color:#68AFFF;font-weight:700}
+.ns-breadcrumb a:hover,.tool-breadcrumb a:hover {color:var(--brand-teal)}
+.ns-tool-heading,.tool-page-header {display:flex;align-items:center;gap:18px;margin:20px 0 22px}
+.ns-tool-heading {padding:22px 24px;border:1px solid var(--ns-line);border-radius:20px;background:linear-gradient(120deg,rgba(20,91,255,.12),rgba(0,184,169,.06)),var(--ns-panel)}
+.ns-tool-heading-icon {background:linear-gradient(140deg,#145BFF,#0736B8)!important;box-shadow:0 8px 22px rgba(20,91,255,.23)}
+.ns-tool-heading-copy h1,.tool-title h1 {color:var(--ns-text);letter-spacing:-1.5px}
+.ns-tool-heading-copy p,.tool-title p {color:var(--ns-muted);line-height:1.7}
+.ns-tool-heading-actions,.tool-header-actions {margin-left:auto}
+.ns-live-pill,.tool-state {border-color:rgba(18,168,107,.25);background:rgba(18,168,107,.12);color:#35D69A}
+.ns-live-pill i,.tool-state i {background:var(--brand-green)}
+.tool-workspace,.ns-compressor-workspace,.universal-tool-main {gap:18px}
+.tool-panel,.ns-compressor-card,.universal-tool .tool-panel {
+  border:1px solid var(--ns-line);border-radius:18px;background:var(--ns-panel);box-shadow:var(--ns-shadow);
+}
+.tool-panel h2,.panel-topline h2,.settings-panel h2,.universal-tool h2 {color:var(--ns-text)}
+.tool-panel p,.tool-panel small,.settings-panel p {color:var(--ns-muted)}
+.upload-zone,.ns-compressor-upload {
+  border-color:rgba(20,91,255,.48);
+  background:radial-gradient(circle at 50% 0,rgba(20,91,255,.13),transparent 48%),var(--ns-bg2);
+  border-radius:16px;
+}
+.upload-zone:hover,.upload-zone.is-dragging,.ns-compressor-upload:hover,.ns-compressor-upload.is-dragging {
+  border-color:var(--brand-blue);background:rgba(20,91,255,.12);
+}
+.upload-icon,.ns-compressor-cloud {background:linear-gradient(140deg,#145BFF,#0736B8);color:#fff}
+.field-label,.settings-label {color:var(--ns-muted)}
+.field-label input,.field-label select,.field-label textarea,
+.tool-panel input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),
+.tool-panel select,.tool-panel textarea,
+.universal-tool input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),
+.universal-tool select,.universal-tool textarea,
+.ns-compressor-settings-grid input:not([type=range]):not([type=color]),
+.ns-compressor-settings-grid select {
+  border-color:var(--ns-line-strong);border-radius:10px;
+}
+input:focus,select:focus,textarea:focus {outline:none}
+.field-label input:focus,.field-label select:focus,.field-label textarea:focus,
+.tool-panel input:focus,.tool-panel select:focus,.tool-panel textarea:focus,
+.universal-tool input:focus,.universal-tool select:focus,.universal-tool textarea:focus {
+  border-color:var(--brand-blue);box-shadow:var(--focus-ring);
+}
+input[type=range] {accent-color:var(--brand-blue)}
+input[type=checkbox],input[type=radio] {accent-color:var(--brand-blue)}
+.tool-trust-strip,.ns-tool-benefits {display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}
+.tool-trust-strip span,.ns-tool-benefits span {padding:8px 12px;border:1px solid var(--ns-line);border-radius:999px;background:var(--ns-panel);color:var(--ns-muted);font-size:11px}
+.universal-tool,.ns-compressor-workspace {margin-top:18px}
+.universal-tool .tool-panel,.universal-tool .universal-panel {border-radius:16px}
+.universal-tool button,.tool-page button,.ns-tool-page button {transition:background-color .18s,border-color .18s,box-shadow .18s,transform .18s}
+.universal-tool button:disabled,.tool-page button:disabled {transform:none}
+.universal-tool .download-button,.universal-tool button[data-action="download"],
+.tool-page .download-button {background:var(--brand-green)!important;color:#fff!important;border-color:var(--brand-green)!important}
+.universal-tool .download-button:hover,.tool-page .download-button:hover {background:var(--brand-green-strong)!important}
+.ns-compressor-choose {display:inline-flex;align-items:center;justify-content:center}
+.ns-compressor-upload,.upload-zone {transition:border-color .2s,background .2s,transform .2s}
+.ns-compressor-progress .track i {background:linear-gradient(90deg,#00B8A9,#145BFF,#F34F9B)}
+.ns-compressor-quality b,.ns-compressor-progress>div b {color:#54BFFF}
+.ns-compressor-error,.status-danger,.badge-danger {color:#FF8292}
+.ns-compressor-success,.status-success,.badge-success {color:#43DDA7}
+.status-warning,.badge-warning {color:#FFD35A}
+.status-info,.badge-info {color:#68AFFF}
+.status-premium,.badge-premium {color:#FF8FC1}
+
+/* Common feedback, alerts, badges and dialogs */
+[role="alert"],.tool-error,.error-message {border-color:rgba(229,57,80,.32)}
+[role="status"],.tool-success,.success-message {border-color:rgba(18,168,107,.28)}
+.nexa-download-dialog {border-radius:22px}
+.nexa-download-dialog-mark {background:linear-gradient(140deg,#00B8A9,#145BFF,#F34F9B)}
+.nexa-download-continue {background:var(--brand-green)!important}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible {
+  outline:2px solid var(--brand-blue);outline-offset:3px;box-shadow:none;
 }
 
-/* Blue is the identity/accent; green is reserved for primary actions. */
-.primary-button,
-.tool-search button,
-.ns-primary-button,
-.btn-primary,
-button[data-variant="primary"] {
-  background: var(--brand-green) !important;
-  border-color: var(--brand-green) !important;
-  color: #fff !important;
-  box-shadow: 0 7px 18px rgba(18, 168, 107, .2);
+/* Footer */
+.ns-site-footer {border-color:var(--ns-line)}
+.ns-footer-brand span {background:linear-gradient(135deg,#00B8A9,#145BFF,#F34F9B);color:#fff}
+
+/* Mobile layout: keep controls readable and prevent horizontal overflow */
+@media(max-width:800px) {
+  .site-shell {width:calc(100% - 30px)}
+  .ns-tool-heading,.tool-page-header {align-items:flex-start;flex-wrap:wrap}
+  .ns-tool-heading-actions,.tool-header-actions {width:100%;margin-left:0}
+  .tool-workspace,.ns-compressor-workspace {grid-template-columns:minmax(0,1fr)}
+  .tool-panel,.ns-compressor-card {padding:clamp(14px,3.5vw,20px)}
 }
-.primary-button:hover,
-.tool-search button:hover,
-.ns-primary-button:hover,
-.btn-primary:hover,
-button[data-variant="primary"]:hover {
-  background: var(--brand-green-strong) !important;
-  border-color: var(--brand-green-strong) !important;
-  color: #fff !important;
-  box-shadow: 0 10px 22px rgba(18, 168, 107, .27);
+@media(max-width:520px) {
+  .site-shell {width:calc(100% - 22px)}
+  .ns-tool-heading {padding:16px;border-radius:16px}
+  .ns-tool-heading-copy h1,.tool-title h1 {font-size:clamp(27px,8vw,36px)}
+  .ns-tool-benefits,.tool-trust-strip {gap:7px}
+  .ns-tool-benefits span,.tool-trust-strip span {font-size:10px;padding:7px 9px}
+  .ns-breadcrumb,.tool-breadcrumb {font-size:10px;gap:6px}
+  .ns-filter-row {gap:7px}
+  .ns-filter-chip {max-width:100%;white-space:normal}
+  .ns-directory-card {min-height:0}
+  .field-grid,.ns-compressor-settings-grid {grid-template-columns:minmax(0,1fr)}
+  .tool-page .tool-header-actions {display:flex;flex-wrap:wrap;gap:8px}
+  .tool-panel,.ns-compressor-card {border-radius:15px}
 }
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
-a:not(.primary-button):not(.ns-primary-button):not(.btn-primary) {
-  --link-accent: var(--brand-blue);
-}
-.eyebrow,
-.section-kicker,
-.apps-live-count,
-.text-link,
-.popular-tools a:hover {
-  color: var(--brand-blue);
-}
-.eyebrow-line {
-  background: var(--brand-teal);
-}
-.status-success,
-.badge-success,
-.app-status-success { color: var(--brand-green); }
-.status-warning,
-.badge-warning,
-.app-status-warning { color: #946900; }
-.status-danger,
-.badge-danger,
-.app-status-danger { color: var(--brand-red); }
-.status-info,
-.badge-info,
-.app-status-info { color: var(--brand-blue); }
-.status-premium,
-.badge-premium { color: var(--brand-pink); }
